@@ -47,8 +47,11 @@ class Clue:
 class GuessRecord:
     """A recorded guess by a Field Operative."""
     word: str
-    result: str  # "correct", "wrong_team", "neutral", "assassin"
+    result: str  # "correct", "wrong_team", "neutral", "assassin", "pass"
     team: TeamColor
+    clue_word: str = ""
+    clue_number: int = 0
+    guess_number: int = 0  # 1-indexed position within the turn (0 = PASS with no prior guesses)
 
 
 class CodenamesGame:
@@ -202,6 +205,10 @@ class CodenamesGame:
         if card.revealed:
             raise ValueError(f"'{word}' has already been revealed.")
 
+        # Capture clue info before any _end_turn() call clears current_clue
+        _clue_word = self.current_clue.word
+        _clue_number = self.current_clue.number
+
         # Reveal and record
         card.revealed = True
         self.guesses_this_turn += 1
@@ -242,7 +249,14 @@ class CodenamesGame:
                 self._end_turn()
 
         self.guess_history.append(
-            GuessRecord(word=matched, result=result, team=self.current_team)
+            GuessRecord(
+                word=matched,
+                result=result,
+                team=self.current_team,
+                clue_word=_clue_word,
+                clue_number=_clue_number,
+                guess_number=self.guesses_this_turn,
+            )
         )
         return result
 
@@ -252,6 +266,16 @@ class CodenamesGame:
             raise ValueError("Game is already over.")
         if self.current_clue is None:
             raise ValueError("No clue has been given yet this turn.")
+        self.guess_history.append(
+            GuessRecord(
+                word="PASS",
+                result="pass",
+                team=self.current_team,
+                clue_word=self.current_clue.word,
+                clue_number=self.current_clue.number,
+                guess_number=self.guesses_this_turn + 1,
+            )
+        )
         self._end_turn()
 
     # ------------------------------------------------------------------
@@ -277,6 +301,17 @@ class CodenamesGame:
             "clue_history": [
                 {"word": cl.word, "number": cl.number, "team": cl.team.value}
                 for cl in self.clue_history
+            ],
+            "guess_history": [
+                {
+                    "word": g.word,
+                    "result": g.result,
+                    "team": g.team.value,
+                    "clue_word": g.clue_word,
+                    "clue_number": g.clue_number,
+                    "guess_number": g.guess_number,
+                }
+                for g in self.guess_history
             ],
         }
 
@@ -313,6 +348,9 @@ class CodenamesGame:
                     "word": g.word,
                     "result": g.result,
                     "team": g.team.value,
+                    "clue_word": g.clue_word,
+                    "clue_number": g.clue_number,
+                    "guess_number": g.guess_number,
                 }
                 for g in self.guess_history
             ],

@@ -58,7 +58,7 @@ class Leaderboard:
         lb.display()
     """
 
-    def __init__(self, filepath: str = "leaderboard.json") -> None:
+    def __init__(self, filepath: str = "game_logs/leaderboard.json") -> None:
         self.filepath = filepath
         self.teams: Dict[str, TeamRecord] = {}
         self._load()
@@ -113,6 +113,26 @@ class Leaderboard:
                 f"{team.elo:>7.1f}{team.wins:>6}{team.losses:>6}"
                 f"{team.games:>7}{team.win_rate:>7.1%}"
             )
+
+    def to_html(self, output_path: str) -> None:
+        """Write an HTML leaderboard table to *output_path*."""
+        from pathlib import Path
+        rows = []
+        for rank, t in enumerate(self.rankings(), start=1):
+            rows.append(
+                f"<tr><td>{rank}</td><td>{t.name}</td><td>{t.model}</td>"
+                f"<td>{t.elo:.1f}</td><td>{t.wins}</td><td>{t.losses}</td>"
+                f"<td>{t.games}</td><td>{t.win_rate:.1%}</td></tr>"
+            )
+        html = (
+            "<table>\n"
+            "<thead><tr><th>Rank</th><th>Name</th><th>Model</th>"
+            "<th>ELO</th><th>W</th><th>L</th><th>Games</th><th>Win%</th></tr></thead>\n"
+            "<tbody>\n" + "\n".join(rows) + "\n</tbody>\n</table>"
+        )
+        p = Path(output_path)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(html, encoding="utf-8")
 
     # ------------------------------------------------------------------
     # Persistence

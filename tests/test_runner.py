@@ -100,15 +100,22 @@ class TestGameRunnerHappyPath:
             entry = red_script[red_turn[0]]
             return entry[0], entry[1]
 
+        def _resolve_guess(g, view, turn_idx):
+            """Return g, but if PASS is requested before any guess has been made,
+            substitute the first unrevealed word so the mandatory-first-guess rule
+            is satisfied."""
+            if g == "PASS" and view["guesses_this_turn"] == 0:
+                return next(c["word"] for c in view["cards"] if not c["revealed"])
+            return g
+
         def red_guesser(view):
             idx = red_turn[0]
             entry = red_script[idx]
             guesses = entry[2]
             used = view["guesses_this_turn"]
             if used < len(guesses):
-                g = guesses[used]
-                if g == "PASS":
-                    # Trigger turn advance in the script index
+                g = _resolve_guess(guesses[used], view, idx)
+                if guesses[used] == "PASS" and view["guesses_this_turn"] > 0:
                     red_turn[0] += 1
                     return "PASS"
                 return g
@@ -125,8 +132,8 @@ class TestGameRunnerHappyPath:
             guesses = entry[2]
             used = view["guesses_this_turn"]
             if used < len(guesses):
-                g = guesses[used]
-                if g == "PASS":
+                g = _resolve_guess(guesses[used], view, idx)
+                if guesses[used] == "PASS" and view["guesses_this_turn"] > 0:
                     blue_turn[0] += 1
                     return "PASS"
                 return g

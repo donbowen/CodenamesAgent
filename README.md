@@ -4,9 +4,23 @@ A framework for running LLM-powered agents in a full game of
 [Codenames](https://en.wikipedia.org/wiki/Codenames_(board_game)) with an
 ELO leaderboard.
 
+## Leaderboard
+
+<!-- ESTTAB:START:game_logs/leaderboard.html -->
+
+<table>
+<thead><tr><th>Rank</th><th>Name</th><th>Model</th><th>ELO</th><th>W</th><th>L</th><th>Games</th><th>Win%</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>gpt-4o-mini-Std-Prompt</td><td>gpt-4o-mini</td><td>1001.5</td><td>1</td><td>1</td><td>2</td><td>50.0%</td></tr>
+<tr><td>2</td><td>gpt-5-mini-2025-08-07-Std-Prompt</td><td>gpt-5-mini-2025-08-07</td><td>998.5</td><td>1</td><td>1</td><td>2</td><td>50.0%</td></tr>
+</tbody>
+</table>
+
+<!-- ESTTAB:END:game_logs/leaderboard.html -->
+
 ---
 
-## Overview
+## Overview of Repo and Usage
 
 * **Two-agent teams** – Each team consists of a *Spymaster* (gives clues) and a
   *Field Operative/Guesser* (guesses words), both powered by the same LLM model.
@@ -17,7 +31,7 @@ ELO leaderboard.
 
 ---
 
-## Quick start
+### Quick start
 
 ```bash
 # 1a. Install dependencies (preferred)
@@ -36,15 +50,15 @@ $env:OPENAI_API_KEY="sk-..."  # windows
 
 # 3. Play a game
 python main.py play \
-    --red-name  "RedBot"  --red-model  "gpt-4o" \
-    --blue-name "BlueBot" --blue-model "gpt-4o-mini" \
-    --verbose --log-file
+    --red-name  "gpt-4o-mini-Std-Prompt"  --red-model  "gpt-4o-mini" `
+    --blue-name "gpt-5-mini-2025-08-07-Std-Prompt" --blue-model "gpt-5-mini-2025-08-07" `
+    --verbose --log-file game_logs/game_log.txt
 
 # 3.b Powershell
 python main.py play `
-    --red-name  "RedBot"  --red-model  "gpt-4o-mini" `
-    --blue-name "BlueBot" --blue-model "gpt-4o-mini" `
-    --verbose --log-file
+    --red-name  "gpt-4o-mini-Std-Prompt"  --red-model  "gpt-4o-mini" `
+    --blue-name "gpt-5-mini-2025-08-07-Std-Prompt" --blue-model "gpt-5-mini-2025-08-07" `
+    --verbose --log-file game_logs/game_log.txt
 
 # 4. View the leaderboard
 python main.py leaderboard
@@ -52,7 +66,7 @@ python main.py leaderboard
 
 ---
 
-## Project structure
+### Project structure
 
 ```
 codenames/
@@ -68,7 +82,7 @@ tests/           # pytest test suite
 
 ---
 
-## Game rules (brief)
+### Game rules (brief)
 
 * 25 word cards are laid out in a 5×5 grid.
 * Red gets **9** cards (if going first), Blue gets **8**; 7 are neutral; 1 is the
@@ -80,7 +94,7 @@ tests/           # pytest test suite
 
 ---
 
-## Customising prompts
+### Customising prompts
 
 Pass custom system prompts when building a `Team`:
 
@@ -97,7 +111,7 @@ team = Team(
 
 ---
 
-## ELO leaderboard
+### ELO leaderboard
 
 Results are stored in `leaderboard.json` (gitignored).  Use
 `Leaderboard` directly for programmatic access:
@@ -111,7 +125,7 @@ lb.display()
 
 ---
 
-## Running tests
+### Running tests
 
 ```bash
 pytest

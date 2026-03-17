@@ -3,7 +3,7 @@
 import json
 import logging
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,10 @@ Rules:
 - Neutral card: turn ends immediately.
 - Opponent card: turn ends, opponent benefits.
 - ASSASSIN card: your team LOSES instantly — be very careful!
-- Respond "PASS" to end your turn without guessing.
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
 
 Respond with ONLY valid JSON:
 {"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
@@ -61,11 +64,15 @@ class BaseAgent(ABC):
         system_prompt: str,
         max_retries: int = 3,
         temperature: float = 0.7,
+        litellm_kwargs: Optional[dict[str, Any]] = None,
+        prompt_log: Any = None,
     ) -> None:
         self.model = model
         self.system_prompt = system_prompt
         self.max_retries = max_retries
         self.temperature = temperature
+        self.litellm_kwargs = litellm_kwargs or {}
+        self.prompt_log = prompt_log
 
     def _call_llm(self, messages: list) -> str:
         """Call the LLM with a pre-built messages list and return the raw text response."""
@@ -77,13 +84,29 @@ class BaseAgent(ABC):
                 "Install it with: pip install litellm"
             ) from exc
 
+        litellm.drop_params = True
         full_messages = [{"role": "system", "content": self.system_prompt}] + messages
+
+        if self.prompt_log:
+            sep = "=" * 60
+            self.prompt_log.write(f"\n{sep}\nPROMPT  model={self.model}\n{sep}\n")
+            for m in full_messages:
+                self.prompt_log.write(f"[{m['role'].upper()}]\n{m['content']}\n\n")
+            self.prompt_log.flush()
+
         response = litellm.completion(
             model=self.model,
             messages=full_messages,
             temperature=self.temperature,
+            **self.litellm_kwargs,
         )
-        return response.choices[0].message.content.strip()
+        result = response.choices[0].message.content.strip()
+
+        if self.prompt_log:
+            self.prompt_log.write(f"[RESPONSE]\n{result}\n{'=' * 60}\n")
+            self.prompt_log.flush()
+
+        return result
 
     def _parse_json(self, text: str) -> dict:
         """Extract the first JSON object found in *text*."""
@@ -116,8 +139,10 @@ class SpymasterAgent(BaseAgent):
         system_prompt: str = SPYMASTER_SYSTEM_PROMPT,
         max_retries: int = 3,
         temperature: float = 0.7,
+        litellm_kwargs: Optional[dict[str, Any]] = None,
+        prompt_log: Any = None,
     ) -> None:
-        super().__init__(model, system_prompt, max_retries, temperature)
+        super().__init__(model, system_prompt, max_retries, temperature, litellm_kwargs, prompt_log)
 
     def _build_prompt(self, game_view: dict) -> str:  # type: ignore[override]
         team = game_view["current_team"]
@@ -134,7 +159,20 @@ class SpymasterAgent(BaseAgent):
             lines.append(
                 f"  {card['word']:<20} {card['color'].upper():<10} {status}"
             )
-        if game_view["clue_history"]:
+        if game_view.get("guess_history"):
+            lines.append("\nGame history:")
+            for g in game_view["guess_history"]:
+                if g["result"] == "pass":
+                    lines.append(
+                        f"  [{g['team'].upper()}] {g['clue_word']} {g['clue_number']}"
+                        f"  #{g['guess_number']}: PASS"
+                    )
+                else:
+                    lines.append(
+                        f"  [{g['team'].upper()}] {g['clue_word']} {g['clue_number']}"
+                        f"  #{g['guess_number']}: {g['word']} → {g['result']}"
+                    )
+        elif game_view.get("clue_history"):
             lines.append("\nPrevious clues this game:")
             for cl in game_view["clue_history"]:
                 lines.append(
@@ -216,8 +254,10 @@ class GuesserAgent(BaseAgent):
         system_prompt: str = GUESSER_SYSTEM_PROMPT,
         max_retries: int = 3,
         temperature: float = 0.7,
+        litellm_kwargs: Optional[dict[str, Any]] = None,
+        prompt_log: Any = None,
     ) -> None:
-        super().__init__(model, system_prompt, max_retries, temperature)
+        super().__init__(model, system_prompt, max_retries, temperature, litellm_kwargs, prompt_log)
 
     def _build_prompt(self, game_view: dict) -> str:  # type: ignore[override]
         team = game_view["current_team"]
@@ -231,26 +271,31 @@ class GuesserAgent(BaseAgent):
             f"Blue remaining: {game_view['blue_remaining']}",
             "",
         ]
+        must_guess = game_view["guesses_this_turn"] == 0
         unrevealed_words = [c["word"] for c in game_view["cards"] if not c["revealed"]]
-        lines.append("VALID GUESSES — you MUST choose ONLY from this list (or say PASS):")
+        pass_note = "" if must_guess else " (or PASS to stop guessing)"
+        lines.append(f"VALID GUESSES — you MUST choose ONLY from this list{pass_note}:")
         for word in unrevealed_words:
             lines.append(f"  {word}")
+        if must_guess:
+            lines.append("\nNOTE: You MUST make at least one guess this turn before you can pass.")
         if game_view["guess_history"]:
-            lines.append("\nThis game's guesses so far:")
-            for g in game_view["guess_history"][-10:]:  # last 10 only
-                lines.append(
-                    f"  [{g['team'].upper()}] {g['word']} → {g['result']}"
-                )
-        if game_view["clue_history"]:
-            lines.append("\nAll clues this game:")
-            for cl in game_view["clue_history"]:
-                lines.append(
-                    f"  [{cl['team'].upper()}] {cl['word']} {cl['number']}"
-                )
-        lines.append(
-            "\nGuess one word from the VALID GUESSES list above, or respond PASS. "
-            "Do not guess any other word."
-        )
+            lines.append("\nGame history:")
+            for g in game_view["guess_history"]:
+                if g["result"] == "pass":
+                    lines.append(
+                        f"  [{g['team'].upper()}] {g['clue_word']} {g['clue_number']}"
+                        f"  #{g['guess_number']}: PASS"
+                    )
+                else:
+                    lines.append(
+                        f"  [{g['team'].upper()}] {g['clue_word']} {g['clue_number']}"
+                        f"  #{g['guess_number']}: {g['word']} → {g['result']}"
+                    )
+        if must_guess:
+            lines.append("\nGuess one word from the VALID GUESSES list above. You cannot pass yet.")
+        else:
+            lines.append("\nGuess one word from the VALID GUESSES list above, or respond PASS to end your turn.")
         return "\n".join(lines)
 
     def make_guess(self, game_view: dict) -> str:
@@ -277,6 +322,10 @@ class GuesserAgent(BaseAgent):
                 guess = str(data["guess"]).strip().upper()
 
                 if guess == "PASS":
+                    if game_view["guesses_this_turn"] == 0:
+                        raise ValueError(
+                            "You must make at least one guess before passing."
+                        )
                     logger.debug(
                         "Guesser PASS (attempt %d) — %s",
                         attempt,

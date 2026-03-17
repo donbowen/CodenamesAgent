@@ -26,36 +26,62 @@ Environment variables for API keys are read by litellm automatically, e.g.::
 """
 
 import argparse
+import json
 import logging
 import sys
+import uuid
+from datetime import datetime
 from pathlib import Path
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 from codenames.elo import Leaderboard
 from codenames.runner import GameRunner, Team
 
+_LEADERBOARD_FILE = "game_logs/leaderboard.json"
+
+
+def _make_game_id() -> str:
+    return datetime.now().strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:8]
+
 
 class _Tee:
-    """Write to both an original stream and a log file simultaneously."""
+    """Mirror a stream to one or more open file objects simultaneously."""
 
-    def __init__(self, original, file_path: str):
+    def __init__(self, original, *files):
         self._orig = original
-        self._file = open(file_path, "w", encoding="utf-8")  # noqa: SIM115
+        self._files = files
 
     def write(self, data):
         self._orig.write(data)
-        self._file.write(data)
+        for f in self._files:
+            f.write(data)
 
     def flush(self):
         self._orig.flush()
-        self._file.flush()
+        for f in self._files:
+            f.flush()
 
-    def close(self):
-        self._file.close()
+
+def _refresh_readme(leaderboard_file: str) -> None:
+    """Regenerate game_logs/leaderboard.html and inject it into README.md."""
+    from codenames.inject_tables import inject_esttab_html
+    from codenames.remove_tables import remove_esttab_html
+
+    readme = Path("README.md")
+    html = Path("game_logs/leaderboard.html")
+    Leaderboard(leaderboard_file).to_html(str(html))
+    remove_esttab_html(readme)
+    inject_esttab_html(readme, html)
 
 
 def cmd_play(args: argparse.Namespace) -> None:
-    red_team = Team(name=args.red_name, model=args.red_model)
-    blue_team = Team(name=args.blue_name, model=args.blue_model)
+    red_team = Team(name=args.red_name, model=args.red_model, prompt_log=args.prompt_log)
+    blue_team = Team(name=args.blue_name, model=args.blue_model, prompt_log=args.prompt_log)
 
     runner = GameRunner(
         red_team=red_team,
@@ -86,6 +112,24 @@ def cmd_play(args: argparse.Namespace) -> None:
         loser_name=result.losing_team_name,
     )
     print(f"\nLeaderboard updated ({args.leaderboard_file}).")
+    _refresh_readme(args.leaderboard_file)
+
+    # Append per-game record to games.json
+    games_path = Path("game_logs/games.json")
+    games = json.loads(games_path.read_text(encoding="utf-8")) if games_path.exists() else []
+    games.append({
+        "game_id": args.game_id,
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "red_name": args.red_name,
+        "red_model": args.red_model,
+        "blue_name": args.blue_name,
+        "blue_model": args.blue_model,
+        "winner_name": result.winning_team_name,
+        "winner_color": result.winner.value,
+        "total_turns": result.total_turns,
+    })
+    games_path.write_text(json.dumps(games, indent=2), encoding="utf-8")
+    print(f"Game record saved (game_logs/games.json, id={args.game_id}).")
 
 
 def cmd_leaderboard(args: argparse.Namespace) -> None:
@@ -94,6 +138,7 @@ def cmd_leaderboard(args: argparse.Namespace) -> None:
         print("No teams in the leaderboard yet. Play some games first!")
     else:
         lb.display()
+        _refresh_readme(args.leaderboard_file)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -103,9 +148,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--leaderboard-file",
-        default="leaderboard.json",
+        default=_LEADERBOARD_FILE,
         metavar="FILE",
-        help="Path to the JSON leaderboard file (default: leaderboard.json).",
+        help=f"Path to the JSON leaderboard file (default: {_LEADERBOARD_FILE}).",
     )
 
     subs = parser.add_subparsers(dest="command", required=True)
@@ -126,12 +171,6 @@ def build_parser() -> argparse.ArgumentParser:
     play_parser.add_argument(
         "--verbose", action="store_true", help="Print play-by-play commentary."
     )
-    play_parser.add_argument(
-        "--log-file",
-        metavar="FILE",
-        default=None,
-        help="Write all output (play-by-play + warnings) to FILE.",
-    )
     play_parser.set_defaults(func=cmd_play)
 
     # leaderboard ----------------------------------------------------
@@ -145,22 +184,29 @@ def main(argv=None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
 
-    tee_out = tee_err = None
-    log_file = getattr(args, "log_file", None)
-    if log_file:
-        tee_out = _Tee(sys.stdout, log_file)
-        tee_err = _Tee(sys.stderr, log_file)
-        sys.stdout = tee_out  # type: ignore[assignment]
-        sys.stderr = tee_err  # type: ignore[assignment]
+    f_log = f_prompts = None
+    if args.command == "play":
+        game_id = _make_game_id()
+        args.game_id = game_id
+        Path("game_logs/full_records").mkdir(parents=True, exist_ok=True)
+        log_path = Path(f"game_logs/full_records/{game_id}.txt")
+        prompts_path = log_path.with_stem(log_path.stem + "_prompts")
+        f_log = open(log_path, "w", encoding="utf-8")  # noqa: SIM115
+        f_prompts = open(prompts_path, "w", encoding="utf-8")  # noqa: SIM115
+        sys.stdout = _Tee(sys.stdout, f_log, f_prompts)  # type: ignore[assignment]
+        sys.stderr = _Tee(sys.stderr, f_log, f_prompts)  # type: ignore[assignment]
+        args.prompt_log = f_prompts
+    else:
+        args.prompt_log = None
 
     try:
         args.func(args)
     finally:
-        if tee_out:
-            sys.stdout = tee_out._orig
-            sys.stderr = tee_err._orig
-            tee_out.close()
-            tee_err.close()
+        if f_log:
+            sys.stdout = sys.stdout._orig  # type: ignore[union-attr]
+            sys.stderr = sys.stderr._orig  # type: ignore[union-attr]
+            f_log.close()
+            f_prompts.close()
 
 
 if __name__ == "__main__":

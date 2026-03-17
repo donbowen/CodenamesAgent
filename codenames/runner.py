@@ -2,7 +2,7 @@
 
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any, Optional
 
 from codenames.game import CodenamesGame, TeamColor
 from codenames.agents import SpymasterAgent, GuesserAgent
@@ -29,6 +29,8 @@ class Team:
     guesser: GuesserAgent = field(init=False)
     spymaster_prompt: str = ""
     guesser_prompt: str = ""
+    litellm_kwargs: dict[str, Any] = field(default_factory=dict)
+    prompt_log: Any = field(default=None)
 
     def __post_init__(self) -> None:
         from codenames.agents import (  # avoid circular import at module level
@@ -37,8 +39,8 @@ class Team:
         )
         sp = self.spymaster_prompt or SPYMASTER_SYSTEM_PROMPT
         gp = self.guesser_prompt or GUESSER_SYSTEM_PROMPT
-        self.spymaster = SpymasterAgent(model=self.model, system_prompt=sp)
-        self.guesser = GuesserAgent(model=self.model, system_prompt=gp)
+        self.spymaster = SpymasterAgent(model=self.model, system_prompt=sp, litellm_kwargs=self.litellm_kwargs, prompt_log=self.prompt_log)
+        self.guesser = GuesserAgent(model=self.model, system_prompt=gp, litellm_kwargs=self.litellm_kwargs, prompt_log=self.prompt_log)
 
 
 @dataclass
@@ -184,6 +186,9 @@ class GameRunner:
                 break
 
             if guess == "PASS":
+                if gview["guesses_this_turn"] == 0:
+                    logger.warning("Guesser tried to pass before guessing — forcing a guess.")
+                    continue
                 self._log("  Guesser passed.")
                 game.pass_turn()
                 break
