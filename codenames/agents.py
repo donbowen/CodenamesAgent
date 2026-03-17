@@ -67,8 +67,8 @@ class BaseAgent(ABC):
         self.max_retries = max_retries
         self.temperature = temperature
 
-    def _call_llm(self, user_message: str) -> str:
-        """Call the LLM and return the raw text response."""
+    def _call_llm(self, messages: list) -> str:
+        """Call the LLM with a pre-built messages list and return the raw text response."""
         try:
             import litellm  # imported lazily so tests can mock it easily
         except ImportError as exc:
@@ -77,13 +77,10 @@ class BaseAgent(ABC):
                 "Install it with: pip install litellm"
             ) from exc
 
-        messages = [
-            {"role": "system", "content": self.system_prompt},
-            {"role": "user", "content": user_message},
-        ]
+        full_messages = [{"role": "system", "content": self.system_prompt}] + messages
         response = litellm.completion(
             model=self.model,
-            messages=messages,
+            messages=full_messages,
             temperature=self.temperature,
         )
         return response.choices[0].message.content.strip()
@@ -143,6 +140,11 @@ class SpymasterAgent(BaseAgent):
                 lines.append(
                     f"  [{cl['team'].upper()}] {cl['word']} {cl['number']}"
                 )
+        forbidden = ", ".join(sorted(c["word"].upper() for c in game_view["cards"]))
+        lines.append(
+            f"\nFORBIDDEN CLUE WORDS — your clue cannot be any of these board words:\n"
+            f"  {forbidden}"
+        )
         lines.append(
             f"\nGive a clue that helps your team ({own_color.upper()}) "
             "identify their unrevealed words."
@@ -160,10 +162,12 @@ class SpymasterAgent(BaseAgent):
         prompt = self._build_prompt(game_view)
         board_words_upper = {c["word"].upper() for c in game_view["cards"]}
         last_error: Optional[Exception] = None
+        raw = ""
+        messages = [{"role": "user", "content": prompt}]
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                raw = self._call_llm(prompt)
+                raw = self._call_llm(messages)
                 data = self._parse_json(raw)
                 clue_word = str(data["clue"]).strip().upper()
                 number = int(data["number"])
@@ -192,6 +196,8 @@ class SpymasterAgent(BaseAgent):
                     exc,
                 )
                 last_error = exc
+                messages.append({"role": "assistant", "content": raw})
+                messages.append({"role": "user", "content": f"Invalid response: {exc}. Try again with a different clue."})
 
         raise RuntimeError(
             f"SpymasterAgent failed after {self.max_retries} attempts. "
@@ -224,11 +230,11 @@ class GuesserAgent(BaseAgent):
             f"Red remaining: {game_view['red_remaining']}  |  "
             f"Blue remaining: {game_view['blue_remaining']}",
             "",
-            "Board (unrevealed words have UNKNOWN color):",
         ]
-        for card in game_view["cards"]:
-            if not card["revealed"]:
-                lines.append(f"  {card['word']}")
+        unrevealed_words = [c["word"] for c in game_view["cards"] if not c["revealed"]]
+        lines.append("VALID GUESSES — you MUST choose ONLY from this list (or say PASS):")
+        for word in unrevealed_words:
+            lines.append(f"  {word}")
         if game_view["guess_history"]:
             lines.append("\nThis game's guesses so far:")
             for g in game_view["guess_history"][-10:]:  # last 10 only
@@ -242,7 +248,8 @@ class GuesserAgent(BaseAgent):
                     f"  [{cl['team'].upper()}] {cl['word']} {cl['number']}"
                 )
         lines.append(
-            "\nGuess one of the unrevealed words above, or respond PASS."
+            "\nGuess one word from the VALID GUESSES list above, or respond PASS. "
+            "Do not guess any other word."
         )
         return "\n".join(lines)
 
@@ -260,10 +267,12 @@ class GuesserAgent(BaseAgent):
             if not c["revealed"]
         }
         last_error: Optional[Exception] = None
+        raw = ""
+        messages = [{"role": "user", "content": prompt}]
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                raw = self._call_llm(prompt)
+                raw = self._call_llm(messages)
                 data = self._parse_json(raw)
                 guess = str(data["guess"]).strip().upper()
 
@@ -277,7 +286,8 @@ class GuesserAgent(BaseAgent):
 
                 if guess not in unrevealed_upper:
                     raise ValueError(
-                        f"'{guess}' is not an unrevealed word on the board."
+                        f"'{guess}' is not in the valid guesses list. "
+                        f"Choose from: {', '.join(sorted(unrevealed_upper))}"
                     )
 
                 logger.debug(
@@ -296,6 +306,8 @@ class GuesserAgent(BaseAgent):
                     exc,
                 )
                 last_error = exc
+                messages.append({"role": "assistant", "content": raw})
+                messages.append({"role": "user", "content": f"Invalid response: {exc}. Try again."})
 
         raise RuntimeError(
             f"GuesserAgent failed after {self.max_retries} attempts. "

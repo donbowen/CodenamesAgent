@@ -28,9 +28,29 @@ Environment variables for API keys are read by litellm automatically, e.g.::
 import argparse
 import logging
 import sys
+from pathlib import Path
 
 from codenames.elo import Leaderboard
 from codenames.runner import GameRunner, Team
+
+
+class _Tee:
+    """Write to both an original stream and a log file simultaneously."""
+
+    def __init__(self, original, file_path: str):
+        self._orig = original
+        self._file = open(file_path, "w", encoding="utf-8")  # noqa: SIM115
+
+    def write(self, data):
+        self._orig.write(data)
+        self._file.write(data)
+
+    def flush(self):
+        self._orig.flush()
+        self._file.flush()
+
+    def close(self):
+        self._file.close()
 
 
 def cmd_play(args: argparse.Namespace) -> None:
@@ -106,6 +126,12 @@ def build_parser() -> argparse.ArgumentParser:
     play_parser.add_argument(
         "--verbose", action="store_true", help="Print play-by-play commentary."
     )
+    play_parser.add_argument(
+        "--log-file",
+        metavar="FILE",
+        default=None,
+        help="Write all output (play-by-play + warnings) to FILE.",
+    )
     play_parser.set_defaults(func=cmd_play)
 
     # leaderboard ----------------------------------------------------
@@ -118,7 +144,23 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv=None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
-    args.func(args)
+
+    tee_out = tee_err = None
+    log_file = getattr(args, "log_file", None)
+    if log_file:
+        tee_out = _Tee(sys.stdout, log_file)
+        tee_err = _Tee(sys.stderr, log_file)
+        sys.stdout = tee_out  # type: ignore[assignment]
+        sys.stderr = tee_err  # type: ignore[assignment]
+
+    try:
+        args.func(args)
+    finally:
+        if tee_out:
+            sys.stdout = tee_out._orig
+            sys.stderr = tee_err._orig
+            tee_out.close()
+            tee_err.close()
 
 
 if __name__ == "__main__":

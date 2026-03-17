@@ -20,17 +20,31 @@ ELO leaderboard.
 ## Quick start
 
 ```bash
-# 1. Install dependencies
+# 1a. Install dependencies (preferred)
+conda env create -f environment.yml 
+conda activate codenames
+
+# 1b. Or
 pip install -r requirements.txt
 
-# 2. Set your API key (example for OpenAI)
-export OPENAI_API_KEY=sk-...
+# 2a. Set your API key (example for OpenAI)
+export OPENAI_API_KEY=sk-...  # mac/linux
+$env:OPENAI_API_KEY="sk-..."  # windows 
+
+# 2b. 
+# Create .env file with OPENAI_API_KEY, etc.
 
 # 3. Play a game
 python main.py play \
     --red-name  "RedBot"  --red-model  "gpt-4o" \
     --blue-name "BlueBot" --blue-model "gpt-4o-mini" \
-    --verbose
+    --verbose --log-file
+
+# 3.b Powershell
+python main.py play `
+    --red-name  "RedBot"  --red-model  "gpt-4o-mini" `
+    --blue-name "BlueBot" --blue-model "gpt-4o-mini" `
+    --verbose --log-file
 
 # 4. View the leaderboard
 python main.py leaderboard
