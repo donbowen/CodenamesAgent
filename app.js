@@ -1,13 +1,15 @@
 /* ============================================================
    CodenamesAgent — GitHub Pages app
    Fetches leaderboard.json and games.json from the main branch
-   and renders leaderboard, ELO chart, H2H matrix, and game log.
+   and renders leaderboard, ELO chart, H2H matrix, game log,
+   and interactive game reviewer.
    ============================================================ */
 
-const REPO = 'donbowen/CodenamesAgent';
-const RAW  = `https://raw.githubusercontent.com/${REPO}/main/game_logs`;
-const LB_URL    = `${RAW}/leaderboard.json`;
-const GAMES_URL = `${RAW}/games.json`;
+const REPO       = 'donbowen/CodenamesAgent';
+const RAW        = `https://raw.githubusercontent.com/${REPO}/main/game_logs`;
+const LB_URL     = `${RAW}/leaderboard.json`;
+const GAMES_URL  = `${RAW}/games.json`;
+const PROMPT_URL = (id) => `${RAW}/full_records/${id}_prompts.txt`;
 
 // ELO constants (must match codenames/elo.py)
 const DEFAULT_ELO = 1000;
@@ -59,7 +61,7 @@ function winPct(wins, games) {
     document.getElementById('h2h-container').innerHTML =
       `<p class="loading">⚠ Could not load data.</p>`;
     document.getElementById('games-body').innerHTML =
-      `<tr><td colspan="5" class="loading">⚠ Could not load data.</td></tr>`;
+      `<tr><td colspan="6" class="loading">⚠ Could not load data.</td></tr>`;
   }
 })();
 
@@ -85,38 +87,15 @@ function renderLeaderboard(data) {
 
 // ── ELO Over Time chart ───────────────────────────────────────
 function renderEloChart(games) {
-  // Sort by timestamp ascending
   const sorted = [...games].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
 
-  // Track current ELO per agent name
-  const eloState = {};
-  // Track data series: { agentName -> [elo after each game they played] }
-  const series   = {};
-  // Track x-axis labels per agent (game index within that agent's games)
-  // We use a unified x-axis: cumulative game index for all games
-  // Each agent gets a point only when they play; we'll use sparse data with null
-
-  // First pass: collect all agent names
   const agentNames = [...new Set(sorted.flatMap(g => [g.red_name, g.blue_name]))].sort();
-  agentNames.forEach(name => {
-    eloState[name] = DEFAULT_ELO;
-    series[name]   = [];
-  });
+  const eloState   = {};
+  agentNames.forEach(name => { eloState[name] = DEFAULT_ELO; });
 
-  // Build data: for each game, record ELO snapshots for both participants
-  // Use per-agent game count as x (cleaner than global index)
-  const agentGameCount = {};
-  agentNames.forEach(n => agentGameCount[n] = 0);
-
-  // For Chart.js we'll use a single x-axis = game number (1-indexed) across ALL games
-  // Each dataset will have nulls for games that agent didn't play
-  const labels = sorted.map((_, i) => i + 1);
-
-  // Initialize all series with nulls
+  const labels    = sorted.map((_, i) => i + 1);
   const chartData = {};
-  agentNames.forEach(name => {
-    chartData[name] = Array(sorted.length).fill(null);
-  });
+  agentNames.forEach(name => { chartData[name] = Array(sorted.length).fill(null); });
 
   sorted.forEach((game, i) => {
     const w = game.winner_name;
@@ -124,7 +103,6 @@ function renderEloChart(games) {
 
     const wElo = eloState[w] ?? DEFAULT_ELO;
     const lElo = eloState[l] ?? DEFAULT_ELO;
-
     const expW = expectedScore(wElo, lElo);
     const expL = expectedScore(lElo, wElo);
 
@@ -156,10 +134,7 @@ function renderEloChart(games) {
       maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: {
-          position: 'bottom',
-          labels: { boxWidth: 12, font: { size: 11 } }
-        },
+        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
         tooltip: {
           callbacks: {
             label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) : '—'}`
@@ -167,14 +142,8 @@ function renderEloChart(games) {
         }
       },
       scales: {
-        x: {
-          title: { display: true, text: 'Game #', color: '#6b7280', font: { size: 11 } },
-          ticks: { maxTicksLimit: 10, font: { size: 10 } }
-        },
-        y: {
-          title: { display: true, text: 'ELO', color: '#6b7280', font: { size: 11 } },
-          ticks: { font: { size: 10 } }
-        }
+        x: { title: { display: true, text: 'Game #', color: '#6b7280', font: { size: 11 } }, ticks: { maxTicksLimit: 10, font: { size: 10 } } },
+        y: { title: { display: true, text: 'ELO',    color: '#6b7280', font: { size: 11 } }, ticks: { font: { size: 10 } } }
       }
     }
   });
@@ -182,43 +151,15 @@ function renderEloChart(games) {
 
 // ── Head-to-Head Matrix ───────────────────────────────────────
 function renderH2HMatrix(games) {
-  // Collect all agent names in leaderboard ELO order (use alphabetical as fallback)
   const names = [...new Set(games.flatMap(g => [g.red_name, g.blue_name]))].sort();
+  const h2h   = {};
+  names.forEach(r => { h2h[r] = {}; names.forEach(c => { h2h[r][c] = { w: 0, l: 0 }; }); });
 
-  // Build win/loss counts: h2h[rowName][colName] = { w, l }
-  // Row = red team, Col = blue team
-  const h2h = {};
-  names.forEach(r => {
-    h2h[r] = {};
-    names.forEach(c => { h2h[r][c] = { w: 0, l: 0 }; });
+  games.forEach(({ red_name, blue_name, winner_color }) => {
+    if (winner_color === 'red') { h2h[red_name][blue_name].w++; }
+    else                        { h2h[red_name][blue_name].l++; }
   });
 
-  games.forEach(g => {
-    const red  = g.red_name;
-    const blue = g.blue_name;
-    if (g.winner_color === 'red') {
-      h2h[red][blue].w++;
-      h2h[blue][red].l++;  // blue's perspective when they played as red vs this blue
-      // Actually: we track [red][blue] = red's record in this matchup
-      // So red won: h2h[red][blue].w++; blue lost: this is h2h[blue][red] for reverse matchup? No.
-      // Keep simple: cell[row][col] = row's record when row=red, col=blue
-    } else {
-      h2h[red][blue].l++;
-    }
-  });
-
-  // Recompute cleanly
-  names.forEach(r => names.forEach(c => { h2h[r][c] = { w: 0, l: 0 }; }));
-  games.forEach(g => {
-    const { red_name, blue_name, winner_color } = g;
-    if (winner_color === 'red') {
-      h2h[red_name][blue_name].w++;
-    } else {
-      h2h[red_name][blue_name].l++;
-    }
-  });
-
-  // Build table HTML
   let html = '<table class="h2h-table"><thead><tr><th class="row-header">Red ╲ Blue</th>';
   names.forEach(c => { html += `<th>${c}</th>`; });
   html += '</tr></thead><tbody>';
@@ -226,23 +167,15 @@ function renderH2HMatrix(games) {
   names.forEach(row => {
     html += `<tr><th class="row-header">${row}</th>`;
     names.forEach(col => {
-      if (row === col) {
-        html += '<td class="h2h-cell-empty">—</td>';
-        return;
-      }
+      if (row === col) { html += '<td class="h2h-cell-empty">—</td>'; return; }
       const { w, l } = h2h[row][col];
-      const total = w + l;
-      if (total === 0) {
-        html += '<td class="h2h-cell-empty">–</td>';
-        return;
-      }
-      const rate  = w / total;
-      // Color: green-ish for high win rate, red-ish for low
-      const alpha = Math.round(rate * 0.45 * 255).toString(16).padStart(2, '0');
-      const r255  = Math.round((1 - rate) * 200);
-      const g255  = Math.round(rate * 200);
-      const bg    = `rgba(${r255},${g255},80,0.25)`;
-      const cls   = rate >= 0.5 ? 'h2h-cell-win' : '';
+      const total    = w + l;
+      if (total === 0) { html += '<td class="h2h-cell-empty">–</td>'; return; }
+      const rate = w / total;
+      const r255 = Math.round((1 - rate) * 200);
+      const g255 = Math.round(rate * 200);
+      const bg   = `rgba(${r255},${g255},80,0.25)`;
+      const cls  = rate >= 0.5 ? 'h2h-cell-win' : '';
       html += `<td class="${cls}" style="background:${bg}" title="${row} as Red vs ${col} as Blue">${w}–${l}</td>`;
     });
     html += '</tr>';
@@ -253,10 +186,10 @@ function renderH2HMatrix(games) {
 }
 
 // ── Game Log Table ────────────────────────────────────────────
-let allGames     = [];
-let sortCol      = 'timestamp';
-let sortDir      = 'desc';
-let filterStr    = '';
+let allGames  = [];
+let sortCol   = 'timestamp';
+let sortDir   = 'desc';
+let filterStr = '';
 
 function renderGameTable(games) {
   allGames = games;
@@ -273,22 +206,14 @@ function attachGameTableEvents() {
   document.querySelectorAll('#games-table th.sortable').forEach(th => {
     th.addEventListener('click', () => {
       const col = th.dataset.col;
-      if (sortCol === col) {
-        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-      } else {
-        sortCol = col;
-        sortDir = col === 'timestamp' ? 'desc' : 'asc';
-      }
-      // Update header classes
-      document.querySelectorAll('#games-table th.sortable').forEach(h => {
-        h.classList.remove('sort-asc', 'sort-desc');
-      });
+      if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
+      else { sortCol = col; sortDir = col === 'timestamp' ? 'desc' : 'asc'; }
+      document.querySelectorAll('#games-table th.sortable').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
       th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
       rebuildGameTable();
     });
   });
 
-  // Set initial sort indicator
   const defaultTh = document.querySelector(`#games-table th[data-col="${sortCol}"]`);
   if (defaultTh) defaultTh.classList.add('sort-desc');
 }
@@ -305,13 +230,13 @@ function rebuildGameTable() {
     let va = a[sortCol], vb = b[sortCol];
     if (sortCol === 'total_turns') { va = +va; vb = +vb; }
     if (va < vb) return sortDir === 'asc' ? -1 : 1;
-    if (va > vb) return sortDir === 'asc' ? 1  : -1;
+    if (va > vb) return sortDir === 'asc' ?  1 : -1;
     return 0;
   });
 
   const tbody = document.getElementById('games-body');
   if (rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="loading">No matching games.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="loading">No matching games.</td></tr>';
     document.getElementById('games-count').textContent = '0 games';
     return;
   }
@@ -324,11 +249,376 @@ function rebuildGameTable() {
       <td class="winner-blue" style="opacity:0.85">${g.blue_name}</td>
       <td class="${winClass}">${g.winner_name}</td>
       <td>${g.total_turns}</td>
+      <td><button class="btn-review" data-id="${g.game_id}" data-red="${g.red_name}" data-blue="${g.blue_name}" data-winner-color="${g.winner_color}" data-date="${g.timestamp}">&#9654; Review</button></td>
     </tr>`;
   }).join('');
+
+  // Wire up Review buttons
+  tbody.querySelectorAll('.btn-review').forEach(btn => {
+    btn.addEventListener('click', () => {
+      loadReviewer({
+        game_id:      btn.dataset.id,
+        red_name:     btn.dataset.red,
+        blue_name:    btn.dataset.blue,
+        winner_color: btn.dataset.winnerColor,
+        timestamp:    btn.dataset.date,
+      });
+    });
+  });
 
   const total = allGames.length;
   const shown = rows.length;
   document.getElementById('games-count').textContent =
     shown === total ? `${total} games` : `${shown} of ${total} games`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GAME REVIEWER
+// ═══════════════════════════════════════════════════════════════
+
+let reviewSteps   = [];
+let reviewStepIdx = 0;
+let reasoningVisible = false;
+
+// ── Load a game into the reviewer ─────────────────────────────
+async function loadReviewer(game) {
+  const content = document.getElementById('reviewer-content');
+  const placeholder = document.getElementById('reviewer-placeholder');
+
+  // Show loading state
+  placeholder.hidden = true;
+  content.hidden = false;
+  document.getElementById('reviewer-header').innerHTML =
+    `<strong>${game.red_name}</strong> <span style="color:var(--red)">(Red)</span>
+     vs <strong>${game.blue_name}</strong> <span style="color:var(--blue)">(Blue)</span>
+     &nbsp;·&nbsp; ${fmtDate(game.timestamp)}
+     &nbsp;&nbsp;<span style="color:var(--muted);font-size:0.85em">Loading…</span>`;
+
+  document.getElementById('reviewer').scrollIntoView({ behavior: 'smooth' });
+
+  try {
+    const res = await fetch(PROMPT_URL(game.game_id));
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+
+    const { board, turns } = parsePromptFile(text);
+    reviewSteps   = buildSteps(board, turns, game.winner_color);
+    reviewStepIdx = 0;
+    reasoningVisible = false;
+
+    // Rebuild header without "Loading…"
+    document.getElementById('reviewer-header').innerHTML =
+      `<strong>${game.red_name}</strong> <span style="color:var(--red)">(Red)</span>
+       vs <strong>${game.blue_name}</strong> <span style="color:var(--blue)">(Blue)</span>
+       &nbsp;·&nbsp; ${fmtDate(game.timestamp)}`;
+
+    buildBoardDOM(board);
+    attachReviewerControls();
+    renderStep();
+  } catch (err) {
+    document.getElementById('reviewer-header').innerHTML =
+      `⚠ Could not load game log: ${err.message}`;
+  }
+}
+
+// ── Parse the prompt file ─────────────────────────────────────
+function parsePromptFile(text) {
+  const lines = text.split('\n');
+
+  // 1. Board: find "Board (all colors visible to you):" and parse next 25 non-blank lines
+  const board = {};   // { word: "RED"|"BLUE"|"NEUTRAL"|"ASSASSIN" }
+  const boardWords = []; // ordered list for grid layout
+  const boardMarker = 'Board (all colors visible to you):';
+  let boardIdx = lines.findIndex(l => l.includes(boardMarker));
+  if (boardIdx !== -1) {
+    let count = 0;
+    for (let i = boardIdx + 1; i < lines.length && count < 25; i++) {
+      const m = lines[i].match(/^\s+(\S[\S ]*\S|\S)\s+(RED|BLUE|NEUTRAL|ASSASSIN)/);
+      if (m) {
+        const word  = m[1].trim();
+        const color = m[2];
+        board[word.toUpperCase()] = color;
+        boardWords.push(word.toUpperCase());
+        count++;
+      }
+    }
+  }
+
+  // 2. Game history: find the LAST "Game history:" block
+  let lastHistoryIdx = -1;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (lines[i].trim() === 'Game history:') { lastHistoryIdx = i; break; }
+  }
+
+  const turns = [];
+  if (lastHistoryIdx !== -1) {
+    let curTurnKey = null;
+    for (let i = lastHistoryIdx + 1; i < lines.length; i++) {
+      const line = lines[i];
+      // Stop at blank line not followed by another history entry, or non-matching content
+      const m = line.match(/^\s+\[(RED|BLUE)\] (\S+) (\d+)\s+#\d+: (\S+)(?: → (\w+))?/);
+      if (!m) {
+        // Stop if we hit a non-indented non-blank line (end of history block)
+        if (line.trim() && !line.startsWith('  ')) break;
+        continue;
+      }
+      const [, team, clue, numStr, guessWord, outcome] = m;
+      const turnKey = `${team}|${clue}|${numStr}`;
+
+      if (turnKey !== curTurnKey) {
+        turns.push({ team, clue, number: parseInt(numStr), guesses: [] });
+        curTurnKey = turnKey;
+      }
+
+      if (guessWord === 'PASS') {
+        turns[turns.length - 1].guesses.push({ word: 'PASS', outcome: null });
+      } else {
+        turns[turns.length - 1].guesses.push({ word: guessWord.toUpperCase(), outcome: outcome ? outcome.toLowerCase() : null });
+      }
+    }
+  }
+
+  // 3. Reasoning: split by "PROMPT  model=" blocks, take last JSON per block
+  const blocks = text.split(/PROMPT\s+model=/);
+  const clueReasonings  = [];
+  const guessReasonings = [];
+
+  for (const block of blocks) {
+    // Find all lines that look like a top-level JSON object
+    const jsonLines = block.split('\n').filter(l => /^\{.*\}$/.test(l.trim()));
+    if (jsonLines.length === 0) continue;
+    // Take the last one (handles retries)
+    const raw = jsonLines[jsonLines.length - 1].trim();
+    try {
+      const obj = JSON.parse(raw);
+      if ('clue'  in obj && 'reasoning' in obj) clueReasonings.push(obj.reasoning);
+      if ('guess' in obj && 'reasoning' in obj) guessReasonings.push(obj.reasoning);
+    } catch (_) { /* skip malformed */ }
+  }
+
+  // Attach reasoning to turns / guesses
+  let ci = 0, gi = 0;
+  for (const turn of turns) {
+    turn.spymasterReasoning = clueReasonings[ci++] || null;
+    for (const guess of turn.guesses) {
+      if (guess.word !== 'PASS') {
+        guess.reasoning = guessReasonings[gi++] || null;
+      }
+    }
+  }
+
+  return { board, boardWords, turns };
+}
+
+// ── Build flat steps array ────────────────────────────────────
+function buildSteps(board, turns, winnerColor) {
+  const steps = [];
+  const revealed = {}; // word -> color string (lower case for CSS class)
+
+  steps.push({ type: 'start', revealed: {} });
+
+  for (const turn of turns) {
+    // Clue step
+    steps.push({
+      type: 'clue',
+      team: turn.team,
+      clue: turn.clue,
+      number: turn.number,
+      spymasterReasoning: turn.spymasterReasoning,
+      revealed: { ...revealed },
+    });
+
+    for (const guess of turn.guesses) {
+      if (guess.word === 'PASS') {
+        steps.push({
+          type: 'pass',
+          team: turn.team,
+          clue: turn.clue,
+          number: turn.number,
+          revealed: { ...revealed },
+        });
+      } else {
+        // Flip the card
+        const color = board[guess.word] || guess.outcome || 'neutral';
+        revealed[guess.word] = color.toLowerCase();
+        steps.push({
+          type: 'guess',
+          team: turn.team,
+          clue: turn.clue,
+          number: turn.number,
+          guess: guess.word,
+          outcome: guess.outcome,
+          guesserReasoning: guess.reasoning || null,
+          revealed: { ...revealed },
+        });
+      }
+    }
+  }
+
+  // Determine end reason
+  const lastGuessStep = [...steps].reverse().find(s => s.type === 'guess');
+  const assassinWord  = lastGuessStep && lastGuessStep.outcome === 'assassin'
+    ? lastGuessStep.guess : null;
+
+  steps.push({
+    type: 'end',
+    winnerColor,
+    reason: assassinWord ? 'assassin' : 'normal',
+    assassinWord,
+    revealed: { ...revealed },
+  });
+
+  return steps;
+}
+
+// ── Build board DOM (once per game load) ─────────────────────
+function buildBoardDOM(board) {
+  const wrap = document.getElementById('board-wrap');
+  // Collect words in order (from board object — insertion order)
+  const words = Object.keys(board);
+  wrap.innerHTML = words.map(word => {
+    const color = board[word].toLowerCase().replace('assassin', 'assassin');
+    return `<div class="card" data-word="${word}" data-color="${color}">
+      <div class="card-inner">
+        <div class="card-back">${word}</div>
+        <div class="card-front color-${color}">${word}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Attach keyboard + button controls ────────────────────────
+function attachReviewerControls() {
+  document.getElementById('prev-btn').onclick = () => stepTo(reviewStepIdx - 1);
+  document.getElementById('next-btn').onclick = () => stepTo(reviewStepIdx + 1);
+
+  // Keyboard arrows (only when reviewer is visible)
+  document.onkeydown = (e) => {
+    if (document.getElementById('reviewer-content').hidden) return;
+    if (e.key === 'ArrowRight') stepTo(reviewStepIdx + 1);
+    if (e.key === 'ArrowLeft')  stepTo(reviewStepIdx - 1);
+  };
+
+  const toggle = document.getElementById('reasoning-toggle');
+  const panel  = document.getElementById('reasoning-panel');
+  toggle.onclick = () => {
+    reasoningVisible = !reasoningVisible;
+    panel.hidden = !reasoningVisible;
+    toggle.textContent = reasoningVisible ? 'Hide reasoning ▲' : 'Show reasoning ▾';
+    if (reasoningVisible) updateReasoningText();
+  };
+}
+
+// ── Navigate to a step ────────────────────────────────────────
+function stepTo(idx) {
+  if (idx < 0 || idx >= reviewSteps.length) return;
+  reviewStepIdx = idx;
+  renderStep();
+}
+
+// ── Render current step ───────────────────────────────────────
+function renderStep() {
+  const step    = reviewSteps[reviewStepIdx];
+  const isFirst = reviewStepIdx === 0;
+  const isLast  = reviewStepIdx === reviewSteps.length - 1;
+
+  document.getElementById('prev-btn').disabled = isFirst;
+  document.getElementById('next-btn').disabled = isLast;
+
+  // Update board card flip states
+  const cards = document.querySelectorAll('#board-wrap .card');
+  cards.forEach(card => {
+    const word = card.dataset.word;
+    if (step.revealed[word]) {
+      card.classList.add('revealed');
+    } else {
+      card.classList.remove('revealed');
+    }
+    // Assassin hit highlight on end step
+    const front = card.querySelector('.card-front');
+    front.classList.remove('assassin-hit');
+    if (step.type === 'end' && step.assassinWord === word) {
+      front.classList.add('assassin-hit');
+    }
+  });
+
+  // Board active-team styling
+  const boardWrap = document.getElementById('board-wrap');
+  boardWrap.classList.remove('team-red', 'team-blue', 'end-red', 'end-blue');
+  if (step.type === 'end') {
+    boardWrap.classList.add(`end-${step.winnerColor}`);
+  } else if (step.type !== 'start') {
+    boardWrap.classList.add(`team-${step.team.toLowerCase()}`);
+  }
+
+  // Clue bar
+  const clueBar    = document.getElementById('clue-bar');
+  const clueBadge  = document.getElementById('clue-team-badge');
+  const clueWord   = document.getElementById('clue-word');
+  const clueNum    = document.getElementById('clue-number');
+  const turnInd    = document.getElementById('turn-indicator');
+
+  if (step.type === 'start') {
+    clueBadge.innerHTML = '';
+    clueWord.textContent = '';
+    clueNum.textContent  = '';
+    turnInd.textContent  = 'Press → to begin';
+  } else if (step.type === 'end') {
+    clueBadge.innerHTML = '';
+    clueWord.textContent = '';
+    clueNum.textContent  = '';
+    turnInd.textContent  = '';
+  } else {
+    const teamLower = step.team.toLowerCase();
+    clueBadge.innerHTML = `<span class="clue-team-badge ${teamLower}">${step.team}</span>`;
+    clueWord.textContent = step.clue;
+    clueNum.textContent  = `(${step.number})`;
+    // Turn index = which clue step we're on
+    const clueSteps  = reviewSteps.filter(s => s.type === 'clue');
+    const clueStepsCurr = reviewSteps.slice(0, reviewStepIdx + 1).filter(s => s.type === 'clue');
+    turnInd.textContent = `Turn ${clueStepsCurr.length} of ${clueSteps.length}`;
+  }
+
+  // PASS banner
+  const passBanner = document.getElementById('pass-banner');
+  passBanner.hidden = (step.type !== 'pass');
+
+  // End banner
+  const endBanner = document.getElementById('end-banner');
+  if (step.type === 'end') {
+    endBanner.hidden = false;
+    endBanner.className = `end-${step.winnerColor}`;
+    const winTeam = step.winnerColor === 'red' ? 'Red' : 'Blue';
+    const loseTeam = step.winnerColor === 'red' ? 'Blue' : 'Red';
+    if (step.reason === 'assassin') {
+      endBanner.innerHTML = `💀 ${loseTeam} team hit the assassin — <strong>${winTeam} team wins!</strong>`;
+    } else {
+      endBanner.innerHTML = `🏆 <strong>${winTeam} team wins!</strong>`;
+    }
+  } else {
+    endBanner.hidden = true;
+  }
+
+  // Reasoning panel
+  if (reasoningVisible) updateReasoningText();
+}
+
+// ── Update reasoning text for current step ────────────────────
+function updateReasoningText() {
+  const step = reviewSteps[reviewStepIdx];
+  const el   = document.getElementById('reasoning-text');
+
+  if (step.type === 'clue' && step.spymasterReasoning) {
+    el.innerHTML = `<strong>Spymaster reasoning:</strong><br>${escHtml(step.spymasterReasoning)}`;
+  } else if (step.type === 'guess' && step.guesserReasoning) {
+    el.innerHTML = `<strong>Guesser reasoning for "${step.guess}":</strong><br>${escHtml(step.guesserReasoning)}`;
+  } else if (step.type === 'start' || step.type === 'end') {
+    el.innerHTML = `<em style="color:var(--muted)">No reasoning at this step.</em>`;
+  } else {
+    el.innerHTML = `<em style="color:var(--muted)">No reasoning recorded for this step.</em>`;
+  }
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
