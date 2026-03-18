@@ -453,13 +453,16 @@ function buildSteps(board, turns, winnerColor) {
       revealed: { ...revealed },
     });
 
+    let guessNum = 0;
     for (const guess of turn.guesses) {
+      guessNum++;
       if (guess.word === 'PASS') {
         steps.push({
           type: 'pass',
           team: turn.team,
           clue: turn.clue,
           number: turn.number,
+          guessNum,
           revealed: { ...revealed },
         });
       } else {
@@ -471,6 +474,7 @@ function buildSteps(board, turns, winnerColor) {
           team: turn.team,
           clue: turn.clue,
           number: turn.number,
+          guessNum,
           guess: guess.word,
           outcome: guess.outcome,
           guesserReasoning: guess.reasoning || null,
@@ -586,29 +590,39 @@ function renderStep() {
   }
 
   // Clue bar
-  const clueBar    = document.getElementById('clue-bar');
-  const clueBadge  = document.getElementById('clue-team-badge');
-  const clueWord   = document.getElementById('clue-word');
-  const clueNum    = document.getElementById('clue-number');
-  const turnInd    = document.getElementById('turn-indicator');
+  const clueBadge    = document.getElementById('clue-team-badge');
+  const clueWord     = document.getElementById('clue-word');
+  const clueNum      = document.getElementById('clue-number');
+  const guessDisplay = document.getElementById('guess-display');
+  const turnInd      = document.getElementById('turn-indicator');
 
   if (step.type === 'start') {
-    clueBadge.innerHTML = '';
-    clueWord.textContent = '';
-    clueNum.textContent  = '';
-    turnInd.textContent  = 'Press → to begin';
+    clueBadge.innerHTML    = '';
+    clueWord.textContent   = '';
+    clueNum.textContent    = '';
+    guessDisplay.innerHTML = '';
+    turnInd.textContent    = 'Press → to begin';
   } else if (step.type === 'end') {
-    clueBadge.innerHTML = '';
-    clueWord.textContent = '';
-    clueNum.textContent  = '';
-    turnInd.textContent  = '';
+    clueBadge.innerHTML    = '';
+    clueWord.textContent   = '';
+    clueNum.textContent    = '';
+    guessDisplay.innerHTML = '';
+    turnInd.textContent    = '';
   } else {
     const teamLower = step.team.toLowerCase();
     clueBadge.innerHTML = `<span class="clue-team-badge ${teamLower}">${step.team}</span>`;
     clueWord.textContent = step.clue;
     clueNum.textContent  = `(${step.number})`;
-    // Turn index = which clue step we're on
-    const clueSteps  = reviewSteps.filter(s => s.type === 'clue');
+
+    if (step.type === 'guess' || step.type === 'pass') {
+      const word = step.type === 'pass' ? 'PASS' : step.guess;
+      guessDisplay.innerHTML =
+        `Field Agent ${step.guessNum}/${step.number + 1} Choice: <strong>${word}</strong>`;
+    } else {
+      guessDisplay.innerHTML = '';
+    }
+
+    const clueSteps     = reviewSteps.filter(s => s.type === 'clue');
     const clueStepsCurr = reviewSteps.slice(0, reviewStepIdx + 1).filter(s => s.type === 'clue');
     turnInd.textContent = `Turn ${clueStepsCurr.length} of ${clueSteps.length}`;
   }
