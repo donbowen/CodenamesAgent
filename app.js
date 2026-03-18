@@ -415,9 +415,7 @@ function parsePromptFile(text) {
   for (const turn of turns) {
     turn.spymasterReasoning = clueReasonings[ci++] || null;
     for (const guess of turn.guesses) {
-      if (guess.word !== 'PASS') {
-        guess.reasoning = guessReasonings[gi++] || null;
-      }
+      guess.reasoning = guessReasonings[gi++] || null;
     }
   }
 
