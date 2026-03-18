@@ -1,0 +1,2797 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Dew                  BLUE       
+  Etch                 BLUE       
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    
+  Clip                 NEUTRAL    
+  Buddy                RED        
+  Fence                NEUTRAL    
+  Steam                RED        
+  Eye                  RED        
+  Model                RED        
+  Track                RED        
+  Penguin              BLUE       
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    
+  Face                 NEUTRAL    
+  Clay                 BLUE       
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       
+  Mount                RED        
+  Hospital             NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Train", "number": 3, "reasoning": "Steam (steam engine), Track (railroad track), Model (model trains)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAIN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dew
+  Etch
+  Rock
+  Flight
+  Bite
+  Branch
+  Japan
+  Clip
+  Buddy
+  Fence
+  Steam
+  Eye
+  Model
+  Track
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Clay
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Track", "reasoning": "Direct strong association — trains run on tracks (clear, primary train-related term)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAIN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Etch
+  Rock
+  Flight
+  Bite
+  Branch
+  Japan
+  Clip
+  Buddy
+  Fence
+  Steam
+  Eye
+  Model
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Clay
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Steam", "reasoning": "Direct association: steam engine / steam train fits TRAIN strongly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAIN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Etch
+  Rock
+  Flight
+  Bite
+  Branch
+  Japan
+  Clip
+  Buddy
+  Fence
+  Eye
+  Model
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Clay
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Model", "reasoning": "Model trains — 'Model' fits TRAIN (model train) and pairs with Track and Steam as the third TRAIN-related card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAIN' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Etch
+  Rock
+  Flight
+  Bite
+  Branch
+  Japan
+  Clip
+  Buddy
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Clay
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Japan", "reasoning": "Strong association with trains (Shinkansen / bullet trains), likely related to TRAIN clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Dew                  BLUE       
+  Etch                 BLUE       
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    
+  Face                 NEUTRAL    
+  Clay                 BLUE       
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       
+  Mount                RED        
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED words, NEUTRAL words, and especially the ASSASSIN (Flight).
+
+My BLUE words are:
+- Dew (water droplets)
+- Etch (carve/engrave)
+- Penguin (flightless bird)
+- Change (coins/alter)
+- Clay (earth material)
+- Idol (statue/celebrity)
+- Plane (aircraft/flat surface)
+- Bear (animal/endure)
+
+Let me look for connections:
+
+**Earth/Ground materials**: Clay, Bear (grizzly/polar - land animals), Penguin (Antarctic)
+- "Ground" could work for Clay and Bear, maybe Penguin
+
+**Animals**: Penguin, Bear
+- "Arctic" or "Polar" could connect these two
+
+**Sculpture/Art**: Clay, Etch, Idol
+- "Sculpture" connects clay (material), etch (technique), idol (statue)
+- This is promising!
+
+**Water**: Dew, Penguin (lives near water), Plane (seaplane?)
+- Weak connection
+
+Let me evaluate "SCULPTURE":
+- Clay ✓ (sculpting material)
+- Etch ✓ (carving/engraving technique)
+- Idol ✓ (often a sculpted statue)
+- Doesn't risk Flight (ASSASSIN)
+- Doesn't point to RED words
+- Not on the forbidden list
+
+This seems like a strong 3-word clue.
+
+{"clue": "SCULPTURE", "number": 3, "reasoning": "Connects Clay (sculpting material), Etch (carving technique), and Idol (sculpted statue) without risking the assassin or opponent words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCULPTURE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dew
+  Etch
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Buddy
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Clay
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Clay",
+  "reasoning": "Clay is a primary material used in sculpture. This is a very strong and direct connection to the clue SCULPTURE."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCULPTURE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Etch
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Buddy
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "ETCH",
+  "reasoning": "ETCH is a technique used in sculpture and art-making (etching into materials). Clay was correctly guessed as the first sculpture-related word. ETCH fits well with the sculpture theme as it's a method of creating art by carving or cutting into surfaces."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCULPTURE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Buddy
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Face
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "FACE",
+  "reasoning": "With 2 correct guesses already (Clay, Etch), I've matched the clue number of 3. FACE is a strong connection to SCULPTURE - sculptures often depict faces, and 'face' is a common term in sculpture (e.g., 'facing' a sculpture, portrait sculptures). Since we're tied 6-6 with Red, I should be somewhat aggressive but careful. FACE seems like a safer third guess than riskier options like ROCK (could be neutral/red) or IDOL (though also sculpture-related, less direct). I'll take this calculated risk for the potential win."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Dew                  BLUE       
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       
+  Mount                RED        
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Friend","number":1,"reasoning":"Directly points to Buddy (pal/companion) and is unlikely to suggest any blue words or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRIEND' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Buddy
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Buddy", "reasoning": "Direct synonym of friend — strongest match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRIEND' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We've already used the FRIEND clue once (found Buddy). With only 1 target for this clue, it's safer to stop and avoid risking a wrong/assassin guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Dew                  BLUE       
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       
+  Mount                RED        
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining BLUE words and find a safe clue:
+
+**Remaining BLUE words:**
+- Dew
+- Penguin
+- Change
+- Idol
+- Plane
+- Bear
+
+**Key considerations:**
+- Avoid ASSASSIN: Flight
+- Avoid RED words: Rock, Bite, Eye, Isle, Mount
+- Avoid NEUTRAL words: Branch, Clip, Fence, Cone, Hospital
+
+Let me look for connections:
+
+1. **Penguin + Bear**: Both are animals. "Animal" could work for 2.
+2. **Plane + Flight**: Too dangerous - Flight is the ASSASSIN!
+3. **Idol + Penguin**: Could connect through "worship" or "statue" but weak
+4. **Change + Dew**: Could relate to "morning" or "transformation"
+5. **Bear + Dew**: Nature-related
+
+Looking at animal connections:
+- Penguin and Bear are both animals
+- "Polar" connects Penguin and Bear (polar bear, penguins in polar regions)
+
+Checking safety of "POLAR":
+- Won't lead to Flight (assassin) ✓
+- Won't lead to RED words (Rock, Bite, Eye, Isle, Mount) ✓
+- Won't lead to neutrals ✓
+- Strongly connects to Penguin and Bear ✓
+
+This seems like a strong, safe clue.
+
+```json
+{"clue": "POLAR", "number": 2, "reasoning": "Connects Penguin and Bear (polar bear, penguins live in polar regions). Safe from assassin Flight and red words."}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POLAR' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Bear
+  Mount
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bear", "reasoning": "POLAR strongly suggests 'polar bear', which is a direct and common association. This is almost certainly a blue card given the strength of the connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POLAR' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Penguin
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Penguin",
+  "reasoning": "POLAR strongly suggests polar regions. I've already correctly guessed 'Bear' (polar bear). 'Penguin' is another animal strongly associated with polar regions (Antarctica). This is a high-confidence second guess for the clue POLAR 2."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POLAR' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Mount
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Bear and Penguin) which matches the clue number of 2. Both were excellent polar-related words. Looking at the remaining words, none have a strong connection to 'POLAR' - the remaining options like Dew, Rock, Flight, etc. don't clearly relate to polar regions, polar coordinates, or polar concepts. With only 4 blue cards remaining vs 5 red cards, I should avoid risky guesses that could hit a neutral (ending turn) or worse, an opponent's card or the assassin. Passing now preserves our lead."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Dew                  BLUE       
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "PEAK", "number": 2, "reasoning": "Suggests Mount and Rock (both associated with peaks/summits)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PEAK' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Mount
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Mount", "reasoning": "Direct match for PEAK = mountain; 'Mount' is the strongest peak-related word (could also be Cone, but I'll take Mount first)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PEAK' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Isle
+  Change
+  Cone
+  Idol
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Cone","reasoning":"A cone has a pointed/peak shape (matches Mount from this clue set), so it likely pairs with Mount for 'PEAK'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Dew                  BLUE       
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        [revealed]
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining BLUE words and find a clue that connects them while avoiding RED words, NEUTRAL words, and especially the ASSASSIN (Flight).
+
+Remaining BLUE words:
+- Dew (water droplets)
+- Change (coins/transformation)
+- Idol (statue/celebrity)
+- Plane (aircraft/flat surface)
+
+Remaining RED words:
+- Rock, Bite, Eye, Isle
+
+ASSASSIN:
+- Flight (aviation/escape)
+
+Let me think about potential clues:
+
+1. **WATER** - Could connect to Dew (water droplets), but doesn't connect well to the others.
+
+2. **WORSHIP** - Could connect to Idol, but risky and doesn't connect to others well.
+
+3. **FLAT** - Could connect to Plane (flat surface), but weak.
+
+4. **AIRCRAFT/JET** - Could connect to Plane, but risks Flight (ASSASSIN). Too dangerous.
+
+5. **MORNING** - Could connect to Dew (morning dew), but limited.
+
+6. **POCKET** - Could connect to Change (pocket change), but weak for others.
+
+7. **GEOMETRY** - Could connect to Plane (geometric plane), but academic and weak.
+
+8. **LEVEL** - Could connect to Plane (level surface), Change (level up), but weak.
+
+9. **GRASS** - Could connect to Dew (dew on grass), Plane (grass plane/lawn), but risky with unclear connections.
+
+10. **SURFACE** - Could connect to Plane (flat surface), Dew (forms on surfaces). Moderate connection.
+
+I'll go with **MOISTURE** for Dew - it's a strong, direct connection and safe from all dangerous words.
+
+{"clue": "MOISTURE", "number": 1, "reasoning": "Directly connects to Dew (morning moisture). Safe from assassin Flight and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOISTURE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dew
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Isle
+  Change
+  Idol
+  Plane
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "MOISTURE" and the valid guesses, I need to find a word that relates to moisture or wetness.
+
+**Dew** is the most obvious connection - dew is literally water droplets that form from moisture condensing on surfaces, especially in the morning. This is a direct and strong connection to moisture.
+
+Let me check the other words:
+- Rock, Flight, Bite, Branch, Clip, Fence, Eye, Isle, Change, Idol, Plane, Hospital - none of these have a strong direct connection to moisture.
+
+Since we have 4 blue cards remaining and 4 red cards remaining, we're tied. The clue number is 1, so this should be a confident, single-word connection. "Dew" fits perfectly.
+
+```json
+{"guess": "Dew", "reasoning": "Dew is water droplets formed from moisture condensing on surfaces - direct and strong connection to the clue MOISTURE"}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOISTURE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Isle
+  Change
+  Idol
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed correctly once (Dew) for the clue MOISTURE 1, which means I've fulfilled the clue. The remaining words don't have a strong connection to moisture - while 'Eye' could relate to tears or 'Rock' to damp surfaces, these connections are weak and risky. With only 3 blue cards remaining vs 4 red cards, I should avoid guessing incorrectly and potentially hitting a neutral, red, or worse, the assassin. Passing is the safe choice here."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Dew                  BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        [revealed]
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"pupil","number":1,"reasoning":"directly refers to part of the eye — aiming for EYE without suggesting hospital/other words"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PUPIL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Eye
+  Isle
+  Change
+  Idol
+  Plane
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Eye", "reasoning": "A 'pupil' is the dark opening in the eye — direct anatomical match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PUPIL' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Isle
+  Change
+  Idol
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"No remaining unrevealed word clearly matches 'PUPIL' and I don't want to risk hitting a neutral/opponent/assassin — safer to end the turn."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Dew                  BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        [revealed]
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        
+  Change               BLUE       
+  Cone                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        [revealed]
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to identify the remaining BLUE words:
+- Change
+- Idol
+- Plane
+
+Let me think about potential clues:
+
+1. **Change, Idol, Plane** - I need a word that connects these three.
+   - "Transformation" could work for Change, but doesn't fit Idol or Plane well
+   - "Worship" connects to Idol but not the others
+   - "Aircraft" connects to Plane but not the others
+
+2. Let me consider pairs:
+   - **Change + Idol**: "Pop" (pop idol, pocket change) - but "change" connection is weak
+   - **Change + Plane**: "Plane" can mean flat surface, "change" could relate to geometry
+   - **Idol + Plane**: Both can be in entertainment (American Idol, movie Plane)
+
+3. Thinking about "Plane":
+   - Aircraft, geometry (flat surface), or woodworking tool
+   
+4. Thinking about "Idol":
+   - Celebrity, statue, worship object
+   
+5. Thinking about "Change":
+   - Coins, transformation, alter
+
+Let me try "AMERICAN" - connects to:
+- Idol (American Idol - the TV show)
+- Plane (American Airlines, American-made planes)
+- Change (American currency/coins)
+
+But this feels weak for "Change" and "Plane."
+
+Better option: **"POCKET"**
+- Change (pocket change - coins)
+- Idol (pocket idol - small figurine)
+- Plane (pocket plane - small woodworking tool)
+
+This works well for Change, reasonably for the others.
+
+Actually, let me reconsider: **"SPARE"**
+- Change (spare change)
+- Plane (spare plane/backup aircraft)
+- Idol (weaker, but "spare idol" could work)
+
+Or **"LOOSE"**:
+- Change (loose change)
+- Idol (loose connection, but weak)
+- Plane (loose plane, weak)
+
+I think "POCKET" is strongest for connecting Change primarily, with reasonable connections to the others.
+
+{"clue": "POCKET", "number": 2, "reasoning": "POCKET connects strongly to Change (pocket change) and reasonably to Plane (pocket plane woodworking tool). Avoiding 3 to reduce risk."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POCKET' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Isle
+  Change
+  Idol
+  Plane
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "POCKET" from the valid guesses list.
+
+Let me think about what relates to POCKET:
+- **Change** - "pocket change" is a very common phrase referring to coins you carry in your pocket
+- **Clip** - could relate to a pocket clip (like on a pen or knife)
+- **Rock** - "pocket rock" is less common, though people do keep rocks in pockets
+- **Plane** - "pocket plane" could refer to a small woodworking tool
+- **Bite** - "pocket bite" isn't a common phrase
+- **Flight** - no clear connection
+- **Branch**, **Fence**, **Isle**, **Hospital**, **Idol** - no obvious pocket connections
+
+The strongest connection is clearly **Change** (pocket change). **Clip** is also possible (pocket clip), but less certain.
+
+Since we have 3 blue cards remaining and 3 red cards remaining, and this is a 2-word clue, I should be reasonably confident but not overly risky. "Change" seems like a very strong match for "POCKET."
+
+{"guess": "Change", "reasoning": "'Pocket change' is a very common phrase referring to coins carried in one's pocket, making this the strongest connection to the clue POCKET."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POCKET' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rock
+  Flight
+  Bite
+  Branch
+  Clip
+  Fence
+  Isle
+  Idol
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "CLIP",
+  "reasoning": "POCKET relates to CLIP in multiple ways: 'pocket clip' is a common term for clips that attach to pockets (like on pens), and you can clip things to your pocket. This seems like a strong connection. With only 2 blue cards remaining and this being my second guess matching the clue number, I should make this guess but then pass to avoid hitting the assassin or helping red."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Dew                  BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    [revealed]
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        [revealed]
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        
+  Change               BLUE       [revealed]
+  Cone                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        [revealed]
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Shark","number":2,"reasoning":"Sharks cause bites and are commonly associated with islands/shorelines, linking BITE and ISLE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHARK' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rock
+  Flight
+  Bite
+  Branch
+  Fence
+  Isle
+  Idol
+  Plane
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bite", "reasoning": "Most direct shark association — sharks bite. I'll stop after this to avoid risking a wrong follow-up."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHARK' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rock
+  Flight
+  Branch
+  Fence
+  Isle
+  Idol
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Isle", "reasoning": "Strong association with sharks (Jaws — Amity Island/island setting); best match for SHARK."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHARK' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rock
+  Flight
+  Branch
+  Fence
+  Idol
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+  [RED] SHARK 2  #2: Isle → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We've already found both SHARK answers (Bite and Isle). Don't risk the final, unknown card — pass."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Dew                  BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        [revealed]
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    [revealed]
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        [revealed]
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        [revealed]
+  Change               BLUE       [revealed]
+  Cone                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        [revealed]
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+  [RED] SHARK 2  #2: Isle → red
+  [RED] SHARK 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words: **Idol** and **Plane**.
+
+Let me analyze:
+- **Idol**: A figure of worship, celebrity, or revered person/object
+- **Plane**: An aircraft, or a flat surface, or a tool for smoothing wood
+
+I need to avoid:
+- **Rock** (RED) - could connect to music/geology
+- **Flight** (ASSASSIN) - very dangerous, strongly connects to Plane
+- All neutral words: Branch, Fence, Hospital
+
+Let me consider possible clues:
+
+1. **"Worship"** - connects to Idol (object of worship), but doesn't connect well to Plane
+2. **"Aircraft"** - connects to Plane but risks Flight (ASSASSIN) 
+3. **"Flat"** - connects to Plane (geometric plane) but weak connection to Idol
+4. **"Celebrity"** - connects to Idol but not Plane
+5. **"Boeing"** - connects to Plane but not Idol, and might be too specific
+6. **"Jet"** - connects to Plane but risks Flight
+7. **"False"** - connects to Idol (false idol) but not Plane strongly
+8. **"Golden"** - connects to Idol (golden idol, like Indiana Jones) but not Plane
+
+Actually, thinking about **Idol** in pop culture - like "American Idol" or golden idols from adventure movies. And **Plane** as aircraft.
+
+**"American"** could work - American Idol (TV show) and American planes/airlines, but it's a proper adjective.
+
+Let me think differently - what about **"Wings"**? No, that risks Flight.
+
+What about **"Pilot"**? Connects to Plane (pilot flies planes), but doesn't connect to Idol well.
+
+**"Hero"** or **"Star"** - both connect to Idol (celebrity/hero worship), and Star could weakly connect to Plane (star pilot), but these are stretches.
+
+Given the difficulty and that we only need 2 more words to win, I'll go with **"GOLDEN"** for just Idol (number: 1), as it strongly evokes "golden idol" imagery, and we can get Plane on the next turn if needed.
+
+{"clue": "GOLDEN", "number": 1, "reasoning": "Connects to IDOL via 'golden idol' (like Indiana Jones). Playing safe with 1 word rather than risking the ASSASSIN (Flight) with aircraft-related clues for Plane."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GOLDEN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rock
+  Flight
+  Branch
+  Fence
+  Idol
+  Plane
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+  [RED] SHARK 2  #2: Isle → red
+  [RED] SHARK 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Idol",
+  "reasoning": "GOLDEN connects strongly to 'Idol' - a golden idol is a very common phrase (e.g., Golden Calf, golden statues/idols in temples and archaeology). With only 2 blue cards left and red at 1, I need to be careful but confident. The other words don't have strong golden associations: Rock, Flight, Branch, Fence, Plane, and Hospital are all weak connections to GOLDEN."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GOLDEN' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rock
+  Flight
+  Branch
+  Fence
+  Plane
+  Hospital
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+  [RED] SHARK 2  #2: Isle → red
+  [RED] SHARK 2  #3: PASS
+  [BLUE] GOLDEN 1  #1: Idol → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed correctly once this turn (Idol for GOLDEN), matching the clue number of 1. Both teams have only 1 card remaining, making this an extremely high-stakes situation. Any wrong guess could hit the opponent's card (giving them the win), a neutral (ending our turn), or worst case the assassin (instant loss). With the clue satisfied and no clear connection between GOLDEN and the remaining words (Rock, Flight, Branch, Fence, Plane, Hospital), the smart play is to PASS and let our Spymaster give us a more targeted clue next turn."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Dew                  BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Rock                 RED        
+  Flight               ASSASSIN   
+  Bite                 RED        [revealed]
+  Branch               NEUTRAL    
+  Japan                NEUTRAL    [revealed]
+  Clip                 NEUTRAL    [revealed]
+  Buddy                RED        [revealed]
+  Fence                NEUTRAL    
+  Steam                RED        [revealed]
+  Eye                  RED        [revealed]
+  Model                RED        [revealed]
+  Track                RED        [revealed]
+  Penguin              BLUE       [revealed]
+  Isle                 RED        [revealed]
+  Change               BLUE       [revealed]
+  Cone                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Clay                 BLUE       [revealed]
+  Idol                 BLUE       [revealed]
+  Plane                BLUE       
+  Bear                 BLUE       [revealed]
+  Mount                RED        [revealed]
+  Hospital             NEUTRAL    
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+  [RED] SHARK 2  #2: Isle → red
+  [RED] SHARK 2  #3: PASS
+  [BLUE] GOLDEN 1  #1: Idol → blue
+  [BLUE] GOLDEN 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, BITE, BRANCH, BUDDY, CHANGE, CLAY, CLIP, CONE, DEW, ETCH, EYE, FACE, FENCE, FLIGHT, HOSPITAL, IDOL, ISLE, JAPAN, MODEL, MOUNT, PENGUIN, PLANE, ROCK, STEAM, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Stone","number":1,"reasoning":"Direct synonym for Rock — points to your remaining red word and unlikely to suggest Plane or Flight."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STONE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rock
+  Flight
+  Branch
+  Fence
+  Plane
+  Hospital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TRAIN 3  #1: Track → red
+  [RED] TRAIN 3  #2: Steam → red
+  [RED] TRAIN 3  #3: Model → red
+  [RED] TRAIN 3  #4: Japan → neutral
+  [BLUE] SCULPTURE 3  #1: Clay → blue
+  [BLUE] SCULPTURE 3  #2: Etch → blue
+  [BLUE] SCULPTURE 3  #3: Face → neutral
+  [RED] FRIEND 1  #1: Buddy → red
+  [RED] FRIEND 1  #2: PASS
+  [BLUE] POLAR 2  #1: Bear → blue
+  [BLUE] POLAR 2  #2: Penguin → blue
+  [BLUE] POLAR 2  #3: PASS
+  [RED] PEAK 2  #1: Mount → red
+  [RED] PEAK 2  #2: Cone → neutral
+  [BLUE] MOISTURE 1  #1: Dew → blue
+  [BLUE] MOISTURE 1  #2: PASS
+  [RED] PUPIL 1  #1: Eye → red
+  [RED] PUPIL 1  #2: PASS
+  [BLUE] POCKET 2  #1: Change → blue
+  [BLUE] POCKET 2  #2: Clip → neutral
+  [RED] SHARK 2  #1: Bite → red
+  [RED] SHARK 2  #2: Isle → red
+  [RED] SHARK 2  #3: PASS
+  [BLUE] GOLDEN 1  #1: Idol → blue
+  [BLUE] GOLDEN 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Rock", "reasoning": "Direct synonym of 'stone' — the clearest match among the remaining words."}
+============================================================

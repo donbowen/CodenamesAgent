@@ -1,0 +1,1662 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       
+  Cross                BLUE       
+  Loom                 RED        
+  Spy                  BLUE       
+  Charge               NEUTRAL    
+  Crest                BLUE       
+  Helm                 BLUE       
+  Burn                 NEUTRAL    
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        
+  Mouse                RED        
+  Point                RED        
+  Bruise               BLUE       
+  Frame                RED        
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "geometry", "number": 3, "reasoning": "Square, Point, and Frame are related to geometry concepts and shapes."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GEOMETRY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Etch
+  Cross
+  Loom
+  Spy
+  Charge
+  Crest
+  Helm
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Square
+  Mouse
+  Point
+  Bruise
+  Frame
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Square", "reasoning": "Square is a fundamental geometric shape, closely related to the clue 'GEOMETRY'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GEOMETRY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Etch
+  Cross
+  Loom
+  Spy
+  Charge
+  Crest
+  Helm
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Point
+  Bruise
+  Frame
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Frame", "reasoning": "A frame relates to shapes and structures, which is connected to geometry. It's a strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GEOMETRY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Etch
+  Cross
+  Loom
+  Spy
+  Charge
+  Crest
+  Helm
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Point
+  Bruise
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Point", "reasoning": "Point is closely related to geometry concepts like points, lines, and shapes, fitting the clue 'GEOMETRY' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GEOMETRY' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Etch
+  Cross
+  Loom
+  Spy
+  Charge
+  Crest
+  Helm
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Bruise
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cross", "reasoning": "Cross is strongly related to geometry (crossing lines, coordinates), fitting the GEOMETRY clue well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       
+  Charge               NEUTRAL    
+  Crest                BLUE       
+  Helm                 BLUE       
+  Burn                 NEUTRAL    
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Armor","number":2,"reasoning":"Helm and Crest are both strongly associated with armor/heraldic equipment. This avoids the assassin Boom and has limited pull toward red words compared with broader alternatives."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ARMOR' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Etch
+  Loom
+  Spy
+  Charge
+  Crest
+  Helm
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Bruise
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Helm","reasoning":"Helm is a piece of armor/head protection and is the strongest direct match to ARMOR."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ARMOR' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Etch
+  Loom
+  Spy
+  Charge
+  Crest
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Bruise
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Crest","reasoning":"Crest fits armor as a feature/emblem on a helmet or coat of arms, making it the strongest remaining match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ARMOR' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Etch
+  Loom
+  Spy
+  Charge
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Bruise
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the 2 likely ARMOR words (Helm, Crest). A third guess from the remaining list is too uncertain and risks hitting red, neutral, or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       
+  Charge               NEUTRAL    
+  Crest                BLUE       [revealed]
+  Helm                 BLUE       [revealed]
+  Burn                 NEUTRAL    
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Wound", "number": 2, "reasoning": "The clue relates to 'Bruise' from blue but is forbidden; focusing on 'Slug' and 'Strike' as they can be associated with causing wounds or hits, both red words and safe from opponent or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WOUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Etch
+  Loom
+  Spy
+  Charge
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Bruise
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bruise", "reasoning": "A bruise is a type of wound or injury, closely related to the clue 'WOUND'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       
+  Charge               NEUTRAL    
+  Crest                BLUE       [revealed]
+  Helm                 BLUE       [revealed]
+  Burn                 NEUTRAL    
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       [revealed]
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Forgery","number":2,"reasoning":"Connects ETCH and MODEL well as things involved in making or imitating designs, while being less direct for dangerous words like BOOM and only weakly related to most red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FORGERY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Etch
+  Loom
+  Spy
+  Charge
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Check
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Check","reasoning":"'Forgery' strongly connects to a forged check, making CHECK the best first guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FORGERY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Etch
+  Loom
+  Spy
+  Charge
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Etch","reasoning":"Forgery can mean creating a fake print or engraved work; 'Etch' is the strongest remaining fit with 'FORGERY' after 'Check'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FORGERY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Loom
+  Spy
+  Charge
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Both likely FORGERY words were already found with Check and Etch, and with only one optional extra guess left, any remaining choice is too risky."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       [revealed]
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       
+  Charge               NEUTRAL    
+  Crest                BLUE       [revealed]
+  Helm                 BLUE       [revealed]
+  Burn                 NEUTRAL    
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       [revealed]
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       [revealed]
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "WOUND", "number": 2, "reasoning": "Slug and Strike both relate to wounds or impacts, and Wound as a clue points to physical harm without risking blue or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WOUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Loom
+  Spy
+  Charge
+  Burn
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Burn", "reasoning": "The clue 'WOUND' strongly relates to 'Burn' as burns are a type of wound."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       [revealed]
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       
+  Charge               NEUTRAL    
+  Crest                BLUE       [revealed]
+  Helm                 BLUE       [revealed]
+  Burn                 NEUTRAL    [revealed]
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       [revealed]
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       [revealed]
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Agent","number":1,"reasoning":"Targets SPY cleanly. MODEL is harder to pair safely, and broader clues risk red words or the assassin BOOM."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'AGENT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Loom
+  Spy
+  Charge
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Spy","reasoning":"'Agent' most directly matches 'Spy', and with only 1 intended word plus needing a safe first guess, this is the strongest by far."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'AGENT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 6  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Loom
+  Charge
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+  [BLUE] AGENT 1  #1: Spy → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already got the 1 intended word for AGENT with Spy, and with only one blue left it's safer to stop than risk a neutral, red, or assassin on an extra guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       [revealed]
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       [revealed]
+  Charge               NEUTRAL    
+  Crest                BLUE       [revealed]
+  Helm                 BLUE       [revealed]
+  Burn                 NEUTRAL    [revealed]
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       [revealed]
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    
+  Strike               RED        
+  Check                BLUE       [revealed]
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+  [BLUE] AGENT 1  #1: Spy → blue
+  [BLUE] AGENT 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Wound", "number": 2, "reasoning": "Slug and Strike are related to wounds or attacks, which fits the clue 'Wound' well, and avoids opponent and assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WOUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Loom
+  Charge
+  Hymn
+  Model
+  Boom
+  Channel
+  Slug
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+  [BLUE] AGENT 1  #1: Spy → blue
+  [BLUE] AGENT 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Slug", "reasoning": "Slug is related to wounds as it can mean a bullet or a hit, which can cause wounds."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WOUND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Gold
+  Bell
+  Loom
+  Charge
+  Hymn
+  Model
+  Boom
+  Channel
+  Mouse
+  Fang
+  Strike
+  Wake
+  Unicorn
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+  [BLUE] AGENT 1  #1: Spy → blue
+  [BLUE] AGENT 1  #2: PASS
+  [RED] WOUND 2  #1: Slug → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fang", "reasoning": "Fang is strongly associated with wounds because of bites causing injury, fitting the clue 'WOUND'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Gold                 NEUTRAL    
+  Bell                 NEUTRAL    
+  Etch                 BLUE       [revealed]
+  Cross                BLUE       [revealed]
+  Loom                 RED        
+  Spy                  BLUE       [revealed]
+  Charge               NEUTRAL    
+  Crest                BLUE       [revealed]
+  Helm                 BLUE       [revealed]
+  Burn                 NEUTRAL    [revealed]
+  Hymn                 NEUTRAL    
+  Model                BLUE       
+  Boom                 ASSASSIN   
+  Channel              RED        
+  Slug                 RED        [revealed]
+  Square               RED        [revealed]
+  Mouse                RED        
+  Point                RED        [revealed]
+  Bruise               BLUE       [revealed]
+  Frame                RED        [revealed]
+  Fang                 NEUTRAL    [revealed]
+  Strike               RED        
+  Check                BLUE       [revealed]
+  Wake                 NEUTRAL    
+  Unicorn              RED        
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+  [BLUE] AGENT 1  #1: Spy → blue
+  [BLUE] AGENT 1  #2: PASS
+  [RED] WOUND 2  #1: Slug → red
+  [RED] WOUND 2  #2: Fang → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BELL, BOOM, BRUISE, BURN, CHANNEL, CHARGE, CHECK, CREST, CROSS, ETCH, FANG, FRAME, GOLD, HELM, HYMN, LOOM, MODEL, MOUSE, POINT, SLUG, SPY, SQUARE, STRIKE, UNICORN, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Prototype","number":1,"reasoning":"Model is the only unrevealed blue word, and Prototype strongly points to it while avoiding stronger links to the assassin Boom or nearby red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PROTOTYPE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Gold
+  Bell
+  Loom
+  Charge
+  Hymn
+  Model
+  Boom
+  Channel
+  Mouse
+  Strike
+  Wake
+  Unicorn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GEOMETRY 3  #1: Square → red
+  [RED] GEOMETRY 3  #2: Frame → red
+  [RED] GEOMETRY 3  #3: Point → red
+  [RED] GEOMETRY 3  #4: Cross → blue
+  [BLUE] ARMOR 2  #1: Helm → blue
+  [BLUE] ARMOR 2  #2: Crest → blue
+  [BLUE] ARMOR 2  #3: PASS
+  [RED] WOUND 2  #1: Bruise → blue
+  [BLUE] FORGERY 2  #1: Check → blue
+  [BLUE] FORGERY 2  #2: Etch → blue
+  [BLUE] FORGERY 2  #3: PASS
+  [RED] WOUND 2  #1: Burn → neutral
+  [BLUE] AGENT 1  #1: Spy → blue
+  [BLUE] AGENT 1  #2: PASS
+  [RED] WOUND 2  #1: Slug → red
+  [RED] WOUND 2  #2: Fang → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Model","reasoning":"Prototype most directly matches Model; with only 1 blue remaining, this is the strongest and safest connection."}
+============================================================

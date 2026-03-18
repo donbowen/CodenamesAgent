@@ -1,0 +1,1710 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        
+  Chase                BLUE       
+  Axe                  NEUTRAL    
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       
+  Arrow                BLUE       
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    
+  India                BLUE       
+  Bamboo               BLUE       
+  Penguin              RED        
+  Piano                RED        
+  Hollow               RED        
+  Fan                  BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Excavate","number":2,"reasoning":"Connects RED words DIG and HOLLOW strongly. It avoids the assassin FRAME and has limited pull toward blue words compared with broader alternatives."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EXCAVATE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Knot
+  Paste
+  Bolt
+  Dig
+  Chase
+  Axe
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Arrow
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Hollow
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Dig","reasoning":"'Excavate' most directly means dig, making this the strongest match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EXCAVATE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Knot
+  Paste
+  Bolt
+  Chase
+  Axe
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Arrow
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Hollow
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Hollow","reasoning":"Excavate means to dig out, creating a hollow. This is the strongest remaining match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EXCAVATE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Knot
+  Paste
+  Bolt
+  Chase
+  Axe
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Arrow
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found two strong matches for EXCAVATE (Dig, Hollow). Remaining options are weak and risky, so passing is safest."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        [revealed]
+  Chase                BLUE       
+  Axe                  NEUTRAL    
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       
+  Arrow                BLUE       
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    
+  India                BLUE       
+  Bamboo               BLUE       
+  Penguin              RED        
+  Piano                RED        
+  Hollow               RED        [revealed]
+  Fan                  BLUE       
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for BLUE words. Let me identify the unrevealed BLUE words:
+- Oil
+- Bolt
+- Chase
+- Bush
+- Arrow
+- India
+- Bamboo
+- Fan
+
+Let me think about potential connections:
+
+1. **Mechanical/Hardware**: Oil, Bolt - could use "ENGINE" or "MACHINE"
+2. **Nature/Plants**: Bush, Bamboo, Olive (neutral - avoid)
+3. **Weapons/Projectiles**: Arrow, Bolt
+4. **Country theme**: India
+5. **Cooling/Air**: Fan
+
+Let me consider "SHOOT" - connects to Arrow (shoot arrows), Bolt (crossbow bolt), Chase (shoot a scene, or chase/shoot), Bush (could be weak - shoot through bushes?)
+
+Or "CROSSBOW" - Arrow and Bolt are both crossbow ammunition, but this might be too specific.
+
+"FASTENER" - Bolt is a fastener, but doesn't connect well to others.
+
+"LUBRICATE" - Oil, but limited.
+
+Let me try **"SHAFT"**:
+- Arrow has a shaft
+- Bolt has a shaft
+- Fan has a shaft
+- India shaft (mining shaft in India?)
+
+Wait, better: **"WEAPON"**:
+- Arrow (weapon)
+- Bolt (crossbow bolt - weapon)
+- Bush (ambush? weak)
+
+Actually, **"PROJECTILE"**:
+- Arrow (projectile)
+- Bolt (projectile)
+
+Let me think differently. **"WIND"**:
+- Fan (creates wind)
+- Arrow (wind affects arrows)
+- Bamboo (wind instrument? or bends in wind)
+- Chase (wind/chase?)
+
+Or **"PLANT"**:
+- Bush (plant)
+- Bamboo (plant)
+- Olive (NEUTRAL - dangerous)
+
+Best option: **"SHAFT"** for Arrow, Bolt, Fan (3 words)
+
+{"clue": "SHAFT", "number": 3, "reasoning": "Arrow has a shaft, Bolt has a shaft, Fan has a shaft - all mechanical/structural components"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHAFT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Knot
+  Paste
+  Bolt
+  Chase
+  Axe
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Arrow
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "SHAFT" from the valid guesses list.
+
+Let me think about what "SHAFT" could mean:
+1. A long narrow part or handle (like an arrow shaft, axe shaft)
+2. A vertical passage (mine shaft, elevator shaft)
+3. A rotating rod that transmits power
+
+Looking at the valid guesses:
+
+- **ARROW** - arrows have shafts (the long wooden/carbon part)
+- **AXE** - axes have shafts (the handle)
+- **BOLT** - bolts can have shafts (the smooth cylindrical part)
+- **PIPE** - could relate to shaft as a cylindrical passage
+- **CLUB** - clubs have shafts (golf clubs, weapons)
+- **BAMBOO** - bamboo has a hollow shaft-like structure
+- **FAN** - fans can have shafts (the rotating part)
+
+The strongest connections are:
+1. ARROW - most directly has a shaft as its main component
+2. AXE - has a shaft/handle
+3. BOLT - has a shaft portion
+
+ARROW seems like the most direct match since "arrow shaft" is a very common term.
+
+{"guess": "Arrow", "reasoning": "Arrow shaft is a direct and common term - the shaft is the main cylindrical body of an arrow between the point and fletching"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHAFT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Knot
+  Paste
+  Bolt
+  Chase
+  Axe
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Axe",
+  "reasoning": "SHAFT connects to Axe (axe handle/shaft). Arrow was correct (arrow shaft). Other shaft-related words: Bolt (crossbow bolt has a shaft), Pipe (cylindrical shaft-like object). Axe is the strongest remaining connection to SHAFT."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        [revealed]
+  Chase                BLUE       
+  Axe                  NEUTRAL    [revealed]
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       
+  Arrow                BLUE       [revealed]
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    
+  India                BLUE       
+  Bamboo               BLUE       
+  Penguin              RED        
+  Piano                RED        
+  Hollow               RED        [revealed]
+  Fan                  BLUE       
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Seamanship","number":2,"reasoning":"Links CAPE and KNOT well through nautical usage, while being relatively distinct from blue words and far from the assassin FRAME."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEAMANSHIP' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Knot
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Knot","reasoning":"Seamanship strongly relates to nautical skills, and knots are a core sailing skill."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEAMANSHIP' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Apple
+  Club
+  Olive
+  Sub
+  India
+  Bamboo
+  Penguin
+  Piano
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Sub","reasoning":"\"Sub\" is strongly related to seamanship/naval activity and fits the clue best among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        [revealed]
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        [revealed]
+  Chase                BLUE       
+  Axe                  NEUTRAL    [revealed]
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       
+  Arrow                BLUE       [revealed]
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    [revealed]
+  India                BLUE       
+  Bamboo               BLUE       
+  Penguin              RED        
+  Piano                RED        
+  Hollow               RED        [revealed]
+  Fan                  BLUE       
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining BLUE words and find a good clue:
+
+**Unrevealed BLUE words:**
+- Oil
+- Bolt
+- Chase
+- Bush
+- India
+- Bamboo
+- Fan
+
+Let me consider potential clues:
+
+1. **PLANT** - Could connect Bush and Bamboo (both plants), but might also suggest Olive (neutral)
+2. **SCREW** - Could connect Bolt and Fan (mechanical/hardware), but risky
+3. **PURSUE** - Could connect Chase, but only one word
+4. **PETROLEUM** - Could connect Oil, but only one word
+5. **FASTENER** - Could connect Bolt, but only one word
+6. **COUNTRY** - Could connect India, but only one word
+7. **COOLING** - Could connect Fan, but only one word
+
+Let me think about broader connections:
+
+**MECHANICAL** - Could work for Bolt and Fan (both mechanical devices), but might be too vague
+
+**GARDEN** - Could work for Bush, Bamboo, and possibly Oil (garden oil for tools). Actually, this is risky.
+
+**SPEED** - Could connect Chase (pursuit involves speed) and Fan (fans spin fast), but this is a stretch
+
+**PALM** - Could connect Oil (palm oil) and Fan (palm fan). This is interesting but only 2 words.
+
+**ELECTRIC** - Could connect Fan (electric fan), but Oil and Bolt don't fit well
+
+**VEGETATION** - Could connect Bush and Bamboo strongly (both are plants/vegetation)
+
+I think **VEGETATION** or **PLANT** works well for Bush and Bamboo. Let me verify neither points to dangerous words:
+- ASSASSIN: Frame - no connection
+- RED words: Paste, Cape, Plot, Pipe, Penguin, Piano - none are plants
+- NEUTRAL: Hint, Spell, Apple, Club, Olive - Apple and Olive are fruits, not vegetation in the sense I mean
+
+Actually, **PLANT** is safer than VEGETATION and more natural.
+
+{"clue": "PLANT", "number": 2, "reasoning": "Connects Bush and Bamboo, both are plants. Avoids assassin Frame and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PLANT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Apple
+  Club
+  Olive
+  India
+  Bamboo
+  Penguin
+  Piano
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bamboo", "reasoning": "Bamboo is a type of plant, making it a strong direct match for the clue 'PLANT'. This is the most obvious connection among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PLANT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Bush
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+  Piano
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "BUSH",
+  "reasoning": "BUSH is a type of plant and fits the clue perfectly. I've already guessed one word correctly (Bamboo), so this is my second guess out of the allowed 3. BUSH is a clear plant-related word and should be a safe blue card."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PLANT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+  Piano
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Bamboo and Bush) matching the clue number of 2. The clue PLANT could potentially relate to other words like Olive (olive plant/tree) or Apple (apple tree), but these connections are weaker and riskier. With Red at 6 remaining and Blue at 5 remaining, we're in a close game where avoiding the assassin and opponent cards is crucial. Since I've fulfilled the clue successfully, passing is the smart choice to avoid unnecessary risk."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        [revealed]
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        [revealed]
+  Chase                BLUE       
+  Axe                  NEUTRAL    [revealed]
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       [revealed]
+  Arrow                BLUE       [revealed]
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    [revealed]
+  India                BLUE       
+  Bamboo               BLUE       [revealed]
+  Penguin              RED        
+  Piano                RED        
+  Hollow               RED        [revealed]
+  Fan                  BLUE       
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Music","number":2,"reasoning":"Piano is a very strong match, and Penguin can connect via musical works/marches and pop-culture associations less directly than any dangerous board word. It avoids the assassin Frame and does not strongly point to blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+  Piano
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"PIANO","reasoning":"Piano is directly and strongly associated with MUSIC; it's the clearest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+  Fan
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"FAN","reasoning":"Most likely remaining match to MUSIC: a music fan is a common association, and it fits better than the other unrevealed words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        [revealed]
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        [revealed]
+  Chase                BLUE       
+  Axe                  NEUTRAL    [revealed]
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       [revealed]
+  Arrow                BLUE       [revealed]
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    [revealed]
+  India                BLUE       
+  Bamboo               BLUE       [revealed]
+  Penguin              RED        
+  Piano                RED        [revealed]
+  Hollow               RED        [revealed]
+  Fan                  BLUE       [revealed]
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+  [RED] MUSIC 2  #2: Fan → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining BLUE words that haven't been revealed:
+- Oil
+- Bolt
+- Chase
+- India
+
+Let me consider potential clues:
+
+1. **Oil + Bolt**: Both relate to machinery/mechanics. "Engine" could work, or "Motor"
+2. **Chase + India**: Hard to connect these
+3. **Oil + India**: Could relate to countries/resources, but risky
+4. **Bolt + Chase**: "Run" connects both (bolt = run fast, chase = run after)
+
+Let me check the risks:
+- ASSASSIN: Frame
+- RED remaining: Paste, Cape, Plot, Pipe, Penguin
+- NEUTRAL: Hint, Spell, Apple, Club, Olive
+
+For "LIGHTNING" (connects Bolt):
+- Bolt ✓ (lightning bolt)
+- Could accidentally suggest Frame (picture frame of lightning? weak)
+- Risk level: Low
+
+For "RUN":
+- Bolt ✓ (to bolt = to run)
+- Chase ✓ (to chase = to run after)
+- Oil ✗ (no strong connection)
+- India ✗ (no connection)
+- Risk: Could suggest Penguin runs? Low risk overall
+
+For "THUNDER":
+- Bolt ✓ (thunderbolt)
+- Risk of Frame? Low
+
+For "PETROLEUM":
+- Oil ✓
+- India ✓ (major oil producer)
+- But risky and only 2 words
+
+Let me try "SCREW":
+- Bolt ✓ (bolt and screw are fasteners)
+- Could be risky with other interpretations
+
+Best option: **RUN** for Bolt and Chase (2 words)
+- Bolt = to bolt/run away
+- Chase = to run after someone
+- Minimal risk to ASSASSIN (Frame) or RED words
+
+{"clue": "RUN", "number": 2, "reasoning": "Bolt means to run quickly, Chase means to run after someone"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RUN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Paste
+  Bolt
+  Chase
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+  [RED] MUSIC 2  #2: Fan → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Chase",
+  "reasoning": "RUN strongly connects to CHASE - you run during a chase, and 'chase' is a common collocation with 'run' (chase/run after someone). This seems like the most direct connection to the clue 'RUN' from the available words."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RUN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Paste
+  Bolt
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+  [RED] MUSIC 2  #2: Fan → blue
+  [BLUE] RUN 2  #1: Chase → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 'Chase' which was correct for the clue 'RUN'. With only 3 blue cards remaining and 5 red cards left, we're in a close game. The remaining words don't have strong connections to 'RUN' - while 'Bolt' could mean to run quickly, it's risky as it could also relate to hardware or lightning. Since I've successfully used the clue once and we're ahead in card ratio (fewer cards left means closer to winning), I should pass to avoid hitting a red card or the assassin."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Frame                ASSASSIN   
+  Oil                  BLUE       
+  Knot                 RED        [revealed]
+  Paste                RED        
+  Bolt                 BLUE       
+  Dig                  RED        [revealed]
+  Chase                BLUE       [revealed]
+  Axe                  NEUTRAL    [revealed]
+  Cape                 RED        
+  Hint                 NEUTRAL    
+  Plot                 RED        
+  Spell                NEUTRAL    
+  Pipe                 RED        
+  Bush                 BLUE       [revealed]
+  Arrow                BLUE       [revealed]
+  Apple                NEUTRAL    
+  Club                 NEUTRAL    
+  Olive                NEUTRAL    
+  Sub                  NEUTRAL    [revealed]
+  India                BLUE       
+  Bamboo               BLUE       [revealed]
+  Penguin              RED        
+  Piano                RED        [revealed]
+  Hollow               RED        [revealed]
+  Fan                  BLUE       [revealed]
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+  [RED] MUSIC 2  #2: Fan → blue
+  [BLUE] RUN 2  #1: Chase → blue
+  [BLUE] RUN 2  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARROW, AXE, BAMBOO, BOLT, BUSH, CAPE, CHASE, CLUB, DIG, FAN, FRAME, HINT, HOLLOW, INDIA, KNOT, OIL, OLIVE, PASTE, PENGUIN, PIANO, PIPE, PLOT, SPELL, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Adhesive","number":2,"reasoning":"Targets PASTE and PIPE via glue/cement associations (paste as adhesive; pipe adhesive/pipe cement). It avoids the assassin FRAME and has limited pull toward blue words compared with broader clues for the other red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ADHESIVE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Frame
+  Oil
+  Paste
+  Bolt
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+  [RED] MUSIC 2  #2: Fan → blue
+  [BLUE] RUN 2  #1: Chase → blue
+  [BLUE] RUN 2  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Paste","reasoning":"'Paste' is the strongest direct match to 'ADHESIVE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ADHESIVE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Frame
+  Oil
+  Bolt
+  Cape
+  Hint
+  Plot
+  Spell
+  Pipe
+  Apple
+  Club
+  Olive
+  India
+  Penguin
+
+Game history:
+  [RED] EXCAVATE 2  #1: Dig → red
+  [RED] EXCAVATE 2  #2: Hollow → red
+  [RED] EXCAVATE 2  #3: PASS
+  [BLUE] SHAFT 3  #1: Arrow → blue
+  [BLUE] SHAFT 3  #2: Axe → neutral
+  [RED] SEAMANSHIP 2  #1: Knot → red
+  [RED] SEAMANSHIP 2  #2: Sub → neutral
+  [BLUE] PLANT 2  #1: Bamboo → blue
+  [BLUE] PLANT 2  #2: Bush → blue
+  [BLUE] PLANT 2  #3: PASS
+  [RED] MUSIC 2  #1: Piano → red
+  [RED] MUSIC 2  #2: Fan → blue
+  [BLUE] RUN 2  #1: Chase → blue
+  [BLUE] RUN 2  #2: PASS
+  [RED] ADHESIVE 2  #1: Paste → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Frame","reasoning":"Most likely remaining match to ADHESIVE is glue, and a frame is commonly associated with glue/being glued together. Better fit than the other options."}
+============================================================

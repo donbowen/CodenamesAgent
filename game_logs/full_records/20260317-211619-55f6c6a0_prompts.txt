@@ -1,0 +1,1623 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        
+  Feather              BLUE       
+  Eye                  BLUE       
+  Fuse                 RED        
+  Night                RED        
+  Nut                  RED        
+  Lily                 BLUE       
+  Iron                 BLUE       
+  Steam                BLUE       
+  Code                 BLUE       
+  Hollow               BLUE       
+  Trip                 RED        
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    
+  Hook                 NEUTRAL    
+  Terminal             RED        
+  Zombie               NEUTRAL    
+  France               RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Army", "number": 3, "reasoning": "Points to Tank, Soldier, and France (military/army connections)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARMY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Tank
+  Feather
+  Eye
+  Fuse
+  Night
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Soldier
+  Queen
+  Box
+  Olive
+  Hook
+  Terminal
+  Zombie
+  France
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Soldier","reasoning":"Direct match for ARMY; a soldier is a member of an army and is the strongest single-word association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARMY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Tank
+  Feather
+  Eye
+  Fuse
+  Night
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Olive
+  Hook
+  Terminal
+  Zombie
+  France
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Tank", "reasoning": "Directly associated with army — armored vehicle; strong match for 'ARMY' after Soldier."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARMY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Feather
+  Eye
+  Fuse
+  Night
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Olive
+  Hook
+  Terminal
+  Zombie
+  France
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Olive","reasoning":"Olive (olive drab/olive green) is strongly associated with army uniforms and gear — fits the ARMY clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        [revealed]
+  Feather              BLUE       
+  Eye                  BLUE       
+  Fuse                 RED        
+  Night                RED        
+  Nut                  RED        
+  Lily                 BLUE       
+  Iron                 BLUE       
+  Steam                BLUE       
+  Code                 BLUE       
+  Hollow               BLUE       
+  Trip                 RED        
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    [revealed]
+  Hook                 NEUTRAL    
+  Terminal             RED        
+  Zombie               NEUTRAL    
+  France               RED        
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words that need to be found:
+- Feather, Eye, Lily, Iron, Steam, Code, Hollow, Game
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Box).
+
+Let me analyze potential connections:
+
+"METAL" could work for Iron, but might also suggest Tank (red, already revealed).
+
+"FLOWER" could work for Lily, but it's quite specific to just one word.
+
+"COMPUTER" could connect to Code and Terminal, but Terminal is red.
+
+"WATER" could connect to Steam and Well, but Well is red.
+
+"PROGRAMMING" could work for Code and Game, avoiding red words.
+
+Actually, looking more carefully, "SOFT" could work well:
+- Code (software)
+- Game (video games, soft play)
+- Feather (soft texture)
+- Steam (soft vapor)
+
+This avoids all red words and the assassin Box. The connection is reasonable for multiple blue words.
+
+{"clue": "SOFT", "number": 4, "reasoning": "Connects Code (software), Game (video games), Feather (soft texture), and Steam (soft vapor) while avoiding red words and assassin"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOFT' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Feather
+  Eye
+  Fuse
+  Night
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "SOFT" from the valid guesses list.
+
+Looking at the options, I can see several potential connections:
+- "Feather" - feathers are soft to the touch
+- "Eye" - could relate to soft eyes or soft gaze
+- "Night" - could relate to soft night sounds or gentle darkness
+- "Cold" - might relate to soft cold vs harsh cold
+- "Well" - could be soft well water or soft spoken "well"
+- "Queen" - might relate to soft queen-sized bed or gentle queen
+
+"Feather" seems like the strongest connection since feathers are literally soft objects that we associate with softness and comfort.
+
+{"guess": "Feather", "reasoning": "Feathers are literally soft objects, making this the most direct connection to the clue 'SOFT'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOFT' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Eye
+  Fuse
+  Night
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "SOFT" and the remaining words, I need to find words that relate to softness or gentleness.
+
+From the valid guesses, "Eye" stands out as having a strong connection to "SOFT" - we commonly use the phrase "soft eyes" to describe a gentle, tender gaze or expression. Eyes themselves are also physically soft organs.
+
+Other possibilities like "Night" (soft night sounds, gentle darkness) or "Cold" (soft cold vs harsh cold) seem less direct than the "Eye" connection.
+
+{"guess": "Eye", "reasoning": "Eye connects strongly to SOFT through the common phrase 'soft eyes' meaning gentle or tender gaze, and eyes are physically soft organs"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOFT' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Fuse
+  Night
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining words for "SOFT" (4 words), I need to find words that relate to softness, gentleness, or things that can be soft.
+
+From the valid guesses, I can see:
+- **Night** - can be described as "soft" (soft night, gentle darkness)
+- **Well** - could relate to "soft water" or gentle/mild
+- **Box** - could be a "soft box" (photography term, packaging)
+- **Cold** - doesn't fit well with soft
+- **Iron** - opposite of soft
+- **Steam** - could be "soft steam" but weak connection
+
+Given that I've already found 2 blue cards with this clue and need 2 more, **Night** seems like the strongest connection to "soft" - we often describe nights as soft, gentle, or peaceful.
+
+{"guess": "Night", "reasoning": "Night can be described as soft or gentle, fitting the softness theme of the clue"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        [revealed]
+  Feather              BLUE       [revealed]
+  Eye                  BLUE       [revealed]
+  Fuse                 RED        
+  Night                RED        [revealed]
+  Nut                  RED        
+  Lily                 BLUE       
+  Iron                 BLUE       
+  Steam                BLUE       
+  Code                 BLUE       
+  Hollow               BLUE       
+  Trip                 RED        
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    [revealed]
+  Hook                 NEUTRAL    
+  Terminal             RED        
+  Zombie               NEUTRAL    
+  France               RED        
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Travel","number":3,"reasoning":"Trip, France, Terminal — all strongly travel/transport related"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAVEL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Fuse
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Trip
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Trip", "reasoning": "Direct synonym of TRAVEL and the clearest match; likely one of the three (other possible targets: Coach, Terminal)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAVEL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Fuse
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Cold
+  Coach
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Coach", "reasoning": "Coach is a clear travel-related vehicle (like a bus/coach); closely matches the clue TRAVEL and is a likely intended target after Trip."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        [revealed]
+  Feather              BLUE       [revealed]
+  Eye                  BLUE       [revealed]
+  Fuse                 RED        
+  Night                RED        [revealed]
+  Nut                  RED        
+  Lily                 BLUE       
+  Iron                 BLUE       
+  Steam                BLUE       
+  Code                 BLUE       
+  Hollow               BLUE       
+  Trip                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    [revealed]
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    [revealed]
+  Hook                 NEUTRAL    
+  Terminal             RED        
+  Zombie               NEUTRAL    
+  France               RED        
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects to Blue words while avoiding Red words, neutrals, and the assassin (Box).
+
+Blue words remaining: Lily, Iron, Steam, Code, Hollow, Game
+
+Let me analyze potential connections:
+
+1. **METAL** - could connect to Iron, but might also suggest Tank (already revealed) or other metallic objects
+2. **FLOWER** - could connect to Lily, but only one word
+3. **WATER** - could connect to Steam (water vapor), but might be weak
+4. **COMPUTER** - could connect to Code and Game, but might suggest Terminal (Red)
+5. **PLANT** - could connect to Lily
+6. **PROGRAMMING** - could connect to Code and Game
+7. **EMPTY** - could connect to Hollow
+8. **SPORT** - could connect to Game
+
+Looking for a broader connection:
+
+**DIGITAL** - This could connect to:
+- Code (programming code)
+- Game (video games)
+- Steam (Steam gaming platform)
+
+This seems like a strong connection to 3 Blue words while avoiding dangerous Red words like Terminal, Fuse, or the assassin Box.
+
+{"clue": "DIGITAL", "number": 3, "reasoning": "Connects to Code (programming), Game (video games), and Steam (gaming platform) while avoiding Red and neutral words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DIGITAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Fuse
+  Nut
+  Lily
+  Iron
+  Steam
+  Code
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "Code is strongly associated with digital - digital code, computer code, programming code. This is the most direct connection to the clue 'DIGITAL' from the available words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DIGITAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Fuse
+  Nut
+  Lily
+  Iron
+  Steam
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Terminal
+  Zombie
+  France
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "DIGITAL" and the remaining words, I need to find connections to digital/electronic/computer concepts.
+
+From the valid guesses:
+- **Terminal** - This strongly connects to digital/computer terminology (computer terminal, command terminal)
+- **Game** - Could relate to digital/video games
+- **Box** - Possibly digital set-top box or computer box
+- **Steam** - Could be Steam (the digital gaming platform)
+- **Film** - Digital film/photography
+
+Terminal seems like the strongest connection to "DIGITAL" as it's a core computer/digital concept.
+
+{"guess": "Terminal", "reasoning": "Terminal is strongly connected to digital/computer systems - computer terminals, command terminals, etc. are fundamental digital concepts"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        [revealed]
+  Feather              BLUE       [revealed]
+  Eye                  BLUE       [revealed]
+  Fuse                 RED        
+  Night                RED        [revealed]
+  Nut                  RED        
+  Lily                 BLUE       
+  Iron                 BLUE       
+  Steam                BLUE       
+  Code                 BLUE       [revealed]
+  Hollow               BLUE       
+  Trip                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    [revealed]
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    [revealed]
+  Hook                 NEUTRAL    
+  Terminal             RED        [revealed]
+  Zombie               NEUTRAL    
+  France               RED        
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"French","number":1,"reasoning":"Directly points to FRANCE (aiming for that remaining red card)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRENCH' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Fuse
+  Nut
+  Lily
+  Iron
+  Steam
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Zombie
+  France
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"France","reasoning":"Direct match to 'FRENCH' — France is the obvious single-word connection."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRENCH' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Fuse
+  Nut
+  Lily
+  Iron
+  Steam
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Zombie
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Lily","reasoning":"Fleur-de-lis (lily) is a strong French symbol/royal emblem — best match for 'FRENCH'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        [revealed]
+  Feather              BLUE       [revealed]
+  Eye                  BLUE       [revealed]
+  Fuse                 RED        
+  Night                RED        [revealed]
+  Nut                  RED        
+  Lily                 BLUE       [revealed]
+  Iron                 BLUE       
+  Steam                BLUE       
+  Code                 BLUE       [revealed]
+  Hollow               BLUE       
+  Trip                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    [revealed]
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    [revealed]
+  Hook                 NEUTRAL    
+  Terminal             RED        [revealed]
+  Zombie               NEUTRAL    
+  France               RED        [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+  [RED] FRENCH 1  #2: Lily → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Iron
+- Steam  
+- Hollow
+- Game
+
+I need to find a clue that connects multiple blue words while avoiding the assassin (Box) and red words.
+
+"Iron" and "Steam" both relate to metal/industrial concepts. "Hollow" can relate to metal pipes or containers. "Game" is harder to connect to the others.
+
+The word "METAL" could work for Iron (obviously) and Steam (steam engines, metal pipes), and potentially Hollow (hollow metal objects). This avoids the assassin Box and the remaining red words (Fuse, Nut, Well).
+
+{"clue": "METAL", "number": 3, "reasoning": "Connects Iron (metal element), Steam (steam engines/metal pipes), and Hollow (hollow metal objects like pipes or containers)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'METAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Fuse
+  Nut
+  Iron
+  Steam
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+  [RED] FRENCH 1  #2: Lily → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "METAL" and the available words, I need to find words that relate to metal.
+
+The most obvious connection is "Iron" - iron is literally a type of metal, one of the most common and well-known metals.
+
+Other possibilities:
+- "Fuse" could relate to metal (electrical fuses contain metal components)
+- "Box" could be made of metal
+- "Cold" - metals feel cold to touch
+
+But "Iron" is by far the strongest and most direct connection to the clue "METAL".
+
+{"guess": "Iron", "reasoning": "Iron is directly a type of metal, making it the strongest connection to the clue METAL"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'METAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Fuse
+  Nut
+  Steam
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Zombie
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+  [RED] FRENCH 1  #2: Lily → blue
+  [BLUE] METAL 3  #1: Iron → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "METAL" and the remaining words, I need to find connections to metals or metallic properties.
+
+From the valid guesses:
+- **Fuse** - This has a strong metal connection as fuses are made of metal wire/filament that melts to break electrical circuits
+- **Cold** - Metals are known for conducting heat and feeling cold to the touch
+- **Steam** - Less direct, but could relate to metal in industrial contexts (steam engines, metal pipes)
+- **Box** - Could be a metal container, but many boxes aren't metal
+- **Hook** - Often made of metal, but not as strong a connection
+- **Nut** - Could refer to metal nuts (hardware), but also the food item
+
+Given that I've already successfully guessed "Iron" for this clue, "Fuse" seems like the strongest remaining connection to METAL, as fuses are fundamentally metal components in electrical systems.
+
+{"guess": "Fuse", "reasoning": "Fuses contain metal filaments/wire that melt to break circuits - strong direct connection to METAL"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Film                 NEUTRAL    
+  Tank                 RED        [revealed]
+  Feather              BLUE       [revealed]
+  Eye                  BLUE       [revealed]
+  Fuse                 RED        [revealed]
+  Night                RED        [revealed]
+  Nut                  RED        
+  Lily                 BLUE       [revealed]
+  Iron                 BLUE       [revealed]
+  Steam                BLUE       
+  Code                 BLUE       [revealed]
+  Hollow               BLUE       
+  Trip                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Coach                NEUTRAL    [revealed]
+  Game                 BLUE       
+  Well                 RED        
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Box                  ASSASSIN   
+  Olive                NEUTRAL    [revealed]
+  Hook                 NEUTRAL    
+  Terminal             RED        [revealed]
+  Zombie               NEUTRAL    
+  France               RED        [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+  [RED] FRENCH 1  #2: Lily → blue
+  [BLUE] METAL 3  #1: Iron → blue
+  [BLUE] METAL 3  #2: Fuse → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOX, COACH, CODE, COLD, EYE, FEATHER, FILM, FRANCE, FUSE, GAME, HOLLOW, HOOK, IRON, LILY, NIGHT, NUT, OLIVE, QUEEN, SOLDIER, STEAM, TANK, TERMINAL, TRIP, WELL, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "OIL", "number": 2, "reasoning": "Oil → oil well (Well) and oils come from nuts (peanut/walnut → Nut)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OIL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Film
+  Nut
+  Steam
+  Hollow
+  Cold
+  Game
+  Well
+  Queen
+  Box
+  Hook
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+  [RED] FRENCH 1  #2: Lily → blue
+  [BLUE] METAL 3  #1: Iron → blue
+  [BLUE] METAL 3  #2: Fuse → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Well", "reasoning": "Direct association: oil well — strongest, most specific match to 'OIL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OIL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Film
+  Nut
+  Steam
+  Hollow
+  Cold
+  Game
+  Queen
+  Box
+  Hook
+  Zombie
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → red
+  [RED] ARMY 3  #3: Olive → neutral
+  [BLUE] SOFT 4  #1: Feather → blue
+  [BLUE] SOFT 4  #2: Eye → blue
+  [BLUE] SOFT 4  #3: Night → red
+  [RED] TRAVEL 3  #1: Trip → red
+  [RED] TRAVEL 3  #2: Coach → neutral
+  [BLUE] DIGITAL 3  #1: Code → blue
+  [BLUE] DIGITAL 3  #2: Terminal → red
+  [RED] FRENCH 1  #1: France → red
+  [RED] FRENCH 1  #2: Lily → blue
+  [BLUE] METAL 3  #1: Iron → blue
+  [BLUE] METAL 3  #2: Fuse → red
+  [RED] OIL 2  #1: Well → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Nut", "reasoning": "Nuts (peanut, coconut, walnut, etc.) produce oils — best match for the OIL clue among the remaining words."}
+============================================================

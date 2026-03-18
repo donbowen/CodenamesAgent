@@ -1,0 +1,2573 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       
+  Cup                  BLUE       
+  Cone                 RED        
+  Chain                RED        
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    
+  Bottle               BLUE       
+  Deer                 RED        
+  Police               RED        
+  Nut                  RED        
+  Pipe                 NEUTRAL    
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       
+  Dog                  NEUTRAL    
+  Fold                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the RED words and find a clue that connects multiple words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (Sugar).
+
+RED words remaining:
+- Cone
+- Chain
+- Deer
+- Police
+- Nut
+- File
+- Clip
+- Nurse
+- Comet
+
+Let me look for connections:
+
+1. **Office/stationery connection**: File, Clip, Paper (but Paper isn't on board)
+2. **Medical connection**: Nurse (only one)
+3. **Space connection**: Comet (only one)
+4. **Animal connection**: Deer (only one)
+5. **Law enforcement**: Police (only one)
+6. **Fastening/attachment**: Chain, Clip (2 words)
+7. **Shapes/geometry**: Cone (only one)
+8. **Food**: Nut (only one)
+
+Let me think about broader connections:
+
+- **METAL**: Chain (metal links), Clip (metal fastener), File (metal tool), Nut (metal hardware) - 4 words! This is strong.
+- **ATTACH/FASTEN**: Chain, Clip - 2 words
+- **OFFICE**: File, Clip, Paper - but Paper isn't here
+
+Wait, let me reconsider METAL:
+- Chain: yes, typically metal
+- Clip: yes, typically metal (paper clip)
+- File: yes, metal tool or nail file
+- Nut: yes, metal hardware (like bolt and nut)
+
+This avoids:
+- BLUE words (Brim, Unicorn, Cup, Burst, Bottle, Grass, Orange, Fold)
+- ASSASSIN (Sugar)
+- NEUTRAL words
+
+"METAL" is not on the forbidden list and connects 4 RED words strongly.
+
+{"clue": "METAL", "number": 4, "reasoning": "Connects Chain (metal links), Clip (paper clip), File (metal tool), and Nut (metal hardware). All are commonly made of or associated with metal."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cup
+  Cone
+  Chain
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Bottle
+  Deer
+  Police
+  Nut
+  Pipe
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Orange
+  Dog
+  Fold
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Chain",
+  "reasoning": "Chain is strongly associated with metal - chains are typically made of metal links. This is a very confident first guess for the clue METAL."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cup
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Bottle
+  Deer
+  Police
+  Nut
+  Pipe
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Orange
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PIPE",
+  "reasoning": "PIPE is strongly associated with METAL - metal pipes are extremely common in plumbing, construction, and industrial applications. This is a confident second guess after successfully getting Chain."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       
+  Cup                  BLUE       
+  Cone                 RED        
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    
+  Bottle               BLUE       
+  Deer                 RED        
+  Police               RED        
+  Nut                  RED        
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       
+  Dog                  NEUTRAL    
+  Fold                 BLUE       
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"juice","number":3,"reasoning":"Juice links Cup (drinking), Bottle (container), and Orange (orange juice)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JUICE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cup
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Bottle
+  Deer
+  Police
+  Nut
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Orange
+  Dog
+  Fold
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Orange", "reasoning": "Directly linked to juice (orange juice)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JUICE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cup
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Bottle
+  Deer
+  Police
+  Nut
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cup", "reasoning": "Cup is a direct item associated with drinking juice."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JUICE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Bottle
+  Deer
+  Police
+  Nut
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bottle", "reasoning": "Directly related to juice as a container (juice often comes in a bottle)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JUICE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Deer
+  Police
+  Nut
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "JUICE clue indicates 3 blue targets; we've already identified 3. Passing avoids risking hitting a neutral/red/assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       
+  Cup                  BLUE       [revealed]
+  Cone                 RED        
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    
+  Bottle               BLUE       [revealed]
+  Deer                 RED        
+  Police               RED        
+  Nut                  RED        
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for RED's remaining 8 words: Cone, Deer, Police, Nut, File, Clip, Nurse, Comet.
+
+Let me analyze potential connections:
+
+**Office/Paper supplies**: File, Clip (2 words)
+- Could use "PAPER" or "OFFICE" but need to avoid Blue's "Brim" (paper brim?) and be careful
+
+**Nature/Animals**: Deer, Nut (2 words)
+- "TREE" connects both (deer in forest, nut from tree)
+- Safe from assassin (Sugar) and Blue words
+
+**Law enforcement**: Police (1 word)
+- Limited connection to others
+
+**Space**: Comet (1 word)
+- Hard to connect safely
+
+**Medical**: Nurse (1 word)
+- Limited connection
+
+**Geometry**: Cone (1 word)
+- "ICE" could work (ice cream cone) but risky
+
+Let me consider broader connections:
+
+**TREE**: Connects to Deer (lives in forest), Nut (grows on trees), possibly Cone (pine cone). That's 3 words with strong connections.
+- Safe from Sugar (assassin)
+- Doesn't point to Blue words (Brim, Unicorn, Burst, Grass, Fold)
+- Grass might be a concern but "tree" is distinct enough
+
+**FOREST**: Similar to tree - Deer, Nut, Cone (pine cone). Also 3 words.
+
+**PINE**: Pine cone, pine nut, pine tree (deer). Very specific to 3 words.
+
+I'll go with **FOREST** as it strongly connects Deer, Cone (pine cone), and Nut (forest nuts), while being safe from the assassin and Blue words.
+
+{"clue": "FOREST", "number": 3, "reasoning": "Connects DEER (forest animal), CONE (pine cone), and NUT (forest nuts like acorns). Avoids assassin SUGAR and Blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Deer
+  Police
+  Nut
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Deer",
+  "reasoning": "FOREST strongly connects to DEER as deer are animals that live in forests. This is a very confident first guess for the clue FOREST."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  Nut
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Nut",
+  "reasoning": "FOREST connects to Nut because forests contain nut-bearing trees like oak, walnut, and chestnut. Deer (already guessed correctly) also eat nuts in forests. This is a strong natural connection."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Deer and Nut) matching the clue number of 3. The remaining words don't have strong forest connections - Cone could be pine cone but it's risky, and other words like Grass are weak. With Red leading 6-5, I should avoid risking a neutral (ending turn) or worse, hitting blue or assassin cards. Smart play is to pass now."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       
+  Cup                  BLUE       [revealed]
+  Cone                 RED        
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "HORSE", "number": 2, "reasoning": "Unicorn is a mythical horse; horses eat grass."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HORSE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Unicorn
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Unicorn", "reasoning": "HORSE -> unicorn fits as a horse-like creature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HORSE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  File
+  Clip
+  Grass
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Grass","reasoning":"Grass is a direct, common association with horses (horses eat grass), making it the strongest match for the HORSE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HORSE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Two HORSE-related blue words found (Unicorn, Grass); safe to pass to avoid guessing a non-matching word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Cone                 RED        
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       [revealed]
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words and find a clue that connects them while avoiding BLUE words, NEUTRAL words, and especially the ASSASSIN (Sugar).
+
+RED words remaining (unrevealed):
+- Cone
+- Police
+- File
+- Clip
+- Nurse
+- Comet
+
+BLUE words remaining (unrevealed):
+- Brim
+- Burst
+- Fold
+
+ASSASSIN: Sugar
+
+Let me consider potential clues:
+
+1. **Office/Workplace angle**: File, Clip, Nurse could work with "office" or "hospital"
+2. **Space/Sky angle**: Comet, Cone (rocket cone?)
+3. **Emergency services**: Police, Nurse could connect with "emergency" or "siren"
+4. **Paper/Stationery**: File, Clip with "paper"
+
+Let me try "PAPER" for File and Clip:
+- File: paper file ✓
+- Clip: paper clip ✓
+- Avoids: Sugar (not related), Brim/Burst/Fold (not strongly related)
+
+Let me try "TRAFFIC" for Police and Cone:
+- Police: traffic police ✓
+- Cone: traffic cone ✓
+- Avoids: Sugar, and blue words
+
+Let me try "HOSPITAL" for Nurse:
+- Only gets 1 word strongly
+
+"PAPER" seems safe for 2 words (File, Clip) and doesn't risk the assassin or blue words.
+
+Actually, let me reconsider "TRAFFIC":
+- Police: traffic ✓
+- Cone: traffic cone ✓
+- Comet: no connection
+- File/Clip/Nurse: no connection
+- Sugar: no connection ✓
+- Blue words (Brim, Burst, Fold): no strong connection ✓
+
+This seems like a solid 2-word clue.
+
+{"clue": "traffic", "number": 2, "reasoning": "Connects Police (traffic police) and Cone (traffic cone). Avoids assassin Sugar and blue words Brim/Burst/Fold."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAFFIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Cone
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+  Fold
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Cone",
+  "reasoning": "TRAFFIC most strongly connects to 'Cone' (traffic cone - a common road safety device used to direct traffic). This is a very direct association. Other words like 'Police' could relate to traffic enforcement, but 'Cone' is the most literal match to the clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAFFIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  Police
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Police",
+  "reasoning": "TRAFFIC strongly connects to Police through traffic police, traffic stops, and police directing traffic. This is a clear second word for the TRAFFIC clue. We've already gotten one correct (Cone), so this completes the clue of 2 words."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAFFIC' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+  Fold
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words matching TRAFFIC (Cone and Police), which was the clue number. The remaining words don't have strong traffic associations - none clearly relate to traffic jams, signals, or road-related concepts. With only 4 red cards left vs 3 blue, the game is close and risky guesses could hit the assassin or help blue. Better to pass and let the spymaster give a fresh clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Cone                 RED        [revealed]
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        [revealed]
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       [revealed]
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "BEND", "number": 1, "reasoning": "Fold is a form of bend; this clues Fold."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BEND' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+  Fold
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fold", "reasoning": "BEND is a direct synonym of fold."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BEND' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  Hook
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hook", "reasoning": "Hook is literally a bend and matches the clue; likely the blue word for Bend."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Cone                 RED        [revealed]
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    [revealed]
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        [revealed]
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        
+  Clip                 RED        
+  Grass                BLUE       [revealed]
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       [revealed]
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words:
+- File
+- Clip
+- Nurse
+- Comet
+
+I need to find a clue that connects multiple RED words while avoiding:
+- BLUE words: Brim, Burst
+- NEUTRAL words: Strike, Whale, Fort, Class, Dog
+- ASSASSIN: Sugar
+
+Let me analyze potential connections:
+
+**File + Clip**: Both are office/paper-related items. "Paper" connects both strongly.
+
+**Nurse + Comet**: These seem unrelated to each other and the office items.
+
+Let me consider "PAPER":
+- File: Paper files ✓
+- Clip: Paper clip ✓
+- Nurse: Weak connection (medical paperwork?)
+- Comet: No connection
+- Brim (BLUE): No strong connection
+- Burst (BLUE): No connection
+- Sugar (ASSASSIN): No connection
+
+"PAPER" for 2 seems safe and strong.
+
+Alternatively, "OFFICE":
+- File: Office file ✓
+- Clip: Office clip ✓
+- Nurse: Hospital/medical office (weaker)
+- Comet: No connection
+- Class (NEUTRAL): Classroom, not really office
+- No dangerous connections
+
+Both work, but PAPER has clearer, more direct connections to File and Clip.
+
+{"clue": "paper", "number": 2, "reasoning": "Connects FILE (paper file) and CLIP (paper clip) directly, both common office items that work with paper. Avoids all blue words, neutrals, and the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAPER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  File
+  Clip
+  Nurse
+  Comet
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Clip",
+  "reasoning": "PAPER and CLIP are strongly associated through 'paper clip,' a common office item. This is a very strong connection and likely one of the intended words for this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAPER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  File
+  Nurse
+  Comet
+  Dog
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "File",
+  "reasoning": "PAPER connects strongly to FILE - both as a paper file (manila folder) and as a verb (to file papers). This is my second guess on a 2-word clue, and I've already gotten one correct (Clip). With Red at 3 remaining and Blue at 2, I should take this strong connection. If correct, I can consider passing to avoid risk, as we're ahead."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAPER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  Nurse
+  Comet
+  Dog
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 2 words correctly (Clip and File) which matches the clue number of 2. Both teams have 2 cards remaining, making this a critical moment. Looking at the remaining words, none have a strong connection to PAPER that would justify the risk. Words like Strike, Whale, Brim, Fort, Sugar, Burst, Class, Nurse, Comet, and Dog don't relate clearly to paper. Since guessing wrong now could give blue the win or hit the assassin, and I've successfully completed the clue, passing is the smart play."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Cone                 RED        [revealed]
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    [revealed]
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        [revealed]
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        [revealed]
+  Clip                 RED        [revealed]
+  Grass                BLUE       [revealed]
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       [revealed]
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "BOOM", "number": 1, "reasoning": "Directly relates to Burst as an explosion synonym; targets the unrevealed blue word Burst."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOOM' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Burst
+  Class
+  Nurse
+  Comet
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Burst", "reasoning": "Direct synonym for an explosion/sudden blast matching 'BOOM'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOOM' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Class
+  Nurse
+  Comet
+  Dog
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+  [BLUE] BOOM 1  #1: Burst → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Uncertain which remaining word links to BOOM; risk of hitting a non-blue or neutral/ red card with a second guess; pass to avoid giving the opponent an advantage."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Cone                 RED        [revealed]
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       [revealed]
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    [revealed]
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        [revealed]
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        [revealed]
+  Clip                 RED        [revealed]
+  Grass                BLUE       [revealed]
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    
+  Fold                 BLUE       [revealed]
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+  [BLUE] BOOM 1  #1: Burst → blue
+  [BLUE] BOOM 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to help RED find their last 2 words: **Nurse** and **Comet**.
+
+Let me analyze these words:
+- **Nurse**: medical professional, healthcare, hospital
+- **Comet**: celestial object, space, tail, ice
+
+Looking for connections:
+- Both could relate to "night" (night nurse, comet visible at night) but that's weak
+- Medical terms for Nurse: medical, hospital, care, health
+- Space terms for Comet: space, celestial, sky, tail, orbit
+
+The challenge is finding one word that connects both. Let me think creatively:
+
+- "TAIL" - Comet has a tail, and a nurse might have a "tail" (archaic uniform piece), but this is very weak
+- "WHITE" - Nurses wear white, comets appear white, but "Brim" (blue) could be a white hat brim
+- "NIGHT" - Night shift nurse, night sky comet - but this could be risky
+- "FLORENCE" - Florence Nightingale (nurse), but proper nouns aren't ideal and no comet connection
+
+Since I need to win this turn (Blue only has 1 left, "Brim"), I should try for both words. However, if the connection is too weak, I might lose.
+
+Let me try "HALLEY" for Halley's Comet, but that's a proper noun and doesn't connect to Nurse well.
+
+Actually, looking more carefully: I could go for just one word safely. "SPACE" connects strongly to Comet. "HOSPITAL" connects strongly to Nurse.
+
+Given the risk, I'll go with **"CELESTIAL"** for Comet (1 word), which is safer than trying to stretch a weak connection to both.
+
+Wait - let me reconsider "NIGHT": Night nurse is a real term, and comets are seen at night. The neutral/assassin words don't strongly connect to night.
+
+{"clue": "NIGHT", "number": 2, "reasoning": "Night nurse (medical shift) and comets visible at night sky - both RED words strongly associate with nighttime"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NIGHT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Class
+  Nurse
+  Comet
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+  [BLUE] BOOM 1  #1: Burst → blue
+  [BLUE] BOOM 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Dog",
+  "reasoning": "NIGHT connects to Dog through 'night dog' or guard dogs that are active at night. With only 2 red cards remaining and blue having just 1 left, this is a critical moment. Dog seems like the strongest connection to NIGHT from the available words."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Strike               NEUTRAL    
+  Whale                NEUTRAL    
+  Brim                 BLUE       
+  Unicorn              BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Cone                 RED        [revealed]
+  Chain                RED        [revealed]
+  Fort                 NEUTRAL    
+  Sugar                ASSASSIN   
+  Burst                BLUE       [revealed]
+  Class                NEUTRAL    
+  Hook                 NEUTRAL    [revealed]
+  Bottle               BLUE       [revealed]
+  Deer                 RED        [revealed]
+  Police               RED        [revealed]
+  Nut                  RED        [revealed]
+  Pipe                 NEUTRAL    [revealed]
+  File                 RED        [revealed]
+  Clip                 RED        [revealed]
+  Grass                BLUE       [revealed]
+  Nurse                RED        
+  Comet                RED        
+  Orange               BLUE       [revealed]
+  Dog                  NEUTRAL    [revealed]
+  Fold                 BLUE       [revealed]
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+  [BLUE] BOOM 1  #1: Burst → blue
+  [BLUE] BOOM 1  #2: PASS
+  [RED] NIGHT 2  #1: Dog → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOTTLE, BRIM, BURST, CHAIN, CLASS, CLIP, COMET, CONE, CUP, DEER, DOG, FILE, FOLD, FORT, GRASS, HOOK, NURSE, NUT, ORANGE, PIPE, POLICE, STRIKE, SUGAR, UNICORN, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "EDGE", "number": 1, "reasoning": "Brim is another term for edge; only blue word remaining."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EDGE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Strike
+  Whale
+  Brim
+  Fort
+  Sugar
+  Class
+  Nurse
+  Comet
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 4  #1: Chain → red
+  [RED] METAL 4  #2: Pipe → neutral
+  [BLUE] JUICE 3  #1: Orange → blue
+  [BLUE] JUICE 3  #2: Cup → blue
+  [BLUE] JUICE 3  #3: Bottle → blue
+  [BLUE] JUICE 3  #4: PASS
+  [RED] FOREST 3  #1: Deer → red
+  [RED] FOREST 3  #2: Nut → red
+  [RED] FOREST 3  #3: PASS
+  [BLUE] HORSE 2  #1: Unicorn → blue
+  [BLUE] HORSE 2  #2: Grass → blue
+  [BLUE] HORSE 2  #3: PASS
+  [RED] TRAFFIC 2  #1: Cone → red
+  [RED] TRAFFIC 2  #2: Police → red
+  [RED] TRAFFIC 2  #3: PASS
+  [BLUE] BEND 1  #1: Fold → blue
+  [BLUE] BEND 1  #2: Hook → neutral
+  [RED] PAPER 2  #1: Clip → red
+  [RED] PAPER 2  #2: File → red
+  [RED] PAPER 2  #3: PASS
+  [BLUE] BOOM 1  #1: Burst → blue
+  [BLUE] BOOM 1  #2: PASS
+  [RED] NIGHT 2  #1: Dog → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Brim","reasoning":"Brim directly means edge, the strongest match among the options."}
+============================================================

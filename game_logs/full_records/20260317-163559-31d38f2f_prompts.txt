@@ -1,0 +1,1789 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    
+  Drop                 BLUE       
+  Gold                 BLUE       
+  Glacier              NEUTRAL    
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       
+  Roller               BLUE       
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        
+  Exile                RED        
+  Cabin                BLUE       
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Forest", "number": 3, "reasoning": "Forest suggests a natural environment, which relates to 'Hollow', 'Lure', and 'Lantern' as things associated with nature and exploration."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Dragon
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Gold
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Book
+  Exile
+  Cabin
+  Bamboo
+  Ring
+  Lure
+  Lantern
+  Pumpkin
+  Beacon
+  Chip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cabin", "reasoning": "A cabin is often found in a forest setting, making it a strong match for the clue 'FOREST'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    
+  Drop                 BLUE       
+  Gold                 BLUE       
+  Glacier              NEUTRAL    
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       
+  Roller               BLUE       
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "casino", "number": 3, "reasoning": "Points strongly to CHIP (poker chip), ROLLER (high roller), and GEM (slang for something valuable like a jackpot); avoids clear connections to the assassin PUMPKIN and to obvious red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CASINO' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Dragon
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Gold
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Book
+  Exile
+  Bamboo
+  Ring
+  Lure
+  Lantern
+  Pumpkin
+  Beacon
+  Chip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chip", "reasoning": "Casino strongly connects to poker chips, making CHIP the safest and most direct match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CASINO' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Back
+  Dragon
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Gold
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Book
+  Exile
+  Bamboo
+  Ring
+  Lure
+  Lantern
+  Pumpkin
+  Beacon
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gold", "reasoning": "Gold fits casino via gold coins, high-roller imagery, and slot machine jackpots; it’s a strong casino association among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CASINO' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 9  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Back
+  Dragon
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Book
+  Exile
+  Bamboo
+  Ring
+  Lure
+  Lantern
+  Pumpkin
+  Beacon
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lure", "reasoning": "Casino relates to gambling, and gamblers are lured in by games and offers; Lure fits better than other options like Gem or Ring."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       
+  Roller               BLUE       
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Fiction", "number": 4, "reasoning": "All the remaining words (Hollow, Book, Delta, Exile) can be connected to the theme of fiction or storytelling."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Dragon
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Book
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Book", "reasoning": "Books are a common form of fiction, making it a strong match for the clue 'FICTION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Back
+  Dragon
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dragon", "reasoning": "Dragons are often prominent in fictional stories and fantasy literature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       
+  Roller               BLUE       
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "skate", "number": 1, "reasoning": "Targets ROLLER (roller skate). Other blue words (DROP, AMAZON, GEM, TICK) are not strongly connected to 'skate,' and it doesn’t suggest the assassin PUMPKIN or obvious red words like BACK, NAIL, HOLLOW, DELTA, CROSS, EXILE, LANTERN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SKATE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Roller
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Roller", "reasoning": "Roller skate is a direct, common phrase; it’s the strongest and most literal connection to the clue SKATE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SKATE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Back
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Glacier
+  Amazon
+  Gem
+  Tick
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Glacier", "reasoning": "Skating is commonly done on ice, and glaciers are large masses of ice, making GLACIER the strongest remaining association with SKATE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    [revealed]
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       
+  Roller               BLUE       [revealed]
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Fiction", "number": 3, "reasoning": "The clue relates to storytelling or narrative, which connects to Book, Delta, and Exile."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Amazon
+  Gem
+  Tick
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Book", "reasoning": "Book is a common item in fiction, and it directly relates to the clue given."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Trick
+  Drop
+  Amazon
+  Gem
+  Tick
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "Book", "reasoning": "Book is a common item in fiction, and it directly relates to the clue given."}
+
+[USER]
+Invalid response: 'BOOK' is not in the valid guesses list. Choose from: AMAZON, BACK, BAMBOO, BEACON, CROSS, DELTA, DROP, EXILE, GEM, HOLLOW, LANTERN, LEMON, NAIL, PUMPKIN, RING, TICK, TRICK. Try again.
+
+[RESPONSE]
+{"guess": "TRICK", "reasoning": "Trick can relate to fictional stories or narratives, making it a plausible guess for the clue 'FICTION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    [revealed]
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    [revealed]
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       
+  Roller               BLUE       [revealed]
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "insect", "number": 1, "reasoning": "Points clearly to TICK, while other unrevealed words are less connected and the assassin PUMPKIN is unrelated."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSECT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Drop
+  Amazon
+  Gem
+  Tick
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Tick", "reasoning": "A tick is a small arthropod commonly thought of as an insect, making it the strongest match to the clue 'INSECT' among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSECT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Back
+  Nail
+  Lemon
+  Hollow
+  Drop
+  Amazon
+  Gem
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already used the INSECT clue to correctly guess TICK earlier this turn; any further guess would be a blind risk with no clear insect-related connection among the remaining words, so passing is safer with only 3 blue words left."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    [revealed]
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    [revealed]
+  Amazon               BLUE       
+  Gem                  BLUE       
+  Tick                 BLUE       [revealed]
+  Roller               BLUE       [revealed]
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Hike", "number": 3, "reasoning": "Hiking involves nature and exploration, which relates to Delta (river), Exile (as in escaping to nature), and Hollow (as in a hollow tree often found in nature)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HIKE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Drop
+  Amazon
+  Gem
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Amazon", "reasoning": "Amazon is associated with hiking in the rainforest and adventure."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    [revealed]
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    [revealed]
+  Amazon               BLUE       [revealed]
+  Gem                  BLUE       
+  Tick                 BLUE       [revealed]
+  Roller               BLUE       [revealed]
+  Delta                RED        
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "water", "number": 1, "reasoning": "Points to DROP (water drop). GEM is much less directly related to water than DROP, and the assassin PUMPKIN is not connected, minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 7  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Drop
+  Gem
+  Delta
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Delta", "reasoning": "A river delta is directly associated with water, making it the strongest match among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        
+  Trick                NEUTRAL    [revealed]
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    [revealed]
+  Amazon               BLUE       [revealed]
+  Gem                  BLUE       
+  Tick                 BLUE       [revealed]
+  Roller               BLUE       [revealed]
+  Delta                RED        [revealed]
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+  [BLUE] WATER 1  #1: Delta → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Cave", "number": 3, "reasoning": "Cave relates to Hollow, Exile, and Lantern."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAVE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Hollow
+  Drop
+  Gem
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+  [BLUE] WATER 1  #1: Delta → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hollow", "reasoning": "A cave is often a hollow space in the ground or a rock formation."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAVE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Back
+  Nail
+  Lemon
+  Drop
+  Gem
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+  [BLUE] WATER 1  #1: Delta → red
+  [RED] CAVE 3  #1: Hollow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gem", "reasoning": "Gems are often found in caves, making it a logical association with the clue 'CAVE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Back                 RED        
+  Dragon               NEUTRAL    [revealed]
+  Nail                 RED        
+  Lemon                NEUTRAL    
+  Hollow               RED        [revealed]
+  Trick                NEUTRAL    [revealed]
+  Drop                 BLUE       
+  Gold                 BLUE       [revealed]
+  Glacier              NEUTRAL    [revealed]
+  Amazon               BLUE       [revealed]
+  Gem                  BLUE       [revealed]
+  Tick                 BLUE       [revealed]
+  Roller               BLUE       [revealed]
+  Delta                RED        [revealed]
+  Cross                RED        
+  Book                 RED        [revealed]
+  Exile                RED        
+  Cabin                BLUE       [revealed]
+  Bamboo               NEUTRAL    
+  Ring                 NEUTRAL    
+  Lure                 RED        [revealed]
+  Lantern              RED        
+  Pumpkin              ASSASSIN   
+  Beacon               NEUTRAL    
+  Chip                 BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+  [BLUE] WATER 1  #1: Delta → red
+  [RED] CAVE 3  #1: Hollow → red
+  [RED] CAVE 3  #2: Gem → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BACK, BAMBOO, BEACON, BOOK, CABIN, CHIP, CROSS, DELTA, DRAGON, DROP, EXILE, GEM, GLACIER, GOLD, HOLLOW, LANTERN, LEMON, LURE, NAIL, PUMPKIN, RING, ROLLER, TICK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "fall", "number": 1, "reasoning": "Only one blue word remains: DROP. 'Fall' strongly connects to DROP while being relatively weakly associated with most remaining red/neutral words, minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FALL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Back
+  Nail
+  Lemon
+  Drop
+  Cross
+  Exile
+  Bamboo
+  Ring
+  Lantern
+  Pumpkin
+  Beacon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 3  #1: Cabin → blue
+  [BLUE] CASINO 3  #1: Chip → blue
+  [BLUE] CASINO 3  #2: Gold → blue
+  [BLUE] CASINO 3  #3: Lure → red
+  [RED] FICTION 4  #1: Book → red
+  [RED] FICTION 4  #2: Dragon → neutral
+  [BLUE] SKATE 1  #1: Roller → blue
+  [BLUE] SKATE 1  #2: Glacier → neutral
+  [RED] FICTION 3  #1: Trick → neutral
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+  [RED] HIKE 3  #1: Amazon → blue
+  [BLUE] WATER 1  #1: Delta → red
+  [RED] CAVE 3  #1: Hollow → red
+  [RED] CAVE 3  #2: Gem → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Drop", "reasoning": "‘Fall’ is closely associated with ‘drop’ (to fall = to drop), making it the strongest direct semantic match among the remaining options."}
+============================================================

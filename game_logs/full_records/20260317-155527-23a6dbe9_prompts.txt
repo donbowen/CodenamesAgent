@@ -1,0 +1,1488 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        
+  Venus                RED        
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       
+  Apple                BLUE       
+  Chapel               RED        
+  Pilot                BLUE       
+  Blade                NEUTRAL    
+  Crown                NEUTRAL    
+  Chain                RED        
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    
+  Dial                 NEUTRAL    
+  Chip                 BLUE       
+  Door                 BLUE       
+  Gate                 RED        
+  Diamond              RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Royalty", "number": 3, "reasoning": "Crown is neutral but relates to Royalty, so avoid it; target words are Crown (neutral), Diamond, and Venus are associated with luxury or royalty, but Crown is neutral, so focusing on Diamond, Venus, and possibly Chain (as in a royal chain) risks confusion. Better to pick words with clear links: Venus (Roman goddess, royalty), Diamond (precious gem, associated with royalty), and Crown (neutral). Since Crown is neutral, avoid. Instead, clue 'Royalty' to hint at Venus, Diamond, and possibly Chain, but Chain is red so it's okay. So 3 words: Venus, Diamond, Chain."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ROYALTY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Boot
+  Venus
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Hull
+  Apple
+  Chapel
+  Pilot
+  Blade
+  Crown
+  Chain
+  Burn
+  Helm
+  Dial
+  Chip
+  Door
+  Gate
+  Diamond
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crown", "reasoning": "The clue 'ROYALTY' strongly associates with 'Crown,' a symbol of monarchy and royal authority."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        
+  Venus                RED        
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       
+  Apple                BLUE       
+  Chapel               RED        
+  Pilot                BLUE       
+  Blade                NEUTRAL    
+  Crown                NEUTRAL    [revealed]
+  Chain                RED        
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    
+  Dial                 NEUTRAL    
+  Chip                 BLUE       
+  Door                 BLUE       
+  Gate                 RED        
+  Diamond              RED        
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Nautical","number":2,"reasoning":"Connects HULL and PILOT most strongly in a maritime sense, while avoiding the assassin ESCAPE and minimizing pull toward other dangerous words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NAUTICAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Boot
+  Venus
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Hull
+  Apple
+  Chapel
+  Pilot
+  Blade
+  Chain
+  Burn
+  Helm
+  Dial
+  Chip
+  Door
+  Gate
+  Diamond
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Hull","reasoning":"Strong direct nautical term: the body of a ship."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NAUTICAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Boot
+  Venus
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Blade
+  Chain
+  Burn
+  Helm
+  Dial
+  Chip
+  Door
+  Gate
+  Diamond
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Helm","reasoning":"Helm is strongly nautical, referring to steering a ship, and best matches the clue after Hull."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        
+  Venus                RED        
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       [revealed]
+  Apple                BLUE       
+  Chapel               RED        
+  Pilot                BLUE       
+  Blade                NEUTRAL    
+  Crown                NEUTRAL    [revealed]
+  Chain                RED        
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    [revealed]
+  Dial                 NEUTRAL    
+  Chip                 BLUE       
+  Door                 BLUE       
+  Gate                 RED        
+  Diamond              RED        
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Monarch", "number": 3, "reasoning": "The clue 'Monarch' relates to Venus (Roman goddess often considered a queen), Crown (already revealed but related to royalty), Chain, and Diamond (jewels often associated with royalty). Since Crown is revealed neutral, focus on Venus, Chain, and Diamond for red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MONARCH' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Boot
+  Venus
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Blade
+  Chain
+  Burn
+  Dial
+  Chip
+  Door
+  Gate
+  Diamond
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Venus", "reasoning": "Venus is associated with the Roman goddess and often linked to monarchs and royalty mythology, fitting the 'MONARCH' clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MONARCH' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Blade
+  Chain
+  Burn
+  Dial
+  Chip
+  Door
+  Gate
+  Diamond
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blade", "reasoning": "Blade can associate with 'Monarch' through the concept of a royal sword or weapon, a symbol of monarchy."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        
+  Venus                RED        [revealed]
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       [revealed]
+  Apple                BLUE       
+  Chapel               RED        
+  Pilot                BLUE       
+  Blade                NEUTRAL    [revealed]
+  Crown                NEUTRAL    [revealed]
+  Chain                RED        
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    [revealed]
+  Dial                 NEUTRAL    
+  Chip                 BLUE       
+  Door                 BLUE       
+  Gate                 RED        
+  Diamond              RED        
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Entry","number":2,"reasoning":"Connects BLUE words DOOR and CHIP (entry chip/keycard). It avoids the assassin ESCAPE and is less direct for nearby reds than broader alternatives."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ENTRY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Chain
+  Burn
+  Dial
+  Chip
+  Door
+  Gate
+  Diamond
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"DOOR","reasoning":"'Entry' most directly matches DOOR as a way into a place; stronger and more specific than other options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ENTRY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Chain
+  Burn
+  Dial
+  Chip
+  Gate
+  Diamond
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"GATE","reasoning":"Best match to ENTRY after Door; gate is a clear point of entry."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        
+  Venus                RED        [revealed]
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       [revealed]
+  Apple                BLUE       
+  Chapel               RED        
+  Pilot                BLUE       
+  Blade                NEUTRAL    [revealed]
+  Crown                NEUTRAL    [revealed]
+  Chain                RED        
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    [revealed]
+  Dial                 NEUTRAL    
+  Chip                 BLUE       
+  Door                 BLUE       [revealed]
+  Gate                 RED        [revealed]
+  Diamond              RED        
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Nobility", "number": 3, "reasoning": "Red words Venus, Crown, and Diamond all relate to themes of royalty and nobility, helping guide teammates to these cards while avoiding opponent or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOBILITY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Chain
+  Burn
+  Dial
+  Chip
+  Diamond
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Diamond", "reasoning": "Diamond is associated with nobility through precious gems and royal jewelry, fitting the clue 'NOBILITY' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOBILITY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Chapel
+  Pilot
+  Chain
+  Burn
+  Dial
+  Chip
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chapel", "reasoning": "Chapels are often associated with nobility and aristocratic ceremonies, fitting the clue 'NOBILITY' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOBILITY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Pilot
+  Chain
+  Burn
+  Dial
+  Chip
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chain", "reasoning": "Chain relates to nobility as noble orders often have chains of honor or lineage, fitting the clue 'NOBILITY'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOBILITY' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Boot
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Pilot
+  Burn
+  Dial
+  Chip
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Boot", "reasoning": "Boot can be associated with nobility through historical aristocratic attire or cavalry boots, which aligns with the clue 'NOBILITY'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        [revealed]
+  Venus                RED        [revealed]
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       [revealed]
+  Apple                BLUE       
+  Chapel               RED        [revealed]
+  Pilot                BLUE       
+  Blade                NEUTRAL    [revealed]
+  Crown                NEUTRAL    [revealed]
+  Chain                RED        [revealed]
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    [revealed]
+  Dial                 NEUTRAL    
+  Chip                 BLUE       
+  Door                 BLUE       [revealed]
+  Gate                 RED        [revealed]
+  Diamond              RED        [revealed]
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"computer","number":2,"reasoning":"Connects BLUE words APPLE and CHIP strongly, while avoiding strong association with the assassin ESCAPE and most red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Apple
+  Pilot
+  Burn
+  Dial
+  Chip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Apple","reasoning":"Strongest match to COMPUTER: Apple is a major computer company/brand, more direct than other options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Pilot
+  Burn
+  Dial
+  Chip
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+  [BLUE] COMPUTER 2  #1: Apple → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Chip","reasoning":"Strong computer association with microchips/computer hardware; best match among remaining words for COMPUTER after Apple."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Pilot
+  Burn
+  Dial
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+  [BLUE] COMPUTER 2  #1: Apple → blue
+  [BLUE] COMPUTER 2  #2: Chip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found both words for COMPUTER (Apple, Chip). A third guess would likely be a risky extra guess from an old clue, and none of the remaining words strongly fit better than the risk warrants."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Float                RED        
+  Hand                 BLUE       
+  Piano                NEUTRAL    
+  Boot                 RED        [revealed]
+  Venus                RED        [revealed]
+  Chill                BLUE       
+  China                BLUE       
+  Escape               ASSASSIN   
+  Teacher              RED        
+  Foam                 NEUTRAL    
+  Amazon               RED        
+  Hull                 BLUE       [revealed]
+  Apple                BLUE       [revealed]
+  Chapel               RED        [revealed]
+  Pilot                BLUE       
+  Blade                NEUTRAL    [revealed]
+  Crown                NEUTRAL    [revealed]
+  Chain                RED        [revealed]
+  Burn                 NEUTRAL    
+  Helm                 NEUTRAL    [revealed]
+  Dial                 NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Door                 BLUE       [revealed]
+  Gate                 RED        [revealed]
+  Diamond              RED        [revealed]
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+  [BLUE] COMPUTER 2  #1: Apple → blue
+  [BLUE] COMPUTER 2  #2: Chip → blue
+  [BLUE] COMPUTER 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, APPLE, BLADE, BOOT, BURN, CHAIN, CHAPEL, CHILL, CHINA, CHIP, CROWN, DIAL, DIAMOND, DOOR, ESCAPE, FLOAT, FOAM, GATE, HAND, HELM, HULL, PIANO, PILOT, TEACHER, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Jungle", "number": 1, "reasoning": "Amazon is associated with the jungle, and it's the only unrevealed red word left."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'JUNGLE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Float
+  Hand
+  Piano
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Amazon
+  Pilot
+  Burn
+  Dial
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+  [BLUE] COMPUTER 2  #1: Apple → blue
+  [BLUE] COMPUTER 2  #2: Chip → blue
+  [BLUE] COMPUTER 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Amazon", "reasoning": "Amazon is strongly associated with a jungle, making it the best match for the clue 'JUNGLE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'JUNGLE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Float
+  Hand
+  Piano
+  Chill
+  China
+  Escape
+  Teacher
+  Foam
+  Pilot
+  Burn
+  Dial
+
+Game history:
+  [RED] ROYALTY 3  #1: Crown → neutral
+  [BLUE] NAUTICAL 2  #1: Hull → blue
+  [BLUE] NAUTICAL 2  #2: Helm → neutral
+  [RED] MONARCH 3  #1: Venus → red
+  [RED] MONARCH 3  #2: Blade → neutral
+  [BLUE] ENTRY 2  #1: Door → blue
+  [BLUE] ENTRY 2  #2: Gate → red
+  [RED] NOBILITY 3  #1: Diamond → red
+  [RED] NOBILITY 3  #2: Chapel → red
+  [RED] NOBILITY 3  #3: Chain → red
+  [RED] NOBILITY 3  #4: Boot → red
+  [BLUE] COMPUTER 2  #1: Apple → blue
+  [BLUE] COMPUTER 2  #2: Chip → blue
+  [BLUE] COMPUTER 2  #3: PASS
+  [RED] JUNGLE 1  #1: Amazon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Escape", "reasoning": "Escape could relate to jungle scenarios involving survival or getting out, fitting the clue 'JUNGLE' better than other options."}
+============================================================

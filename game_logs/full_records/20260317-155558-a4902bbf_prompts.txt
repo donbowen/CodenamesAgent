@@ -1,0 +1,1928 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Watch                RED        
+  Cloud                BLUE       
+  Scale                RED        
+  Rock                 RED        
+  Foam                 ASSASSIN   
+  Keel                 BLUE       
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        
+  Telescope            RED        
+  Cup                  NEUTRAL    
+  Crop                 BLUE       
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        
+  Shoe                 BLUE       
+  Well                 RED        
+  Beam                 BLUE       
+  Phoenix              NEUTRAL    
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    
+  America              RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Instrument","number":3,"reasoning":"Links WATCH, SCALE, and TELESCOPE — all are instruments/tools used to measure or observe."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Watch
+  Cloud
+  Scale
+  Rock
+  Foam
+  Keel
+  Chase
+  Root
+  Hotel
+  Telescope
+  Cup
+  Crop
+  Loop
+  Rose
+  Mirror
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Telescope", "reasoning": "A telescope is clearly an instrument for observation (astronomy) — strong, direct match to INSTRUMENT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Cloud
+  Scale
+  Rock
+  Foam
+  Keel
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Mirror
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Scale", "reasoning": "Scale is a measuring instrument — fits the INSTRUMENT clue and pairs well with the earlier Telescope guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Cloud
+  Rock
+  Foam
+  Keel
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Mirror
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Watch","reasoning":"Like Telescope and Scale (both measurement instruments), a Watch is a measuring instrument (time) and fits the INSTRUMENT clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cloud
+  Rock
+  Foam
+  Keel
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Mirror
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Mirror", "reasoning": "Mirror is closely tied to optical instruments (telescopes/microscopes) and fits the INSTRUMENT theme alongside Telescope, Scale, and Watch."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       
+  Scale                RED        [revealed]
+  Rock                 RED        
+  Foam                 ASSASSIN   
+  Keel                 BLUE       
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        
+  Beam                 BLUE       
+  Phoenix              NEUTRAL    
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    
+  America              RED        
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Balance", "number": 2, "reasoning": "Relates to 'Keel' (part of a boat that helps with balance) and 'Scale' (which measures weight/balance) as a concept."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BALANCE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cloud
+  Rock
+  Foam
+  Keel
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Keel", "reasoning": "A 'keel' is part of a ship that helps maintain stability and balance."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BALANCE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cloud
+  Rock
+  Foam
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Scale", "reasoning": "Scale is directly related to balance, as it is used to measure weight and requires balance to function properly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BALANCE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cloud
+  Rock
+  Foam
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Beam
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Scale", "reasoning": "Scale is directly related to balance, as it is used to measure weight and requires balance to function properly."}
+
+[USER]
+Invalid response: 'SCALE' is not in the valid guesses list. Choose from: AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, LOOP, PHOENIX, ROCK, ROOT, ROSE, SATURN, SHOE, SPIDER, WELL. Try again.
+
+[RESPONSE]
+{"guess": "Beam", "reasoning": "Beam can refer to a balance beam, which is used in gymnastics and is directly associated with balance."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BALANCE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cloud
+  Rock
+  Foam
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Rock", "reasoning": "A rock can represent stability and balance."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    
+  America              RED        
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Travel", "number": 2, "reasoning": "Links HOTEL (stays) and AMERICA (a destination) without strongly pointing to assassin or known blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAVEL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cloud
+  Foam
+  Chase
+  Root
+  Hotel
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Hotel","reasoning":"Directly travel-related (lodging) — strong match for TRAVEL; pick this first before considering a second travel destination (e.g., Phoenix or America)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRAVEL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cloud
+  Foam
+  Chase
+  Root
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Phoenix
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Phoenix", "reasoning": "Phoenix is a travel destination (city) and pairs well with the already-guessed Hotel under the TRAVEL clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        [revealed]
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    
+  America              RED        
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FLOAT", "number": 2, "reasoning": "Both 'Crop' and 'Saturn' can relate to floating; crops can be associated with floating in water and Saturn is a gas giant, often depicted with its rings floating in space."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLOAT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cloud
+  Foam
+  Chase
+  Root
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cloud", "reasoning": "Clouds float in the sky, so it directly relates to the clue 'FLOAT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLOAT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Foam
+  Chase
+  Root
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Saturn
+  Spider
+  Duck
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Duck", "reasoning": "Ducks float on water, making it a strong association with the clue 'FLOAT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       [revealed]
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        [revealed]
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    
+  America              RED        
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Roswell", "number": 3, "reasoning": "Roswell (town in America) effectively combines ROSE + WELL and is located in America — links Rose, Well, America."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ROSWELL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Foam
+  Chase
+  Root
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Well
+  Saturn
+  Spider
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Well", "reasoning":"'Roswell' literally contains 'Well' (paired with 'Rose'); likely one of the intended red words — other targets could be 'Rose' and a space/UFO-related word (e.g. 'Saturn' or 'Crop')."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ROSWELL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Foam
+  Chase
+  Root
+  Cup
+  Crop
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+  Face
+  Flow
+  America
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Crop","reasoning":"Roswell evokes UFOs and crop circles — Crop fits that theme and is the best match from the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       [revealed]
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        [revealed]
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       [revealed]
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        [revealed]
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    
+  America              RED        
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Balance", "number": 2, "reasoning": "The clue 'Balance' relates to the concepts of stability and equilibrium, which can connect to 'Chase' (as in the balance of pursuit) and 'Shoe' (as in balance while walking)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BALANCE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Foam
+  Chase
+  Root
+  Cup
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Scale", "reasoning": "Scale relates to balance as it measures weight, which is essential for achieving balance. It is also a commonly associated term with balance."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BALANCE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Foam
+  Chase
+  Root
+  Cup
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+  Face
+  Flow
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "Scale", "reasoning": "Scale relates to balance as it measures weight, which is essential for achieving balance. It is also a commonly associated term with balance."}
+
+[USER]
+Invalid response: 'SCALE' is not in the valid guesses list. Choose from: AMERICA, CHASE, CUP, FACE, FLOW, FOAM, LOOP, ROOT, ROSE, SATURN, SHOE, SPIDER. Try again.
+
+[RESPONSE]
+{"guess": "FLOW", "reasoning": "Flow can represent balance in terms of movement and harmony, making it a suitable guess for the clue 'BALANCE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       [revealed]
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        [revealed]
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       [revealed]
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        [revealed]
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    
+  Flow                 NEUTRAL    [revealed]
+  America              RED        
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"national","number":2,"reasoning":"America is a nation and the rose is the national flower of the United States."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NATIONAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Foam
+  Chase
+  Root
+  Cup
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+  Face
+  America
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "America", "reasoning": "Direct match — 'national' points to a nation, and America is the clear nation-related choice (likely paired with Rose for the 2-clue)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NATIONAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Foam
+  Chase
+  Root
+  Cup
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+  Face
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+  [RED] NATIONAL 2  #1: America → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Face","reasoning":"'Face the Nation' is a direct phrase with NATIONAL, and America was already taken for this clue — Face is the strongest remaining match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       [revealed]
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        [revealed]
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    
+  Crop                 BLUE       [revealed]
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        [revealed]
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Flow                 NEUTRAL    [revealed]
+  America              RED        [revealed]
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+  [RED] NATIONAL 2  #1: America → red
+  [RED] NATIONAL 2  #2: Face → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FLOAT", "number": 3, "reasoning": "This relates to 'Chase', 'Shoe', and 'Saturn' as they can all be associated with floating or being airborne."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLOAT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Foam
+  Chase
+  Root
+  Cup
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+  [RED] NATIONAL 2  #1: America → red
+  [RED] NATIONAL 2  #2: Face → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cup", "reasoning": "A cup can float on water, making it a fitting guess for 'FLOAT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Watch                RED        [revealed]
+  Cloud                BLUE       [revealed]
+  Scale                RED        [revealed]
+  Rock                 RED        [revealed]
+  Foam                 ASSASSIN   
+  Keel                 BLUE       [revealed]
+  Chase                BLUE       
+  Root                 BLUE       
+  Hotel                RED        [revealed]
+  Telescope            RED        [revealed]
+  Cup                  NEUTRAL    [revealed]
+  Crop                 BLUE       [revealed]
+  Loop                 NEUTRAL    
+  Rose                 RED        
+  Mirror               RED        [revealed]
+  Shoe                 BLUE       
+  Well                 RED        [revealed]
+  Beam                 BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Saturn               BLUE       
+  Spider               NEUTRAL    
+  Duck                 NEUTRAL    [revealed]
+  Face                 NEUTRAL    [revealed]
+  Flow                 NEUTRAL    [revealed]
+  America              RED        [revealed]
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+  [RED] NATIONAL 2  #1: America → red
+  [RED] NATIONAL 2  #2: Face → neutral
+  [BLUE] FLOAT 3  #1: Cup → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, BEAM, CHASE, CLOUD, CROP, CUP, DUCK, FACE, FLOW, FOAM, HOTEL, KEEL, LOOP, MIRROR, PHOENIX, ROCK, ROOT, ROSE, SATURN, SCALE, SHOE, SPIDER, TELESCOPE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"thorn","number":1,"reasoning":"Thorns are strongly associated with roses and unlikely to point to blue, neutral, or the assassin word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'THORN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Foam
+  Chase
+  Root
+  Loop
+  Rose
+  Shoe
+  Saturn
+  Spider
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INSTRUMENT 3  #1: Telescope → red
+  [RED] INSTRUMENT 3  #2: Scale → red
+  [RED] INSTRUMENT 3  #3: Watch → red
+  [RED] INSTRUMENT 3  #4: Mirror → red
+  [BLUE] BALANCE 2  #1: Keel → blue
+  [BLUE] BALANCE 2  #2: Beam → blue
+  [BLUE] BALANCE 2  #3: Rock → red
+  [RED] TRAVEL 2  #1: Hotel → red
+  [RED] TRAVEL 2  #2: Phoenix → neutral
+  [BLUE] FLOAT 2  #1: Cloud → blue
+  [BLUE] FLOAT 2  #2: Duck → neutral
+  [RED] ROSWELL 3  #1: Well → red
+  [RED] ROSWELL 3  #2: Crop → blue
+  [BLUE] BALANCE 2  #1: Flow → neutral
+  [RED] NATIONAL 2  #1: America → red
+  [RED] NATIONAL 2  #2: Face → neutral
+  [BLUE] FLOAT 3  #1: Cup → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Rose", "reasoning": "Thorn most directly points to Rose (roses have thorns). We have one red left, so this is the best match."}
+============================================================

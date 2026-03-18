@@ -1,0 +1,2230 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Beam                 BLUE       
+  Chime                RED        
+  Saturn               ASSASSIN   
+  Foam                 BLUE       
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        
+  Fold                 NEUTRAL    
+  Orange               BLUE       
+  Turkey               BLUE       
+  Cook                 RED        
+  Ink                  RED        
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       
+  Flow                 NEUTRAL    
+  Axe                  RED        
+  Change               RED        
+  Square               RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Printing","number":3,"reasoning":"Connects INK, CHANGE, and SQUARE through printing terms: ink, change of type/layout, and square as a print/format shape. It avoids the assassin SATURN and has limited pull toward blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PRINTING' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beam
+  Chime
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Fold
+  Orange
+  Turkey
+  Cook
+  Ink
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Duck
+  Flow
+  Axe
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Ink","reasoning":"Most directly related to PRINTING; very high-confidence match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PRINTING' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beam
+  Chime
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Fold
+  Orange
+  Turkey
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Duck
+  Flow
+  Axe
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"FOLD","reasoning":"Strong fit with printing as in folded printed materials like brochures, newspapers, or page folds."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Beam                 BLUE       
+  Chime                RED        
+  Saturn               ASSASSIN   
+  Foam                 BLUE       
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       
+  Turkey               BLUE       
+  Cook                 RED        
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       
+  Flow                 NEUTRAL    
+  Axe                  RED        
+  Change               RED        
+  Square               RED        
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Feather", "number": 2, "reasoning": "Feather relates to both 'Duck' and 'Turkey', which are birds known for their feathers. No other team's words are strongly connected to this clue, and it avoids the assassin and opponent's words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FEATHER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beam
+  Chime
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Orange
+  Turkey
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Duck
+  Flow
+  Axe
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Turkey", "reasoning": "Turkeys have feathers, making 'Turkey' a strong match for the clue 'FEATHER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FEATHER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beam
+  Chime
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Duck
+  Flow
+  Axe
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Duck", "reasoning": "Ducks have feathers, making this a strong connection to the clue 'FEATHER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FEATHER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beam
+  Chime
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Axe
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We've already guessed two words related to 'FEATHER' (Turkey and Duck), which are the most obvious connections. No other words in the list strongly relate to feathers. It's safest to pass rather than risk hitting a neutral, red, or assassin word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Beam                 BLUE       
+  Chime                RED        
+  Saturn               ASSASSIN   
+  Foam                 BLUE       
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       
+  Turkey               BLUE       [revealed]
+  Cook                 RED        
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    
+  Axe                  RED        
+  Change               RED        
+  Square               RED        
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Sound","number":2,"reasoning":"Connects CHIME and HOLLOW (as in hollow sound) while avoiding strong links to the assassin SATURN and most blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SOUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beam
+  Chime
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Axe
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Chime","reasoning":"'Chime' is the strongest direct match to SOUND; it literally produces a sound."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SOUND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beam
+  Saturn
+  Foam
+  Helm
+  Queen
+  Hollow
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Axe
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Hollow","reasoning":"'Hollow' strongly relates to sound via echo/resonance in a hollow space, making it the best follow-up to 'SOUND'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SOUND' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beam
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Axe
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found 2 strong matches for SOUND (Chime, Hollow). A third guess would be a risky extra with no clear remaining match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Beam                 BLUE       
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       
+  Turkey               BLUE       [revealed]
+  Cook                 RED        
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    
+  Axe                  RED        
+  Change               RED        
+  Square               RED        
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "construction", "number": 2, "reasoning": "Beam and Foam are both commonly associated with construction: beams are structural elements, and foam is used for insulation. This clue connects these two blue words without pointing toward the assassin (Saturn) or red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONSTRUCTION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beam
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Axe
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Beam", "reasoning": "A beam is a structural element commonly used in construction, making it a strong match for the clue 'CONSTRUCTION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONSTRUCTION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Axe
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Axe", "reasoning": "An axe is a common tool used in construction for cutting wood and other materials, which directly relates to the clue 'CONSTRUCTION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Beam                 BLUE       [revealed]
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       
+  Turkey               BLUE       [revealed]
+  Cook                 RED        
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    
+  Axe                  RED        [revealed]
+  Change               RED        
+  Square               RED        
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Meal","number":2,"reasoning":"Connects strongly to COOK and FISH, while being less likely to suggest the assassin SATURN or the remaining blue words than broader food clues would."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Cook
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Cook","reasoning":"'Cook' is the strongest match for 'MEAL' because preparing a meal directly involves cooking."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Isle
+  Plant
+  Bite
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Bite","reasoning":"Strong match to MEAL; a bite is directly associated with eating, and it's safer than broader food-related options like Fish or Orange."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found both likely MEAL words (Cook and Bite). A third guess would be a risky extra guess with no strong remaining meal-related match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Beam                 BLUE       [revealed]
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       
+  Turkey               BLUE       [revealed]
+  Cook                 RED        [revealed]
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        [revealed]
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    
+  Axe                  RED        [revealed]
+  Change               RED        
+  Square               RED        
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "soap", "number": 2, "reasoning": "Soap connects to FOAM (as in soap foam) and can also relate to PLANT (as in soap plant, a common name for some plants with saponins). Both are Blue words. The other Blue word DRIVE is not strongly connected, but this clue avoids Red words and the assassin (SATURN)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOAP' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Saturn
+  Foam
+  Helm
+  Queen
+  Orange
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Foam", "reasoning": "Foam is closely related to soap, as soap often produces foam or bubbles when used."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOAP' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Helm
+  Queen
+  Orange
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Flow
+  Change
+  Square
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Flow", "reasoning": "Soap and foam both flow with water, and 'flow' is closely related to the use of soap and water. It's a strong connection for this clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Beam                 BLUE       [revealed]
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       [revealed]
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       
+  Turkey               BLUE       [revealed]
+  Cook                 RED        [revealed]
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        [revealed]
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    [revealed]
+  Axe                  RED        [revealed]
+  Change               RED        
+  Square               RED        
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"shape","number":2,"reasoning":"Targets SQUARE and CHANGE via geometric transformation; it avoids the assassin SATURN and is less direct for blue words than alternatives."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHAPE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Saturn
+  Helm
+  Queen
+  Orange
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Change
+  Square
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Square","reasoning":"Most direct match to 'SHAPE'; square is explicitly a shape."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHAPE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Helm
+  Queen
+  Orange
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Change
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Orange","reasoning":"Best fit to SHAPE among remaining words: orange is both a fruit and a geometric color/shape association is weaker than ideal, but it stands out more than the other options after Square."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Beam                 BLUE       [revealed]
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       [revealed]
+  Helm                 NEUTRAL    
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       [revealed]
+  Turkey               BLUE       [revealed]
+  Cook                 RED        [revealed]
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        [revealed]
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    [revealed]
+  Axe                  RED        [revealed]
+  Change               RED        
+  Square               RED        [revealed]
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Vehicle", "number": 1, "reasoning": "Of the remaining blue words—Plant, Undertaker, and Drive—'Drive' is strongly associated with vehicles. 'Vehicle' does not suggest any red words (Fish, Change), the assassin (Saturn), or neutrals (Helm, Queen, Isle, Code, Dawn). This clue safely targets one blue word without risking the assassin or opponent's words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VEHICLE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Saturn
+  Helm
+  Queen
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Drive
+  Change
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Drive", "reasoning": "'Drive' is most directly associated with 'vehicle' among the available words, as one typically drives a vehicle."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VEHICLE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Helm
+  Queen
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Change
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Helm", "reasoning": "A 'helm' is related to steering a vehicle, especially a ship or boat. It fits the clue 'VEHICLE' better than any other word remaining."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Beam                 BLUE       [revealed]
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       [revealed]
+  Helm                 NEUTRAL    [revealed]
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       [revealed]
+  Turkey               BLUE       [revealed]
+  Cook                 RED        [revealed]
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        [revealed]
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       [revealed]
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    [revealed]
+  Axe                  RED        [revealed]
+  Change               RED        
+  Square               RED        [revealed]
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+  [BLUE] VEHICLE 1  #2: Helm → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"evolution","number":1,"reasoning":"Change is the strongest match. It avoids the assassin Saturn and is less likely to suggest blue words like Plant or Undertaker than alternatives for Fish."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EVOLUTION' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Saturn
+  Queen
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+  Change
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+  [BLUE] VEHICLE 1  #2: Helm → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Change","reasoning":"'Evolution' most directly matches change; it's the strongest semantic fit among the unrevealed words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EVOLUTION' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Queen
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+  [BLUE] VEHICLE 1  #2: Helm → neutral
+  [RED] EVOLUTION 1  #1: Change → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already got the 1 intended word for EVOLUTION (Change). With only one red left, an extra guess is unnecessary and risks hitting blue, neutral, or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Beam                 BLUE       [revealed]
+  Chime                RED        [revealed]
+  Saturn               ASSASSIN   
+  Foam                 BLUE       [revealed]
+  Helm                 NEUTRAL    [revealed]
+  Queen                NEUTRAL    
+  Hollow               RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Orange               BLUE       [revealed]
+  Turkey               BLUE       [revealed]
+  Cook                 RED        [revealed]
+  Ink                  RED        [revealed]
+  Isle                 NEUTRAL    
+  Plant                BLUE       
+  Bite                 RED        [revealed]
+  Undertaker           BLUE       
+  Code                 NEUTRAL    
+  Fish                 RED        
+  Dawn                 NEUTRAL    
+  Drive                BLUE       [revealed]
+  Duck                 BLUE       [revealed]
+  Flow                 NEUTRAL    [revealed]
+  Axe                  RED        [revealed]
+  Change               RED        [revealed]
+  Square               RED        [revealed]
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+  [BLUE] VEHICLE 1  #2: Helm → neutral
+  [RED] EVOLUTION 1  #1: Change → red
+  [RED] EVOLUTION 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BEAM, BITE, CHANGE, CHIME, CODE, COOK, DAWN, DRIVE, DUCK, FISH, FLOW, FOAM, FOLD, HELM, HOLLOW, INK, ISLE, ORANGE, PLANT, QUEEN, SATURN, SQUARE, TURKEY, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "life", "number": 2, "reasoning": "Both 'Plant' and 'Undertaker' relate to the concept of life: 'Plant' is a living organism, and 'Undertaker' deals with the end of life. No other unrevealed words fit this clue, and it avoids the assassin ('Saturn')."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIFE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Saturn
+  Queen
+  Isle
+  Plant
+  Undertaker
+  Code
+  Fish
+  Dawn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+  [BLUE] VEHICLE 1  #2: Helm → neutral
+  [RED] EVOLUTION 1  #1: Change → red
+  [RED] EVOLUTION 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Plant", "reasoning": "Plants are living organisms and closely associated with the clue 'LIFE'. This is likely one of the intended words for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIFE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Saturn
+  Queen
+  Isle
+  Undertaker
+  Code
+  Fish
+  Dawn
+
+Game history:
+  [RED] PRINTING 3  #1: Ink → red
+  [RED] PRINTING 3  #2: Fold → neutral
+  [BLUE] FEATHER 2  #1: Turkey → blue
+  [BLUE] FEATHER 2  #2: Duck → blue
+  [BLUE] FEATHER 2  #3: PASS
+  [RED] SOUND 2  #1: Chime → red
+  [RED] SOUND 2  #2: Hollow → red
+  [RED] SOUND 2  #3: PASS
+  [BLUE] CONSTRUCTION 2  #1: Beam → blue
+  [BLUE] CONSTRUCTION 2  #2: Axe → red
+  [RED] MEAL 2  #1: Cook → red
+  [RED] MEAL 2  #2: Bite → red
+  [RED] MEAL 2  #3: PASS
+  [BLUE] SOAP 2  #1: Foam → blue
+  [BLUE] SOAP 2  #2: Flow → neutral
+  [RED] SHAPE 2  #1: Square → red
+  [RED] SHAPE 2  #2: Orange → blue
+  [BLUE] VEHICLE 1  #1: Drive → blue
+  [BLUE] VEHICLE 1  #2: Helm → neutral
+  [RED] EVOLUTION 1  #1: Change → red
+  [RED] EVOLUTION 1  #2: PASS
+  [BLUE] LIFE 2  #1: Plant → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fish", "reasoning": "Fish is a living creature and is directly associated with life. It is the strongest connection to the clue 'LIFE' among the remaining options."}
+============================================================

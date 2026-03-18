@@ -1,0 +1,2678 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       
+  Cherry               RED        
+  Pipe                 BLUE       
+  Flesh                RED        
+  Flight               RED        
+  Berry                BLUE       
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    
+  Hymn                 RED        
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        
+  Chain                RED        
+  Jet                  NEUTRAL    
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (Dragon).
+
+RED words remaining:
+- Cherry
+- Flesh
+- Flight
+- Fog
+- Hymn
+- Clear
+- Undertaker
+- Chain
+- Sub
+
+Let me look for connections:
+
+1. **Cherry, Berry (BLUE)** - Both fruits, but Berry is BLUE
+2. **Flight, Fly (NEUTRAL)** - Related to flying
+3. **Chain, Cord (BLUE)** - Both connectors, but Cord is BLUE
+4. **Sub, Undertaker** - Submarine and funeral director seem unrelated
+5. **Fog, Clear** - Weather/visibility related, opposites actually
+6. **Hymn** - Religious song
+
+Let me try thematic groupings:
+- **Military/Combat**: Sub (submarine), Chain (could be chain of command), Flight (military flight)
+- **Body/Physical**: Flesh, Cherry (slang for virginity)
+- **Funeral/Death**: Undertaker, Hymn (funeral hymn)
+- **Weather**: Fog, Clear
+
+"FUNERAL" could connect: Undertaker (funeral director), Hymn (funeral hymn), and possibly Flesh (mortal flesh). That's 3 words.
+
+"NAVAL" or "NAVY" could connect: Sub (submarine), Chain (anchor chain), Flight (flight deck). That's 3 words.
+
+"WEATHER" could connect: Fog, Clear - only 2 words
+
+Let me go with "FUNERAL" as it strongly connects Undertaker and Hymn, with Flesh being a reasonable third connection (mortal flesh, flesh and blood mortality themes).
+
+{"clue": "FUNERAL", "number": 3, "reasoning": "Connects UNDERTAKER (funeral director), HYMN (sung at funerals), and FLESH (mortal flesh/mortality theme)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FUNERAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Ivy
+  Cherry
+  Pipe
+  Flesh
+  Flight
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Hymn
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Undertaker
+  Chain
+  Jet
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Undertaker", "reasoning": "UNDERTAKER is directly associated with funerals - undertakers are funeral directors who manage funeral services and prepare bodies for burial. This is the strongest possible connection to the clue FUNERAL."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FUNERAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Ivy
+  Cherry
+  Pipe
+  Flesh
+  Flight
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Hymn
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Jet
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "HYMN",
+  "reasoning": "HYMN is strongly associated with funerals as hymns are songs commonly sung during funeral services. This is a clear second connection to the clue FUNERAL after Undertaker was correctly guessed."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FUNERAL' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Ivy
+  Cherry
+  Pipe
+  Flesh
+  Flight
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Jet
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words for the clue 'FUNERAL 3', matching the clue number. The remaining words don't have strong funeral associations - while 'Torch' could relate to a funeral pyre or 'Fly' to death symbolism, these connections are weak and risky. With Red trailing (7 vs 8 cards), I should avoid guessing incorrectly and potentially hitting the assassin or giving Blue an advantage. Passing now preserves our progress."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       
+  Cherry               RED        
+  Pipe                 BLUE       
+  Flesh                RED        
+  Flight               RED        
+  Berry                BLUE       
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        
+  Jet                  NEUTRAL    
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 3, "reasoning": "I chose 'Garden' because it relates to the words 'Berry', 'Ivy', and 'Chair', evoking imagery of plants and outdoor settings."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Ivy
+  Cherry
+  Pipe
+  Flesh
+  Flight
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Jet
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cherry", "reasoning": "Cherries are often found in gardens, making it a reasonable guess for the clue 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       
+  Flesh                RED        
+  Flight               RED        
+  Berry                BLUE       
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        
+  Jet                  NEUTRAL    
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words:
+- Flesh
+- Flight
+- Fog
+- Clear
+- Chain
+- Sub
+
+Let me analyze potential clues:
+
+1. **MIST** could connect to Fog and Clear (both relate to visibility/weather), but that's only 2 words.
+
+2. **METAL** could connect to Chain, but risks pointing to Pipe (BLUE) or Cord (BLUE).
+
+3. **NAVAL/MILITARY** could connect to Sub and Flight, but Flight could be confused with civilian flight.
+
+4. **TRANSPARENT** could work for Clear, but it's a bit abstract.
+
+5. **VAPOR** could connect to Fog and Clear (atmospheric conditions).
+
+6. **LINK** could work for Chain, but it's only 1 word and risks Code (BLUE).
+
+7. **BODY** could connect to Flesh, but risky with other body-part neutrals.
+
+8. **UNDERWATER** could work for Sub, but it's only 1 word.
+
+Looking for a stronger multi-word connection:
+
+**AIR** could connect to:
+- Flight (flying through air)
+- Fog (air condition)
+- Clear (clear air)
+
+This seems promising for 3 words. It avoids the ASSASSIN (Dragon) and most BLUE words. The main risk is Fly (NEUTRAL), but "air" as a clue is more conceptual than the action of flying.
+
+{"clue": "AIR", "number": 3, "reasoning": "Connects Flight (air travel), Fog (air condition), and Clear (air quality/visibility). Avoids assassin Dragon and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AIR' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Ivy
+  Pipe
+  Flesh
+  Flight
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Jet
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flight", "reasoning": "Flight is strongly associated with AIR - things that fly move through air, and flight is a direct air-related concept. This seems like the most obvious connection to the clue AIR."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AIR' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Ivy
+  Pipe
+  Flesh
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Jet
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Jet",
+  "reasoning": "JET is strongly associated with AIR - jet engines power aircraft through the air, and 'jet' itself relates to air travel and air propulsion. This is a highly confident match for the clue AIR."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 3, "reasoning": "The clue 'Garden' relates to Berry, Ivy, and Dust, which can all be associated with a garden environment."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Ivy
+  Pipe
+  Flesh
+  Berry
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Berry", "reasoning": "Berries are commonly found in gardens, making it a strong association with the clue 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Ivy
+  Pipe
+  Flesh
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ivy", "reasoning": "Ivy is a common plant found in gardens, making it a strong association with the clue 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Pipe
+  Flesh
+  Torch
+  Fly
+  Lab
+  Fog
+  Dig
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dig", "reasoning": "Digging is a common activity associated with gardening, making it a strong candidate for the clue 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words and find a clue that connects them while avoiding BLUE words, NEUTRAL words, and especially the ASSASSIN (Dragon).
+
+RED words remaining (unrevealed):
+- Flesh
+- Fog
+- Clear
+- Chain
+- Sub
+
+Let me consider potential clues:
+
+1. **MEAT** - Could connect to Flesh, but risky as it doesn't connect to others strongly.
+
+2. **WEATHER** - Could connect to Fog and Clear (weather conditions), but only 2 words.
+
+3. **LINK** - Could connect to Chain, but might also suggest Cord (BLUE).
+
+4. **SANDWICH** - Could connect to Sub (submarine sandwich), but only 1 word.
+
+5. **WATER** - Could connect to Sub (submarine), Fog (water vapor), Clear (clear water). This seems promising for 3 words.
+
+6. **METAL** - Could connect to Chain, but risky.
+
+7. **TRANSPARENT** - Too close to Clear itself.
+
+8. **NAVAL** - Could connect to Sub (submarine), Fog (fog horn/naval conditions). Possibly 2 words.
+
+9. **SKIN** - Could connect to Flesh and Clear (clear skin). Only 2 words though.
+
+10. **MIST** - Could connect to Fog and Clear (mist clears). Only 2 words.
+
+The safest option seems to be **WATER** for 3 words (Sub, Fog, Clear):
+- Sub = submarine (underwater vessel)
+- Fog = water vapor/mist
+- Clear = clear water
+
+This avoids Dragon (ASSASSIN) and the BLUE words reasonably well.
+
+{"clue": "WATER", "number": 3, "reasoning": "Connects Sub (submarine), Fog (water vapor), and Clear (clear water) while avoiding assassin and opponent words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Pipe
+  Flesh
+  Torch
+  Fly
+  Lab
+  Fog
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Pipe",
+  "reasoning": "WATER flows through pipes, making this a strong connection. Pipe is commonly associated with water in plumbing and water distribution systems."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 3, "reasoning": "The clue 'Garden' relates to the concepts of nature and growth, which can connect to the words 'Berry', 'Ivy', and 'Dust'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Flesh
+  Torch
+  Fly
+  Lab
+  Fog
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fly", "reasoning": "In a garden, you often find flies, so it relates well to the clue 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words:
+- Flesh
+- Fog
+- Clear
+- Chain
+- Sub
+
+Let me analyze each:
+- **Flesh**: body, meat, skin, tissue
+- **Fog**: mist, haze, cloud, vapor
+- **Clear**: transparent, obvious, see-through
+- **Chain**: link, metal, series, connected
+- **Sub**: submarine, sandwich, substitute, under
+
+Let me look for connections:
+
+**"Fog" and "Clear"**: Both relate to visibility/weather. "Hazy" could work but might be too close to fog.
+
+**"Chain" and "Sub"**: Chain could relate to submarine (anchor chain), but weak.
+
+**"Flesh" and "Fog"**: No clear connection.
+
+Let me try different angles:
+
+**METAL** - Could connect to Chain (metal links), Sub (metal vessel). Number: 2
+But need to avoid opponent words: Lens, Cord, Chair, Code, Dust (none strongly metal)
+
+**VAPOR/MIST** - Connects to Fog strongly, but only 1 word.
+
+**TRANSPARENT/SEE** - Clear is obvious, but what else? Fog can make things unclear (opposite). Not good.
+
+**LINK** - Chain, Sub (linked in a chain of command?), but weak.
+
+**SANDWICH** - Sub is a sandwich, but only 1 word and very specific.
+
+**MARINE/OCEAN** - Sub (submarine), Fog (sea fog), but Fog is weak. Could risk it being 2.
+
+**SHACKLE/BIND** - Chain, Flesh (bound in flesh?), weak.
+
+Let me reconsider **METAL**: Chain is definitely metal. Sub (submarine) is metal. This seems like the strongest connection for 2 words, and neither the assassin (Dragon) nor blue words (Lens, Cord, Chair, Code, Dust) are strongly metallic.
+
+{"clue": "metal", "number": 2, "reasoning": "Chain is made of metal links, and Sub (submarine) is a metal vessel. Avoids assassin Dragon and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Chain
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chain", "reasoning": "METAL strongly suggests Chain, which is literally made of metal links. This is a very direct connection and highly confident match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Cord
+  Clear
+  Dragon
+  Chair
+  Core
+  Cage
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "CORE",
+  "reasoning": "CORE is strongly associated with METAL - the Earth has a metal core (iron/nickel), and 'core' is used in metallurgy contexts. Chain was already correctly guessed for METAL, so CORE seems like the intended second word. This completes the clue count of 2, and I should consider passing after this unless I'm very confident about previous clues."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       
+  Core                 NEUTRAL    [revealed]
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       
+  Code                 BLUE       
+  Sub                  RED        
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 3, "reasoning": "The words 'Dust', 'Code', and 'Cord' can all relate to a garden theme."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Cord
+  Clear
+  Dragon
+  Chair
+  Cage
+  Dust
+  Code
+  Sub
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chair", "reasoning": "Chairs can often be found in a garden setting for relaxation."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Cord
+  Clear
+  Dragon
+  Cage
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "CORD", "reasoning": "Cord can be associated with gardening tools or tying plants."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Clear
+  Dragon
+  Cage
+  Dust
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dust", "reasoning": "Dust can accumulate in a garden, making it a relevant association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Clear
+  Dragon
+  Cage
+  Code
+  Sub
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Sub", "reasoning": "The word 'Sub' can relate to 'subterranean' or underground gardens, fitting the clue 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Lens                 BLUE       
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       [revealed]
+  Core                 NEUTRAL    [revealed]
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       [revealed]
+  Code                 BLUE       
+  Sub                  RED        [revealed]
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words:
+- Flesh
+- Fog
+- Clear
+
+Let me analyze each:
+- **Flesh**: relates to body, meat, skin, tissue
+- **Fog**: relates to mist, haze, weather, unclear visibility
+- **Clear**: relates to transparent, obvious, unclouded
+
+I need to avoid:
+- The ASSASSIN: Dragon
+- BLUE words: Lens, Code (unrevealed)
+- NEUTRAL words: Torch, Lab, Cage
+
+Let me think of connections:
+
+**Option 1: "Mist" for Fog + Clear**
+- Fog is literally mist
+- Clear could relate (clearing mist, or mist being not clear)
+- But this seems weak for Clear
+
+**Option 2: "Skin" for Flesh**
+- Strong connection to Flesh
+- But only covers 1 word
+
+**Option 3: "Body" for Flesh**
+- Strong connection to Flesh
+- But only covers 1 word
+
+**Option 4: "Transparent" for Clear**
+- Strong for Clear
+- Doesn't connect well to others
+
+**Option 5: "Haze" for Fog + Clear**
+- Fog is a type of haze
+- Clear is the opposite of haze (but might still work)
+- Risky connection
+
+**Option 6: "Weather" for Fog + Clear**
+- Fog is weather
+- Clear is weather condition
+- Doesn't risk assassin or blues
+
+**Option 7: "Visibility" for Fog + Clear**
+- Fog reduces visibility
+- Clear weather has good visibility
+- Both strongly relate to visibility
+
+Let me go with "Visibility" as it connects both Fog and Clear well, without risking Dragon, Lens, or Code.
+
+{"clue": "Visibility", "number": 2, "reasoning": "Fog reduces visibility, and Clear describes good visibility conditions. Both words strongly relate to this concept without risking the assassin or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISIBILITY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lens
+  Flesh
+  Torch
+  Lab
+  Fog
+  Clear
+  Dragon
+  Cage
+  Code
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'VISIBILITY' with 2 words, I need to find words that relate to seeing or being seen.
+
+From the valid guesses:
+- **Lens**: Directly related to visibility - lenses help you see clearly
+- **Torch**: Provides light, enabling visibility in darkness
+- **Clear**: Relates to visibility - clear things are visible, clear weather has good visibility
+- **Fog**: Reduces visibility significantly
+- **Lab**: Less direct connection
+- **Flesh**: No strong connection
+- **Dragon**: No connection
+- **Cage**: No connection
+- **Code**: No connection
+
+The strongest connections are:
+1. **Lens** - optical device for vision/visibility
+2. **Clear** - directly describes good visibility
+3. **Torch** - light source for visibility
+
+I'll start with the most direct connection.
+
+```json
+{"guess": "Lens", "reasoning": "Lens is directly related to visibility as an optical device that helps with seeing and vision clarity"}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Lens                 BLUE       [revealed]
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       [revealed]
+  Core                 NEUTRAL    [revealed]
+  Cage                 NEUTRAL    
+  Undertaker           RED        [revealed]
+  Chain                RED        [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       [revealed]
+  Code                 BLUE       
+  Sub                  RED        [revealed]
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 1, "reasoning": "The remaining unrevealed word 'Code' relates to the theme of a garden, as it can represent the structure or plan for a garden."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flesh
+  Torch
+  Lab
+  Fog
+  Clear
+  Dragon
+  Cage
+  Code
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cage", "reasoning": "A cage can often be found in a garden setting for birds or other animals."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Lens                 BLUE       [revealed]
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Lab                  NEUTRAL    
+  Fog                  RED        
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clear                RED        
+  Dragon               ASSASSIN   
+  Chair                BLUE       [revealed]
+  Core                 NEUTRAL    [revealed]
+  Cage                 NEUTRAL    [revealed]
+  Undertaker           RED        [revealed]
+  Chain                RED        [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       [revealed]
+  Code                 BLUE       
+  Sub                  RED        [revealed]
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+  [BLUE] GARDEN 1  #1: Cage → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Flesh, Fog, and Clear.
+
+Let me analyze each:
+- **Flesh**: body, meat, skin, tissue
+- **Fog**: mist, haze, cloud, vapor
+- **Clear**: transparent, obvious, bright, see-through
+
+Looking for connections:
+- Flesh and Clear: Both can relate to "skin" (clear skin, flesh of skin)
+- Fog and Clear: These are almost opposites (fog obscures, clear reveals)
+- All three could relate to visibility/transparency concepts
+
+Let me think of safer single connections:
+- **Flesh** alone: MEAT, BODY, SKIN
+- **Fog** alone: MIST, HAZE, CLOUD
+- **Clear** alone: TRANSPARENT, OBVIOUS
+
+Wait, I should check what's dangerous:
+- ASSASSIN: Dragon
+- BLUE remaining: Code
+- NEUTRALS: Torch, Lab
+
+For "FLESH" - thinking MEAT, BODY, SKIN, BONE
+For "FOG" - thinking MIST, HAZE, WEATHER
+For "CLEAR" - thinking TRANSPARENT, OBVIOUS
+
+"SKIN" could work for Flesh (and possibly Clear as in "clear skin")
+"WEATHER" could work for Fog (and possibly Clear as in "clear weather")
+
+Actually, "TRANSPARENT" works well for:
+- Clear (directly means transparent)
+- Fog (is semi-transparent/translucent)
+
+But that's risky with only 2 words strongly connected.
+
+Let me try "BODY":
+- Flesh (part of body)
+- Fog (not really...)
+
+"WEATHER" for Fog and Clear:
+- Fog is weather
+- Clear weather
+
+This seems safer! Weather connects to Fog strongly and Clear reasonably (clear skies/weather).
+
+{"clue": "weather", "number": 2, "reasoning": "FOG is a weather phenomenon, and CLEAR describes weather conditions (clear skies). Avoids assassin DRAGON and blue CODE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEATHER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flesh
+  Torch
+  Lab
+  Fog
+  Clear
+  Dragon
+  Code
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+  [BLUE] GARDEN 1  #1: Cage → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to WEATHER from the valid guesses list.
+
+Let me analyze each option:
+- **Flesh** - Not related to weather
+- **Torch** - Not related to weather
+- **Lab** - Not related to weather
+- **Fog** - STRONGLY related to weather (a weather condition)
+- **Clear** - Related to weather (clear skies, clear weather)
+- **Dragon** - Not related to weather
+- **Code** - Not related to weather
+
+The clue is WEATHER for 2 words. The two most obvious connections are:
+1. **Fog** - a direct weather phenomenon
+2. **Clear** - describes weather conditions (clear skies)
+
+Given that we have 3 red cards remaining and blue only has 1, we're in a good position. I should guess confidently but carefully.
+
+**Fog** is the strongest connection - it's literally a type of weather condition.
+
+```json
+{"guess": "Fog", "reasoning": "Fog is directly a weather phenomenon/condition, making it the strongest match for the clue WEATHER"}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEATHER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flesh
+  Torch
+  Lab
+  Clear
+  Dragon
+  Code
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+  [BLUE] GARDEN 1  #1: Cage → neutral
+  [RED] WEATHER 2  #1: Fog → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Clear",
+  "reasoning": "WEATHER clue with 2 words - I've already guessed 'Fog' correctly. 'Clear' is a weather-related term (clear skies, clear weather). With only 2 red cards remaining and 1 blue card left, I need to be careful but this seems like a strong connection to weather. If I'm wrong, I risk hitting neutral (turn ends) or blue (they win), but the connection seems solid enough to take the risk."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEATHER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flesh
+  Torch
+  Lab
+  Dragon
+  Code
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+  [BLUE] GARDEN 1  #1: Cage → neutral
+  [RED] WEATHER 2  #1: Fog → red
+  [RED] WEATHER 2  #2: Clear → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly for the WEATHER clue (Fog and Clear). Both teams have only 1 card remaining, making this a critical endgame situation. None of the remaining words (Flesh, Torch, Lab, Dragon, Code) have a strong connection to WEATHER. Guessing incorrectly now could hit the assassin or give Blue the win. Since I've fulfilled the clue number, passing is the safest strategic choice."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Lens                 BLUE       [revealed]
+  Ivy                  BLUE       [revealed]
+  Cherry               RED        [revealed]
+  Pipe                 BLUE       [revealed]
+  Flesh                RED        
+  Flight               RED        [revealed]
+  Berry                BLUE       [revealed]
+  Torch                NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Lab                  NEUTRAL    
+  Fog                  RED        [revealed]
+  Dig                  NEUTRAL    [revealed]
+  Hymn                 RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clear                RED        [revealed]
+  Dragon               ASSASSIN   
+  Chair                BLUE       [revealed]
+  Core                 NEUTRAL    [revealed]
+  Cage                 NEUTRAL    [revealed]
+  Undertaker           RED        [revealed]
+  Chain                RED        [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Dust                 BLUE       [revealed]
+  Code                 BLUE       
+  Sub                  RED        [revealed]
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+  [BLUE] GARDEN 1  #1: Cage → neutral
+  [RED] WEATHER 2  #1: Fog → red
+  [RED] WEATHER 2  #2: Clear → red
+  [RED] WEATHER 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BERRY, CAGE, CHAIN, CHAIR, CHERRY, CLEAR, CODE, CORD, CORE, DIG, DRAGON, DUST, FLESH, FLIGHT, FLY, FOG, HYMN, IVY, JET, LAB, LENS, PIPE, SUB, TORCH, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 1, "reasoning": "The clue relates to the word 'Code', as it can be associated with a garden in terms of design and planning."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flesh
+  Torch
+  Lab
+  Dragon
+  Code
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FUNERAL 3  #1: Undertaker → red
+  [RED] FUNERAL 3  #2: Hymn → red
+  [RED] FUNERAL 3  #3: PASS
+  [BLUE] GARDEN 3  #1: Cherry → red
+  [RED] AIR 3  #1: Flight → red
+  [RED] AIR 3  #2: Jet → neutral
+  [BLUE] GARDEN 3  #1: Berry → blue
+  [BLUE] GARDEN 3  #2: Ivy → blue
+  [BLUE] GARDEN 3  #3: Dig → neutral
+  [RED] WATER 3  #1: Pipe → blue
+  [BLUE] GARDEN 3  #1: Fly → neutral
+  [RED] METAL 2  #1: Chain → red
+  [RED] METAL 2  #2: Core → neutral
+  [BLUE] GARDEN 3  #1: Chair → blue
+  [BLUE] GARDEN 3  #2: Cord → blue
+  [BLUE] GARDEN 3  #3: Dust → blue
+  [BLUE] GARDEN 3  #4: Sub → red
+  [RED] VISIBILITY 2  #1: Lens → blue
+  [BLUE] GARDEN 1  #1: Cage → neutral
+  [RED] WEATHER 2  #1: Fog → red
+  [RED] WEATHER 2  #2: Clear → red
+  [RED] WEATHER 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flesh", "reasoning": "Flesh can be associated with organic matter often found in gardens, making it a relevant guess for 'GARDEN'."}
+============================================================

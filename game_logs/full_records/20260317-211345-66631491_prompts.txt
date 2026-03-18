@@ -1,0 +1,2556 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        
+  Court                BLUE       
+  Satellite            BLUE       
+  Comic                RED        
+  Cord                 BLUE       
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        
+  Gorge                RED        
+  Spirit               BLUE       
+  Laser                RED        
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    
+  Ember                NEUTRAL    
+  Freeze               RED        
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects RED words while avoiding BLUE words, NEUTRAL words, and especially the ASSASSIN (Russia).
+
+RED words remaining:
+- Pipe
+- Flesh
+- Force
+- Comic
+- Bridge
+- Gorge
+- Laser
+- Freeze
+- Fly
+
+Let me look for connections:
+
+1. **Pipe, Gorge** - both can relate to water flow/channels
+2. **Force, Laser** - both relate to physics/Star Wars
+3. **Freeze, Ember** - wait, Ember is NEUTRAL
+4. **Comic, Fly** - superhero connection (Superman can fly, comic books)
+5. **Bridge, Gorge** - geographical features
+6. **Flesh, Force** - weak connection
+
+Strong groupings:
+- **Bridge, Gorge** - both geographical features, canyons/ravines
+- **Laser, Force, Freeze** - Star Wars connection (laser beams, the Force, Han Solo frozen in carbonite)
+- **Comic, Fly** - superhero theme
+
+Let me try "CANYON" for Bridge and Gorge:
+- Bridge spans a canyon
+- Gorge IS a canyon
+- Safe from: Russia (no connection), Blue words seem safe, Neutrals safe
+
+Let me try "STAR" for Laser, Force, Comic:
+- Wait, "STAR" could connect to: Laser (Star Wars), Force (Star Wars), Comic (comic stars?)
+- But this might be risky
+
+Let me try "SUPERHERO" - no, that's too obvious and might not be allowed as compound.
+
+"CANYON" for 2 (Bridge, Gorge) seems safest and most direct.
+
+{"clue": "canyon", "number": 2, "reasoning": "Bridge spans a canyon, Gorge is a type of canyon. Both are geological features with strong direct connections."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CANYON' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Satellite
+  Comic
+  Cord
+  Clock
+  Slug
+  Bridge
+  Gorge
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "CANYON" from the valid guesses list.
+
+Let me think about what connects to CANYON:
+- **GORGE**: This is essentially a synonym for canyon - a deep ravine or narrow valley with steep sides. This is a very strong connection.
+- **BRIDGE**: Bridges often span canyons
+- **PIT**: A deep hole, somewhat similar to a canyon
+- **TRAIN**: The Grand Canyon has trains/railways
+
+GORGE is by far the strongest connection - it's almost a direct synonym for canyon. This seems like an obvious first guess.
+
+{"guess": "GORGE", "reasoning": "GORGE is essentially a synonym for CANYON - both refer to deep, narrow valleys with steep sides carved by water erosion"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CANYON' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Satellite
+  Comic
+  Cord
+  Clock
+  Slug
+  Bridge
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "BRIDGE",
+  "reasoning": "CANYON strongly connects to BRIDGE because many famous canyons have bridges spanning them (like the Royal Gorge Bridge). Since GORGE (a synonym for canyon) was already correctly guessed, BRIDGE is the most logical second word for this clue. It's a natural pairing with canyon geography."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CANYON' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Satellite
+  Comic
+  Cord
+  Clock
+  Slug
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly matching the CANYON clue (Gorge and Bridge). Since the clue number was 2, I've fulfilled the intended guesses. Looking at the remaining words, none have a strong connection to CANYON. Guessing further risks hitting a neutral, blue, or assassin card, which would be detrimental given we're behind (7 vs 8 cards). The safe play is to PASS and preserve our position."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        
+  Court                BLUE       
+  Satellite            BLUE       
+  Comic                RED        
+  Cord                 BLUE       
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       
+  Laser                RED        
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    
+  Ember                NEUTRAL    
+  Freeze               RED        
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"cable","number":2,"reasoning":"Connects Cord and Satellite (cable/cord and cable TV vs. satellite TV)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CABLE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Satellite
+  Comic
+  Cord
+  Clock
+  Slug
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cord", "reasoning": "Direct synonym of cable — cord is the obvious match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CABLE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Satellite
+  Comic
+  Clock
+  Slug
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Satellite", "reasoning": "Strong association with cable (cable TV vs satellite TV) — good match for the clue after Cord."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CABLE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Comic
+  Clock
+  Slug
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Comic","reasoning":"Cable is a well-known comic-book character (and 'comic' ties to 'Cable' via comics/characters)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        
+  Court                BLUE       
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       
+  Laser                RED        
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    
+  Ember                NEUTRAL    
+  Freeze               RED        
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for RED's remaining words: Pipe, Flesh, Force, Laser, Freeze, Fly.
+
+Let me analyze potential connections:
+
+**Pipe, Flesh, Force, Laser, Freeze, Fly** - These are quite diverse.
+
+Let me look for groupings:
+- **Pipe, Laser** - Both can shoot/emit things
+- **Freeze, Laser** - Both are actions/effects
+- **Fly, Force** - Both relate to movement/physics
+- **Flesh, Force** - "Flesh" and "Force" don't connect well
+
+Let me consider "RAY" as a clue:
+- Laser → a type of ray ✓
+- Freeze → freeze ray (sci-fi weapon) ✓
+- Force → not directly related
+- Pipe, Flesh, Fly → not related
+
+Let me try "WEAPON":
+- Laser → weapon ✓
+- Pipe → can be a weapon ✓
+- Force → "force" in military context ✓
+- But this might be too broad and risky
+
+Let me try "LIGHT":
+- Laser → emits light ✓
+- Pipe → not related
+- Freeze → not related
+
+Let me try "BEAM":
+- Laser → laser beam ✓
+- Pipe → pipe as a beam/support? Weak
+- Freeze → freeze beam? Possible
+
+Actually, "STAR" could work:
+- Force → Star Force, or "force" from Star Wars
+- Fly → starfly? No, too weak
+- Laser → star laser? Weak
+
+Let me reconsider "RAY":
+- Laser → ray of light/laser ray ✓
+- Freeze → freeze ray ✓
+This seems like the strongest 2-word connection, avoiding risks.
+
+Checking against dangers:
+- ASSASSIN (Russia) - not related to "ray"
+- BLUE words - Jar, Pit, Court, Slug, Spirit, Grace - none strongly relate to "ray"
+
+{"clue": "RAY", "number": 2, "reasoning": "Connects Laser (light ray/laser ray) and Freeze (freeze ray). Avoids assassin and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Clock
+  Slug
+  Spirit
+  Laser
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Laser", "reasoning": "RAY strongly connects to LASER (laser ray is a common phrase). This is a very confident first guess. Other possibilities like Force (ray of force) or Spirit (ray of hope/spirit) are weaker connections."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Alien
+  Ember
+  Freeze
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "FREEZE",
+  "reasoning": "RAY can connect to FREEZE through 'freeze ray' (a common sci-fi weapon concept). I've already gotten one correct guess (Laser) which strongly connects to RAY. FREEZE is my second guess for this clue. Since I have 5 cards left vs opponent's 6, I should be somewhat aggressive but careful not to hit the assassin or give the opponent too many cards."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Alien
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 2 words correctly for the clue 'RAY 2' (Laser and Freeze), matching the clue number. While I have one more guess available, I cannot confidently connect any remaining words to 'RAY'. Guessing incorrectly now risks hitting a blue card (opponent has 6 remaining), neutral, or worse - the assassin. With Red at 4 remaining vs Blue at 6, we're behind but not critically, so conservative play is wise here."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        
+  Court                BLUE       
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "tennis", "number": 1, "reasoning": "Points to Court (tennis court) — unlikely to suggest other board words"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TENNIS' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Court
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Alien
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Court","reasoning":"Direct association — tennis is played on a court."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TENNIS' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Alien
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found my TENNIS word (Court) this turn; no other safe strong tennis match among remaining words, so pass to avoid risking a bad guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        
+  Court                BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words and find a clue that connects them while avoiding BLUE words, NEUTRAL words, and especially the ASSASSIN (Russia).
+
+Remaining RED words:
+- Pipe
+- Flesh
+- Force
+- Fly
+
+Let me consider potential clues:
+
+1. **PLUMBING** - could connect to Pipe, but doesn't help with others
+2. **BODY** - could connect to Flesh, but risky as it might lead to other body parts
+3. **POWER** - could connect to Force, but limited
+4. **INSECT** - could connect to Fly, but Slug is BLUE (also an invertebrate)
+5. **SMOKE** - connects to Pipe (smoking pipe), but limited
+6. **MEAT** - connects to Flesh, but only one word
+7. **DRAIN** - connects to Pipe, but only one word
+
+Let me think about multi-word connections:
+- **STAR** - Star Force (video game), Fly (like a star), but weak
+- **WATER** - Water pipe, but risky with Pit (water pit)
+- **MUSCLE** - Flesh (muscle tissue), Force (muscle force), but only 2
+- **BRUTE** - Brute force, brute flesh (strength), but uncommon usage
+
+Looking at Pipe, Flesh, Force:
+- **BRUTE** could work for Force (brute force) and Flesh (brute strength/flesh), but Pipe doesn't fit well
+- **RAW** - Raw flesh, raw force (power), but Pipe doesn't fit
+
+For Fly and Force:
+- **AIR** - Air force, Fly (through air), but risky with Spirit (airy)
+
+Let me focus on the safest 2-word combination:
+- **Flesh** and **Force**: Both can relate to physical strength/power
+- **BRUTE** - "brute force" is a common phrase, "brute flesh" less so but could work
+
+Actually, **PHYSICAL** could work: physical force, physical flesh (corporeal), but doesn't include others.
+
+Let me try **BRUTE** for 2 (Force and Flesh).
+
+{"clue": "BRUTE", "number": 2, "reasoning": "Connects to Force (brute force - common computing/problem-solving term) and Flesh (brute strength, physical/fleshy brutality)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BRUTE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Force
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Alien
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that connect to "BRUTE" from the valid guesses list.
+
+Let me think about "BRUTE":
+- Brute force (a common phrase meaning raw power or a trial-and-error method)
+- Brute strength
+- Something brutal, savage, or animalistic
+
+Looking at the valid guesses:
+- **Force** - "Brute force" is a very strong, common phrase
+- **Flesh** - Could relate to physicality/brutality
+- **Alien** - Could be a "brute" alien character
+- **Slug** - Could mean to hit/punch brutally
+- **Hand** - Less direct connection
+- **Spirit** - Opposite of brute (spiritual vs. physical)
+
+"Force" seems like the strongest connection due to the common phrase "brute force." This is used in computing, physics, and general language to mean using raw power rather than finesse.
+
+{"guess": "Force", "reasoning": "BRUTE FORCE is a very common phrase meaning raw power or trial-and-error method, making this the strongest connection to the clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BRUTE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Alien
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "ALIEN",
+  "reasoning": "BRUTE connects to ALIEN through 'brute force' but also 'alien brute' is a common sci-fi trope. Force was already guessed correctly as the first word for this clue. ALIEN seems like a strong second connection to BRUTE, possibly through strength/power themes or sci-fi contexts where 'brute' aliens are common."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        [revealed]
+  Court                BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    [revealed]
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"HOLY","number":2,"reasoning":"Points to Holy Spirit (Spirit) and 'Amazing Grace' (Grace)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HOLY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Clock
+  Slug
+  Spirit
+  Cover
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Spirit", "reasoning": "'Holy Spirit' is a direct match to the clue; highest-confidence association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HOLY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Clock
+  Slug
+  Cover
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+  Grace
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Grace","reasoning":"'Grace' strongly matches HOLY (divine/holy grace, religious connotation and the hymn 'Amazing Grace')."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HOLY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Clock
+  Slug
+  Cover
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found the two HOLY targets (Spirit, Grace). Safer to stop rather than risk a neutral/opponent/assassin on an extra guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        
+  Force                RED        [revealed]
+  Court                BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       [revealed]
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    
+  Train                NEUTRAL    
+  Alien                NEUTRAL    [revealed]
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       [revealed]
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words:
+- Pipe
+- Flesh
+- Fly
+
+Let me think about connections:
+
+**Pipe**: Could relate to plumbing, smoking, organ pipe, pipeline
+**Flesh**: Body, meat, skin, human
+**Fly**: Insect, aviation, zipper
+
+Looking for a word that connects multiple RED words while avoiding:
+- BLUE words: Jar, Pit, Slug
+- ASSASSIN: Russia
+- NEUTRAL words: Clock, Cover, Train, Ember, Hand, Horn
+
+Possible clues:
+1. "BODY" - connects to Flesh (body part) and Fly (body of an insect), but weak for Pipe
+2. "ORGAN" - connects to Pipe (organ pipe) and Flesh (organ meat/tissue), but not Fly
+3. "TRAP" - connects to Fly (fly trap) and Pipe (pipe trap in plumbing), but not Flesh
+4. "MEAT" - connects to Flesh directly, Fly (meat fly/blowfly), less so Pipe
+5. "HUMAN" - Flesh (human flesh), Fly (human can fly in planes), Pipe (humans smoke pipes)
+
+"MEAT" seems promising:
+- Flesh = meat directly
+- Fly = meat flies/blowflies are common
+- Pipe = less direct but doesn't risk other words
+
+Checking risks:
+- Jar: No strong meat connection
+- Pit: Could be "pit" in meat (cherry pit, peach pit) - this is a risk
+- Slug: No meat connection
+- Russia: No meat connection
+- Neutral words: No strong meat connections
+
+Actually, "PIT" in fruit is a concern. Let me reconsider.
+
+"HUMAN" for 2 (Flesh + Fly):
+- Flesh = human flesh
+- Fly = human fly (less natural)
+- Avoids Pit risk
+
+Better: "SKIN" for 2:
+- Flesh and skin are closely related
+- Fly has skin/exoskeleton
+- But "skin" might not be on the board... checking... not forbidden!
+
+Wait, let me try "WATER" - Pipe (water pipe), but Slug and Pit don't fit well.
+
+I'll go with **"SKIN"** for 2 words (Flesh + Fly).
+
+{"clue": "SKIN", "number": 2, "reasoning": "Connects Flesh (skin is outer flesh) and Fly (insects have exoskeletons/skin), avoids risky words like Pit"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SKIN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Flesh
+  Clock
+  Slug
+  Cover
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "SKIN" from the valid guesses list.
+
+Let me analyze the options:
+- **Flesh**: Directly related to skin - flesh is the soft tissue beneath skin, very strong connection
+- **Cover**: Skin covers the body, good connection
+- **Pit**: Could relate to skin pits/pores, weaker connection
+- **Slug**: Slugs have slimy skin-like covering, possible connection
+- **Jar**: No clear connection
+- **Pipe**: No clear connection
+- **Clock**: No clear connection
+- **Train**: No clear connection
+- **Ember**: No clear connection
+- **Hand**: Has skin on it, but indirect
+- **Russia**: No clear connection
+- **Horn**: Animal horns are made of keratin like skin/nails, weak connection
+- **Fly**: Insects have exoskeletons, not skin
+
+The strongest connection is clearly **Flesh** - it's anatomically adjacent to skin and commonly paired together (e.g., "flesh and blood," discussing wounds, etc.).
+
+**Cover** is also strong since skin literally covers the body.
+
+Given that I need to guess at least once and can guess up to 3 times, I'll start with the most confident choice.
+
+{"guess": "Flesh", "reasoning": "Flesh is directly related to skin - it's the soft tissue beneath the skin, commonly paired together in language"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SKIN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Pit
+  Clock
+  Slug
+  Cover
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Cover",
+  "reasoning": "SKIN relates to COVER in multiple ways: skin can cover the body, book covers can be made of skin/leather, and 'cover your skin' is a common phrase. This is my second guess matching the clue number of 2, and I've already successfully guessed FLESH. With only 2 red cards remaining and this being a strong connection, I'll make this guess. If correct, we win the game (2/2 cards found). If wrong, I should probably pass after this since I'll have used my clue_number guesses."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       
+  Flesh                RED        [revealed]
+  Force                RED        [revealed]
+  Court                BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       [revealed]
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    [revealed]
+  Train                NEUTRAL    
+  Alien                NEUTRAL    [revealed]
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       [revealed]
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"ground","number":2,"reasoning":"Pit is a hole in the ground; slugs live on the ground — connects Pit and Slug without strongly pointing to opponent words or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GROUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Pit
+  Clock
+  Slug
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Pit", "reasoning": "A pit is a hole in the ground — strong direct association with 'ground'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GROUND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pipe
+  Jar
+  Clock
+  Slug
+  Train
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+  [BLUE] GROUND 2  #1: Pit → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Train","reasoning":"Ground→ground transportation/land travel pairs well with Train; likely the other GROUND target after Pit."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Pipe                 RED        
+  Jar                  BLUE       
+  Pit                  BLUE       [revealed]
+  Flesh                RED        [revealed]
+  Force                RED        [revealed]
+  Court                BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       [revealed]
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    [revealed]
+  Train                NEUTRAL    [revealed]
+  Alien                NEUTRAL    [revealed]
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       [revealed]
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+  [BLUE] GROUND 2  #1: Pit → blue
+  [BLUE] GROUND 2  #2: Train → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining words for RED team:
+- **Pipe** (RED, unrevealed)
+- **Fly** (RED, unrevealed)
+
+These are the only 2 RED words left to find.
+
+Let me consider clues:
+
+For **Pipe**:
+- Could relate to: plumbing, smoking, organ pipe, pipeline
+- Risky connections: "Jar" (BLUE) could be a container like a pipe
+
+For **Fly**:
+- Could relate to: insect, aviation, zipper fly, baseball fly
+- Risky connections: none obvious with remaining words
+
+For **both Pipe and Fly**:
+- Need a word that connects both
+- "Drain" - drain pipe and drain fly (common household pest)
+- "Fruit" - fruit fly is common, but fruit pipe doesn't work well
+- "House" - house fly and house pipe, but weak
+- "Water" - water pipe and... not really fly
+
+Let me think about "DRAIN":
+- Drain pipe ✓
+- Drain fly ✓ (small flies found near drains)
+- Doesn't match any board words ✓
+- Neutral words: Clock, Ember, Hand, Horn - no strong connection
+- ASSASSIN (Russia) - no connection
+- BLUE words: Jar, Slug - "Slug" could be garden slug that might be near drains, but that's a stretch
+
+"DRAIN" seems like a solid clue connecting both remaining RED words.
+
+{"clue": "DRAIN", "number": 2, "reasoning": "Connects 'Pipe' (drain pipe) and 'Fly' (drain fly, a common insect found near drains). Avoids the assassin and opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DRAIN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pipe
+  Jar
+  Clock
+  Slug
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+  [BLUE] GROUND 2  #1: Pit → blue
+  [BLUE] GROUND 2  #2: Train → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "DRAIN" from the valid guesses list.
+
+Let me think about connections to DRAIN:
+- **Pipe**: Drains often involve pipes, water drains through pipes - strong connection
+- **Jar**: Could drain liquid from a jar - moderate connection
+- **Slug**: Slugs leave slime trails that could "drain" - weak connection
+- **Fly**: Drain fly is a type of insect - possible connection
+- **Clock**: Time drains away - metaphorical but weak
+- **Ember**: Energy drains, embers drain heat - weak
+- **Hand**: Can drain by hand - weak
+- **Russia**: Geographic/political - no clear connection
+- **Horn**: No clear connection to drain
+
+The strongest connection is clearly **Pipe** - drains and pipes are directly related in plumbing contexts. Water drains through pipes.
+
+**Fly** could also work (drain fly), but Pipe is much more direct and certain.
+
+Since we have 2 red cards remaining and 2 blue cards remaining, and I can guess up to 3 times, I should be somewhat careful but the Pipe connection is very strong.
+
+{"guess": "Pipe", "reasoning": "Pipes are directly connected to drains in plumbing - water drains through pipes, and drain pipes are a common term"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DRAIN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Clock
+  Slug
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+  [BLUE] GROUND 2  #1: Pit → blue
+  [BLUE] GROUND 2  #2: Train → neutral
+  [RED] DRAIN 2  #1: Pipe → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "SLUG",
+  "reasoning": "DRAIN can relate to SLUG in multiple ways: a drain slug is a type of plumbing tool used to clear drains, and slugs are also associated with drains/damp areas. With only 1 red card remaining vs 2 blue cards, I need to be aggressive and continue guessing since I've already used 1 guess successfully. SLUG seems like a reasonable connection to DRAIN."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Pipe                 RED        [revealed]
+  Jar                  BLUE       
+  Pit                  BLUE       [revealed]
+  Flesh                RED        [revealed]
+  Force                RED        [revealed]
+  Court                BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Comic                RED        [revealed]
+  Cord                 BLUE       [revealed]
+  Clock                NEUTRAL    
+  Slug                 BLUE       [revealed]
+  Bridge               RED        [revealed]
+  Gorge                RED        [revealed]
+  Spirit               BLUE       [revealed]
+  Laser                RED        [revealed]
+  Cover                NEUTRAL    [revealed]
+  Train                NEUTRAL    [revealed]
+  Alien                NEUTRAL    [revealed]
+  Ember                NEUTRAL    
+  Freeze               RED        [revealed]
+  Hand                 NEUTRAL    
+  Russia               ASSASSIN   
+  Horn                 NEUTRAL    
+  Fly                  RED        
+  Grace                BLUE       [revealed]
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+  [BLUE] GROUND 2  #1: Pit → blue
+  [BLUE] GROUND 2  #2: Train → neutral
+  [RED] DRAIN 2  #1: Pipe → red
+  [RED] DRAIN 2  #2: Slug → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BRIDGE, CLOCK, COMIC, CORD, COURT, COVER, EMBER, FLESH, FLY, FORCE, FREEZE, GORGE, GRACE, HAND, HORN, JAR, LASER, PIPE, PIT, RUSSIA, SATELLITE, SLUG, SPIRIT, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"PICKLE","number":1,"reasoning":"A pickle is commonly stored in a jar — points to the remaining blue word 'Jar'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PICKLE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Clock
+  Ember
+  Hand
+  Russia
+  Horn
+  Fly
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CANYON 2  #1: Gorge → red
+  [RED] CANYON 2  #2: Bridge → red
+  [RED] CANYON 2  #3: PASS
+  [BLUE] CABLE 2  #1: Cord → blue
+  [BLUE] CABLE 2  #2: Satellite → blue
+  [BLUE] CABLE 2  #3: Comic → red
+  [RED] RAY 2  #1: Laser → red
+  [RED] RAY 2  #2: Freeze → red
+  [RED] RAY 2  #3: PASS
+  [BLUE] TENNIS 1  #1: Court → blue
+  [BLUE] TENNIS 1  #2: PASS
+  [RED] BRUTE 2  #1: Force → red
+  [RED] BRUTE 2  #2: Alien → neutral
+  [BLUE] HOLY 2  #1: Spirit → blue
+  [BLUE] HOLY 2  #2: Grace → blue
+  [BLUE] HOLY 2  #3: PASS
+  [RED] SKIN 2  #1: Flesh → red
+  [RED] SKIN 2  #2: Cover → neutral
+  [BLUE] GROUND 2  #1: Pit → blue
+  [BLUE] GROUND 2  #2: Train → neutral
+  [RED] DRAIN 2  #1: Pipe → red
+  [RED] DRAIN 2  #2: Slug → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jar", "reasoning": "Pickles are commonly kept in a jar — clear, direct association with the clue."}
+============================================================

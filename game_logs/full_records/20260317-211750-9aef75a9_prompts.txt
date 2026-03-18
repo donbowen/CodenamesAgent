@@ -1,0 +1,635 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bar                  NEUTRAL    
+  Paper                NEUTRAL    
+  Night                ASSASSIN   
+  King                 RED        
+  Jar                  RED        
+  Knot                 BLUE       
+  Glove                BLUE       
+  Fabric               RED        
+  Bolt                 NEUTRAL    
+  Fish                 BLUE       
+  India                BLUE       
+  Bell                 NEUTRAL    
+  Joint                RED        
+  Dune                 BLUE       
+  Fruit                BLUE       
+  Agent                RED        
+  Top                  RED        
+  Die                  RED        
+  Alien                RED        
+  Frost                BLUE       
+  Mind                 BLUE       
+  File                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Moscow               NEUTRAL    
+  Clock                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AGENT, ALIEN, BAR, BEAR, BELL, BOLT, CLOCK, DIE, DUNE, FABRIC, FILE, FISH, FROST, FRUIT, GLOVE, INDIA, JAR, JOINT, KING, KNOT, MIND, MOSCOW, NIGHT, PAPER, TOP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "spy", "number": 1, "reasoning": "Directly points to Agent (agent = spy)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPY' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bar
+  Paper
+  Night
+  King
+  Jar
+  Knot
+  Glove
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Agent
+  Top
+  Die
+  Alien
+  Frost
+  Mind
+  File
+  Bear
+  Moscow
+  Clock
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Agent","reasoning":"'Agent' is the closest synonym for 'spy' and directly matches the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPY' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bar
+  Paper
+  Night
+  King
+  Jar
+  Knot
+  Glove
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Top
+  Die
+  Alien
+  Frost
+  Mind
+  File
+  Bear
+  Moscow
+  Clock
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Moscow", "reasoning": "Moscow strongly evokes spies/KGB—most likely match for 'SPY'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bar                  NEUTRAL    
+  Paper                NEUTRAL    
+  Night                ASSASSIN   
+  King                 RED        
+  Jar                  RED        
+  Knot                 BLUE       
+  Glove                BLUE       
+  Fabric               RED        
+  Bolt                 NEUTRAL    
+  Fish                 BLUE       
+  India                BLUE       
+  Bell                 NEUTRAL    
+  Joint                RED        
+  Dune                 BLUE       
+  Fruit                BLUE       
+  Agent                RED        [revealed]
+  Top                  RED        
+  Die                  RED        
+  Alien                RED        
+  Frost                BLUE       
+  Mind                 BLUE       
+  File                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Moscow               NEUTRAL    [revealed]
+  Clock                RED        
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AGENT, ALIEN, BAR, BEAR, BELL, BOLT, CLOCK, DIE, DUNE, FABRIC, FILE, FISH, FROST, FRUIT, GLOVE, INDIA, JAR, JOINT, KING, KNOT, MIND, MOSCOW, NIGHT, PAPER, TOP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "cold", "number": 2, "reasoning": "Frost and Glove are both strongly associated with cold. Glove is worn to keep hands warm in the cold, and frost forms in cold conditions. None of the red words are strongly linked to 'cold', and the assassin ('Night') could be weakly linked but is less direct than Frost or Glove."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COLD' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bar
+  Paper
+  Night
+  King
+  Jar
+  Knot
+  Glove
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Top
+  Die
+  Alien
+  Frost
+  Mind
+  File
+  Bear
+  Clock
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Frost", "reasoning": "'Frost' is strongly associated with cold and fits the clue directly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COLD' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bar
+  Paper
+  Night
+  King
+  Jar
+  Knot
+  Glove
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Top
+  Die
+  Alien
+  Mind
+  File
+  Bear
+  Clock
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+  [BLUE] COLD 2  #1: Frost → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Glove", "reasoning": "Gloves are worn to keep hands warm in the cold, so 'Glove' fits the clue 'COLD' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COLD' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bar
+  Paper
+  Night
+  King
+  Jar
+  Knot
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Top
+  Die
+  Alien
+  Mind
+  File
+  Bear
+  Clock
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+  [BLUE] COLD 2  #1: Frost → blue
+  [BLUE] COLD 2  #2: Glove → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Both 'Frost' and 'Glove' were already guessed for 'COLD'. No other remaining words are strongly connected to 'COLD', so it's safest to pass to avoid hitting a neutral, red, or assassin card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bar                  NEUTRAL    
+  Paper                NEUTRAL    
+  Night                ASSASSIN   
+  King                 RED        
+  Jar                  RED        
+  Knot                 BLUE       
+  Glove                BLUE       [revealed]
+  Fabric               RED        
+  Bolt                 NEUTRAL    
+  Fish                 BLUE       
+  India                BLUE       
+  Bell                 NEUTRAL    
+  Joint                RED        
+  Dune                 BLUE       
+  Fruit                BLUE       
+  Agent                RED        [revealed]
+  Top                  RED        
+  Die                  RED        
+  Alien                RED        
+  Frost                BLUE       [revealed]
+  Mind                 BLUE       
+  File                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Moscow               NEUTRAL    [revealed]
+  Clock                RED        
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+  [BLUE] COLD 2  #1: Frost → blue
+  [BLUE] COLD 2  #2: Glove → blue
+  [BLUE] COLD 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AGENT, ALIEN, BAR, BEAR, BELL, BOLT, CLOCK, DIE, DUNE, FABRIC, FILE, FISH, FROST, FRUIT, GLOVE, INDIA, JAR, JOINT, KING, KNOT, MIND, MOSCOW, NIGHT, PAPER, TOP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "chess", "number": 2, "reasoning": "King is a chess piece and a chess clock links to Clock — ties those two RED words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CHESS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bar
+  Paper
+  Night
+  King
+  Jar
+  Knot
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Top
+  Die
+  Alien
+  Mind
+  File
+  Bear
+  Clock
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+  [BLUE] COLD 2  #1: Frost → blue
+  [BLUE] COLD 2  #2: Glove → blue
+  [BLUE] COLD 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "King", "reasoning": "Direct chess piece; likely pair is 'File' (a chess term for columns) as the second CHESS clue target."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CHESS' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bar
+  Paper
+  Night
+  Jar
+  Knot
+  Fabric
+  Bolt
+  Fish
+  India
+  Bell
+  Joint
+  Dune
+  Fruit
+  Top
+  Die
+  Alien
+  Mind
+  File
+  Bear
+  Clock
+
+Game history:
+  [RED] SPY 1  #1: Agent → red
+  [RED] SPY 1  #2: Moscow → neutral
+  [BLUE] COLD 2  #1: Frost → blue
+  [BLUE] COLD 2  #2: Glove → blue
+  [BLUE] COLD 2  #3: PASS
+  [RED] CHESS 2  #1: King → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Night","reasoning":"Chess clue likely targeted King (already taken) and Knight — spelled as Night on the board, making it the best second guess for CHESS."}
+============================================================

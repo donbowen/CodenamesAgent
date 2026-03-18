@@ -1,0 +1,1934 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        
+  Bruise               RED        
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    
+  Ball                 BLUE       
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       
+  Dove                 RED        
+  Boom                 BLUE       
+  Cat                  ASSASSIN   
+  Foam                 RED        
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       
+  Cage                 NEUTRAL    
+  Nurse                RED        
+  Lab                  BLUE       
+  Decay                RED        
+  Plane                NEUTRAL    
+  Axe                  RED        
+  Chapel               BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "injury", "number": 2, "reasoning": "Bruise and Crack both relate strongly to 'injury'. Decay is also somewhat related but less directly, so this clue is likely to connect your team with two of your words without endangering them with blue or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INJURY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Lava
+  Bruise
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Laser
+  Cage
+  Nurse
+  Lab
+  Decay
+  Plane
+  Axe
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bruise", "reasoning": "A bruise is a common type of injury, making it the most directly connected word to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INJURY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Lava
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Laser
+  Cage
+  Nurse
+  Lab
+  Decay
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Nurse", "reasoning": "A nurse is directly associated with treating injuries, making it a strong connection to the clue 'INJURY.'"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INJURY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Lava
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Laser
+  Cage
+  Lab
+  Decay
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Both Bruise and Nurse are strong matches for INJURY and have already been guessed. The remaining words are less directly connected to the clue, so it's safer to pass and avoid risking an incorrect guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    
+  Ball                 BLUE       
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       
+  Dove                 RED        
+  Boom                 BLUE       
+  Cat                  ASSASSIN   
+  Foam                 RED        
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       
+  Decay                RED        
+  Plane                NEUTRAL    
+  Axe                  RED        
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Science", "number": 2, "reasoning": "Links Lab and Laser, both science-related."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCIENCE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Lava
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Laser
+  Cage
+  Lab
+  Decay
+  Plane
+  Axe
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lab", "reasoning": "Direct science connection; 'lab' is central to science and likely a blue card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCIENCE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Lava
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Laser
+  Cage
+  Decay
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Laser", "reasoning": "Strong science association; laser is a quintessential science term and likely one of the two blue words for SCIENCE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCIENCE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Lava
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Decay
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Decay","reasoning":"Science-related term that fits the SCIENCE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    
+  Ball                 BLUE       
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       
+  Dove                 RED        
+  Boom                 BLUE       
+  Cat                  ASSASSIN   
+  Foam                 RED        
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    
+  Axe                  RED        
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "volcano", "number": 2, "reasoning": "Lava and Crack are both associated with volcanoes—lava flows from volcanoes and cracks form during eruptions. This clue connects both words without closely linking to any blue or assassin cards."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VOLCANO' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Lava
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lava", "reasoning": "Lava is directly associated with volcanoes, making it the strongest connection to the clue 'VOLCANO'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VOLCANO' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Boom
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Boom", "reasoning": "Volcanoes are associated with loud explosive eruptions, and 'Boom' directly relates to that concept."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        [revealed]
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    
+  Ball                 BLUE       
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       
+  Dove                 RED        
+  Boom                 BLUE       [revealed]
+  Cat                  ASSASSIN   
+  Foam                 RED        
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    
+  Axe                  RED        
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "CUE", "number": 2, "reasoning": "Connects to Ball and Pool via cue ball / pool cue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CUE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Cement
+  France
+  Clear
+  Ball
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ball", "reasoning": "Direct link: a cue is used with a cue ball in billiards/pool."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CUE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  France
+  Clear
+  Fang
+  Atlantis
+  Helicopter
+  Pool
+  Dove
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Pool", "reasoning": "Pool cue is used to strike the cue ball in billiards; matches the clue 'CUE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CUE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  France
+  Clear
+  Fang
+  Atlantis
+  Helicopter
+  Dove
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dove", "reasoning": "Dove commonly follows a cue in stage magic (cue the dove), a strong link to the clue 'CUE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        [revealed]
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    
+  Ball                 BLUE       [revealed]
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       [revealed]
+  Dove                 RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Cat                  ASSASSIN   
+  Foam                 RED        
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    
+  Axe                  RED        
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "bubble", "number": 2, "reasoning": "The remaining unrevealed red words are France, Foam, Crack, and Axe. 'Bubble' connects well with Foam (as foam consists of bubbles) and Crack (as in 'crackling' or the sound bubbles make when popping). The other two (France and Axe) are less connected to this clue, and none of the blue or assassin words are obviously related to 'bubble', minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BUBBLE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Cement
+  France
+  Clear
+  Fang
+  Atlantis
+  Helicopter
+  Cat
+  Foam
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Foam", "reasoning": "'Foam' is closely associated with bubbles, as bubbles are often made of foam or found within foam."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BUBBLE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  France
+  Clear
+  Fang
+  Atlantis
+  Helicopter
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Clear", "reasoning": "Bubbles are often clear, and 'clear' is a strong association with the physical appearance of bubbles. Of the remaining words, this is the most direct connection to the clue BUBBLE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        [revealed]
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    [revealed]
+  Ball                 BLUE       [revealed]
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       [revealed]
+  Dove                 RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Cat                  ASSASSIN   
+  Foam                 RED        [revealed]
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    
+  Axe                  RED        
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Blade", "number": 2, "reasoning": "Relates to Fang (blade-like tooth) and Helicopter (has blades)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLADE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Cement
+  France
+  Fang
+  Atlantis
+  Helicopter
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Axe
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Axe","reasoning":"Direct blade reference."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        [revealed]
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        
+  Clear                NEUTRAL    [revealed]
+  Ball                 BLUE       [revealed]
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       [revealed]
+  Dove                 RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Cat                  ASSASSIN   
+  Foam                 RED        [revealed]
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    
+  Axe                  RED        [revealed]
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Europe", "number": 1, "reasoning": "France is a country in Europe, making this a direct and safe clue for the unrevealed red word France. Crack is the other unrevealed red word, but there is no safe, meaningful common clue for both without risking blue or the assassin (Cat)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EUROPE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Cement
+  France
+  Fang
+  Atlantis
+  Helicopter
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "France", "reasoning": "France is a country in Europe and directly matches the clue 'EUROPE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EUROPE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  Fang
+  Atlantis
+  Helicopter
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We have already guessed one word for the EUROPE clue (France), which was correct. Since there is only one red word left and no other obvious strong connection to Europe among the remaining words, it's safer to pass and not risk guessing the assassin or a blue card when we only need one more red to win."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        [revealed]
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        [revealed]
+  Clear                NEUTRAL    [revealed]
+  Ball                 BLUE       [revealed]
+  Fang                 BLUE       
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       
+  Pool                 BLUE       [revealed]
+  Dove                 RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Cat                  ASSASSIN   
+  Foam                 RED        [revealed]
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    
+  Axe                  RED        [revealed]
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+  [RED] EUROPE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "BLADE", "number": 3, "reasoning": "Fangs are blade-like teeth; helicopters use blades (rotors); chapels are associated with blades in ceremonial contexts."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Cement
+  Fang
+  Atlantis
+  Helicopter
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+  [RED] EUROPE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Helicopter", "reasoning": "Directly linked to blades (rotor blades); strongest single association for BLADE among the plausible blue candidates."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  Fang
+  Atlantis
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+  [RED] EUROPE 1  #2: PASS
+  [BLUE] BLADE 3  #1: Helicopter → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fang", "reasoning": "Direct blade synonym; a fang is a blade-like tooth, matching the clue 'BLADE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Kelp
+  Cement
+  Atlantis
+  Cat
+  Harbor
+  Crack
+  Cage
+  Plane
+  Chapel
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+  [RED] EUROPE 1  #2: PASS
+  [BLUE] BLADE 3  #1: Helicopter → blue
+  [BLUE] BLADE 3  #2: Fang → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plane", "reasoning": "Blade refers to the cutting blade of a plane; a direct association with the clue BLADE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Kelp                 NEUTRAL    
+  Lava                 RED        [revealed]
+  Bruise               RED        [revealed]
+  Cement               NEUTRAL    
+  France               RED        [revealed]
+  Clear                NEUTRAL    [revealed]
+  Ball                 BLUE       [revealed]
+  Fang                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Helicopter           BLUE       [revealed]
+  Pool                 BLUE       [revealed]
+  Dove                 RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Cat                  ASSASSIN   
+  Foam                 RED        [revealed]
+  Harbor               NEUTRAL    
+  Crack                RED        
+  Laser                BLUE       [revealed]
+  Cage                 NEUTRAL    
+  Nurse                RED        [revealed]
+  Lab                  BLUE       [revealed]
+  Decay                RED        [revealed]
+  Plane                NEUTRAL    [revealed]
+  Axe                  RED        [revealed]
+  Chapel               BLUE       
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+  [RED] EUROPE 1  #2: PASS
+  [BLUE] BLADE 3  #1: Helicopter → blue
+  [BLUE] BLADE 3  #2: Fang → blue
+  [BLUE] BLADE 3  #3: Plane → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, AXE, BALL, BOOM, BRUISE, CAGE, CAT, CEMENT, CHAPEL, CLEAR, CRACK, DECAY, DOVE, FANG, FOAM, FRANCE, HARBOR, HELICOPTER, KELP, LAB, LASER, LAVA, NURSE, PLANE, POOL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "fracture", "number": 1, "reasoning": "The only Red word left is 'Crack', which is closely related to 'fracture'. This clue should clearly direct the team to the correct word while avoiding the assassin and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRACTURE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Kelp
+  Cement
+  Atlantis
+  Cat
+  Harbor
+  Crack
+  Cage
+  Chapel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] INJURY 2  #1: Bruise → red
+  [RED] INJURY 2  #2: Nurse → red
+  [RED] INJURY 2  #3: PASS
+  [BLUE] SCIENCE 2  #1: Lab → blue
+  [BLUE] SCIENCE 2  #2: Laser → blue
+  [BLUE] SCIENCE 2  #3: Decay → red
+  [RED] VOLCANO 2  #1: Lava → red
+  [RED] VOLCANO 2  #2: Boom → blue
+  [BLUE] CUE 2  #1: Ball → blue
+  [BLUE] CUE 2  #2: Pool → blue
+  [BLUE] CUE 2  #3: Dove → red
+  [RED] BUBBLE 2  #1: Foam → red
+  [RED] BUBBLE 2  #2: Clear → neutral
+  [BLUE] BLADE 2  #1: Axe → red
+  [RED] EUROPE 1  #1: France → red
+  [RED] EUROPE 1  #2: PASS
+  [BLUE] BLADE 3  #1: Helicopter → blue
+  [BLUE] BLADE 3  #2: Fang → blue
+  [BLUE] BLADE 3  #3: Plane → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crack", "reasoning": "'Fracture' is most closely associated with 'Crack', as both words relate to something breaking or splitting, especially in the context of injuries or materials. This is the strongest connection among the available options."}
+============================================================

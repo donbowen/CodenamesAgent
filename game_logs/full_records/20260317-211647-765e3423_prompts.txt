@@ -1,0 +1,1521 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Burst                RED        
+  Deck                 BLUE       
+  Ring                 NEUTRAL    
+  Card                 RED        
+  Beam                 BLUE       
+  Blast                NEUTRAL    
+  Drill                NEUTRAL    
+  Dash                 BLUE       
+  Lark                 BLUE       
+  Lever                RED        
+  Fruit                NEUTRAL    
+  Flash                RED        
+  Pool                 ASSASSIN   
+  Coast                BLUE       
+  Cabin                NEUTRAL    
+  Dawn                 BLUE       
+  Tank                 BLUE       
+  Disk                 RED        
+  Flag                 RED        
+  Horn                 NEUTRAL    
+  Boom                 NEUTRAL    
+  Bullet               BLUE       
+  Elm                  RED        
+  Cover                RED        
+  Depot                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLAST, BOOM, BULLET, BURST, CABIN, CARD, COAST, COVER, DASH, DAWN, DECK, DEPOT, DISK, DRILL, ELM, FLAG, FLASH, FRUIT, HORN, LARK, LEVER, POOL, RING, TANK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the red words, I can see several that relate to explosions or sudden actions:
+
+RED words: Burst, Card, Lever, Flash, Disk, Flag, Elm, Cover, Depot
+
+I notice that "Burst", "Flash", and potentially "Blast" (though it's neutral) all relate to sudden, explosive actions. However, I need to be careful not to lead toward blue words like "Beam" or the assassin "Pool".
+
+The word "EXPLOSION" could connect to Burst and Flash, as both relate to sudden bursts of energy or light. This seems like a safe connection that avoids the assassin and blue words.
+
+{"clue": "EXPLOSION", "number": 2, "reasoning": "Connects BURST and FLASH as both relate to sudden explosive energy or light, avoiding assassin and opponent words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EXPLOSION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Burst
+  Deck
+  Ring
+  Card
+  Beam
+  Blast
+  Drill
+  Dash
+  Lark
+  Lever
+  Fruit
+  Flash
+  Pool
+  Coast
+  Cabin
+  Dawn
+  Tank
+  Disk
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Blast", "reasoning": "Blast is the most direct synonym for explosion - both refer to sudden, violent releases of energy. This is a very strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Burst                RED        
+  Deck                 BLUE       
+  Ring                 NEUTRAL    
+  Card                 RED        
+  Beam                 BLUE       
+  Blast                NEUTRAL    [revealed]
+  Drill                NEUTRAL    
+  Dash                 BLUE       
+  Lark                 BLUE       
+  Lever                RED        
+  Fruit                NEUTRAL    
+  Flash                RED        
+  Pool                 ASSASSIN   
+  Coast                BLUE       
+  Cabin                NEUTRAL    
+  Dawn                 BLUE       
+  Tank                 BLUE       
+  Disk                 RED        
+  Flag                 RED        
+  Horn                 NEUTRAL    
+  Boom                 NEUTRAL    
+  Bullet               BLUE       
+  Elm                  RED        
+  Cover                RED        
+  Depot                RED        
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLAST, BOOM, BULLET, BURST, CABIN, CARD, COAST, COVER, DASH, DAWN, DECK, DEPOT, DISK, DRILL, ELM, FLAG, FLASH, FRUIT, HORN, LARK, LEVER, POOL, RING, TANK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"morning","number":2,"reasoning":"Dawn happens in the morning and larks are known as morning-singing birds."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MORNING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Burst
+  Deck
+  Ring
+  Card
+  Beam
+  Drill
+  Dash
+  Lark
+  Lever
+  Fruit
+  Flash
+  Pool
+  Coast
+  Cabin
+  Dawn
+  Tank
+  Disk
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Dawn","reasoning":"Direct match for MORNING — dawn = morning; highest-confidence pick."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MORNING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Ring
+  Card
+  Beam
+  Drill
+  Dash
+  Lark
+  Lever
+  Fruit
+  Flash
+  Pool
+  Coast
+  Cabin
+  Tank
+  Disk
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Lark","reasoning":"“Morning lark” is a common phrase (bird active in the morning); pairs well with Dawn already found."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MORNING' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Ring
+  Card
+  Beam
+  Drill
+  Dash
+  Lever
+  Fruit
+  Flash
+  Pool
+  Coast
+  Cabin
+  Tank
+  Disk
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Ring","reasoning":"Alarms 'ring' in the morning — strong direct association with MORNING."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Burst                RED        
+  Deck                 BLUE       
+  Ring                 NEUTRAL    [revealed]
+  Card                 RED        
+  Beam                 BLUE       
+  Blast                NEUTRAL    [revealed]
+  Drill                NEUTRAL    
+  Dash                 BLUE       
+  Lark                 BLUE       [revealed]
+  Lever                RED        
+  Fruit                NEUTRAL    
+  Flash                RED        
+  Pool                 ASSASSIN   
+  Coast                BLUE       
+  Cabin                NEUTRAL    
+  Dawn                 BLUE       [revealed]
+  Tank                 BLUE       
+  Disk                 RED        
+  Flag                 RED        
+  Horn                 NEUTRAL    
+  Boom                 NEUTRAL    
+  Bullet               BLUE       
+  Elm                  RED        
+  Cover                RED        
+  Depot                RED        
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLAST, BOOM, BULLET, BURST, CABIN, CARD, COAST, COVER, DASH, DAWN, DECK, DEPOT, DISK, DRILL, ELM, FLAG, FLASH, FRUIT, HORN, LARK, LEVER, POOL, RING, TANK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the RED words that need to be revealed:
+- Burst, Card, Lever, Flash, Disk, Flag, Elm, Cover, Depot
+
+I need to find a clue that connects multiple RED words while avoiding the ASSASSIN (Pool) and BLUE words.
+
+I notice several RED words relate to computer/technology concepts:
+- Card (memory card, graphics card)
+- Disk (hard disk, floppy disk) 
+- Flash (flash drive, flash memory)
+
+The word "MEMORY" could connect these three technology-related words effectively. Memory cards, disk memory, and flash memory are all common computer storage concepts.
+
+This clue avoids:
+- The ASSASSIN word "Pool" (no connection to memory)
+- BLUE words like Beam, Deck, Dash, Coast, Tank, Bullet (no strong memory connections)
+- Already revealed neutral words
+
+{"clue": "MEMORY", "number": 3, "reasoning": "Connects Card, Disk, and Flash as computer memory/storage devices"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEMORY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Burst
+  Deck
+  Card
+  Beam
+  Drill
+  Dash
+  Lever
+  Fruit
+  Flash
+  Pool
+  Coast
+  Cabin
+  Tank
+  Disk
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "MEMORY" from the valid guesses list.
+
+Looking at the options, I can see several potential connections:
+- "Card" - memory cards are used in computers and cameras for storage
+- "Disk" - memory disks/hard disks store data and memories
+- "Flash" - flash memory is a common type of computer memory storage
+
+"Flash" seems like the strongest connection to memory, as flash memory is a very common term in technology for storing data and information.
+
+{"guess": "Flash", "reasoning": "Flash memory is a common type of computer storage that directly relates to the concept of memory"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEMORY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Card
+  Beam
+  Drill
+  Dash
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Disk
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "MEMORY" and the remaining words, I need to find connections to memory or remembering.
+
+From my first guess "Flash" (which was correct), I can see the spymaster is thinking about memory-related concepts. 
+
+Looking at the remaining options:
+- **DISK** - This strongly connects to memory as computer storage/memory disks
+- **CARD** - Could relate to memory cards (SD cards, etc.)
+- **DECK** - Could relate to flashcard decks used for memorization
+- **TANK** - Think tank, memory bank concepts
+- **COVER** - Less clear connection
+
+DISK seems like the strongest connection to memory, especially given that Flash was correct (flash memory, flash drives, etc. - all computer storage/memory related).
+
+{"guess": "DISK", "reasoning": "DISK connects strongly to computer memory/storage, following the pattern established by the correct guess FLASH (flash memory/drives)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEMORY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Card
+  Beam
+  Drill
+  Dash
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "MEMORY" and the remaining words, I need to find something that relates to memory or data storage.
+
+I've already successfully guessed "Flash" (flash memory) and "Disk" (disk storage), both computer memory-related terms. 
+
+Looking at the remaining options, "Card" stands out as it can refer to memory cards (SD cards, flash cards, etc.) which are common storage devices. This fits perfectly with the memory theme established by the previous correct guesses.
+
+{"guess": "Card", "reasoning": "Card relates to memory cards/storage devices, continuing the computer memory theme from Flash and Disk"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEMORY' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Beam
+  Drill
+  Dash
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at this situation:
+
+- I've already successfully guessed 3 words for the "MEMORY" clue (Flash, Disk, Card)
+- The clue was for 3 words, so I've fulfilled the expected number
+- I have 1 guess remaining (4th guess allowed since clue was 3)
+- The game is tied 6-6, so taking unnecessary risks could be dangerous
+
+Since I've already gotten the expected 3 words for "MEMORY" and there's no obvious strong connection between "MEMORY" and any of the remaining words, the smart play is to pass and avoid risking hitting a neutral, opponent card, or assassin.
+
+{"guess": "PASS", "reasoning": "Already got 3 correct guesses matching the clue number. No clear memory connections in remaining words, and with game tied 6-6, avoiding risk is wise."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Burst                RED        
+  Deck                 BLUE       
+  Ring                 NEUTRAL    [revealed]
+  Card                 RED        [revealed]
+  Beam                 BLUE       
+  Blast                NEUTRAL    [revealed]
+  Drill                NEUTRAL    
+  Dash                 BLUE       
+  Lark                 BLUE       [revealed]
+  Lever                RED        
+  Fruit                NEUTRAL    
+  Flash                RED        [revealed]
+  Pool                 ASSASSIN   
+  Coast                BLUE       
+  Cabin                NEUTRAL    
+  Dawn                 BLUE       [revealed]
+  Tank                 BLUE       
+  Disk                 RED        [revealed]
+  Flag                 RED        
+  Horn                 NEUTRAL    
+  Boom                 NEUTRAL    
+  Bullet               BLUE       
+  Elm                  RED        
+  Cover                RED        
+  Depot                RED        
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLAST, BOOM, BULLET, BURST, CABIN, CARD, COAST, COVER, DASH, DAWN, DECK, DEPOT, DISK, DRILL, ELM, FLAG, FLASH, FRUIT, HORN, LARK, LEVER, POOL, RING, TANK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"FAST","number":3,"reasoning":"Points to Dash (quick), Bullet (fast projectile) and Beam (light is very fast)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FAST' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Burst
+  Deck
+  Beam
+  Drill
+  Dash
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dash", "reasoning": "Direct match — a 'dash' is a short, fast run; strongest, most obvious connection to FAST."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FAST' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Beam
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Bullet
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Bullet","reasoning":"A bullet is strongly associated with high speed — a clear match for FAST."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FAST' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Burst
+  Deck
+  Beam
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Elm
+  Cover
+  Depot
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Burst","reasoning":"A 'burst' (burst of speed) strongly matches FAST and is the clearest remaining fit for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Burst                RED        [revealed]
+  Deck                 BLUE       
+  Ring                 NEUTRAL    [revealed]
+  Card                 RED        [revealed]
+  Beam                 BLUE       
+  Blast                NEUTRAL    [revealed]
+  Drill                NEUTRAL    
+  Dash                 BLUE       [revealed]
+  Lark                 BLUE       [revealed]
+  Lever                RED        
+  Fruit                NEUTRAL    
+  Flash                RED        [revealed]
+  Pool                 ASSASSIN   
+  Coast                BLUE       
+  Cabin                NEUTRAL    
+  Dawn                 BLUE       [revealed]
+  Tank                 BLUE       
+  Disk                 RED        [revealed]
+  Flag                 RED        
+  Horn                 NEUTRAL    
+  Boom                 NEUTRAL    
+  Bullet               BLUE       [revealed]
+  Elm                  RED        
+  Cover                RED        
+  Depot                RED        
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLAST, BOOM, BULLET, BURST, CABIN, CARD, COAST, COVER, DASH, DAWN, DECK, DEPOT, DISK, DRILL, ELM, FLAG, FLASH, FRUIT, HORN, LARK, LEVER, POOL, RING, TANK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words:
+- LEVER (mechanical device)
+- FLAG (symbol/banner)
+- ELM (type of tree)
+- COVER (protection/shelter)
+- DEPOT (storage/station)
+
+I need to find a clue that connects multiple RED words while avoiding the ASSASSIN (POOL) and remaining BLUE words (DECK, BEAM, COAST, TANK).
+
+The word "STATION" could work well:
+- DEPOT is literally a type of station (train depot, bus depot)
+- FLAG is commonly found at stations (flag poles at government stations, train stations)
+- LEVER could relate to station equipment (signal levers at train stations)
+
+This avoids pointing toward POOL (assassin) or any blue words, and doesn't match any forbidden board words.
+
+{"clue": "STATION", "number": 3, "reasoning": "DEPOT is a type of station, FLAG flies at stations, and LEVER relates to station equipment like signal controls"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STATION' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Deck
+  Beam
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Elm
+  Cover
+  Depot
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "STATION" and the available words, I need to find words that could relate to different types of stations.
+
+The most obvious connection is "DEPOT" - this is essentially synonymous with station, as both refer to transportation hubs where trains, buses, or other vehicles stop. Train depot and train station mean essentially the same thing.
+
+Other possibilities like "TANK" (gas station) or "CABIN" (station cabin) seem less direct, and I want to start with the strongest connection.
+
+{"guess": "DEPOT", "reasoning": "DEPOT is essentially synonymous with STATION - both refer to transportation hubs, particularly for trains and buses"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STATION' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Deck
+  Beam
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Tank
+  Flag
+  Horn
+  Boom
+  Elm
+  Cover
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+  [RED] STATION 3  #1: Depot → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "STATION" and the remaining words, I need to find connections to different types of stations or places where you might find stations.
+
+From the valid guesses, I can see several potential connections:
+- **Tank**: Could relate to a gas station (fuel tank) or tank station
+- **Cabin**: Could relate to a train station (train cabins) or a station house/cabin
+- **Deck**: Could relate to a naval station or ship's deck
+- **Pool**: Could relate to a pumping station or water station
+
+Given that I successfully found "Depot" (which is very similar to station), I'm looking for other transportation or infrastructure-related words. "Tank" seems like the strongest connection as gas stations have fuel tanks, and there are also tank stations in military contexts.
+
+{"guess": "Tank", "reasoning": "Tank connects to station through gas stations (fuel tanks) and military tank stations/depots"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Burst                RED        [revealed]
+  Deck                 BLUE       
+  Ring                 NEUTRAL    [revealed]
+  Card                 RED        [revealed]
+  Beam                 BLUE       
+  Blast                NEUTRAL    [revealed]
+  Drill                NEUTRAL    
+  Dash                 BLUE       [revealed]
+  Lark                 BLUE       [revealed]
+  Lever                RED        
+  Fruit                NEUTRAL    
+  Flash                RED        [revealed]
+  Pool                 ASSASSIN   
+  Coast                BLUE       
+  Cabin                NEUTRAL    
+  Dawn                 BLUE       [revealed]
+  Tank                 BLUE       [revealed]
+  Disk                 RED        [revealed]
+  Flag                 RED        
+  Horn                 NEUTRAL    
+  Boom                 NEUTRAL    
+  Bullet               BLUE       [revealed]
+  Elm                  RED        
+  Cover                RED        
+  Depot                RED        [revealed]
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+  [RED] STATION 3  #1: Depot → red
+  [RED] STATION 3  #2: Tank → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLAST, BOOM, BULLET, BURST, CABIN, CARD, COAST, COVER, DASH, DAWN, DECK, DEPOT, DISK, DRILL, ELM, FLAG, FLASH, FRUIT, HORN, LARK, LEVER, POOL, RING, TANK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"PIER","number":3,"reasoning":"A pier on the coast has a deck and is supported by beams — links Coast, Deck, and Beam."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PIER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Deck
+  Beam
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Flag
+  Horn
+  Boom
+  Elm
+  Cover
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+  [RED] STATION 3  #1: Depot → red
+  [RED] STATION 3  #2: Tank → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Deck","reasoning":"A pier has a deck — strong direct association with 'PIER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PIER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beam
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Flag
+  Horn
+  Boom
+  Elm
+  Cover
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+  [RED] STATION 3  #1: Depot → red
+  [RED] STATION 3  #2: Tank → blue
+  [BLUE] PIER 3  #1: Deck → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Beam","reasoning":"Piers are held up by support beams — Beam strongly fits the PIER clue (and Deck was already taken)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PIER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Drill
+  Lever
+  Fruit
+  Pool
+  Coast
+  Cabin
+  Flag
+  Horn
+  Boom
+  Elm
+  Cover
+
+Game history:
+  [RED] EXPLOSION 2  #1: Blast → neutral
+  [BLUE] MORNING 2  #1: Dawn → blue
+  [BLUE] MORNING 2  #2: Lark → blue
+  [BLUE] MORNING 2  #3: Ring → neutral
+  [RED] MEMORY 3  #1: Flash → red
+  [RED] MEMORY 3  #2: Disk → red
+  [RED] MEMORY 3  #3: Card → red
+  [RED] MEMORY 3  #4: PASS
+  [BLUE] FAST 3  #1: Dash → blue
+  [BLUE] FAST 3  #2: Bullet → blue
+  [BLUE] FAST 3  #3: Burst → red
+  [RED] STATION 3  #1: Depot → red
+  [RED] STATION 3  #2: Tank → blue
+  [BLUE] PIER 3  #1: Deck → blue
+  [BLUE] PIER 3  #2: Beam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Coast","reasoning":"A pier is built on the coast—strongly related to deck and beam (already found) and fits the clue well."}
+============================================================

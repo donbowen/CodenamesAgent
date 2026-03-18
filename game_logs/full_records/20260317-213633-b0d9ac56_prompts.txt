@@ -1,0 +1,2552 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  London               NEUTRAL    
+  Eye                  RED        
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        
+  Game                 RED        
+  Hint                 RED        
+  Table                BLUE       
+  Well                 BLUE       
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    
+  Spell                BLUE       
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        
+  Kelp                 NEUTRAL    
+  Board                RED        
+  Harbor               BLUE       
+  Chest                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE words, NEUTRAL words, and especially the ASSASSIN (Moscow).
+
+RED words remaining:
+- Eye
+- Night
+- Game
+- Hint
+- Dagger
+- France
+- Cotton
+- Watch
+- Board
+
+Let me look for connections:
+
+1. **Timepieces/Time**: Watch, Night - but "time" might be too weak
+2. **Weapons**: Dagger - standalone
+3. **Countries/Places**: France - standalone
+4. **Materials**: Cotton - standalone
+5. **Vision/Seeing**: Eye, Watch - "vision" or "see"
+6. **Games/Activities**: Game, Board, Hint - "play" could work
+7. **Body parts**: Eye - standalone
+
+Let me consider "PLAY":
+- Game ✓ (playing games)
+- Board ✓ (play board games)
+- Hint ✓ (hints in games you play)
+- Eye ✗ (weak)
+- Watch ✗ (weak)
+
+But I need to check BLUE words: Table (play table?), Spell, Fabric, Sub, Check, Well, Harbor, Chest - none strongly connect to "play"
+
+Let me try "POKER":
+- Game ✓ (poker is a game)
+- Night ✓ (poker night)
+- Table ✗ (BLUE - poker table) - risky!
+
+Let me try "CLUE":
+- Hint ✓ (synonym)
+- Game ✓ (Clue is a board game)
+- Board ✓ (Clue is a board game)
+- Dagger ✓ (weapon in Clue)
+But "clue" might be too meta for this game.
+
+Let me try "TEXTILE":
+- Cotton ✓ (textile material)
+- Fabric ✗ (BLUE word)
+
+Let me try "VISION":
+- Eye ✓ (organ of vision)
+- Watch ✓ (to watch/observe)
+- Night ✗ (night vision?)
+
+Let me try "SHARP":
+- Dagger ✓ (sharp weapon)
+- Eye ✓ (sharp eye)
+- Watch ✗ (sharp watch?)
+
+I'll go with a safer 2-word clue: "VISION" for Eye and Watch.
+
+{"clue": "vision", "number": 2, "reasoning": "Connects EYE (organ of vision) and WATCH (to observe/see), avoiding risky words and the assassin"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  London
+  Eye
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Well
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Watch
+  Kelp
+  Board
+  Harbor
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Eye",
+  "reasoning": "Eye is strongly associated with vision - it's the organ that enables sight. This is a clear and direct connection to the clue word 'VISION'."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Well
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Watch
+  Kelp
+  Board
+  Harbor
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Watch",
+  "reasoning": "VISION relates strongly to WATCH - both involve seeing/observing. Watch can mean to look at something (using vision) or a timepiece you look at to see the time. This is a confident second guess for the clue VISION."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Well
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Kelp
+  Board
+  Harbor
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words matching the VISION clue (Eye and Watch). Since the clue number was 2, I've fulfilled the intended guesses. Looking at the remaining words, none have a strong connection to VISION - they're mostly unrelated nouns like locations (London, Moscow, France), objects (Table, Chest, Board), or materials (Cotton, Fabric, Kelp). Continuing would be risky as we could hit a blue card, neutral, or worse - the assassin. With 7 red cards remaining vs 8 blue, we're slightly behind but not desperate enough to take unnecessary risks."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  London               NEUTRAL    
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        
+  Game                 RED        
+  Hint                 RED        
+  Table                BLUE       
+  Well                 BLUE       
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    
+  Spell                BLUE       
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    
+  Board                RED        
+  Harbor               BLUE       
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words that need to be found:
+- Table, Well, Spell, Fabric, Sub, Check, Harbor, Chest
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Moscow).
+
+Let me analyze potential connections:
+
+"WATER" could work for:
+- Well (water source)
+- Harbor (water location)
+- Sub (underwater vessel)
+
+This gives me 3 blue words and doesn't strongly connect to any red words or the assassin. The red words (Night, Game, Hint, Dagger, France, Cotton, Board) don't have strong water associations.
+
+{"clue": "WATER", "number": 3, "reasoning": "Connects Well (water source), Harbor (water location), and Sub (underwater vessel) - all blue words with clear water associations"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Well
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Kelp
+  Board
+  Harbor
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "WATER" and the available words, I need to find connections to water.
+
+Let me analyze the options:
+- **Well** - directly related to water (water well, source of water)
+- **Harbor** - water-related (where boats dock, body of water)
+- **Kelp** - aquatic plant that grows in water
+- **Sub** - could be submarine (underwater vessel)
+- **Moscow** - has rivers but less direct connection
+- **Bill** - could be duck bill (ducks are in water) but very indirect
+- **Reel** - fishing reel used near water, but indirect
+
+The strongest connections are Well, Harbor, and Kelp. Well seems like the most direct and obvious connection to water.
+
+{"guess": "Well", "reasoning": "Well is directly connected to water - it's a structure used to access groundwater, making it the strongest match for the clue WATER"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Kelp
+  Board
+  Harbor
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "WATER" and the remaining words, I need to find connections to water.
+
+From the valid guesses, several words have strong water connections:
+- **Harbor** - a place where ships dock, directly related to water/ocean
+- **Kelp** - seaweed that grows in water
+- **Sub** - likely short for submarine, which operates underwater
+- **Reel** - could be a fishing reel used near water
+- **Bill** - could refer to a duck's bill (waterfowl)
+
+Harbor seems like the strongest connection since harbors are fundamentally about water - they're coastal areas where boats and ships are moored. This is a very direct water-related term.
+
+{"guess": "Harbor", "reasoning": "Harbor is directly water-related as it's where ships dock and is fundamentally connected to bodies of water"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Kelp
+  Board
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "WATER" and the remaining words, I need to find one more water-related word since I've already found 2 correct blue cards (Well and Harbor).
+
+Scanning the valid guesses:
+- **Kelp** - This is a type of seaweed that grows in water, making it directly water-related
+- **Sub** - Could be submarine (water vessel) or substitute
+- **Bill** - Could be a duck's bill (water bird)
+- **Reel** - Could be fishing reel (water activity)
+
+Kelp has the strongest and most direct connection to water as it's a marine organism that literally lives in water.
+
+{"guess": "Kelp", "reasoning": "Kelp is seaweed that grows in water, making it directly water-related and the strongest match for the WATER clue among remaining options"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  London               NEUTRAL    
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        
+  Game                 RED        
+  Hint                 RED        
+  Table                BLUE       
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    
+  Spell                BLUE       
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words:
+- Night
+- Game
+- Hint
+- Dagger
+- France
+- Cotton
+- Board
+
+Let me consider potential clues:
+
+1. **KNIFE** for Dagger - but only connects to 1 word
+2. **COUNTRY** for France - but only connects to 1 word
+3. **FABRIC/CLOTH** for Cotton - but Fabric is already on the board (Blue)
+4. **EVENING** for Night - only 1 word
+5. **CLUE** for Hint/Game - could work for 2
+6. **PLAY** for Game/Board - could work for 2
+
+Let me think about multi-word connections:
+- **STAB** connects to Dagger (weapon that stabs)
+- **PARIS** connects to France (capital)
+- **MATERIAL** connects to Cotton (fabric material) and potentially Board (material)
+- **WOOD** connects to Board (wooden board)
+- **SUGGESTION** connects to Hint
+
+Wait, let me think broader:
+- **MONOPOLY** - connects to Game (board game) and Board (game board)
+- **PLANK** - connects to Board (wooden plank)
+
+Actually, **CARD** could work:
+- Game (card game)
+- Board (card board/cardboard)
+- Night (card night, game night)
+
+Or **GAME** is already on the board, so I can't use it.
+
+Let me try **PLANK**:
+- Board (wooden plank)
+- Dagger (walking the plank - pirate theme)
+
+Or **KNIFE**:
+- Dagger (type of knife)
+- Cotton (cotton knife? No...)
+
+Let me reconsider **CLUE**:
+- Hint (synonym)
+- Game (Clue is a board game)
+- Board (Clue board game)
+
+This could connect 3 words! But I need to be careful about Blue's "Spell" and "Check" and the ASSASSIN "Moscow".
+
+{"clue": "CLUE", "number": 3, "reasoning": "Connects to Hint (synonym), Game (Clue is a board game), and Board (game board). Avoids assassin Moscow and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLUE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Hint
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Board
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Hint",
+  "reasoning": "The clue 'CLUE' directly relates to 'Hint' as they are near-synonyms. A hint is a type of clue, making this the strongest and most direct connection on the board."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLUE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Board
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Board",
+  "reasoning": "The clue 'CLUE' strongly relates to board games (like the game Clue/Cluedo). 'Board' fits perfectly as it's part of 'board game' and the game Clue itself is a board game. This is a confident second guess."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLUE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Game
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Game",
+  "reasoning": "The clue is 'CLUE' with 3 words. I've already correctly guessed 'Hint' and 'Board', which are both strongly related to clues (hint is a synonym, board games often involve clues). 'Game' fits well as the third word since many games involve clues (like Clue the board game, mystery games, puzzle games). I've used 2 of 4 guesses and have found 2 correct words, so this third guess seems worth the risk to complete the clue set."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLUE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've successfully guessed 3 words matching the clue 'CLUE' (Hint, Board, Game). Since I've matched the clue number exactly and we're tied at 4 red cards vs 6 blue cards remaining, it's strategically wise to pass now rather than risk hitting a neutral, blue card, or the assassin on a 4th guess that could end our turn negatively or even lose the game."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  London               NEUTRAL    
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        
+  Game                 RED        [revealed]
+  Hint                 RED        [revealed]
+  Table                BLUE       
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    
+  Spell                BLUE       
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        [revealed]
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words: Table, Spell, Fabric, Sub, Check, Chest
+
+I need a clue that connects multiple blue words while avoiding red words and the assassin (Moscow).
+
+Let me analyze potential connections:
+- Table, Check, Sub could relate to restaurant/dining concepts
+- Spell, Check could relate to writing/text
+- Fabric, Cotton (red) - need to avoid this connection
+- Chest, Table could relate to furniture
+
+I think "RESTAURANT" works well:
+- Table: where you sit to eat
+- Check: the bill you pay
+- Sub: submarine sandwich
+- This avoids red words like Cotton, France, Night, Dagger
+- Doesn't point toward Moscow (assassin)
+
+{"clue": "RESTAURANT", "number": 3, "reasoning": "Connects Table (where you sit), Check (the bill), and Sub (submarine sandwich) while avoiding red words and assassin"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RESTAURANT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  London
+  High
+  Champion
+  Reel
+  Night
+  Table
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "RESTAURANT" and the available words, I need to find words that relate to restaurants.
+
+The most obvious connection is "Table" - restaurants have tables where customers sit and eat. This is a very strong connection.
+
+"Bill" is also restaurant-related, as it refers to the check you receive at the end of your meal.
+
+"Check" could also work in this context, as it's another word for the bill at a restaurant.
+
+I'll start with the strongest connection first.
+
+{"guess": "Table", "reasoning": "Tables are essential furniture in restaurants where customers sit to eat their meals"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RESTAURANT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Moscow
+  Bill
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "RESTAURANT" and the remaining valid guesses, I need to find words that could relate to restaurants.
+
+From the valid guesses:
+- **Bill** - This strongly connects to restaurants as it's what you pay at the end of a meal
+- **Check** - Another word for the bill at a restaurant
+- **Night** - Restaurants are often associated with dinner/nighttime dining
+- **High** - Could relate to "high-end" restaurants
+- **Sub** - Could be a submarine sandwich, food item
+
+Given that I already successfully guessed "Table" (which was clearly restaurant-related), "Bill" seems like the strongest connection as it's directly what you receive and pay at a restaurant.
+
+{"guess": "Bill", "reasoning": "Bill is what you pay at a restaurant, making it a strong connection to the clue RESTAURANT"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  London               NEUTRAL    
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        
+  Game                 RED        [revealed]
+  Hint                 RED        [revealed]
+  Table                BLUE       [revealed]
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    [revealed]
+  Spell                BLUE       
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        [revealed]
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words and find a clue that connects them while avoiding the ASSASSIN (Moscow) and BLUE words.
+
+Remaining RED words:
+- Night
+- Dagger
+- France
+- Cotton
+
+Let me consider potential clues:
+
+1. **KNIFE** → Dagger (but only 1 word, not efficient)
+2. **PARIS** → France, Night (Paris at night is famous)
+3. **FABRIC** → Cotton (but FABRIC is on the board - forbidden!)
+4. **TEXTILE** → Cotton (only 1 word)
+5. **COUNTRY** → France (only 1 word)
+6. **WEAPON** → Dagger (only 1 word)
+7. **DARK** → Night, Dagger (dark night, dark deeds with dagger)
+8. **MEDIEVAL** → Dagger, France, Night (medieval times, knights, France)
+9. **STAB** → Dagger (only 1 word, risky)
+10. **PLANT** → Cotton (cotton is a plant, only 1 word)
+
+Looking at combinations:
+- France + Night: Could use PARIS (City of Light/Night)
+- Cotton + France: French cotton/textiles
+- Dagger + Night: Dark/shadowy themes
+- France + Dagger: Historical/medieval themes
+
+**PARIS** seems strong for France and Night (Paris nightlife is famous). However, I need to be careful it doesn't lead to London (another capital).
+
+Let me try **DARK** for Night and Dagger - both have dark associations. But this might be risky.
+
+Actually, **MIDNIGHT** could work for Night specifically, but only connects to 1 word.
+
+I think **PARIS** for 2 (France, Night) is the best option. It strongly connects to France as the capital, and Paris is famous for its nightlife.
+
+{"clue": "PARIS", "number": 2, "reasoning": "PARIS connects to FRANCE (capital city) and NIGHT (famous Parisian nightlife). Avoids LONDON and other dangerous words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PARIS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  London
+  High
+  Champion
+  Reel
+  Night
+  Moscow
+  Spell
+  Fabric
+  Lab
+  Dagger
+  France
+  Cotton
+  Sub
+  Check
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "France",
+  "reasoning": "PARIS is the capital of France, making this a very strong and direct connection. This is almost certainly one of the intended words for this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PARIS' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  London
+  High
+  Champion
+  Reel
+  Night
+  Moscow
+  Spell
+  Fabric
+  Lab
+  Dagger
+  Cotton
+  Sub
+  Check
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "London",
+  "reasoning": "PARIS is the capital of France, and London is the capital of the UK. These are both major European capital cities, making this a strong geographical connection. Since I've already correctly guessed 'France' for this clue, 'London' is the most logical second guess for PARIS."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  London               NEUTRAL    [revealed]
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        
+  Game                 RED        [revealed]
+  Hint                 RED        [revealed]
+  Table                BLUE       [revealed]
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    [revealed]
+  Spell                BLUE       
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        [revealed]
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        [revealed]
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Spell
+- Fabric  
+- Sub
+- Check
+- Chest
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin.
+
+"Spell" and "Check" can both relate to verification/examination. "Fabric" relates to textiles/materials. "Sub" could be submarine or substitute. "Chest" is a body part or container.
+
+I notice that "Spell", "Check", and "Chest" can all relate to the concept of "MAGIC":
+- Spell: magical incantation
+- Check: in chess, which involves magical/fantasy themes
+- Chest: treasure chest, common in magical stories
+
+This avoids the red words (Night, Dagger, Cotton) and the assassin (Moscow).
+
+{"clue": "MAGIC", "number": 3, "reasoning": "Connects Spell (magical incantation), Check (chess move, fantasy game context), and Chest (treasure chest in magical stories)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MAGIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  High
+  Champion
+  Reel
+  Night
+  Moscow
+  Spell
+  Fabric
+  Lab
+  Dagger
+  Cotton
+  Sub
+  Check
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "MAGIC" and the available words, I need to find connections to magic, spells, or magical concepts.
+
+The most obvious connection is "Spell" - this directly relates to magic as spells are fundamental to magical practices and fantasy. Magic users cast spells.
+
+Other potential connections I considered:
+- "Night" could relate to magic (witching hour, dark magic)
+- "Lab" might connect to magical laboratories or alchemy
+- "Champion" could relate to magical heroes
+
+However, "Spell" is by far the strongest and most direct connection to the clue "MAGIC."
+
+{"guess": "Spell", "reasoning": "Spell directly relates to magic - spells are what magic users cast and are fundamental to magical practices"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MAGIC' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  High
+  Champion
+  Reel
+  Night
+  Moscow
+  Fabric
+  Lab
+  Dagger
+  Cotton
+  Sub
+  Check
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "MAGIC" and the remaining words, I need to find connections to magic/supernatural themes.
+
+From the valid guesses:
+- **Night** - strongly associated with magic, witchcraft, spells, and supernatural activities
+- **Dagger** - could be a magical weapon or ritual tool
+- **Champion** - could be a magical hero or warrior
+- **High** - could relate to "high magic" or elevated mystical states
+
+Night seems like the strongest connection to magic - it's when most magical activities traditionally take place, from witching hours to casting spells under moonlight.
+
+{"guess": "Night", "reasoning": "Night is strongly associated with magic - it's the traditional time for spells, witchcraft, and supernatural activities"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  London               NEUTRAL    [revealed]
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        [revealed]
+  Game                 RED        [revealed]
+  Hint                 RED        [revealed]
+  Table                BLUE       [revealed]
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    [revealed]
+  Spell                BLUE       [revealed]
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        
+  France               RED        [revealed]
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        [revealed]
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words that haven't been revealed:
+- Dagger
+- Cotton
+
+Let me consider clues for these words:
+
+For **Dagger**: weapon, blade, knife, sharp, stab, pierce
+For **Cotton**: fabric, cloth, soft, plant, textile
+
+Wait - "Fabric" is actually a BLUE word on the board, so I need to be careful with clues related to Cotton.
+
+Let me think about what connects both words:
+- Both are physical objects
+- Both have historical/traditional significance
+
+For Dagger alone: blade, knife, weapon, sharp
+For Cotton alone: plant, soft, white, thread
+
+Since I have only 2 words left and Blue has 4 remaining, I should try to connect both if possible, but it's risky. Let me consider:
+
+**SHARP** could work for Dagger, but doesn't connect to Cotton.
+**BLADE** works well for Dagger.
+**SOFT** could work for Cotton but is weak.
+**PLANT** works for Cotton (cotton plant).
+
+Looking at the board:
+- ASSASSIN is Moscow (avoid anything related to Russia/cities)
+- Blue words remaining: Fabric, Sub, Check, Chest
+- Neutral: High, Champion, Reel, Lab
+
+"BLADE" for Dagger is strong and safe - it doesn't risk the assassin or blue words.
+
+"PLANT" for Cotton could work but "Lab" (neutral) might be confusing.
+
+I'll go with **BLADE** for 1, focusing on Dagger as it's a clear connection and safe.
+
+{"clue": "BLADE", "number": 1, "reasoning": "BLADE strongly connects to DAGGER. It's safe from the assassin (Moscow) and won't mislead toward blue words (Fabric, Sub, Check, Chest)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLADE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  High
+  Champion
+  Reel
+  Moscow
+  Fabric
+  Lab
+  Dagger
+  Cotton
+  Sub
+  Check
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Dagger",
+  "reasoning": "BLADE is a synonym for dagger - both are sharp weapons/knives. This is a very strong direct connection and likely the intended word for this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLADE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  High
+  Champion
+  Reel
+  Moscow
+  Fabric
+  Lab
+  Cotton
+  Sub
+  Check
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed correctly once this turn (Dagger for BLADE). With only 1 red card remaining vs 4 blue cards, we're in a winning position. The clue was for 1 word, and I've successfully identified it. Continuing to guess risks hitting a blue card (which would help the opponent significantly), a neutral card, or worse, the assassin. The safe play is to PASS and let our spymaster give us another targeted clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  London               NEUTRAL    [revealed]
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        [revealed]
+  Game                 RED        [revealed]
+  Hint                 RED        [revealed]
+  Table                BLUE       [revealed]
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    [revealed]
+  Spell                BLUE       [revealed]
+  Fabric               BLUE       
+  Lab                  NEUTRAL    
+  Dagger               RED        [revealed]
+  France               RED        [revealed]
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        [revealed]
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+  [RED] BLADE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Fabric
+- Sub
+- Check
+- Chest
+
+I need a clue that connects these words while avoiding the assassin (Moscow) and the remaining red word (Cotton).
+
+Let me analyze potential connections:
+- Sub could relate to submarines/underwater
+- Check could relate to verification/patterns
+- Chest could relate to body parts/containers
+- Fabric could relate to materials/textiles
+
+I notice that "Check", "Fabric", and "Chest" can all relate to clothing and textiles:
+- Check: as in checkered pattern on clothing
+- Fabric: material used to make clothes
+- Chest: part of clothing/shirts cover the chest
+
+"Sub" is harder to connect to clothing, but I think a clothing-related clue for 3 words is better than trying to force all 4 with a weaker connection.
+
+The word "PATTERN" could work well:
+- Check: checkered patterns
+- Fabric: fabrics have patterns
+- Chest: could be a stretch, but chest patterns exist in clothing
+
+Actually, let me consider "TEXTILE" - but that's very close to "Fabric" and might be too obvious.
+
+I think "PATTERN" is a good clue for Check and Fabric (2 words), as it's safe from the assassin and red words.
+
+{"clue": "PATTERN", "number": 2, "reasoning": "Connects 'Check' (checkered pattern) and 'Fabric' (fabrics have patterns). Safe from assassin Moscow and red word Cotton."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PATTERN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  High
+  Champion
+  Reel
+  Moscow
+  Fabric
+  Lab
+  Cotton
+  Sub
+  Check
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+  [RED] BLADE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "PATTERN" and the available words, I need to find words that relate to patterns.
+
+The most obvious connection is "Check" - this refers to a checkered pattern, which is a very common type of pattern used in textiles, chess boards, and design.
+
+"Fabric" could also relate to patterns since fabrics often have patterns, but "Check" is more directly a type of pattern itself.
+
+The other words don't have strong pattern connections:
+- High, Champion, Reel, Moscow, Lab, Cotton, Sub, Chest don't clearly relate to patterns
+
+{"guess": "Check", "reasoning": "Check refers to a checkered pattern, which is a direct type of pattern commonly seen in textiles and design"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PATTERN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  High
+  Champion
+  Reel
+  Moscow
+  Fabric
+  Lab
+  Cotton
+  Sub
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+  [RED] BLADE 1  #2: PASS
+  [BLUE] PATTERN 2  #1: Check → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "PATTERN" and the remaining words, I need to find another word that relates to patterns.
+
+From the valid guesses:
+- **Fabric** - Fabrics often have patterns (floral patterns, geometric patterns, etc.)
+- **Cotton** - A type of fabric, but less directly related to patterns
+- **High, Champion, Reel, Moscow, Lab, Sub, Chest** - These don't have strong connections to patterns
+
+Since I already got "Check" (which makes sense - checkered patterns), "Fabric" is the most logical second guess as fabrics commonly feature various patterns.
+
+{"guess": "Fabric", "reasoning": "Fabrics commonly have patterns like floral, geometric, or printed designs, making it a strong match for the PATTERN clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PATTERN' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  High
+  Champion
+  Reel
+  Moscow
+  Lab
+  Cotton
+  Sub
+  Chest
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+  [RED] BLADE 1  #2: PASS
+  [BLUE] PATTERN 2  #1: Check → blue
+  [BLUE] PATTERN 2  #2: Fabric → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the current situation:
+- I've already guessed 2 words correctly for the "PATTERN" clue (Check and Fabric)
+- Red only has 1 card remaining, so they're very close to winning
+- Blue has 2 cards remaining (including me having already gotten 2 this turn)
+
+Since I've already matched the clue number (2), I should be very cautious about making a third guess. Looking at the remaining words, none of them have a strong connection to "PATTERN":
+
+- High, Champion, Reel, Moscow, Lab, Cotton, Sub, Chest
+
+While "Cotton" might have a weak connection to fabric patterns, it's quite risky. Given that Red is so close to winning (only 1 card left), I cannot afford to hit a red card or the assassin. The safe play is to pass and let my team maintain our current position.
+
+{"guess": "PASS", "reasoning": "Already matched clue number, Red has only 1 card left so hitting their card would be devastating, no strong pattern connections remain"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  London               NEUTRAL    [revealed]
+  Eye                  RED        [revealed]
+  High                 NEUTRAL    
+  Champion             NEUTRAL    
+  Reel                 NEUTRAL    
+  Night                RED        [revealed]
+  Game                 RED        [revealed]
+  Hint                 RED        [revealed]
+  Table                BLUE       [revealed]
+  Well                 BLUE       [revealed]
+  Moscow               ASSASSIN   
+  Bill                 NEUTRAL    [revealed]
+  Spell                BLUE       [revealed]
+  Fabric               BLUE       [revealed]
+  Lab                  NEUTRAL    
+  Dagger               RED        [revealed]
+  France               RED        [revealed]
+  Cotton               RED        
+  Sub                  BLUE       
+  Check                BLUE       [revealed]
+  Watch                RED        [revealed]
+  Kelp                 NEUTRAL    [revealed]
+  Board                RED        [revealed]
+  Harbor               BLUE       [revealed]
+  Chest                BLUE       
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+  [RED] BLADE 1  #2: PASS
+  [BLUE] PATTERN 2  #1: Check → blue
+  [BLUE] PATTERN 2  #2: Fabric → blue
+  [BLUE] PATTERN 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BOARD, CHAMPION, CHECK, CHEST, COTTON, DAGGER, EYE, FABRIC, FRANCE, GAME, HARBOR, HIGH, HINT, KELP, LAB, LONDON, MOSCOW, NIGHT, REEL, SPELL, SUB, TABLE, WATCH, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the current board state:
+
+**RED remaining (unrevealed):** Cotton (1 word)
+
+**BLUE remaining (unrevealed):** Sub, Chest (2 words)
+
+**NEUTRAL remaining (unrevealed):** High, Champion, Reel, Lab (4 words)
+
+**ASSASSIN:** Moscow (unrevealed)
+
+My goal is to help RED find "Cotton" - their last remaining word.
+
+Let me think of clues for "Cotton":
+- "Fabric" - already revealed (blue)
+- "Cloth" - relates to cotton material
+- "Soft" - describes cotton
+- "Plant" - cotton is a plant
+- "Thread" - made from cotton
+- "Textile" - cotton is a textile
+- "Gin" - cotton gin (but might be too obscure)
+- "Candy" - cotton candy
+- "Swab" - cotton swab
+- "Ball" - cotton ball
+
+I need to avoid:
+- Moscow (ASSASSIN) - relates to Russia, cities
+- Sub (BLUE) - submarine, sandwich, substitute
+- Chest (BLUE) - body part, treasure chest
+
+"Textile" is a strong clue for Cotton and unlikely to point to the assassin (Moscow), the blue words (Sub, Chest), or confusing neutrals.
+
+"Candy" could work for cotton candy, but might be risky.
+
+"Soft" is safe and clearly points to Cotton.
+
+I'll go with "Textile" as it's specifically related to Cotton and won't confuse with other words.
+
+{"clue": "Textile", "number": 1, "reasoning": "Cotton is a textile material, and this clue clearly points to the last RED word without risking the assassin Moscow or blue words Sub/Chest"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEXTILE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  High
+  Champion
+  Reel
+  Moscow
+  Lab
+  Cotton
+  Sub
+  Chest
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] VISION 2  #1: Eye → red
+  [RED] VISION 2  #2: Watch → red
+  [RED] VISION 2  #3: PASS
+  [BLUE] WATER 3  #1: Well → blue
+  [BLUE] WATER 3  #2: Harbor → blue
+  [BLUE] WATER 3  #3: Kelp → neutral
+  [RED] CLUE 3  #1: Hint → red
+  [RED] CLUE 3  #2: Board → red
+  [RED] CLUE 3  #3: Game → red
+  [RED] CLUE 3  #4: PASS
+  [BLUE] RESTAURANT 3  #1: Table → blue
+  [BLUE] RESTAURANT 3  #2: Bill → neutral
+  [RED] PARIS 2  #1: France → red
+  [RED] PARIS 2  #2: London → neutral
+  [BLUE] MAGIC 3  #1: Spell → blue
+  [BLUE] MAGIC 3  #2: Night → red
+  [RED] BLADE 1  #1: Dagger → red
+  [RED] BLADE 1  #2: PASS
+  [BLUE] PATTERN 2  #1: Check → blue
+  [BLUE] PATTERN 2  #2: Fabric → blue
+  [BLUE] PATTERN 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find a word that relates to TEXTILE from the valid guesses list.
+
+Looking at the options:
+- **Cotton** - This is directly related to TEXTILE. Cotton is a textile fiber/material used to make fabrics.
+- High - Not related to textiles
+- Champion - Not related to textiles
+- Reel - Could be tangentially related (thread reels), but weak connection
+- Moscow - Not related to textiles
+- Lab - Not related to textiles
+- Sub - Not related to textiles
+- Chest - Not related to textiles
+
+Cotton is the clear answer here - it's a primary textile material. This is very likely our last red card (we only have 1 remaining), and it's a strong, direct connection to TEXTILE.
+
+{"guess": "Cotton", "reasoning": "Cotton is a textile fiber and fabric material, directly matching the clue TEXTILE. This is our last red card needed."}
+============================================================

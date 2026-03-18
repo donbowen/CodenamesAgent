@@ -1,0 +1,1231 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Flute                BLUE       
+  Tick                 BLUE       
+  Engine               NEUTRAL    
+  Fly                  NEUTRAL    
+  Scale                BLUE       
+  Game                 BLUE       
+  Boot                 BLUE       
+  Note                 RED        
+  Cap                  BLUE       
+  Shadow               RED        
+  Amazon               RED        
+  Circle               NEUTRAL    
+  Buddy                BLUE       
+  Blank                NEUTRAL    
+  Olive                RED        
+  Dog                  NEUTRAL    
+  Moon                 RED        
+  Bat                  RED        
+  Fracture             BLUE       
+  State                NEUTRAL    
+  France               ASSASSIN   
+  Core                 RED        
+  Husk                 RED        
+  Ground               RED        
+  Chart                NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BAT, BLANK, BOOT, BUDDY, CAP, CHART, CIRCLE, CORE, DOG, ENGINE, FLUTE, FLY, FRACTURE, FRANCE, GAME, GROUND, HUSK, MOON, NOTE, OLIVE, SCALE, SHADOW, STATE, TICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Nocturnal", "number": 3, "reasoning": "Targets Moon, Bat, and Shadow because they’re strongly associated with night."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOCTURNAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flute
+  Tick
+  Engine
+  Fly
+  Scale
+  Game
+  Boot
+  Note
+  Cap
+  Shadow
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Moon
+  Bat
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Moon", "reasoning": "Nocturnal relates to night; Moon is a strong night-associated term."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOCTURNAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flute
+  Tick
+  Engine
+  Fly
+  Scale
+  Game
+  Boot
+  Note
+  Cap
+  Shadow
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Bat
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Bat","reasoning":"Strong nocturnal association (nocturnal animal). Bat is a classic fit for the NOCTURNAL clue and is a valid guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOCTURNAL' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flute
+  Tick
+  Engine
+  Fly
+  Scale
+  Game
+  Boot
+  Note
+  Cap
+  Shadow
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Shadow", "reasoning": "Fits the nocturnal/night theme alongside Moon and Bat; likely the third red word connected to NOCTURNAL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NOCTURNAL' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flute
+  Tick
+  Engine
+  Fly
+  Scale
+  Game
+  Boot
+  Note
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Fly","reasoning":"Completes the NOCTURNAL theme; many nocturnal creatures (like bats) fly at night."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Flute                BLUE       
+  Tick                 BLUE       
+  Engine               NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Scale                BLUE       
+  Game                 BLUE       
+  Boot                 BLUE       
+  Note                 RED        
+  Cap                  BLUE       
+  Shadow               RED        [revealed]
+  Amazon               RED        
+  Circle               NEUTRAL    
+  Buddy                BLUE       
+  Blank                NEUTRAL    
+  Olive                RED        
+  Dog                  NEUTRAL    
+  Moon                 RED        [revealed]
+  Bat                  RED        [revealed]
+  Fracture             BLUE       
+  State                NEUTRAL    
+  France               ASSASSIN   
+  Core                 RED        
+  Husk                 RED        
+  Ground               RED        
+  Chart                NEUTRAL    
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BAT, BLANK, BOOT, BUDDY, CAP, CHART, CIRCLE, CORE, DOG, ENGINE, FLUTE, FLY, FRACTURE, FRANCE, GAME, GROUND, HUSK, MOON, NOTE, OLIVE, SCALE, SHADOW, STATE, TICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "music", "number": 3, "reasoning": "Flute, Scale, and Game can all relate to music: Flute is an instrument, Scale is a musical scale, and Game could refer to musical games. All three are blue words and are strongly connected by the clue 'music', while not pointing toward any red or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flute
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Note
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flute", "reasoning": "A flute is a musical instrument and directly related to music, making it a strong candidate for the clue 'MUSIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Note
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Note", "reasoning": "A 'note' is directly related to music, as musical notes are the basic elements of melodies and harmonies."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Flute                BLUE       [revealed]
+  Tick                 BLUE       
+  Engine               NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Scale                BLUE       
+  Game                 BLUE       
+  Boot                 BLUE       
+  Note                 RED        [revealed]
+  Cap                  BLUE       
+  Shadow               RED        [revealed]
+  Amazon               RED        
+  Circle               NEUTRAL    
+  Buddy                BLUE       
+  Blank                NEUTRAL    
+  Olive                RED        
+  Dog                  NEUTRAL    
+  Moon                 RED        [revealed]
+  Bat                  RED        [revealed]
+  Fracture             BLUE       
+  State                NEUTRAL    
+  France               ASSASSIN   
+  Core                 RED        
+  Husk                 RED        
+  Ground               RED        
+  Chart                NEUTRAL    
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BAT, BLANK, BOOT, BUDDY, CAP, CHART, CIRCLE, CORE, DOG, ENGINE, FLUTE, FLY, FRACTURE, FRANCE, GAME, GROUND, HUSK, MOON, NOTE, OLIVE, SCALE, SHADOW, STATE, TICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SEED", "number": 4, "reasoning": "Olive has a seed/pit; seeds have husks; seeds germinate in the ground; seeds are abundant in Amazon flora."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEED' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Ground
+  Chart
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ground", "reasoning": "Seed -> planted in the ground; a direct, strong link to seeds and planting."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEED' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Husk
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Husk", "reasoning": "Seed-related term; husk is the outer covering of a seed, a plausible red card under SEED."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEED' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 3  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Olive
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Olive", "reasoning": "Olive is a seed-bearing fruit and has a seed/pit, which fits the SEED clue. Likely red word(s) remaining alongside Ground and Husk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEED' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 2  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Dog
+  Fracture
+  State
+  France
+  Core
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Core", "reasoning": "Seed-related: seeds have a core; fits the SEED clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SEED' — 4 word(s).
+Guesses used this turn: 4 / 5.
+Red remaining: 1  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Dog
+  Fracture
+  State
+  France
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+  [RED] SEED 4  #4: Core → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"All four SEED-related red words have been found (Ground, Husk, Olive, Core). Remaining options risk blue/neutral/assassin; passing is prudent."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Flute                BLUE       [revealed]
+  Tick                 BLUE       
+  Engine               NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Scale                BLUE       
+  Game                 BLUE       
+  Boot                 BLUE       
+  Note                 RED        [revealed]
+  Cap                  BLUE       
+  Shadow               RED        [revealed]
+  Amazon               RED        
+  Circle               NEUTRAL    
+  Buddy                BLUE       
+  Blank                NEUTRAL    
+  Olive                RED        [revealed]
+  Dog                  NEUTRAL    
+  Moon                 RED        [revealed]
+  Bat                  RED        [revealed]
+  Fracture             BLUE       
+  State                NEUTRAL    
+  France               ASSASSIN   
+  Core                 RED        [revealed]
+  Husk                 RED        [revealed]
+  Ground               RED        [revealed]
+  Chart                NEUTRAL    
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+  [RED] SEED 4  #4: Core → red
+  [RED] SEED 4  #5: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BAT, BLANK, BOOT, BUDDY, CAP, CHART, CIRCLE, CORE, DOG, ENGINE, FLUTE, FLY, FRACTURE, FRANCE, GAME, GROUND, HUSK, MOON, NOTE, OLIVE, SCALE, SHADOW, STATE, TICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "insect", "number": 1, "reasoning": "Tick is an insect, and the clue does not seem to connect strongly to any red or assassin words. This is the safest way to claim Tick without risking the assassin (France) or the last red word (Amazon)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSECT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Tick
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Dog
+  Fracture
+  State
+  France
+  Chart
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+  [RED] SEED 4  #4: Core → red
+  [RED] SEED 4  #5: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Tick", "reasoning": "A tick is a type of insect (or, more precisely, an arachnid, but commonly thought of as an insect). It is by far the closest match to the clue 'INSECT' among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSECT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Dog
+  Fracture
+  State
+  France
+  Chart
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+  [RED] SEED 4  #4: Core → red
+  [RED] SEED 4  #5: PASS
+  [BLUE] INSECT 1  #1: Tick → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "The clue was 'INSECT' with 1 word, and 'Tick' (already guessed) was the clear choice. There are no other obvious insect-related words left. It's safest to pass and avoid risking a wrong guess, especially since red only needs one more to win."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Flute                BLUE       [revealed]
+  Tick                 BLUE       [revealed]
+  Engine               NEUTRAL    
+  Fly                  NEUTRAL    [revealed]
+  Scale                BLUE       
+  Game                 BLUE       
+  Boot                 BLUE       
+  Note                 RED        [revealed]
+  Cap                  BLUE       
+  Shadow               RED        [revealed]
+  Amazon               RED        
+  Circle               NEUTRAL    
+  Buddy                BLUE       
+  Blank                NEUTRAL    
+  Olive                RED        [revealed]
+  Dog                  NEUTRAL    
+  Moon                 RED        [revealed]
+  Bat                  RED        [revealed]
+  Fracture             BLUE       
+  State                NEUTRAL    
+  France               ASSASSIN   
+  Core                 RED        [revealed]
+  Husk                 RED        [revealed]
+  Ground               RED        [revealed]
+  Chart                NEUTRAL    
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+  [RED] SEED 4  #4: Core → red
+  [RED] SEED 4  #5: PASS
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, BAT, BLANK, BOOT, BUDDY, CAP, CHART, CIRCLE, CORE, DOG, ENGINE, FLUTE, FLY, FRACTURE, FRANCE, GAME, GROUND, HUSK, MOON, NOTE, OLIVE, SCALE, SHADOW, STATE, TICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"RIVER","number":1,"reasoning":"Amazon -> Amazon River; directly links to the remaining Red word (Amazon) without pointing to Blue or Assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Engine
+  Scale
+  Game
+  Boot
+  Cap
+  Amazon
+  Circle
+  Buddy
+  Blank
+  Dog
+  Fracture
+  State
+  France
+  Chart
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NOCTURNAL 3  #1: Moon → red
+  [RED] NOCTURNAL 3  #2: Bat → red
+  [RED] NOCTURNAL 3  #3: Shadow → red
+  [RED] NOCTURNAL 3  #4: Fly → neutral
+  [BLUE] MUSIC 3  #1: Flute → blue
+  [BLUE] MUSIC 3  #2: Note → red
+  [RED] SEED 4  #1: Ground → red
+  [RED] SEED 4  #2: Husk → red
+  [RED] SEED 4  #3: Olive → red
+  [RED] SEED 4  #4: Core → red
+  [RED] SEED 4  #5: PASS
+  [BLUE] INSECT 1  #1: Tick → blue
+  [BLUE] INSECT 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Amazon", "reasoning": "Direct river reference (Amazon River)."}
+============================================================

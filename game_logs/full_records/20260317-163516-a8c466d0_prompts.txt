@@ -1,0 +1,960 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Ice                  BLUE       
+  Era                  RED        
+  Lily                 RED        
+  Coast                NEUTRAL    
+  Pool                 NEUTRAL    
+  Capsule              NEUTRAL    
+  Cord                 NEUTRAL    
+  Star                 BLUE       
+  Orange               NEUTRAL    
+  Box                  BLUE       
+  Beam                 NEUTRAL    
+  Sub                  RED        
+  Beach                BLUE       
+  Telescope            BLUE       
+  Crack                RED        
+  Blur                 BLUE       
+  Giant                BLUE       
+  Card                 RED        
+  Atlantis             RED        
+  King                 BLUE       
+  Dust                 RED        
+  Hospital             NEUTRAL    
+  Dune                 RED        
+  Gene                 RED        
+  Letter               ASSASSIN   
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, BEACH, BEAM, BLUR, BOX, CAPSULE, CARD, COAST, CORD, CRACK, DUNE, DUST, ERA, GENE, GIANT, HOSPITAL, ICE, KING, LETTER, LILY, ORANGE, POOL, STAR, SUB, TELESCOPE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "mythology", "number": 2, "reasoning": "Both 'Atlantis' and 'Gene' can be connected to mythology: 'Atlantis' is a famous mythical place, and 'Gene' can link to myths of origin and human creation. No assassin or blue words are directly related to this clue, minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MYTHOLOGY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ice
+  Era
+  Lily
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Orange
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Atlantis
+  King
+  Dust
+  Hospital
+  Dune
+  Gene
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Atlantis", "reasoning": "Atlantis is a legendary city from mythology, making it a strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MYTHOLOGY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ice
+  Era
+  Lily
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Orange
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  King
+  Dust
+  Hospital
+  Dune
+  Gene
+  Letter
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "King", "reasoning": "Kings are prominent figures in many mythologies, including Greek, Norse, and others. This fits the 'MYTHOLOGY' clue well and is a strong candidate for the second word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Ice                  BLUE       
+  Era                  RED        
+  Lily                 RED        
+  Coast                NEUTRAL    
+  Pool                 NEUTRAL    
+  Capsule              NEUTRAL    
+  Cord                 NEUTRAL    
+  Star                 BLUE       
+  Orange               NEUTRAL    
+  Box                  BLUE       
+  Beam                 NEUTRAL    
+  Sub                  RED        
+  Beach                BLUE       
+  Telescope            BLUE       
+  Crack                RED        
+  Blur                 BLUE       
+  Giant                BLUE       
+  Card                 RED        
+  Atlantis             RED        [revealed]
+  King                 BLUE       [revealed]
+  Dust                 RED        
+  Hospital             NEUTRAL    
+  Dune                 RED        
+  Gene                 RED        
+  Letter               ASSASSIN   
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, BEACH, BEAM, BLUR, BOX, CAPSULE, CARD, COAST, CORD, CRACK, DUNE, DUST, ERA, GENE, GIANT, HOSPITAL, ICE, KING, LETTER, LILY, ORANGE, POOL, STAR, SUB, TELESCOPE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Snow", "number": 2, "reasoning": "Connects strongly to ICE and BLUR (blizzard/whiteout), while being relatively weakly related to most red and assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SNOW' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ice
+  Era
+  Lily
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Orange
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Dune
+  Gene
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ice", "reasoning": "Ice is directly associated with snow and is the strongest match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SNOW' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Era
+  Lily
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Orange
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Dune
+  Gene
+  Letter
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dune", "reasoning": "Snow forms dunes in windy conditions, and ‘snow dune’ is a natural phrase; other options like Lily or Dust are weaker associations."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Ice                  BLUE       [revealed]
+  Era                  RED        
+  Lily                 RED        
+  Coast                NEUTRAL    
+  Pool                 NEUTRAL    
+  Capsule              NEUTRAL    
+  Cord                 NEUTRAL    
+  Star                 BLUE       
+  Orange               NEUTRAL    
+  Box                  BLUE       
+  Beam                 NEUTRAL    
+  Sub                  RED        
+  Beach                BLUE       
+  Telescope            BLUE       
+  Crack                RED        
+  Blur                 BLUE       
+  Giant                BLUE       
+  Card                 RED        
+  Atlantis             RED        [revealed]
+  King                 BLUE       [revealed]
+  Dust                 RED        
+  Hospital             NEUTRAL    
+  Dune                 RED        [revealed]
+  Gene                 RED        
+  Letter               ASSASSIN   
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, BEACH, BEAM, BLUR, BOX, CAPSULE, CARD, COAST, CORD, CRACK, DUNE, DUST, ERA, GENE, GIANT, HOSPITAL, ICE, KING, LETTER, LILY, ORANGE, POOL, STAR, SUB, TELESCOPE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Flower", "number": 1, "reasoning": "Lily is a type of flower and is an unrevealed Red word. No other words on the board are strongly related to 'Flower,' so this should safely guide my team to Lily without risking the assassin (Letter) or Blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Era
+  Lily
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Orange
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Gene
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lily", "reasoning": "Lily is a type of flower, which directly matches the given clue 'FLOWER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Era
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Orange
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Gene
+  Letter
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Orange", "reasoning": "Of the remaining words, 'Orange' is the closest association to 'Flower' as it refers to the orange blossom, which is a well-known flower."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Ice                  BLUE       [revealed]
+  Era                  RED        
+  Lily                 RED        [revealed]
+  Coast                NEUTRAL    
+  Pool                 NEUTRAL    
+  Capsule              NEUTRAL    
+  Cord                 NEUTRAL    
+  Star                 BLUE       
+  Orange               NEUTRAL    [revealed]
+  Box                  BLUE       
+  Beam                 NEUTRAL    
+  Sub                  RED        
+  Beach                BLUE       
+  Telescope            BLUE       
+  Crack                RED        
+  Blur                 BLUE       
+  Giant                BLUE       
+  Card                 RED        
+  Atlantis             RED        [revealed]
+  King                 BLUE       [revealed]
+  Dust                 RED        
+  Hospital             NEUTRAL    
+  Dune                 RED        [revealed]
+  Gene                 RED        
+  Letter               ASSASSIN   
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+  [RED] FLOWER 1  #2: Orange → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, BEACH, BEAM, BLUR, BOX, CAPSULE, CARD, COAST, CORD, CRACK, DUNE, DUST, ERA, GENE, GIANT, HOSPITAL, ICE, KING, LETTER, LILY, ORANGE, POOL, STAR, SUB, TELESCOPE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "space", "number": 3, "reasoning": "Connects strongly to STAR and TELESCOPE, and plausibly to GIANT via the phrase ‘giant star’ or large celestial objects, while avoiding clear links to red or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPACE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Era
+  Coast
+  Pool
+  Capsule
+  Cord
+  Star
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Gene
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+  [RED] FLOWER 1  #2: Orange → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Capsule", "reasoning": "Space capsule is a direct, common phrase related to space travel."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Ice                  BLUE       [revealed]
+  Era                  RED        
+  Lily                 RED        [revealed]
+  Coast                NEUTRAL    
+  Pool                 NEUTRAL    
+  Capsule              NEUTRAL    [revealed]
+  Cord                 NEUTRAL    
+  Star                 BLUE       
+  Orange               NEUTRAL    [revealed]
+  Box                  BLUE       
+  Beam                 NEUTRAL    
+  Sub                  RED        
+  Beach                BLUE       
+  Telescope            BLUE       
+  Crack                RED        
+  Blur                 BLUE       
+  Giant                BLUE       
+  Card                 RED        
+  Atlantis             RED        [revealed]
+  King                 BLUE       [revealed]
+  Dust                 RED        
+  Hospital             NEUTRAL    
+  Dune                 RED        [revealed]
+  Gene                 RED        
+  Letter               ASSASSIN   
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+  [RED] FLOWER 1  #2: Orange → neutral
+  [BLUE] SPACE 3  #1: Capsule → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ATLANTIS, BEACH, BEAM, BLUR, BOX, CAPSULE, CARD, COAST, CORD, CRACK, DUNE, DUST, ERA, GENE, GIANT, HOSPITAL, ICE, KING, LETTER, LILY, ORANGE, POOL, STAR, SUB, TELESCOPE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "history", "number": 2, "reasoning": "Both 'Era' and 'Gene' are related to history: 'Era' directly refers to a historical period, and 'Gene' can allude to genetic history or ancestry. This clue does not connect strongly to the assassin ('Letter') or any blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HISTORY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Era
+  Coast
+  Pool
+  Cord
+  Star
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Gene
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+  [RED] FLOWER 1  #2: Orange → neutral
+  [BLUE] SPACE 3  #1: Capsule → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Era", "reasoning": "'Era' is directly related to 'History' as historical periods are often referred to as eras. It is the most obvious historical term among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HISTORY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coast
+  Pool
+  Cord
+  Star
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Gene
+  Letter
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+  [RED] FLOWER 1  #2: Orange → neutral
+  [BLUE] SPACE 3  #1: Capsule → neutral
+  [RED] HISTORY 2  #1: Era → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gene", "reasoning": "Genes are significant in human history, especially in the context of genetics, evolution, and ancestry. It fits the clue 'HISTORY' as it relates to the history of life and humans."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HISTORY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coast
+  Pool
+  Cord
+  Star
+  Box
+  Beam
+  Sub
+  Beach
+  Telescope
+  Crack
+  Blur
+  Giant
+  Card
+  Dust
+  Hospital
+  Letter
+
+Game history:
+  [RED] MYTHOLOGY 2  #1: Atlantis → red
+  [RED] MYTHOLOGY 2  #2: King → blue
+  [BLUE] SNOW 2  #1: Ice → blue
+  [BLUE] SNOW 2  #2: Dune → red
+  [RED] FLOWER 1  #1: Lily → red
+  [RED] FLOWER 1  #2: Orange → neutral
+  [BLUE] SPACE 3  #1: Capsule → neutral
+  [RED] HISTORY 2  #1: Era → red
+  [RED] HISTORY 2  #2: Gene → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Letter", "reasoning": "Historical letters are important artifacts (e.g., letters from famous figures), and 'Letter' fits the 'History' clue more than the other remaining words. We have already found two for this clue, but since a third guess is possible, this is the most likely candidate if there's a missed connection."}
+============================================================

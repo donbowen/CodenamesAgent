@@ -1,0 +1,2062 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Crown                BLUE       
+  Phoenix              NEUTRAL    
+  Jar                  BLUE       
+  Crane                NEUTRAL    
+  Jade                 RED        
+  Check                NEUTRAL    
+  Cotton               RED        
+  Gorge                NEUTRAL    
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       
+  Sub                  RED        
+  Dart                 BLUE       
+  Fort                 NEUTRAL    
+  Plant                RED        
+  Shot                 BLUE       
+  Blast                RED        
+  Code                 RED        
+  Cape                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Nature", "number": 3, "reasoning": "Nature relates to 'Amazon', 'Plant', and 'Cotton', which all have connections to natural elements."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NATURE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Crown
+  Phoenix
+  Jar
+  Crane
+  Jade
+  Check
+  Cotton
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Amazon
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Plant
+  Shot
+  Blast
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Amazon", "reasoning": "The Amazon rainforest is a prominent representation of nature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NATURE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Crown
+  Phoenix
+  Jar
+  Crane
+  Jade
+  Check
+  Cotton
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Plant
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plant", "reasoning": "Plant relates directly to nature and fits well with the clue given."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NATURE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Crown
+  Phoenix
+  Jar
+  Crane
+  Jade
+  Check
+  Cotton
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Crane", "reasoning": "A crane is a bird that is often associated with nature, fitting the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Crown                BLUE       
+  Phoenix              NEUTRAL    
+  Jar                  BLUE       
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        
+  Check                NEUTRAL    
+  Cotton               RED        
+  Gorge                NEUTRAL    
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       
+  Sub                  RED        
+  Dart                 BLUE       
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       
+  Blast                RED        
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "royal", "number": 2, "reasoning": "Points strongly to CROWN and CAPE (royal crown, royal cape/cloak). Other blue words are less connected, and it avoids clear links to the assassin BONE or red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ROYAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Crown
+  Phoenix
+  Jar
+  Jade
+  Check
+  Cotton
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crown", "reasoning": "Royal strongly associates with monarchy and kings/queens, making Crown the most direct and likely intended match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ROYAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Phoenix
+  Jar
+  Jade
+  Check
+  Cotton
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Phoenix", "reasoning": "Phoenix is the capital of Arizona, and many capitals are associated with royalty and royal authority; it’s the best remaining fit for ROYAL among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        
+  Check                NEUTRAL    
+  Cotton               RED        
+  Gorge                NEUTRAL    
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       
+  Sub                  RED        
+  Dart                 BLUE       
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       
+  Blast                RED        
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FARM", "number": 4, "reasoning": "Farming is related to Cotton, Plant, and can also be associated with Depth (as in soil depth), and Jade can be linked to farming due to its historical significance in agriculture."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FARM' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Jade
+  Check
+  Cotton
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cotton", "reasoning": "Cotton is a crop that is grown on farms, making it a strong association with the clue 'FARM'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FARM' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Jade
+  Check
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Cat
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cat", "reasoning": "Cats can be found on farms as pets or for controlling pests."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        
+  Dart                 BLUE       
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       
+  Blast                RED        
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "container", "number": 2, "reasoning": "Jar and Sub both relate to containers (a jar holds contents; a submarine is a vessel). This avoids strong connections to red words and stays away from the assassin Bone."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONTAINER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Jade
+  Check
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jar", "reasoning": "A jar is directly a type of container, making it the strongest and most literal match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONTAINER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jade
+  Check
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Sub
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Sub", "reasoning": "A submarine is often called a ‘sub’ and is a type of vessel, which is a kind of container holding people and equipment; this fits the CONTAINER clue better than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       [revealed]
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        [revealed]
+  Dart                 BLUE       
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       
+  Blast                RED        
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "GREEN", "number": 3, "reasoning": "It relates to Jade, Depth, and Blast, all of which can be associated with the color green or nature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GREEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jade
+  Check
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jade", "reasoning": "Jade is a green gemstone, directly relating to the clue 'GREEN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GREEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Check
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Green is often associated with nature, plants, and leaves, making 'Leaf' a strong guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GREEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Check
+  Gorge
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Leaf", "reasoning": "Green is often associated with nature, plants, and leaves, making 'Leaf' a strong guess."}
+
+[USER]
+Invalid response: 'LEAF' is not in the valid guesses list. Choose from: ANCHOR, BLAST, BLOCK, BONE, CAPE, CHANNEL, CHECK, CODE, COLD, DART, DEPTH, FORT, GORGE, LOOP, SHOT. Try again.
+
+[RESPONSE]
+{"guess": "Gorge", "reasoning": "A gorge is a steep valley which is often lush and green, making it a fitting guess for the clue 'GREEN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       [revealed]
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        [revealed]
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    [revealed]
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        [revealed]
+  Dart                 BLUE       
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       
+  Blast                RED        
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "weapon", "number": 3, "reasoning": "Connects Dart, Shot, and Anchor as tools or implements of attack, while avoiding strong ties to remaining red or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WEAPON' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Check
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Dart
+  Fort
+  Shot
+  Blast
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Shot", "reasoning": "A shot is directly associated with guns and firearms, fitting the clue WEAPON most strongly among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WEAPON' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Check
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Dart
+  Fort
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dart", "reasoning": "A dart is directly a type of weapon, used for throwing or in blowguns, making it the strongest remaining match to the clue WEAPON."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WEAPON' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Check
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Fort
+  Blast
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blast", "reasoning": "Blast fits the WEAPON clue best among remaining options (e.g., explosion, blast radius). Other words like Fort or Block are more indirect, and with only three blue words left and two already found for this clue, a single confident guess is reasonable."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       [revealed]
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        [revealed]
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    [revealed]
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        [revealed]
+  Dart                 BLUE       [revealed]
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       [revealed]
+  Blast                RED        [revealed]
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "DEPTH", "number": 1, "reasoning": "It relates to depth as an abstract concept, which connects to the unrevealed word 'Depth'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       [revealed]
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        [revealed]
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    [revealed]
+  Depth                RED        
+  Cold                 NEUTRAL    
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        [revealed]
+  Dart                 BLUE       [revealed]
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       [revealed]
+  Blast                RED        [revealed]
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[ASSISTANT]
+{"clue": "DEPTH", "number": 1, "reasoning": "It relates to depth as an abstract concept, which connects to the unrevealed word 'Depth'."}
+
+[USER]
+Invalid response: Clue 'DEPTH' is a word on the board.. Try again with a different clue.
+
+[RESPONSE]
+{"clue": "FARM", "number": 1, "reasoning": "It relates to the concept of farming, which can connect to the unrevealed word 'Cotton'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FARM' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Check
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Fort
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "COTTON", "reasoning": "Cotton is a crop that is typically grown on a farm, making it a strong match for the clue 'FARM'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FARM' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Check
+  Depth
+  Cold
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Fort
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "COTTON", "reasoning": "Cotton is a crop that is typically grown on a farm, making it a strong match for the clue 'FARM'."}
+
+[USER]
+Invalid response: 'COTTON' is not in the valid guesses list. Choose from: ANCHOR, BLOCK, BONE, CAPE, CHANNEL, CHECK, CODE, COLD, DEPTH, FORT, LOOP. Try again.
+
+[RESPONSE]
+{"guess": "COLD", "reasoning": "Farming can be affected by temperature, and 'cold' can refer to cold climates that influence farming practices."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       [revealed]
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        [revealed]
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    [revealed]
+  Depth                RED        
+  Cold                 NEUTRAL    [revealed]
+  Bone                 ASSASSIN   
+  Anchor               BLUE       
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        [revealed]
+  Dart                 BLUE       [revealed]
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       [revealed]
+  Blast                RED        [revealed]
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+  [RED] FARM 1  #1: Cold → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "harbor", "number": 3, "reasoning": "Harbor strongly connects ANCHOR, CAPE (coastal feature forming harbors), and BLOCK (harbor as verb: to block/obstruct), while being relatively distant from the remaining red and neutral words; it also steers away from the assassin BONE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HARBOR' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Check
+  Depth
+  Bone
+  Anchor
+  Loop
+  Channel
+  Block
+  Fort
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+  [RED] FARM 1  #1: Cold → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Anchor", "reasoning": "Anchors are directly associated with harbors and ships docking there, making it the strongest and safest match for the clue HARBOR."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HARBOR' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Check
+  Depth
+  Bone
+  Loop
+  Channel
+  Block
+  Fort
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+  [RED] FARM 1  #1: Cold → neutral
+  [BLUE] HARBOR 3  #1: Anchor → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Channel", "reasoning": "A harbor is a sheltered body of water connected to the sea via a channel; 'channel' is a common nautical/harbor term, more directly related to harbor than the other remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Crown                BLUE       [revealed]
+  Phoenix              NEUTRAL    [revealed]
+  Jar                  BLUE       [revealed]
+  Crane                NEUTRAL    [revealed]
+  Jade                 RED        [revealed]
+  Check                NEUTRAL    
+  Cotton               RED        [revealed]
+  Gorge                NEUTRAL    [revealed]
+  Depth                RED        
+  Cold                 NEUTRAL    [revealed]
+  Bone                 ASSASSIN   
+  Anchor               BLUE       [revealed]
+  Loop                 RED        
+  Amazon               RED        [revealed]
+  Channel              NEUTRAL    [revealed]
+  Block                BLUE       
+  Cat                  BLUE       [revealed]
+  Sub                  RED        [revealed]
+  Dart                 BLUE       [revealed]
+  Fort                 NEUTRAL    
+  Plant                RED        [revealed]
+  Shot                 BLUE       [revealed]
+  Blast                RED        [revealed]
+  Code                 RED        
+  Cape                 BLUE       
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+  [RED] FARM 1  #1: Cold → neutral
+  [BLUE] HARBOR 3  #1: Anchor → blue
+  [BLUE] HARBOR 3  #2: Channel → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANCHOR, BLAST, BLOCK, BONE, CAPE, CAT, CHANNEL, CHECK, CODE, COLD, COTTON, CRANE, CROWN, DART, DEPTH, FORT, GORGE, JADE, JAR, LOOP, PHOENIX, PLANT, SHOT, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "DEEP", "number": 2, "reasoning": "Both 'Depth' and 'Loop' can relate to the concept of being deep or profound."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DEEP' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Check
+  Depth
+  Bone
+  Loop
+  Block
+  Fort
+  Code
+  Cape
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+  [RED] FARM 1  #1: Cold → neutral
+  [BLUE] HARBOR 3  #1: Anchor → blue
+  [BLUE] HARBOR 3  #2: Channel → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Depth", "reasoning": "Depth relates directly to the concept of 'deep', making it a strong guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DEEP' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Check
+  Bone
+  Loop
+  Block
+  Fort
+  Code
+  Cape
+
+Game history:
+  [RED] NATURE 3  #1: Amazon → red
+  [RED] NATURE 3  #2: Plant → red
+  [RED] NATURE 3  #3: Crane → neutral
+  [BLUE] ROYAL 2  #1: Crown → blue
+  [BLUE] ROYAL 2  #2: Phoenix → neutral
+  [RED] FARM 4  #1: Cotton → red
+  [RED] FARM 4  #2: Cat → blue
+  [BLUE] CONTAINER 2  #1: Jar → blue
+  [BLUE] CONTAINER 2  #2: Sub → red
+  [RED] GREEN 3  #1: Jade → red
+  [RED] GREEN 3  #2: Gorge → neutral
+  [BLUE] WEAPON 3  #1: Shot → blue
+  [BLUE] WEAPON 3  #2: Dart → blue
+  [BLUE] WEAPON 3  #3: Blast → red
+  [RED] FARM 1  #1: Cold → neutral
+  [BLUE] HARBOR 3  #1: Anchor → blue
+  [BLUE] HARBOR 3  #2: Channel → neutral
+  [RED] DEEP 2  #1: Depth → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "BONE", "reasoning": "BONE can be associated with DEEP as in deep skeletal structures or deep sea creatures that have bones."}
+============================================================

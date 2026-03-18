@@ -1,0 +1,1701 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       
+  Cake                 BLUE       
+  Ball                 RED        
+  Canal                RED        
+  Column               NEUTRAL    
+  Dove                 RED        
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    
+  Fan                  NEUTRAL    
+  Haze                 NEUTRAL    
+  Brook                RED        
+  Cargo                RED        
+  Channel              RED        
+  Press                RED        
+  Boom                 BLUE       
+  Server               BLUE       
+  Train                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "waterway", "number": 2, "reasoning": "Connects CANAL and CHANNEL while avoiding strong links to blue or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WATERWAY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Chip
+  Cake
+  Ball
+  Canal
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Code
+  Fan
+  Haze
+  Brook
+  Cargo
+  Channel
+  Press
+  Boom
+  Server
+  Train
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Canal", "reasoning": "A canal is a man-made waterway, making it the strongest and most direct match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WATERWAY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Chip
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Code
+  Fan
+  Haze
+  Brook
+  Cargo
+  Channel
+  Press
+  Boom
+  Server
+  Train
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Brook", "reasoning": "A brook is a small stream, which is a type of waterway."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WATERWAY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Chip
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Code
+  Fan
+  Haze
+  Cargo
+  Channel
+  Press
+  Boom
+  Server
+  Train
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Channel", "reasoning": "A channel is a type of waterway, matching the clue most directly among remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       
+  Cake                 BLUE       
+  Ball                 RED        
+  Canal                RED        [revealed]
+  Column               NEUTRAL    
+  Dove                 RED        
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    
+  Fan                  NEUTRAL    
+  Haze                 NEUTRAL    
+  Brook                RED        [revealed]
+  Cargo                RED        
+  Channel              RED        [revealed]
+  Press                RED        
+  Boom                 BLUE       
+  Server               BLUE       
+  Train                BLUE       
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words I need to connect:
+- Bomb, Line, Chip, Cake, Token, Boom, Server, Train
+
+I can see a strong connection around technology/computing concepts:
+- Chip (computer chip)
+- Server (computer server)
+- Token (security token, authentication token)
+- Bomb (logic bomb, email bomb - computing terms)
+
+The word "COMPUTER" relates well to these four concepts and doesn't risk pointing to red words or the assassin. While some blue words like Train, Line, Cake, and Boom could have weaker connections to computing, the four I identified have strong, clear connections that should guide my team safely.
+
+{"clue": "COMPUTER", "number": 4, "reasoning": "Connects Chip (computer chip), Server (computer server), Token (security token), and Bomb (logic bomb) - all computing-related terms"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Chip
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Code
+  Fan
+  Haze
+  Cargo
+  Press
+  Boom
+  Server
+  Train
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "COMPUTER" with 4 words, I need to find words that relate to computers or computing.
+
+From the valid guesses, I can see several strong computer-related terms:
+- **Chip** (computer chip/processor)
+- **Code** (programming code)
+- **Server** (computer server)
+- **Line** (line of code)
+
+"Chip" is the most direct and obvious connection to computers - it's a fundamental component of any computer system.
+
+{"guess": "Chip", "reasoning": "Chip is a core computer component and the most direct match for the clue COMPUTER"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Code
+  Fan
+  Haze
+  Cargo
+  Press
+  Boom
+  Server
+  Train
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "COMPUTER" and the remaining words, I need to find terms that relate to computers or technology.
+
+From the valid guesses, I can see several computer-related terms:
+- **Server** - directly computer-related (computer servers)
+- **Code** - programming code, computer code
+- **Line** - could be code line, command line
+- **Press** - could be key press, print press
+- **Token** - programming tokens, security tokens
+
+Given that this is a 4-word clue and I've already found one correct word (Chip), I should look for the strongest computer connection. "Server" is the most directly and obviously computer-related word on the board.
+
+{"guess": "Server", "reasoning": "Server is directly computer-related - computer servers are a fundamental part of computing infrastructure and networks"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Code
+  Fan
+  Haze
+  Cargo
+  Press
+  Boom
+  Train
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining words and the clue "COMPUTER" with 4 words, I need to find computer-related terms.
+
+I've already correctly guessed "Chip" and "Server" (2/4). Looking at the remaining options:
+
+- "Code" is strongly related to computers (programming code, source code, etc.)
+- "Line" could relate to computers (command line, code lines)
+- "Press" might relate (key press, printing press for computer output)
+- "Token" could relate (security tokens, programming tokens)
+
+"Code" has the strongest and most direct connection to computers. It's a fundamental concept in computing.
+
+{"guess": "Code", "reasoning": "Code is directly related to computers - programming code, source code, executable code are all core computer concepts"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       [revealed]
+  Cake                 BLUE       
+  Ball                 RED        
+  Canal                RED        [revealed]
+  Column               NEUTRAL    
+  Dove                 RED        
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    
+  Haze                 NEUTRAL    
+  Brook                RED        [revealed]
+  Cargo                RED        
+  Channel              RED        [revealed]
+  Press                RED        
+  Boom                 BLUE       
+  Server               BLUE       [revealed]
+  Train                BLUE       
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "electric", "number": 2, "reasoning": "Connects clearly to BULB and FAN (electric devices) while being weakly related to other unrevealed words and avoiding the assassin TRIP and blue words like BOMB, LINE, TRAIN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ELECTRIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Fan
+  Haze
+  Cargo
+  Press
+  Boom
+  Train
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bulb", "reasoning": "Electric bulb is a very common phrase (light bulb), strongly linked to electricity; it’s the clearest match to the clue among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ELECTRIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Fan
+  Haze
+  Cargo
+  Press
+  Boom
+  Train
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fan", "reasoning": "Electric fan is a very common phrase and strongly associated with electricity, making it the best remaining match for the clue ELECTRIC."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       [revealed]
+  Cake                 BLUE       
+  Ball                 RED        
+  Canal                RED        [revealed]
+  Column               NEUTRAL    
+  Dove                 RED        
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    [revealed]
+  Haze                 NEUTRAL    
+  Brook                RED        [revealed]
+  Cargo                RED        
+  Channel              RED        [revealed]
+  Press                RED        
+  Boom                 BLUE       
+  Server               BLUE       [revealed]
+  Train                BLUE       
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words: Bomb, Line, Cake, Token, Boom, Train.
+
+Let me analyze these words:
+- Bomb and Boom are both explosive/loud sounds
+- Train is transportation
+- Line could be many things (queue, drawing, etc.)
+- Cake is food
+- Token could be a coin, symbol, or game piece
+
+I need to be careful about the ASSASSIN word "Trip" and avoid leading to RED words.
+
+Looking for connections:
+- Bomb, Boom, Train could relate to "SOUND" (explosions make sounds, trains make sounds)
+- Train, Line could relate to "TRACK" or "RAIL"
+- Token, Line could relate to "SUBWAY" (subway tokens, subway lines)
+
+"SOUND" seems promising - Bomb makes a sound, Boom is a sound, Train makes sound. This avoids the assassin "Trip" and doesn't strongly point to any red words.
+
+Let me check if SOUND could accidentally point to red words:
+- Coal, Ball, Dove, Cargo, Press - none of these strongly relate to sound
+- The assassin "Trip" doesn't relate to sound either
+
+SOUND for 3 seems safe and effective.
+
+{"clue": "SOUND", "number": 3, "reasoning": "Bomb, Boom, and Train all relate to sounds - explosions make sounds and trains are noisy. This avoids the assassin and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+  Press
+  Boom
+  Train
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "SOUND" and the available words, I need to find words that relate to sound or noise.
+
+From the valid guesses, I can see several potential matches:
+- "Boom" - this is a loud sound/noise
+- "Press" - could relate to pressing buttons that make sounds, or a printing press
+- "Train" - trains make distinctive sounds
+- "Ball" - could bounce and make sounds
+- "Bomb" - makes explosive sounds
+
+"Boom" stands out as the most direct connection to sound - it's literally an onomatopoeia for a loud noise or explosion sound.
+
+{"guess": "Boom", "reasoning": "Boom is directly related to sound as it represents a loud explosive noise or sound effect"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+  Press
+  Train
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "SOUND" and the remaining words, I need to find words that relate to sound or audio.
+
+From the valid guesses:
+- **Bell** - makes sound when rung
+- **Train** - makes distinctive sounds (whistle, engine, wheels on tracks)
+- **Bomb** - makes a loud explosive sound
+- **Press** - could relate to pressing keys that make sound, or printing press sounds
+- **Line** - could be an audio line or phone line for sound transmission
+
+Given that I've already successfully guessed one word (Boom) for this clue, I should look for another strong sound-related word. "Train" is excellent because trains are very associated with distinctive sounds - the whistle, the chug of the engine, wheels on tracks, etc.
+
+{"guess": "Train", "reasoning": "Trains are strongly associated with distinctive sounds like whistles, engine chugging, and wheels on tracks, making it a solid match for the SOUND clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+  Press
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "SOUND" with 3 words, I've already successfully guessed "Boom" and "Train" which both relate to sounds. I need one more guess to complete the clue.
+
+From the remaining words, "Press" stands out as the best match. A press can make sounds - printing presses make mechanical sounds, and "press" is also used in contexts like "press a button" which often produces sound feedback.
+
+The other options don't have strong sound connections:
+- Coal, Trip, Chair, Line, Cake, Ball, Column, Dove, Edge, Token, Moscow, Haze, Cargo don't clearly relate to sound
+- Bomb could relate to sound (explosion), but it's riskier and less likely given the spymaster's pattern
+
+Since I need 4 blue cards total and have found 3 so far, getting this third "SOUND" word would put me in a strong position.
+
+{"guess": "Press", "reasoning": "Press relates to sound through printing presses and button-pressing audio feedback, completing the SOUND clue pattern established by Boom and Train"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       [revealed]
+  Cake                 BLUE       
+  Ball                 RED        
+  Canal                RED        [revealed]
+  Column               NEUTRAL    
+  Dove                 RED        
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    [revealed]
+  Haze                 NEUTRAL    
+  Brook                RED        [revealed]
+  Cargo                RED        
+  Channel              RED        [revealed]
+  Press                RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Server               BLUE       [revealed]
+  Train                BLUE       [revealed]
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "bird", "number": 1, "reasoning": "Dove is the only remaining red word clearly associated with birds; broader clues risk blue or assassin guesses."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BIRD' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Dove
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dove", "reasoning": "A dove is a type of bird; it’s the only word in the list that directly names a bird."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BIRD' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "The BIRD clue was already used successfully for Dove. None of the remaining words clearly relate to birds, and since we’re only allowed one word for this clue, any further guess would be an unnecessary risk with 3 red cards still to find."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       [revealed]
+  Cake                 BLUE       
+  Ball                 RED        
+  Canal                RED        [revealed]
+  Column               NEUTRAL    
+  Dove                 RED        [revealed]
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    [revealed]
+  Haze                 NEUTRAL    
+  Brook                RED        [revealed]
+  Cargo                RED        
+  Channel              RED        [revealed]
+  Press                RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Server               BLUE       [revealed]
+  Train                BLUE       [revealed]
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+  [RED] BIRD 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Bomb
+- Line
+- Cake
+- Token
+
+I need to find a clue that connects these words while avoiding the assassin (Trip) and red words (Coal, Ball, Cargo).
+
+Let me consider "DESSERT" for Cake - this is safe and specific, but only connects to one word.
+
+Actually, let me think about "PARTY" - this could connect to:
+- Bomb (party bomb, confetti bomb)
+- Cake (birthday cake, party cake)
+- Token (party token, arcade token)
+
+This avoids Trip (assassin), and the red words Coal, Ball, Cargo don't strongly connect to "party."
+
+{"clue": "PARTY", "number": 3, "reasoning": "Connects to Bomb (party bomb), Cake (party cake), and Token (party token/arcade) while avoiding assassin Trip and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PARTY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Cake
+  Ball
+  Column
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+  [RED] BIRD 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "PARTY" and the available words, I need to find connections to parties or celebrations.
+
+The strongest connection I see is "Cake" - cakes are strongly associated with parties, especially birthday parties and celebrations. This seems like a very likely blue card.
+
+Other potential connections could be "Ball" (as in a formal party/dance) or "Token" (party favors), but "Cake" has the most direct and common association with parties.
+
+{"guess": "Cake", "reasoning": "Cake is strongly associated with parties and celebrations, making it the most likely match for the clue PARTY"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PARTY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Ball
+  Column
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+  [RED] BIRD 1  #2: PASS
+  [BLUE] PARTY 3  #1: Cake → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "PARTY" and the remaining words, I need to find connections to parties or celebrations.
+
+From the valid guesses:
+- **Ball** - This strongly connects to "party" as in a formal dance party or ball
+- **Line** - Could relate to party lines (political) or waiting in line at parties
+- **Token** - Might relate to party favors or tokens given at parties
+- **Trip** - Could be a party trip or vacation
+- **Chair** - Party chair (political role) or seating at parties
+
+Given that I've already successfully guessed "Cake" (which was clearly party-related), "Ball" seems like the strongest remaining connection to parties, as formal balls are literally a type of party.
+
+{"guess": "Ball", "reasoning": "Ball strongly connects to PARTY as formal balls are a type of party/celebration, and it's the clearest party-related word remaining"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Coal                 RED        
+  Trip                 ASSASSIN   
+  Chair                NEUTRAL    
+  Bomb                 BLUE       
+  Line                 BLUE       
+  Chip                 BLUE       [revealed]
+  Cake                 BLUE       [revealed]
+  Ball                 RED        [revealed]
+  Canal                RED        [revealed]
+  Column               NEUTRAL    
+  Dove                 RED        [revealed]
+  Edge                 NEUTRAL    
+  Token                BLUE       
+  Moscow               NEUTRAL    
+  Code                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    [revealed]
+  Haze                 NEUTRAL    
+  Brook                RED        [revealed]
+  Cargo                RED        
+  Channel              RED        [revealed]
+  Press                RED        [revealed]
+  Boom                 BLUE       [revealed]
+  Server               BLUE       [revealed]
+  Train                BLUE       [revealed]
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+  [RED] BIRD 1  #2: PASS
+  [BLUE] PARTY 3  #1: Cake → blue
+  [BLUE] PARTY 3  #2: Ball → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BOMB, BOOM, BROOK, BULB, CAKE, CANAL, CARGO, CHAIR, CHANNEL, CHIP, COAL, CODE, COLUMN, DOVE, EDGE, FAN, HAZE, LINE, MOSCOW, PRESS, SERVER, TOKEN, TRAIN, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "fuel", "number": 2, "reasoning": "Coal is a classic fuel, and cargo often includes fuel shipments; avoids clear links to blue or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FUEL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coal
+  Trip
+  Chair
+  Bomb
+  Line
+  Column
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+  [RED] BIRD 1  #2: PASS
+  [BLUE] PARTY 3  #1: Cake → blue
+  [BLUE] PARTY 3  #2: Ball → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Coal", "reasoning": "Coal is directly used as a fuel source, making it the strongest match to the clue FUEL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FUEL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Trip
+  Chair
+  Bomb
+  Line
+  Column
+  Edge
+  Token
+  Moscow
+  Haze
+  Cargo
+
+Game history:
+  [RED] WATERWAY 2  #1: Canal → red
+  [RED] WATERWAY 2  #2: Brook → red
+  [RED] WATERWAY 2  #3: Channel → red
+  [BLUE] COMPUTER 4  #1: Chip → blue
+  [BLUE] COMPUTER 4  #2: Server → blue
+  [BLUE] COMPUTER 4  #3: Code → neutral
+  [RED] ELECTRIC 2  #1: Bulb → red
+  [RED] ELECTRIC 2  #2: Fan → neutral
+  [BLUE] SOUND 3  #1: Boom → blue
+  [BLUE] SOUND 3  #2: Train → blue
+  [BLUE] SOUND 3  #3: Press → red
+  [RED] BIRD 1  #1: Dove → red
+  [RED] BIRD 1  #2: PASS
+  [BLUE] PARTY 3  #1: Cake → blue
+  [BLUE] PARTY 3  #2: Ball → red
+  [RED] FUEL 2  #1: Coal → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cargo", "reasoning": "Fuel is commonly transported as cargo (e.g., oil, gas, coal shipments). Other options like Bomb or Moscow are more tenuous links to fuel, so Cargo is the safest remaining association."}
+============================================================

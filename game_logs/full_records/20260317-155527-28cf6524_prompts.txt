@@ -1,0 +1,2002 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        
+  Witch                BLUE       
+  Frame                BLUE       
+  Bush                 NEUTRAL    
+  Fall                 RED        
+  Desert               RED        
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    
+  Crane                BLUE       
+  Staff                RED        
+  Class                BLUE       
+  Rock                 RED        
+  Clip                 BLUE       
+  Gold                 NEUTRAL    
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    
+  Space                RED        
+  Canada               RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"planet","number":3,"reasoning":"Points to SPACE, ROCK, and GROUND (all relate to planets)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Ground
+  Witch
+  Frame
+  Bush
+  Fall
+  Desert
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Rock
+  Clip
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Space
+  Canada
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Space", "reasoning": "Directly related to planets — planets exist in space; strongest, most obvious match to PLANET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Ground
+  Witch
+  Frame
+  Bush
+  Fall
+  Desert
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Rock
+  Clip
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ground", "reasoning": "Earth/ground directly relates to 'planet' and connects with the already-found Space card — likely another red word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Witch
+  Frame
+  Bush
+  Fall
+  Desert
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Rock
+  Clip
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Desert","reasoning":"‘Desert planet’ is a common phrase (e.g. Tatooine); fits the PLANET clue along with Space and Ground — likely the third red."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Witch
+  Frame
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Rock
+  Clip
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Rock", "reasoning": "Rocky planets — 'rock' fits PLANET (terrestrial/rocky planets)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       
+  Frame                BLUE       
+  Bush                 NEUTRAL    
+  Fall                 RED        
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    
+  Crane                BLUE       
+  Staff                RED        
+  Class                BLUE       
+  Rock                 RED        [revealed]
+  Clip                 BLUE       
+  Gold                 NEUTRAL    
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    
+  Space                RED        [revealed]
+  Canada               RED        
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"MOVIE","number":3,"reasoning":"Film-related terms: frame, clip, crane."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Witch
+  Frame
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Clip
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Frame", "reasoning": "Strong association with movies (film frame)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Witch
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Clip
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Clip", "reasoning": "Directly tied to movies as a film clip; strong cinema association for MOVIE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Witch
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Crane
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Crane", "reasoning": "Direct cinema/filmmaking term (camera crane); fits MOVIE clue alongside 'Frame' and 'Clip'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Witch
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "MOVIE 3 has likely been exhausted with Frame, Clip, Crane; there are no more MOVIE-related blue words to guess, so pass to avoid risking a red/neutral."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    
+  Fall                 RED        
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    
+  Crane                BLUE       [revealed]
+  Staff                RED        
+  Class                BLUE       
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    
+  Space                RED        [revealed]
+  Canada               RED        
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Maple","number":2,"reasoning":"Maps to Canada (maple leaf/symbol) and Fall (maple leaves in autumn)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAPLE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Witch
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Leaf
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Direct association—maple leaf is the most obvious match (likely one of the two; the other may be Canada)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    
+  Fall                 RED        
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    [revealed]
+  Crane                BLUE       [revealed]
+  Staff                RED        
+  Class                BLUE       
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    
+  Space                RED        [revealed]
+  Canada               RED        
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "CRAFT", "number": 3, "reasoning": "Witch -> witchcraft, State -> statecraft, Class -> craft class (craft-related class)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRAFT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Witch
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Witch", "reasoning": "CRAFT pairs to form common words: witchcraft; also statecraft and bushcraft are possible, so Witch is a strong first guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRAFT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Bush
+  Fall
+  Eye
+  Capital
+  Mirror
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bush", "reasoning": "Bush pairs with craft to form 'bushcraft', a strong link for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       [revealed]
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    [revealed]
+  Fall                 RED        
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    [revealed]
+  Crane                BLUE       [revealed]
+  Staff                RED        
+  Class                BLUE       
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    
+  Space                RED        [revealed]
+  Canada               RED        
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Maple","number":2,"reasoning":"Points to CANADA (maple leaf) and FALL (autumn/maple leaves)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAPLE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Fall
+  Eye
+  Capital
+  Mirror
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+  Canada
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Canada", "reasoning": "Maple leaf is a primary symbol of Canada (strong, direct association); likely intended by the clue (I’d target Fall next if allowed)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAPLE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Fall
+  Eye
+  Capital
+  Mirror
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fall", "reasoning": "Maple is strongly associated with autumn leaves — maple leaves turn color in the fall, so Fall fits the MAPLE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAPLE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Staff
+  Class
+  Gold
+  Bruise
+  Loop
+  Bridge
+  Block
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Gold","reasoning":"The Canadian Gold Maple Leaf bullion coin — strong direct link between 'maple' and 'gold'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       [revealed]
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    [revealed]
+  Fall                 RED        [revealed]
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    [revealed]
+  Crane                BLUE       [revealed]
+  Staff                RED        
+  Class                BLUE       
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    [revealed]
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    
+  Space                RED        [revealed]
+  Canada               RED        [revealed]
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "EDUCATION", "number": 1, "reasoning": "Blue word likely linked: Class (education)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EDUCATION' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Staff
+  Class
+  Bruise
+  Loop
+  Bridge
+  Block
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Class", "reasoning": "Strong, direct link to education; the most obvious match among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EDUCATION' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Staff
+  Bruise
+  Loop
+  Bridge
+  Block
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Block", "reasoning": "Education clue points to block letters or building blocks used in early learning."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       [revealed]
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    [revealed]
+  Fall                 RED        [revealed]
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    [revealed]
+  Crane                BLUE       [revealed]
+  Staff                RED        
+  Class                BLUE       [revealed]
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    [revealed]
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        
+  Block                NEUTRAL    [revealed]
+  Space                RED        [revealed]
+  Canada               RED        [revealed]
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"music","number":2,"reasoning":"'Staff' = musical staff; 'Bridge' = part of many instruments (guitar/violin) — links to two of our remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Staff
+  Bruise
+  Loop
+  Bridge
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Staff", "reasoning": "A musical staff is a core music term and strongly matches the clue 'MUSIC' — likely one of the two intended words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Bruise
+  Loop
+  Bridge
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+  [RED] MUSIC 2  #1: Staff → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bridge", "reasoning": "A bridge is a standard musical section (like Staff already guessed). Likely the other red word for MUSIC."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Bruise
+  Loop
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+  [RED] MUSIC 2  #1: Staff → red
+  [RED] MUSIC 2  #2: Bridge → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Clue was MUSIC=2 and we've already found both red words (Staff, Bridge). Best to stop to avoid risking a wrong/assassin guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       [revealed]
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    [revealed]
+  Fall                 RED        [revealed]
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    [revealed]
+  Crane                BLUE       [revealed]
+  Staff                RED        [revealed]
+  Class                BLUE       [revealed]
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    [revealed]
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        [revealed]
+  Block                NEUTRAL    [revealed]
+  Space                RED        [revealed]
+  Canada               RED        [revealed]
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+  [RED] MUSIC 2  #1: Staff → red
+  [RED] MUSIC 2  #2: Bridge → red
+  [RED] MUSIC 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "CITY", "number": 3, "reasoning": "Fort, Buck, and State each connect to the idea of a city: forts appear in city names (Fort Worth, Fort Wayne), Buck is used in city/place names (Bucktown), and the term 'city-state' links city with state."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CITY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Eye
+  Capital
+  Mirror
+  Bruise
+  Loop
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+  [RED] MUSIC 2  #1: Staff → red
+  [RED] MUSIC 2  #2: Bridge → red
+  [RED] MUSIC 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Capital", "reasoning": "Directly tied to CITY as 'capital city'; highest likelihood among remaining blue cards."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Fort                 BLUE       
+  Buck                 BLUE       
+  State                BLUE       
+  Ground               RED        [revealed]
+  Witch                BLUE       [revealed]
+  Frame                BLUE       [revealed]
+  Bush                 NEUTRAL    [revealed]
+  Fall                 RED        [revealed]
+  Desert               RED        [revealed]
+  Eye                  RED        
+  Capital              NEUTRAL    [revealed]
+  Mirror               NEUTRAL    
+  Leaf                 NEUTRAL    [revealed]
+  Crane                BLUE       [revealed]
+  Staff                RED        [revealed]
+  Class                BLUE       [revealed]
+  Rock                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Gold                 NEUTRAL    [revealed]
+  Bruise               NEUTRAL    
+  Loop                 ASSASSIN   
+  Bridge               RED        [revealed]
+  Block                NEUTRAL    [revealed]
+  Space                RED        [revealed]
+  Canada               RED        [revealed]
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+  [RED] MUSIC 2  #1: Staff → red
+  [RED] MUSIC 2  #2: Bridge → red
+  [RED] MUSIC 2  #3: PASS
+  [BLUE] CITY 3  #1: Capital → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLOCK, BRIDGE, BRUISE, BUCK, BUSH, CANADA, CAPITAL, CLASS, CLIP, CRANE, DESERT, EYE, FALL, FORT, FRAME, GOLD, GROUND, LEAF, LOOP, MIRROR, ROCK, SPACE, STAFF, STATE, WITCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"CORNEA","number":1,"reasoning":"Cornea is a part of the eye — directs teammates to the unrevealed RED word 'Eye'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CORNEA' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fort
+  Buck
+  State
+  Eye
+  Mirror
+  Bruise
+  Loop
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLANET 3  #1: Space → red
+  [RED] PLANET 3  #2: Ground → red
+  [RED] PLANET 3  #3: Desert → red
+  [RED] PLANET 3  #4: Rock → red
+  [BLUE] MOVIE 3  #1: Frame → blue
+  [BLUE] MOVIE 3  #2: Clip → blue
+  [BLUE] MOVIE 3  #3: Crane → blue
+  [BLUE] MOVIE 3  #4: PASS
+  [RED] MAPLE 2  #1: Leaf → neutral
+  [BLUE] CRAFT 3  #1: Witch → blue
+  [BLUE] CRAFT 3  #2: Bush → neutral
+  [RED] MAPLE 2  #1: Canada → red
+  [RED] MAPLE 2  #2: Fall → red
+  [RED] MAPLE 2  #3: Gold → neutral
+  [BLUE] EDUCATION 1  #1: Class → blue
+  [BLUE] EDUCATION 1  #2: Block → neutral
+  [RED] MUSIC 2  #1: Staff → red
+  [RED] MUSIC 2  #2: Bridge → red
+  [RED] MUSIC 2  #3: PASS
+  [BLUE] CITY 3  #1: Capital → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Eye", "reasoning": "The cornea is part of the eye — clear, direct match."}
+============================================================

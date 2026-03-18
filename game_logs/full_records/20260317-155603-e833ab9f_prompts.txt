@@ -1,0 +1,1229 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Eye                  RED        
+  Door                 RED        
+  Brown                NEUTRAL    
+  Cycle                NEUTRAL    
+  Channel              RED        
+  Dune                 BLUE       
+  Blank                RED        
+  Chapel               RED        
+  Fire                 NEUTRAL    
+  Note                 BLUE       
+  Cloud                NEUTRAL    
+  Frame                BLUE       
+  Blade                RED        
+  Hospital             BLUE       
+  Slip                 BLUE       
+  Line                 RED        
+  Chamber              BLUE       
+  Engine               BLUE       
+  Press                RED        
+  Piano                BLUE       
+  Chip                 NEUTRAL    
+  Dig                  ASSASSIN   
+  Capsule              NEUTRAL    
+  Row                  NEUTRAL    
+  Field                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLADE, BLANK, BROWN, CAPSULE, CHAMBER, CHANNEL, CHAPEL, CHIP, CLOUD, CYCLE, DIG, DOOR, DUNE, ENGINE, EYE, FIELD, FIRE, FRAME, HOSPITAL, LINE, NOTE, PIANO, PRESS, ROW, SLIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"OPEN","number":4,"reasoning":"Open pairs naturally with Eye (open your eyes), Door (open the door), Channel (an open channel of communication), and Field (an open field)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OPEN' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Eye
+  Door
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Fire
+  Note
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Piano
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Door", "reasoning": "Strong association: 'open door' is a common phrase."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OPEN' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eye
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Fire
+  Note
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Piano
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Fire","reasoning":"Fits the clue OPEN 4 as the common phrase 'open fire'; a strong, high-likelihood red-card guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Eye                  RED        
+  Door                 RED        [revealed]
+  Brown                NEUTRAL    
+  Cycle                NEUTRAL    
+  Channel              RED        
+  Dune                 BLUE       
+  Blank                RED        
+  Chapel               RED        
+  Fire                 NEUTRAL    [revealed]
+  Note                 BLUE       
+  Cloud                NEUTRAL    
+  Frame                BLUE       
+  Blade                RED        
+  Hospital             BLUE       
+  Slip                 BLUE       
+  Line                 RED        
+  Chamber              BLUE       
+  Engine               BLUE       
+  Press                RED        
+  Piano                BLUE       
+  Chip                 NEUTRAL    
+  Dig                  ASSASSIN   
+  Capsule              NEUTRAL    
+  Row                  NEUTRAL    
+  Field                RED        
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLADE, BLANK, BROWN, CAPSULE, CHAMBER, CHANNEL, CHAPEL, CHIP, CLOUD, CYCLE, DIG, DOOR, DUNE, ENGINE, EYE, FIELD, FIRE, FRAME, HOSPITAL, LINE, NOTE, PIANO, PRESS, ROW, SLIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "music", "number": 2, "reasoning": "Piano and Note are both strongly associated with music. No red or assassin words have a strong connection to this clue, making it safe and effective for two blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Eye
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Note
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Piano
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Piano", "reasoning": "Piano is directly related to music as a musical instrument, making it the strongest connection to the clue 'MUSIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eye
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Note
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Note", "reasoning": "'Note' directly relates to music, as musical notes are fundamental elements in music. This is the most obvious connection to the clue 'MUSIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eye
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I have already found two words (Piano and Note) for the clue 'MUSIC' and have no strong connection between the remaining unrevealed words and the clue. It's safest to pass to avoid accidentally hitting the assassin or an opponent's word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Eye                  RED        
+  Door                 RED        [revealed]
+  Brown                NEUTRAL    
+  Cycle                NEUTRAL    
+  Channel              RED        
+  Dune                 BLUE       
+  Blank                RED        
+  Chapel               RED        
+  Fire                 NEUTRAL    [revealed]
+  Note                 BLUE       [revealed]
+  Cloud                NEUTRAL    
+  Frame                BLUE       
+  Blade                RED        
+  Hospital             BLUE       
+  Slip                 BLUE       
+  Line                 RED        
+  Chamber              BLUE       
+  Engine               BLUE       
+  Press                RED        
+  Piano                BLUE       [revealed]
+  Chip                 NEUTRAL    
+  Dig                  ASSASSIN   
+  Capsule              NEUTRAL    
+  Row                  NEUTRAL    
+  Field                RED        
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLADE, BLANK, BROWN, CAPSULE, CHAMBER, CHANNEL, CHAPEL, CHIP, CLOUD, CYCLE, DIG, DOOR, DUNE, ENGINE, EYE, FIELD, FIRE, FRAME, HOSPITAL, LINE, NOTE, PIANO, PRESS, ROW, SLIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "vision", "number": 3, "reasoning": "Eye (sight), Line (line of vision), Field (field of vision)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Eye
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Eye", "reasoning": "Directly related to vision; strongest single-word match for 'VISION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+  Field
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Field", "reasoning": "Strong direct link to vision: 'visual field' is a common phrase."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Line
+  Chamber
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Line", "reasoning": "Line is closely related to vision (line of sight); fits with the existing red clues Eye and Field for VISION."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VISION' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Chamber
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chamber", "reasoning": "Most directly linked to vision (eye chamber) and fits the 'VISION' clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Eye                  RED        [revealed]
+  Door                 RED        [revealed]
+  Brown                NEUTRAL    
+  Cycle                NEUTRAL    
+  Channel              RED        
+  Dune                 BLUE       
+  Blank                RED        
+  Chapel               RED        
+  Fire                 NEUTRAL    [revealed]
+  Note                 BLUE       [revealed]
+  Cloud                NEUTRAL    
+  Frame                BLUE       
+  Blade                RED        
+  Hospital             BLUE       
+  Slip                 BLUE       
+  Line                 RED        [revealed]
+  Chamber              BLUE       [revealed]
+  Engine               BLUE       
+  Press                RED        
+  Piano                BLUE       [revealed]
+  Chip                 NEUTRAL    
+  Dig                  ASSASSIN   
+  Capsule              NEUTRAL    
+  Row                  NEUTRAL    
+  Field                RED        [revealed]
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLADE, BLANK, BROWN, CAPSULE, CHAMBER, CHANNEL, CHAPEL, CHIP, CLOUD, CYCLE, DIG, DOOR, DUNE, ENGINE, EYE, FIELD, FIRE, FRAME, HOSPITAL, LINE, NOTE, PIANO, PRESS, ROW, SLIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "vehicle", "number": 2, "reasoning": "Both 'engine' and 'frame' are components of vehicles, and neither connects strongly to opponent or assassin words. This clue avoids pointing toward red words like 'channel', 'chapel', or 'blank', and does not risk 'dig' (assassin). 'Slip' and 'dune' do not fit as directly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VEHICLE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Engine
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Engine", "reasoning": "An engine is a fundamental component of many vehicles, making it a strong match for the clue 'VEHICLE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VEHICLE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brown
+  Cycle
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+  [BLUE] VEHICLE 2  #1: Engine → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cycle", "reasoning": "A cycle (bicycle, motorcycle) is a type of vehicle and fits well with the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Eye                  RED        [revealed]
+  Door                 RED        [revealed]
+  Brown                NEUTRAL    
+  Cycle                NEUTRAL    [revealed]
+  Channel              RED        
+  Dune                 BLUE       
+  Blank                RED        
+  Chapel               RED        
+  Fire                 NEUTRAL    [revealed]
+  Note                 BLUE       [revealed]
+  Cloud                NEUTRAL    
+  Frame                BLUE       
+  Blade                RED        
+  Hospital             BLUE       
+  Slip                 BLUE       
+  Line                 RED        [revealed]
+  Chamber              BLUE       [revealed]
+  Engine               BLUE       [revealed]
+  Press                RED        
+  Piano                BLUE       [revealed]
+  Chip                 NEUTRAL    
+  Dig                  ASSASSIN   
+  Capsule              NEUTRAL    
+  Row                  NEUTRAL    
+  Field                RED        [revealed]
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+  [BLUE] VEHICLE 2  #1: Engine → blue
+  [BLUE] VEHICLE 2  #2: Cycle → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLADE, BLANK, BROWN, CAPSULE, CHAMBER, CHANNEL, CHAPEL, CHIP, CLOUD, CYCLE, DIG, DOOR, DUNE, ENGINE, EYE, FIELD, FIRE, FRAME, HOSPITAL, LINE, NOTE, PIANO, PRESS, ROW, SLIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "NEWS", "number": 2, "reasoning": "Channel and Press are both associated with news."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NEWS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brown
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Press
+  Chip
+  Dig
+  Capsule
+  Row
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+  [BLUE] VEHICLE 2  #1: Engine → blue
+  [BLUE] VEHICLE 2  #2: Cycle → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Press", "reasoning": "Strong link to NEWS; 'Press' is a classic media/news word, likely one of the two red cards."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NEWS' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brown
+  Channel
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Chip
+  Dig
+  Capsule
+  Row
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+  [BLUE] VEHICLE 2  #1: Engine → blue
+  [BLUE] VEHICLE 2  #2: Cycle → neutral
+  [RED] NEWS 2  #1: Press → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Channel", "reasoning": "Strong association with news; 'news channel' is a direct link to the clue 'NEWS' and is a plausible red word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NEWS' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brown
+  Dune
+  Blank
+  Chapel
+  Cloud
+  Frame
+  Blade
+  Hospital
+  Slip
+  Chip
+  Dig
+  Capsule
+  Row
+
+Game history:
+  [RED] OPEN 4  #1: Door → red
+  [RED] OPEN 4  #2: Fire → neutral
+  [BLUE] MUSIC 2  #1: Piano → blue
+  [BLUE] MUSIC 2  #2: Note → blue
+  [BLUE] MUSIC 2  #3: PASS
+  [RED] VISION 3  #1: Eye → red
+  [RED] VISION 3  #2: Field → red
+  [RED] VISION 3  #3: Line → red
+  [RED] VISION 3  #4: Chamber → blue
+  [BLUE] VEHICLE 2  #1: Engine → blue
+  [BLUE] VEHICLE 2  #2: Cycle → neutral
+  [RED] NEWS 2  #1: Press → red
+  [RED] NEWS 2  #2: Channel → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dig", "reasoning": "Dig for stories is a common phrase connected to news/journalism, making it a plausible red card under the clue 'NEWS'."}
+============================================================

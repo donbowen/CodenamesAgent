@@ -1,0 +1,2603 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Pit                  RED        
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       
+  Press                BLUE       
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    
+  Blossom              RED        
+  Wall                 BLUE       
+  Orange               RED        
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        
+  Lock                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "tree", "number": 2, "reasoning": "Tree connects to BRANCH and BLOSSOM, both of which are red words. No strong tree associations with blue words, the assassin (CAPE), or dangerous neutrals."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Branch
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Blossom
+  Wall
+  Orange
+  Cord
+  Clear
+  Door
+  Lock
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Branch", "reasoning": "A 'branch' is directly related to a tree, making it the most obvious connection to the clue 'TREE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Blossom
+  Wall
+  Orange
+  Cord
+  Clear
+  Door
+  Lock
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blossom", "reasoning": "Blossom is closely associated with trees, as many trees produce blossoms. This fits the clue 'TREE' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Orange
+  Cord
+  Clear
+  Door
+  Lock
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Both 'Branch' and 'Blossom' have already been guessed for 'TREE'. No remaining words strongly relate to 'TREE'. It's best to pass to avoid unnecessary risk."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Pit                  RED        
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       
+  Press                BLUE       
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    
+  Blossom              RED        [revealed]
+  Wall                 BLUE       
+  Orange               RED        
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        
+  Lock                 BLUE       
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED, NEUTRAL, and especially the ASSASSIN (Cape).
+
+My BLUE words are:
+- Angel
+- Aztec
+- Die
+- Pool
+- Glass
+- Press
+- Wall
+- Lock
+
+Let me consider potential clues:
+
+1. **WATER** - Could connect Pool, Glass (drinking glass), Lock (canal lock). But "Lock" as canal lock is a stretch.
+
+2. **SWIMMING** - Pool connects strongly, but others don't fit well.
+
+3. **TRANSPARENT** - Glass fits, but others don't.
+
+4. **ANCIENT** - Aztec and Angel (biblical) could work, but that's only 2.
+
+5. **NEWSPAPER** - Press (printing press) connects well, but need more words.
+
+6. **BILLIARD** - Pool (billiards), but only 1 word.
+
+7. **CUBE** - Die (dice), Ice (for pool/glass). Not on board though.
+
+8. **PRINTING** - Press connects, but limited.
+
+9. **SWIM** - Pool is strong, but others weak.
+
+10. **KEY** - Lock is obvious. Press (key on keyboard/piano). Die (key die in manufacturing). That's 3 potential connections!
+
+Let me verify KEY:
+- Lock ✓ (key and lock)
+- Press ✓ (key press, keyboard key)
+- Die ✓ (less common, but a key die is used in manufacturing)
+
+Checking dangers:
+- Not pointing to Cape (ASSASSIN)
+- Not pointing to RED words strongly
+- Not a board word
+
+{"clue": "KEY", "number": 2, "reasoning": "KEY connects Lock (key-lock pair) and Press (key press on keyboard). Avoiding 3 to be safer since Die connection is weaker."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'KEY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Orange
+  Cord
+  Clear
+  Door
+  Lock
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Lock",
+  "reasoning": "KEY and LOCK are strongly associated - a key opens a lock. This is a very direct connection and highly likely to be a blue card given the clue 'KEY'."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'KEY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Orange
+  Cord
+  Clear
+  Door
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "DOOR",
+  "reasoning": "KEY strongly associates with DOOR (key opens a door, key and lock are related, and I just got Lock). This is a confident second guess for the clue KEY-2. I'll likely pass after this to avoid risking the assassin or opponent cards."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Pit                  RED        
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       
+  Press                BLUE       
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    
+  Blossom              RED        [revealed]
+  Wall                 BLUE       
+  Orange               RED        
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "fruit", "number": 2, "reasoning": "Both 'Pit' and 'Orange' are related to fruit. None of the opponent's words or the assassin ('Cape') are strongly connected to this clue, making it safe and effective for targeting two red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRUIT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Orange
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Orange", "reasoning": "Orange is a direct match for the clue 'FRUIT' and is the most obvious choice from the list."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRUIT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pit
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Pit", "reasoning": "Many fruits have pits (e.g., peach, cherry), so 'Pit' fits well with the clue 'FRUIT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FRUIT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We've already guessed two words for FRUIT (Orange and Pit), which matches the clue number. There are no obvious remaining fruit-related words among the valid guesses, so it's safest to pass and avoid hitting a neutral, blue, or assassin card."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       
+  Press                BLUE       
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    
+  Blossom              RED        [revealed]
+  Wall                 BLUE       
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Angel
+- Aztec
+- Die
+- Pool
+- Glass
+- Press
+- Wall
+
+Let me consider potential clues:
+
+**WATER** could connect: Pool (body of water), Glass (water glass). But it's only 2 words and relatively weak.
+
+**SWIMMING** could connect: Pool (swimming pool), Die (pool/billiards die?). Weak connection.
+
+**PRINT** could connect: Press (printing press). Only 1 word.
+
+**NEWSPAPER** could connect: Press (news press). Only 1 word.
+
+**WINE** could connect: Glass (wine glass), Press (wine press). That's 2 solid connections.
+
+**MEXICAN** could connect: Aztec (Mexican civilization). Only 1 word, but very strong.
+
+**ANCIENT** could connect: Aztec (ancient civilization), Wall (ancient walls). 2 words.
+
+**CIVILIZATION** could connect: Aztec. Only 1 word.
+
+**TRANSPARENT** could connect: Glass, Clear (but Clear is neutral). Risky.
+
+**BERLIN** could connect: Wall (Berlin Wall). Only 1 word but strong.
+
+Let me try **WINE** for 2:
+- Press (wine press) ✓
+- Glass (wine glass) ✓
+- Risk: None of these seem to point to ASSASSIN (Cape) or RED words
+
+This seems like a safe, solid clue.
+
+{"clue": "WINE", "number": 2, "reasoning": "Connects PRESS (wine press) and GLASS (wine glass) - both strong associations with wine production and consumption"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WINE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Glass
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Glass",
+  "reasoning": "WINE is strongly associated with 'Glass' as wine is typically served in a wine glass. This is a very direct connection and seems like the most obvious match for the clue WINE."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WINE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Press
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Press",
+  "reasoning": "WINE PRESS is a strong compound word connection - a wine press is used to extract juice from grapes in winemaking. This is a direct and common association with wine production. I've already guessed one word correctly (Glass), so this is my second guess for the clue WINE 2."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WINE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words (Glass and Press) matching the WINE clue with number 2. Both were correct blue cards. Since I've matched the clue number exactly and there are no other obvious wine-related words in the remaining list, continuing would be risky. With Blue at 5 remaining vs Red at 4, we're slightly behind, but guessing randomly could hit the assassin, a neutral, or help Red. The safe play is to PASS and preserve our position."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       [revealed]
+  Press                BLUE       [revealed]
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    
+  Blossom              RED        [revealed]
+  Wall                 BLUE       
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Island", "number": 2, "reasoning": "The words 'Isle' and 'Hook' can both be associated with 'Island': 'Isle' is a synonym for island, and 'Hook' can refer to a landform such as 'Sandy Hook' or a 'hook'-shaped peninsula, which are often associated with islands or coasts. This clue avoids blue words and the assassin ('Cape')."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ISLAND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Isle
+  Hook
+  Pool
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Isle", "reasoning": "'Isle' is a synonym for 'island', making it the most direct and obvious connection to the clue 'ISLAND'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ISLAND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Australia
+  Wall
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Australia", "reasoning": "Australia is both a country and a large island, making it a strong match for the clue 'ISLAND.'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        [revealed]
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       [revealed]
+  Press                BLUE       [revealed]
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    [revealed]
+  Blossom              RED        [revealed]
+  Wall                 BLUE       
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Angel
+- Aztec
+- Die
+- Pool
+- Wall
+
+Let me consider potential clues:
+
+1. **HEAVEN** - Could connect to "Angel" and possibly "Die" (going to heaven when you die), but "Die" is risky as it could be misinterpreted.
+
+2. **SWIMMING** - Could connect to "Pool" but only covers one word.
+
+3. **ANCIENT** - Could connect to "Aztec" but only one word.
+
+4. **WATER** - Could connect to "Pool" but only one word, and might risk "Harbor" (neutral).
+
+5. **STRUCTURE** - Could connect to "Wall" but only one word.
+
+6. **CELESTIAL/DIVINE** - Could connect to "Angel" and "Aztec" (Aztec gods/temples), but only 2 words.
+
+7. **BILLIARDS** - Could connect to "Pool" (pool table) and "Die" (dice used in some games), but this is stretching it.
+
+8. **BUILDING** - Could connect to "Wall" but only one word.
+
+9. **STONE** - Could connect to "Wall" (stone wall) and "Aztec" (stone temples/pyramids), possibly 2 words.
+
+10. **MEXICAN** - Could connect to "Aztec" strongly, but only one word and it's a proper noun adjective.
+
+11. **MESOAMERICAN** - Similar issue to Mexican.
+
+Let me reconsider "STONE":
+- Wall: stone walls are common
+- Aztec: stone pyramids, stone temples
+- Angel: stone angels (statues) - this is a stretch but possible
+
+This seems like the best option for connecting multiple words safely.
+
+{"clue": "STONE", "number": 2, "reasoning": "Connects Wall (stone walls) and Aztec (stone pyramids/temples). Avoids assassin Cape and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STONE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Wall
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "STONE" from the valid guesses list.
+
+Let me analyze the connections:
+- **Wall** - Stone walls are very common (stone wall construction)
+- **Aztec** - Aztecs built stone pyramids and structures
+- **Angel** - Stone angel statues are common
+- **Cape** - Could relate to Cape Stone or stone formations at capes
+- **Arm** - Stone arm (statue part)
+- **Pool** - Stone pool construction
+- **Light** - Less direct connection
+- **Harbor** - Stone harbors/breakwaters
+- **Foam** - No clear connection
+- **Clear** - No clear connection
+- **Cord** - No clear connection
+- **Draft** - No clear connection
+- **Bullet** - No clear connection
+- **Die** - No clear connection
+- **Hook** - No clear connection
+
+The strongest connections are:
+1. **Wall** - "Stone wall" is a very common phrase
+2. **Aztec** - Famous for stone architecture and pyramids
+
+I'll start with **Wall** as it has the most direct and common association with stone.
+
+{"guess": "Wall", "reasoning": "Stone wall is a very common phrase - walls are frequently made of stone throughout history"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STONE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Aztec
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "AZTEC", "reasoning": "STONE connects to AZTEC through ancient stone structures and pyramids. This is a strong historical/architectural connection. I've already gotten one correct guess (Wall) for this clue, so I have one more natural guess before considering passing. AZTEC feels like a solid connection to STONE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STONE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Wall and Aztec) matching the clue number of 2. The remaining words don't have strong connections to STONE - while 'Cape' could relate to Cape Stone or stonework at capes, it's a weak connection. With the score tied at 3-3, risking a wrong guess on an opponent's card or the assassin isn't worth it. I should pass and let my Spymaster give a fresh clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    
+  Aztec                BLUE       [revealed]
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        
+  Die                  BLUE       
+  Isle                 RED        [revealed]
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       [revealed]
+  Press                BLUE       [revealed]
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    [revealed]
+  Blossom              RED        [revealed]
+  Wall                 BLUE       [revealed]
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "gun", "number": 2, "reasoning": "Both 'Bullet' and 'Hook' can be related to 'gun'—'Bullet' directly, and 'Hook' as in the 'trigger hook' or 'gun hook' used in firearms. 'Light' is less directly related, but giving a 2 clue helps avoid overreaching and prevents accidental guesses of blue or assassin words. 'Gun' does not strongly connect to any blue words or the assassin 'Cape'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GUN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Arm
+  Light
+  Harbor
+  Draft
+  Bullet
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bullet", "reasoning": "Bullet is directly related to a gun as it is what is fired from a gun, making it the most obvious connection to the clue 'GUN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GUN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Arm
+  Light
+  Harbor
+  Draft
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Arm", "reasoning": "The word 'arm' is closely associated with 'gun' (as in 'firearm' or 'to arm oneself with a gun'). It is the most directly connected word among the valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    [revealed]
+  Aztec                BLUE       [revealed]
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        [revealed]
+  Die                  BLUE       
+  Isle                 RED        [revealed]
+  Hook                 RED        
+  Pool                 BLUE       
+  Glass                BLUE       [revealed]
+  Press                BLUE       [revealed]
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    [revealed]
+  Blossom              RED        [revealed]
+  Wall                 BLUE       [revealed]
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to help BLUE identify their remaining unrevealed words: **Angel**, **Die**, and **Pool**.
+
+Let me analyze each:
+- **Angel**: heavenly being, halo, wings, divine
+- **Die**: cube with dots, gaming piece, singular of dice
+- **Pool**: swimming pool, billiards, body of water
+
+I need to avoid:
+- **Cape** (ASSASSIN) - clothing item or geographic feature
+- **Light** and **Hook** (RED words still in play)
+- All neutral words
+
+Let me consider possible clues:
+
+1. **WATER** - connects to Pool (swimming pool, body of water). Angel and Die don't relate strongly to water. Number: 1
+
+2. **SWIMMING** - connects to Pool. Angel and Die don't relate. Number: 1
+
+3. **HEAVEN** - connects to Angel strongly. Die could relate (death → afterlife), but that's a stretch. Pool doesn't relate. Number: 1
+
+4. **GAME** - connects to Die (dice game) and Pool (billiards/pool game). Angel doesn't relate. Number: 2
+   - Risk: Could point to neutral words like Draft (draft in games?)
+   - This seems promising!
+
+5. **CUBE** - connects to Die (six-sided cube). Doesn't connect to Angel or Pool. Number: 1
+
+Let me go with **GAME** for 2, targeting Die and Pool. Both are strongly associated with games (dice games and pool/billiards). Angel doesn't fit, but my team should identify the two game-related words first.
+
+{"clue": "GAME", "number": 2, "reasoning": "Die (dice) and Pool (billiards) are both game-related items, avoiding the assassin Cape and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GAME' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Light
+  Harbor
+  Draft
+  Die
+  Hook
+  Pool
+  Cape
+  Foam
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "GAME" from the valid guesses list.
+
+Let me think about each word:
+- **Die**: Strongly connected to GAME (dice are used in many games)
+- **Pool**: Connected to GAME (pool is a game, billiards)
+- **Draft**: Could relate to GAME (draft picks in sports, card draft in games)
+- **Hook**: Weak connection (fishing game?)
+- **Cape**: Weak connection (superhero games?)
+- **Angel**: No strong connection
+- **Light**: No strong connection
+- **Harbor**: No strong connection
+- **Foam**: No strong connection
+- **Cord**: No strong connection
+- **Clear**: No strong connection
+
+The strongest connections are:
+1. **Die** - dice are fundamental to many games
+2. **Pool** - pool/billiards is literally a game
+
+I'm most confident about "Die" as it's a core gaming component (rolling dice). Pool is also good but slightly less universal.
+
+Current situation: Red has 2 cards left, Blue has 3 cards left. We're slightly behind, so I should be reasonably aggressive but careful about the assassin.
+
+{"guess": "Die", "reasoning": "Die (dice) is strongly associated with games - dice are used in board games, casino games, and many other types of games"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GAME' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Light
+  Harbor
+  Draft
+  Hook
+  Pool
+  Cape
+  Foam
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Pool",
+  "reasoning": "GAME connects to Pool through 'pool game' (billiards/8-ball). This is a strong connection. I've already guessed Die (board game piece), so Pool makes sense as the second word for this clue. With 2 cards left for each team, I should take this confident guess rather than pass."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GAME' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Light
+  Harbor
+  Draft
+  Hook
+  Cape
+  Foam
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+  [BLUE] GAME 2  #2: Pool → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the situation:
+- Blue has 1 card remaining (we need just 1 more to win!)
+- Red has 2 cards remaining
+- I've already guessed 2 words correctly for "GAME" (Die and Pool)
+- I have 1 guess left this turn
+
+The clue was "GAME 2", meaning the Spymaster intended 2 words. I've successfully found both. However, I could try for a third guess to win immediately.
+
+Let me analyze the remaining words for any connection to "GAME":
+- **Draft** - Could relate to game (draft picks in sports/games, draft in card games)
+- Hook - Fishing hook, Captain Hook, hook shot
+- Cape - Clothing, geography
+- Angel, Light, Harbor, Foam, Cord, Clear - Less obvious connections to GAME
+
+Since we only need 1 more card to WIN, and Red needs 2, we're in a strong position. However, guessing wrong could:
+1. Hit a neutral (ends turn, Red gets their turn)
+2. Hit a red card (ends turn, Red wins immediately!)
+3. Hit the assassin (we lose instantly!)
+
+The risk is very high. I've already gotten the 2 intended words for "GAME". Pushing for a third guess when the Spymaster only indicated 2 words is extremely risky, especially when one wrong guess could hand Red the victory.
+
+{"guess": "PASS", "reasoning": "Already found both intended GAME words (Die, Pool). With Blue needing only 1 card and Red needing 2, we're ahead. Risking a third guess could hit Red's last cards or assassin, potentially losing the game. Better to pass and let our Spymaster give a winning clue next turn."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    [revealed]
+  Aztec                BLUE       [revealed]
+  Light                RED        
+  Harbor               NEUTRAL    
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        [revealed]
+  Die                  BLUE       [revealed]
+  Isle                 RED        [revealed]
+  Hook                 RED        
+  Pool                 BLUE       [revealed]
+  Glass                BLUE       [revealed]
+  Press                BLUE       [revealed]
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    [revealed]
+  Blossom              RED        [revealed]
+  Wall                 BLUE       [revealed]
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+  [BLUE] GAME 2  #2: Pool → blue
+  [BLUE] GAME 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "fishing", "number": 2, "reasoning": "The two remaining red words are 'Light' and 'Hook.' 'Fishing' connects to 'Hook' directly, as hooks are used for fishing, and 'Light' can relate to fishing as in 'fishing light,' a device used to attract fish, or fishing at dawn/dusk when light is a factor. No blue or assassin words are strongly connected to 'fishing,' especially avoiding 'Angel' (which could be 'angel fish,' but is less direct), and especially avoiding 'Cape' (the assassin) which is not directly connected."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Light
+  Harbor
+  Draft
+  Hook
+  Cape
+  Foam
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+  [BLUE] GAME 2  #2: Pool → blue
+  [BLUE] GAME 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hook", "reasoning": "'Hook' is strongly associated with fishing, as it is a primary tool used to catch fish."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Angel
+  Light
+  Harbor
+  Draft
+  Cape
+  Foam
+  Cord
+  Clear
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+  [BLUE] GAME 2  #2: Pool → blue
+  [BLUE] GAME 2  #3: PASS
+  [RED] FISHING 2  #1: Hook → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Harbor", "reasoning": "A harbor is closely related to fishing, as fishing boats often dock in harbors. This is the most direct connection to fishing among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Pit                  RED        [revealed]
+  Angel                BLUE       
+  Arm                  NEUTRAL    [revealed]
+  Aztec                BLUE       [revealed]
+  Light                RED        
+  Harbor               NEUTRAL    [revealed]
+  Branch               RED        [revealed]
+  Draft                NEUTRAL    
+  Bullet               RED        [revealed]
+  Die                  BLUE       [revealed]
+  Isle                 RED        [revealed]
+  Hook                 RED        [revealed]
+  Pool                 BLUE       [revealed]
+  Glass                BLUE       [revealed]
+  Press                BLUE       [revealed]
+  Cape                 ASSASSIN   
+  Foam                 NEUTRAL    
+  Australia            NEUTRAL    [revealed]
+  Blossom              RED        [revealed]
+  Wall                 BLUE       [revealed]
+  Orange               RED        [revealed]
+  Cord                 NEUTRAL    
+  Clear                NEUTRAL    
+  Door                 RED        [revealed]
+  Lock                 BLUE       [revealed]
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+  [BLUE] GAME 2  #2: Pool → blue
+  [BLUE] GAME 2  #3: PASS
+  [RED] FISHING 2  #1: Hook → red
+  [RED] FISHING 2  #2: Harbor → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, ARM, AUSTRALIA, AZTEC, BLOSSOM, BRANCH, BULLET, CAPE, CLEAR, CORD, DIE, DOOR, DRAFT, FOAM, GLASS, HARBOR, HOOK, ISLE, LIGHT, LOCK, ORANGE, PIT, POOL, PRESS, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the current board state:
+
+**Blue remaining (unrevealed):** Angel
+**Red remaining (unrevealed):** Light
+**Assassin:** Cape
+**Neutral (unrevealed):** Draft, Foam, Cord, Clear
+
+I need to give a clue for "Angel" (the only Blue word left) while avoiding:
+- The assassin "Cape"
+- The red word "Light"
+- Any neutral words
+
+Let me think of clues for "Angel":
+- "Heaven" - relates to Angel
+- "Halo" - relates to Angel
+- "Wings" - relates to Angel
+- "Divine" - relates to Angel
+- "Cherub" - relates to Angel
+- "Guardian" - relates to Angel
+
+I need to ensure my clue doesn't accidentally point to:
+- Cape (clothing item, geographic feature)
+- Light (could relate to angels being beings of light)
+- Draft, Foam, Cord, Clear (seem unrelated to most angel clues)
+
+"Heaven" seems like a strong, clear clue for Angel that won't point to Cape, Light, or the neutrals.
+
+Let me verify "Heaven" isn't on the forbidden list: It's not there.
+
+{"clue": "Heaven", "number": 1, "reasoning": "Heaven directly relates to Angel, the only remaining blue word. It avoids pointing to Cape (assassin), Light (red), or any neutrals."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HEAVEN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Angel
+  Light
+  Draft
+  Cape
+  Foam
+  Cord
+  Clear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 2  #1: Branch → red
+  [RED] TREE 2  #2: Blossom → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] KEY 2  #1: Lock → blue
+  [BLUE] KEY 2  #2: Door → red
+  [RED] FRUIT 2  #1: Orange → red
+  [RED] FRUIT 2  #2: Pit → red
+  [RED] FRUIT 2  #3: PASS
+  [BLUE] WINE 2  #1: Glass → blue
+  [BLUE] WINE 2  #2: Press → blue
+  [BLUE] WINE 2  #3: PASS
+  [RED] ISLAND 2  #1: Isle → red
+  [RED] ISLAND 2  #2: Australia → neutral
+  [BLUE] STONE 2  #1: Wall → blue
+  [BLUE] STONE 2  #2: Aztec → blue
+  [BLUE] STONE 2  #3: PASS
+  [RED] GUN 2  #1: Bullet → red
+  [RED] GUN 2  #2: Arm → neutral
+  [BLUE] GAME 2  #1: Die → blue
+  [BLUE] GAME 2  #2: Pool → blue
+  [BLUE] GAME 2  #3: PASS
+  [RED] FISHING 2  #1: Hook → red
+  [RED] FISHING 2  #2: Harbor → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Angel",
+  "reasoning": "HEAVEN strongly connects to Angel - this is a very direct association. With only 1 blue and 1 red card remaining, this is essentially a win-or-lose situation. Angel is the most obvious connection to HEAVEN from the available words, much more so than Light or any other option. Given the critical game state (tied 1-1), I need to take this clear connection."
+}
+```
+============================================================

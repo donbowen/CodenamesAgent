@@ -52,6 +52,7 @@ class GameResult:
     losing_team_name: str
     total_turns: int
     game: CodenamesGame
+    error_turns: int = 0  # turns skipped due to API failures; >0 means result is invalid
 
 
 class GameRunner:
@@ -95,6 +96,7 @@ class GameRunner:
             seed=self.seed,
         )
         turns = 0
+        error_turns = 0
 
         while not game.is_over() and turns < self.max_turns:
             team = (
@@ -102,7 +104,8 @@ class GameRunner:
                 if game.current_team == TeamColor.RED
                 else self.blue_team
             )
-            self._play_turn(game, team)
+            if self._play_turn(game, team):
+                error_turns += 1
             turns += 1
 
         if not game.is_over():
@@ -138,14 +141,15 @@ class GameRunner:
             losing_team_name=losing_name,
             total_turns=turns,
             game=game,
+            error_turns=error_turns,
         )
 
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
 
-    def _play_turn(self, game: CodenamesGame, team: Team) -> None:
-        """Run one full turn for *team*."""
+    def _play_turn(self, game: CodenamesGame, team: Team) -> bool:
+        """Run one full turn for *team*. Returns True if an API error occurred."""
         color = game.current_team
         self._log(
             f"\n--- {team.name} ({color.value.upper()}) turn | "
@@ -158,10 +162,8 @@ class GameRunner:
             clue_word, number = team.spymaster.give_clue(view)
         except RuntimeError as exc:
             logger.error("Spymaster failed: %s — passing turn.", exc)
-            # Cannot give clue; skip turn by giving a dummy clue with number 0
-            # which is not allowed, so we directly end the turn
             game._end_turn()  # noqa: SLF001
-            return
+            return True
 
         self._log(f"  Spymaster clue: '{clue_word}' ({number})")
 
@@ -170,7 +172,7 @@ class GameRunner:
         except ValueError as exc:
             logger.error("Invalid spymaster clue '%s': %s", clue_word, exc)
             game._end_turn()  # noqa: SLF001
-            return
+            return True
 
         # Field Operative guesses
         while not game.is_over():
@@ -183,7 +185,7 @@ class GameRunner:
             except RuntimeError as exc:
                 logger.error("Guesser failed: %s — passing.", exc)
                 game.pass_turn()
-                break
+                return True
 
             if guess == "PASS":
                 if gview["guesses_this_turn"] == 0:
@@ -207,6 +209,8 @@ class GameRunner:
 
             if result in ("assassin", "neutral", "wrong_team"):
                 break  # turn has already ended inside game.guess()
+
+        return False
 
     def _log(self, msg: str) -> None:
         if self.verbose:

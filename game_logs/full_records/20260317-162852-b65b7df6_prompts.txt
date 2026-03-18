@@ -1,0 +1,1960 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        
+  Egypt                NEUTRAL    
+  Button               RED        
+  Shoe                 RED        
+  Club                 RED        
+  Ball                 NEUTRAL    
+  Saturn               RED        
+  Fabric               BLUE       
+  Root                 BLUE       
+  Decay                RED        
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    
+  Penguin              RED        
+  Freeze               BLUE       
+  Screen               BLUE       
+  Drill                BLUE       
+  Fountain             BLUE       
+  Bridge               BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"garment","number":3,"reasoning":"Connects FOLD, BUTTON, and SHOE through clothing/apparel, while avoiding strong association with the assassin IDOL and only limited pull toward other board words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GARMENT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Fold
+  Egypt
+  Button
+  Shoe
+  Club
+  Ball
+  Saturn
+  Fabric
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Freeze
+  Screen
+  Drill
+  Fountain
+  Bridge
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Button","reasoning":"Strongest match to GARMENT; buttons are a common part of clothing."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GARMENT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Fold
+  Egypt
+  Shoe
+  Club
+  Ball
+  Saturn
+  Fabric
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Freeze
+  Screen
+  Drill
+  Fountain
+  Bridge
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"SHOE","reasoning":"Strong garment/clothing-related association alongside Button; more direct than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GARMENT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Fold
+  Egypt
+  Club
+  Ball
+  Saturn
+  Fabric
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Freeze
+  Screen
+  Drill
+  Fountain
+  Bridge
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Fabric","reasoning":"Fabric is strongly associated with garments and fits the clue well after Button and Shoe."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        
+  Ball                 NEUTRAL    
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       
+  Decay                RED        
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    
+  Penguin              RED        
+  Freeze               BLUE       
+  Screen               BLUE       
+  Drill                BLUE       
+  Fountain             BLUE       
+  Bridge               BLUE       
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Idol).
+
+Blue words remaining: Root, Truck, Freeze, Screen, Drill, Fountain, Bridge
+
+Let me analyze potential connections:
+
+1. **Tool/Equipment angle**: Drill, Screen, Truck could relate to construction/work tools
+2. **Water/Cold theme**: Freeze, Fountain, Bridge (bridges cross water)
+3. **Computer/Technology**: Screen, Root (computer terms)
+4. **Construction/Building**: Bridge, Drill, Truck
+
+Looking at "WATER" as a clue:
+- Fountain ✓ (water feature)
+- Bridge ✓ (crosses water)
+- Freeze ✓ (water becomes ice)
+- Root could work (plants need water)
+
+But I need to be careful about red words:
+- Saturn (planet, no water connection)
+- Club, Fold, Decay, Link, Leaf, Penguin - none strongly connect to water
+
+"WATER" seems safe and could connect 3-4 blue words effectively.
+
+{"clue": "WATER", "number": 3, "reasoning": "Connects Fountain (water feature), Bridge (crosses water), and Freeze (water turns to ice). Avoids red words and assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Fold
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Freeze
+  Screen
+  Drill
+  Fountain
+  Bridge
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "WATER" with 3 words, I need to find words that relate to water.
+
+Scanning the valid guesses:
+- **Fountain** - directly relates to water (water fountains)
+- **Freeze** - water freezes into ice
+- **Bridge** - bridges often go over water
+- **Root** - plants need water, roots absorb water
+- **Leaf** - leaves need water for photosynthesis
+- **Saturn** - has water/ice in its rings and moons
+
+"Fountain" has the strongest connection to water - fountains are literally water features. This seems like the most obvious and safe first guess.
+
+{"guess": "Fountain", "reasoning": "Fountain directly relates to water as water fountains are common water features, making this the strongest connection to the clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Fold
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Freeze
+  Screen
+  Drill
+  Bridge
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "WATER" and the remaining words, I need to find connections to water.
+
+From the valid guesses, several words have potential water connections:
+- **Freeze** - water freezes into ice (strong connection)
+- **Bridge** - bridges often go over water bodies
+- **Root** - plant roots need water to survive
+- **Leaf** - leaves need water and can collect water droplets
+- **Drill** - can drill for water/wells
+
+Since I've already successfully guessed one word (Fountain) for this clue, I have 2 more guesses to use. "Freeze" has the strongest and most direct connection to water - it's literally what happens to water at low temperatures.
+
+{"guess": "Freeze", "reasoning": "Freeze has a direct connection to water - water freezes into ice at low temperatures, making it a strong match for the WATER clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Fold
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Screen
+  Drill
+  Bridge
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "WATER" and the remaining words, I need to find connections to water.
+
+I've already successfully guessed two water-related words (Fountain and Freeze). For the third guess, I'm considering:
+
+- **Bridge** - Many bridges span over water bodies like rivers, lakes, and harbors
+- **Root** - Plant roots absorb water from soil
+- **Leaf** - Leaves contain water and are involved in water transport in plants
+- **Drill** - Could refer to drilling water wells
+
+Bridge seems like the strongest connection since bridges are fundamentally associated with crossing water. This feels like a natural third word for a WATER clue.
+
+{"guess": "Bridge", "reasoning": "Bridges are built over water bodies like rivers and lakes, making it a strong connection to the WATER clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Fold
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Screen
+  Drill
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 words correctly for the WATER clue, matching the clue number. With only 4 blue cards remaining and having successfully completed the clue, it's wise to pass rather than risk hitting a red card, neutral, or the assassin on an uncertain fourth guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        
+  Ball                 NEUTRAL    
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       
+  Decay                RED        
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    
+  Penguin              RED        
+  Freeze               BLUE       [revealed]
+  Screen               BLUE       
+  Drill                BLUE       
+  Fountain             BLUE       [revealed]
+  Bridge               BLUE       [revealed]
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Paper","number":2,"reasoning":"Connects FOLD and CLIP most strongly, but FOLD is red while CLIP is neutral, so this is risky. Better is a safer pair: 'Orbit' for SATURN only is too small. 'Wither' links DECAY and LEAF, but LEAF could also suggest ROOT. 'Chain' cleanly points to LINK and CLUB less well. Best balance is 'Penguin' impossible since on board. Safer focused clue: 'Rot' for DECAY is very direct and avoids assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAPER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Fold
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Screen
+  Drill
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"FOLD","reasoning":"'Paper' strongly suggests FOLD as a direct paper action; it's the clearest match on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAPER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Clip
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Screen
+  Drill
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"CLIP","reasoning":"Paper clip is a very strong match to PAPER, and Fold was already found from this clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        [revealed]
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        
+  Ball                 NEUTRAL    
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       
+  Decay                RED        
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    [revealed]
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    
+  Penguin              RED        
+  Freeze               BLUE       [revealed]
+  Screen               BLUE       
+  Drill                BLUE       
+  Fountain             BLUE       [revealed]
+  Bridge               BLUE       [revealed]
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Root
+- Truck  
+- Screen
+- Drill
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin.
+
+Let me analyze potential connections:
+
+"Tool" could work for Drill and potentially Root (garden tool), but Truck doesn't fit well.
+
+"Display" could work for Screen, but doesn't connect to the others strongly.
+
+"Underground" could work for Root, but again limited connections.
+
+"Machine" could connect Truck, Drill, and potentially Screen (computer screen), but Root doesn't fit.
+
+"Computer" could work for Screen and Drill (drill down in data/menus), but Truck and Root don't fit well.
+
+"Vehicle" only fits Truck.
+
+"Plant" could work for Root, but none of the others.
+
+Wait - "Driver" could work:
+- Drill (drill driver/power drill)  
+- Truck (truck driver)
+- Screen (screen driver in computing)
+
+But Root doesn't fit well, and this might be too abstract.
+
+Let me try "Power":
+- Drill (power drill)
+- Truck (powerful vehicle)
+- Screen (powered device)
+
+Root still doesn't fit great, but this seems like the best multi-word connection.
+
+Actually, "Electric" might work better:
+- Drill (electric drill)
+- Screen (electric screen/display)
+- Truck (electric truck)
+
+Root still doesn't fit, but 3 out of 4 is good.
+
+{"clue": "ELECTRIC", "number": 3, "reasoning": "Electric connects to drill (electric drill), screen (electric display), and truck (electric vehicle)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ELECTRIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Bolt
+  Penguin
+  Screen
+  Drill
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "ELECTRIC" and the available words, I need to find words that relate to electricity.
+
+The most obvious connection is "Bolt" - which can mean a lightning bolt, which is electric. Lightning bolts are a classic symbol of electricity.
+
+Other potential connections I considered:
+- "Band" could relate to electric bands/circuits
+- "Screen" could relate to electric screens/displays
+- "Drill" could be an electric drill
+
+But "Bolt" has the strongest and most direct connection to electricity through lightning bolts.
+
+{"guess": "Bolt", "reasoning": "Bolt strongly connects to electric through lightning bolts, which are electrical phenomena"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        [revealed]
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        
+  Ball                 NEUTRAL    
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       
+  Decay                RED        
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    [revealed]
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    [revealed]
+  Penguin              RED        
+  Freeze               BLUE       [revealed]
+  Screen               BLUE       
+  Drill                BLUE       
+  Fountain             BLUE       [revealed]
+  Bridge               BLUE       [revealed]
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Golf","number":1,"reasoning":"Strongly points to CLUB while avoiding the assassin IDOL and having limited pull toward other unrevealed words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GOLF' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Egypt
+  Club
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+  Drill
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Club","reasoning":"'Golf club' is the strongest direct association with GOLF among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GOLF' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Egypt
+  Ball
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+  Drill
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Ball","reasoning":"Strongest remaining match to GOLF after Club; common golf term and likely intended pair."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        [revealed]
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        [revealed]
+  Ball                 NEUTRAL    [revealed]
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       
+  Decay                RED        
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    [revealed]
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    [revealed]
+  Penguin              RED        
+  Freeze               BLUE       [revealed]
+  Screen               BLUE       
+  Drill                BLUE       
+  Fountain             BLUE       [revealed]
+  Bridge               BLUE       [revealed]
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Root
+- Truck  
+- Screen
+- Drill
+
+I need a clue that connects these words while avoiding the assassin (Idol) and red words.
+
+Root and Drill both relate to dental procedures - root canals and dental drills are common dental terms. This is a strong connection that shouldn't point to any red words or the assassin.
+
+{"clue": "DENTAL", "number": 2, "reasoning": "Root (as in root canal) and Drill (dental drill) both relate to dental procedures, avoiding red words and assassin"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DENTAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Egypt
+  Saturn
+  Root
+  Decay
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+  Drill
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "DENTAL" and the available words, I need to find connections to dentistry or teeth.
+
+The strongest connection I can see is "ROOT" - this directly relates to tooth roots, which are a fundamental part of dental anatomy and procedures like root canals.
+
+"DECAY" is also dental-related (tooth decay), but "ROOT" seems like the most direct and common dental term.
+
+{"guess": "Root", "reasoning": "Root directly relates to dental terminology - tooth roots are fundamental to dentistry and dental procedures like root canals"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DENTAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Egypt
+  Saturn
+  Decay
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+  Drill
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "DENTAL" for 2 words, I already guessed "Root" correctly (tooth root). Now I need to find one more dental-related word from the remaining options.
+
+Scanning the list, "Drill" stands out immediately as strongly connected to dental work - dental drills are essential tools used by dentists for procedures like filling cavities.
+
+Other words like "Decay" (tooth decay) could also be dental-related, but "Drill" has a very clear and direct connection to dentistry.
+
+{"guess": "Drill", "reasoning": "Dental drill is a primary tool used by dentists for procedures, making it a strong match for the DENTAL clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DENTAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Egypt
+  Saturn
+  Decay
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "DENTAL" and the remaining words, I need to find connections to dental/teeth/mouth concepts.
+
+I've already successfully guessed "Root" and "Drill" for this clue, which were both perfect dental matches. Now I need to consider if there's a third word that could relate to dental work.
+
+Looking at the remaining options:
+- "Decay" stands out as having a strong dental connection (tooth decay is a common dental problem)
+- Other words like "Arch," "Band," "Link" could have weaker connections but are much more risky
+
+Since I'm on my third guess (clue number + 1), I should be cautious. However, "Decay" has such a strong dental connection that it seems worth the risk, especially since we only have 2 blue cards remaining and need to be somewhat aggressive to win.
+
+{"guess": "Decay", "reasoning": "Tooth decay is a fundamental dental concept, making this a strong match for the DENTAL clue"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        [revealed]
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        [revealed]
+  Ball                 NEUTRAL    [revealed]
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       [revealed]
+  Decay                RED        [revealed]
+  Idol                 ASSASSIN   
+  Link                 RED        
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    [revealed]
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    [revealed]
+  Penguin              RED        
+  Freeze               BLUE       [revealed]
+  Screen               BLUE       
+  Drill                BLUE       [revealed]
+  Fountain             BLUE       [revealed]
+  Bridge               BLUE       [revealed]
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+  [BLUE] DENTAL 2  #3: Decay → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"chain","number":1,"reasoning":"Targets LINK most directly. It avoids the assassin IDOL and has limited pull toward blue words; broader multi-word clues risk SCREEN, TRUCK, or SATURN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CHAIN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Egypt
+  Saturn
+  Idol
+  Link
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+  [BLUE] DENTAL 2  #3: Decay → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Link","reasoning":"'Link' is the strongest direct association with 'chain' (a chain is made of links)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CHAIN' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Egypt
+  Saturn
+  Idol
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+  [BLUE] DENTAL 2  #3: Decay → red
+  [RED] CHAIN 1  #1: Link → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the intended CHAIN word with LINK. A second guess would be a risky extra attempt from an old clue, and none of the remaining words strongly fit better than the danger warrants."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Arch                 NEUTRAL    
+  Fold                 RED        [revealed]
+  Egypt                NEUTRAL    
+  Button               RED        [revealed]
+  Shoe                 RED        [revealed]
+  Club                 RED        [revealed]
+  Ball                 NEUTRAL    [revealed]
+  Saturn               RED        
+  Fabric               BLUE       [revealed]
+  Root                 BLUE       [revealed]
+  Decay                RED        [revealed]
+  Idol                 ASSASSIN   
+  Link                 RED        [revealed]
+  Buddy                NEUTRAL    
+  Clip                 NEUTRAL    [revealed]
+  Leaf                 RED        
+  Band                 NEUTRAL    
+  Truck                BLUE       
+  Bolt                 NEUTRAL    [revealed]
+  Penguin              RED        
+  Freeze               BLUE       [revealed]
+  Screen               BLUE       
+  Drill                BLUE       [revealed]
+  Fountain             BLUE       [revealed]
+  Bridge               BLUE       [revealed]
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+  [BLUE] DENTAL 2  #3: Decay → red
+  [RED] CHAIN 1  #1: Link → red
+  [RED] CHAIN 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, BALL, BAND, BOLT, BRIDGE, BUDDY, BUTTON, CLIP, CLUB, DECAY, DRILL, EGYPT, FABRIC, FOLD, FOUNTAIN, FREEZE, IDOL, LEAF, LINK, PENGUIN, ROOT, SATURN, SCREEN, SHOE, TRUCK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Truck (vehicle)
+- Screen (display/barrier)
+
+I need a clue that connects these two words while avoiding the assassin (Idol) and red words (Saturn, Leaf, Penguin).
+
+Both "Truck" and "Screen" can be related to technology/electronics - trucks have screens (dashboards, GPS displays) and screens are electronic devices.
+
+{"clue": "DISPLAY", "number": 2, "reasoning": "Both Truck and Screen relate to displays - trucks have dashboard displays and screens are display devices"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DISPLAY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arch
+  Egypt
+  Saturn
+  Idol
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+  Screen
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+  [BLUE] DENTAL 2  #3: Decay → red
+  [RED] CHAIN 1  #1: Link → red
+  [RED] CHAIN 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "DISPLAY" and the available words, I need to find words that relate to showing or exhibiting something.
+
+The word "Screen" stands out as the strongest connection - screens are literally devices used for display (computer screens, TV screens, movie screens, etc.). This is a very direct match.
+
+Looking at the other options, "Arch" could potentially relate to display in an architectural sense (like a triumphal arch displaying grandeur), but this connection is much weaker than "Screen."
+
+Given that we only have 2 blue cards remaining and need to be efficient, I should go with the strongest, most obvious connection.
+
+{"guess": "Screen", "reasoning": "Screen directly relates to DISPLAY - screens are devices used to display images, text, and information"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DISPLAY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arch
+  Egypt
+  Saturn
+  Idol
+  Buddy
+  Leaf
+  Band
+  Truck
+  Penguin
+
+Game history:
+  [RED] GARMENT 3  #1: Button → red
+  [RED] GARMENT 3  #2: Shoe → red
+  [RED] GARMENT 3  #3: Fabric → blue
+  [BLUE] WATER 3  #1: Fountain → blue
+  [BLUE] WATER 3  #2: Freeze → blue
+  [BLUE] WATER 3  #3: Bridge → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PAPER 2  #1: Fold → red
+  [RED] PAPER 2  #2: Clip → neutral
+  [BLUE] ELECTRIC 3  #1: Bolt → neutral
+  [RED] GOLF 1  #1: Club → red
+  [RED] GOLF 1  #2: Ball → neutral
+  [BLUE] DENTAL 2  #1: Root → blue
+  [BLUE] DENTAL 2  #2: Drill → blue
+  [BLUE] DENTAL 2  #3: Decay → red
+  [RED] CHAIN 1  #1: Link → red
+  [RED] CHAIN 1  #2: PASS
+  [BLUE] DISPLAY 2  #1: Screen → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "DISPLAY" and the remaining words, I need to find another word that relates to displaying or showing something.
+
+From the valid guesses:
+- Arch - could be displayed in architecture or monuments
+- Egypt - museums display Egyptian artifacts
+- Saturn - displayed in planetariums or astronomy exhibits
+- Idol - idols are displayed for worship or in museums
+- Buddy - not really related to display
+- Leaf - could be displayed in collections or exhibits
+- Band - bands display their performance
+- Truck - not strongly related to display
+- Penguin - displayed in zoos or aquariums
+
+Given that I only have 1 blue card remaining and this is a critical moment, I need to be confident. "Idol" seems like a strong connection to DISPLAY since idols are objects specifically meant to be displayed for worship, reverence, or exhibition in museums.
+
+{"guess": "Idol", "reasoning": "Idols are objects specifically created to be displayed for worship or exhibition, making it a strong connection to the DISPLAY clue"}
+============================================================

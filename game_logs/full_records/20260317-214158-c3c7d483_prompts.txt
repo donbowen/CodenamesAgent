@@ -1,0 +1,1323 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cold                 BLUE       
+  Fuse                 NEUTRAL    
+  Couch                NEUTRAL    
+  Foot                 RED        
+  Fruit                BLUE       
+  Apple                RED        
+  Bow                  NEUTRAL    
+  Bank                 BLUE       
+  Bulb                 BLUE       
+  Fly                  BLUE       
+  Sub                  NEUTRAL    
+  Bolt                 RED        
+  Reel                 BLUE       
+  Jar                  NEUTRAL    
+  Alien                RED        
+  Ring                 RED        
+  Gene                 BLUE       
+  Boot                 RED        
+  Satellite            BLUE       
+  Fork                 NEUTRAL    
+  Pit                  RED        
+  Pipe                 ASSASSIN   
+  Dome                 RED        
+  Line                 NEUTRAL    
+  Pumpkin              RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, APPLE, BANK, BOLT, BOOT, BOW, BULB, COLD, COUCH, DOME, FLY, FOOT, FORK, FRUIT, FUSE, GENE, JAR, LINE, PIPE, PIT, PUMPKIN, REEL, RING, SATELLITE, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Halloween", "number": 3, "reasoning": "Halloween relates to Pumpkin, Boot (like a costume), and Dome (like a pumpkin dome or a thematic decoration), helping to connect those red words without risking the assassin or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cold
+  Fuse
+  Couch
+  Foot
+  Fruit
+  Apple
+  Bow
+  Bank
+  Bulb
+  Fly
+  Sub
+  Bolt
+  Reel
+  Jar
+  Alien
+  Ring
+  Gene
+  Boot
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+  Pumpkin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Pumpkin", "reasoning": "Pumpkin is directly associated with Halloween as a common decoration and symbol."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Fuse
+  Couch
+  Foot
+  Fruit
+  Apple
+  Bow
+  Bank
+  Bulb
+  Fly
+  Sub
+  Bolt
+  Reel
+  Jar
+  Alien
+  Ring
+  Gene
+  Boot
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fruit", "reasoning": "Halloween is associated with fruits like apples for bobbing or fruit treats, fitting the clue well after pumpkin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Cold                 BLUE       
+  Fuse                 NEUTRAL    
+  Couch                NEUTRAL    
+  Foot                 RED        
+  Fruit                BLUE       [revealed]
+  Apple                RED        
+  Bow                  NEUTRAL    
+  Bank                 BLUE       
+  Bulb                 BLUE       
+  Fly                  BLUE       
+  Sub                  NEUTRAL    
+  Bolt                 RED        
+  Reel                 BLUE       
+  Jar                  NEUTRAL    
+  Alien                RED        
+  Ring                 RED        
+  Gene                 BLUE       
+  Boot                 RED        
+  Satellite            BLUE       
+  Fork                 NEUTRAL    
+  Pit                  RED        
+  Pipe                 ASSASSIN   
+  Dome                 RED        
+  Line                 NEUTRAL    
+  Pumpkin              RED        [revealed]
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, APPLE, BANK, BOLT, BOOT, BOW, BULB, COLD, COUCH, DOME, FLY, FOOT, FORK, FRUIT, FUSE, GENE, JAR, LINE, PIPE, PIT, PUMPKIN, REEL, RING, SATELLITE, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words I need to connect:
+- Cold, Bank, Bulb, Fly, Reel, Gene, Satellite
+
+I can see a strong connection between several of these words through electricity/electrical concepts:
+- Bulb (light bulb - electrical)
+- Fly (as in "sparks fly" - electrical)
+- Reel (electrical cable reel)
+
+This avoids the assassin word "Pipe" and the red words. While "Cold" could potentially fit (cold fusion, electrical conductivity), the three core electrical words make this a solid clue.
+
+{"clue": "ELECTRICAL", "number": 3, "reasoning": "Connects Bulb (light bulb), Fly (sparks fly), and Reel (cable reel) through electricity theme"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ELECTRICAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cold
+  Fuse
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Bulb
+  Fly
+  Sub
+  Bolt
+  Reel
+  Jar
+  Alien
+  Ring
+  Gene
+  Boot
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "ELECTRICAL" with 3 words, I need to find words that relate to electricity or electrical components.
+
+From the valid guesses, the strongest electrical connections I see are:
+- **Fuse** - electrical safety device that prevents overloads
+- **Bulb** - light bulb, electrical component
+- **Bolt** - lightning bolt, electrical discharge
+
+"Fuse" has the strongest and most direct connection to electrical systems as it's specifically an electrical component used in circuits and electrical panels.
+
+{"guess": "Fuse", "reasoning": "Fuse is directly related to electrical systems as a safety device that prevents electrical overloads in circuits"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Cold                 BLUE       
+  Fuse                 NEUTRAL    [revealed]
+  Couch                NEUTRAL    
+  Foot                 RED        
+  Fruit                BLUE       [revealed]
+  Apple                RED        
+  Bow                  NEUTRAL    
+  Bank                 BLUE       
+  Bulb                 BLUE       
+  Fly                  BLUE       
+  Sub                  NEUTRAL    
+  Bolt                 RED        
+  Reel                 BLUE       
+  Jar                  NEUTRAL    
+  Alien                RED        
+  Ring                 RED        
+  Gene                 BLUE       
+  Boot                 RED        
+  Satellite            BLUE       
+  Fork                 NEUTRAL    
+  Pit                  RED        
+  Pipe                 ASSASSIN   
+  Dome                 RED        
+  Line                 NEUTRAL    
+  Pumpkin              RED        [revealed]
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, APPLE, BANK, BOLT, BOOT, BOW, BULB, COLD, COUCH, DOME, FLY, FOOT, FORK, FRUIT, FUSE, GENE, JAR, LINE, PIPE, PIT, PUMPKIN, REEL, RING, SATELLITE, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Halloween", "number": 3, "reasoning": "Connects Pumpkin (revealed), Alien (costume/creature), and Boot (footwear), but Boot is forbidden, so focusing on other Halloween-related words like Dome (could be a head/costume) and Bolt (Halloween decorations). However, Boot is forbidden; better to focus on Halloween-themed words: Alien, Dome, Bolt, and possibly Foot. Since Foot is forbidden, clue targets Alien, Dome, and Bolt as Halloween-related."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Bulb
+  Fly
+  Sub
+  Bolt
+  Reel
+  Jar
+  Alien
+  Ring
+  Gene
+  Boot
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Boot", "reasoning": "Boot is often associated with costumes or dressing up, which fits the Halloween theme."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Bulb
+  Fly
+  Sub
+  Bolt
+  Reel
+  Jar
+  Alien
+  Ring
+  Gene
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Jar", "reasoning": "Jars are commonly associated with Halloween for holding candies or decorations."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Cold                 BLUE       
+  Fuse                 NEUTRAL    [revealed]
+  Couch                NEUTRAL    
+  Foot                 RED        
+  Fruit                BLUE       [revealed]
+  Apple                RED        
+  Bow                  NEUTRAL    
+  Bank                 BLUE       
+  Bulb                 BLUE       
+  Fly                  BLUE       
+  Sub                  NEUTRAL    
+  Bolt                 RED        
+  Reel                 BLUE       
+  Jar                  NEUTRAL    [revealed]
+  Alien                RED        
+  Ring                 RED        
+  Gene                 BLUE       
+  Boot                 RED        [revealed]
+  Satellite            BLUE       
+  Fork                 NEUTRAL    
+  Pit                  RED        
+  Pipe                 ASSASSIN   
+  Dome                 RED        
+  Line                 NEUTRAL    
+  Pumpkin              RED        [revealed]
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, APPLE, BANK, BOLT, BOOT, BOW, BULB, COLD, COUCH, DOME, FLY, FOOT, FORK, FRUIT, FUSE, GENE, JAR, LINE, PIPE, PIT, PUMPKIN, REEL, RING, SATELLITE, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words: Cold, Bank, Bulb, Fly, Reel, Gene, Satellite
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Pipe).
+
+Let me analyze potential connections:
+
+- COLD could relate to temperature/weather
+- BANK could relate to finance/river/storage
+- BULB could relate to light/plants
+- FLY could relate to insects/movement/aviation
+- REEL could relate to fishing/film/spinning
+- GENE could relate to biology/heredity
+- SATELLITE could relate to space/communication
+
+I notice that LIGHT could work well:
+- BULB (light bulb)
+- SATELLITE (uses light/solar panels, transmits signals including light)
+- REEL (film reel, which captures light/images)
+
+This avoids red words like Apple, Foot, Bolt, Ring, Alien, Pit, Dome and the assassin Pipe.
+
+{"clue": "LIGHT", "number": 3, "reasoning": "Connects BULB (light bulb), SATELLITE (solar/light-based), and REEL (film captures light). Avoids red words and assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Bulb
+  Fly
+  Sub
+  Bolt
+  Reel
+  Alien
+  Ring
+  Gene
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "LIGHT" and the available words, I need to find connections to light.
+
+The most obvious connection is "Bulb" - light bulbs are a direct association with light. This seems like a very safe first guess.
+
+Other potential connections I see:
+- "Satellite" - satellites reflect sunlight and have lights
+- "Ring" - could refer to a ring of light or halo
+- "Fly" - fireflies produce light
+
+But "Bulb" is by far the strongest and most direct connection to "LIGHT".
+
+{"guess": "Bulb", "reasoning": "Bulb is the most direct connection to LIGHT - light bulbs are a primary source of artificial light"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Fly
+  Sub
+  Bolt
+  Reel
+  Alien
+  Ring
+  Gene
+  Satellite
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "LIGHT" and the remaining words, I need to find connections to light/lighting concepts.
+
+From the valid guesses, I can see several potential matches:
+- **SATELLITE** - satellites reflect sunlight and have solar panels that convert light to energy
+- **RING** - could refer to a ring of light or halo
+- **DOME** - could be a light dome or observatory dome
+- **PIPE** - light pipe is a real lighting technology
+
+SATELLITE seems like the strongest connection to LIGHT, as satellites are closely associated with solar energy, reflecting sunlight, and space-based light phenomena.
+
+{"guess": "SATELLITE", "reasoning": "Satellites are strongly connected to light through solar panels, reflecting sunlight, and space-based light phenomena"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Fly
+  Sub
+  Bolt
+  Reel
+  Alien
+  Ring
+  Gene
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "LIGHT" and the remaining words, I need to find connections to light.
+
+I've already successfully guessed "Bulb" and "Satellite" for this clue. For the third word, I'm considering:
+
+- **Ring**: Could refer to a ring of light, halo, or light ring
+- **Dome**: Could be a light dome or lighting fixture
+- **Pipe**: Light pipe is a real term for optical devices that transport light
+- **Line**: Could refer to a line of light or light beam
+
+Given that this is my third guess for a 3-word clue, I should be confident in my choice. "Ring" seems like the strongest connection - rings of light are common (halos, light rings, circular lighting fixtures), and it's a clear visual association with light.
+
+{"guess": "Ring", "reasoning": "Ring connects to light through rings of light, halos, and circular lighting fixtures - a strong visual association for the third word of this LIGHT clue"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Cold                 BLUE       
+  Fuse                 NEUTRAL    [revealed]
+  Couch                NEUTRAL    
+  Foot                 RED        
+  Fruit                BLUE       [revealed]
+  Apple                RED        
+  Bow                  NEUTRAL    
+  Bank                 BLUE       
+  Bulb                 BLUE       [revealed]
+  Fly                  BLUE       
+  Sub                  NEUTRAL    
+  Bolt                 RED        
+  Reel                 BLUE       
+  Jar                  NEUTRAL    [revealed]
+  Alien                RED        
+  Ring                 RED        [revealed]
+  Gene                 BLUE       
+  Boot                 RED        [revealed]
+  Satellite            BLUE       [revealed]
+  Fork                 NEUTRAL    
+  Pit                  RED        
+  Pipe                 ASSASSIN   
+  Dome                 RED        
+  Line                 NEUTRAL    
+  Pumpkin              RED        [revealed]
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, APPLE, BANK, BOLT, BOOT, BOW, BULB, COLD, COUCH, DOME, FLY, FOOT, FORK, FRUIT, FUSE, GENE, JAR, LINE, PIPE, PIT, PUMPKIN, REEL, RING, SATELLITE, SUB
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Halloween", "number": 3, "reasoning": "Pumpkin, Boot, and Ring were previously guessed with this clue, and it relates well to Alien, Dome, and Pit as spooky or thematic words associated with Halloween."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Fly
+  Sub
+  Bolt
+  Reel
+  Alien
+  Gene
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Alien", "reasoning": "Alien is strongly associated with Halloween themes like monsters and costumes."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Fly
+  Sub
+  Bolt
+  Reel
+  Gene
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+  [RED] HALLOWEEN 3  #1: Alien → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bolt", "reasoning": "Bolt relates to Halloween through the idea of lightning bolts and spooky storms, fitting the Halloween clue and is unrevealed."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Couch
+  Foot
+  Apple
+  Bow
+  Bank
+  Fly
+  Sub
+  Reel
+  Gene
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+  [RED] HALLOWEEN 3  #1: Alien → red
+  [RED] HALLOWEEN 3  #2: Bolt → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Apple", "reasoning": "Apple is associated with Halloween through the tradition of apple bobbing."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HALLOWEEN' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cold
+  Couch
+  Foot
+  Bow
+  Bank
+  Fly
+  Sub
+  Reel
+  Gene
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+  [RED] HALLOWEEN 3  #1: Alien → red
+  [RED] HALLOWEEN 3  #2: Bolt → red
+  [RED] HALLOWEEN 3  #3: Apple → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fly", "reasoning": "Fly can be associated with Halloween (like a fly on a haunted scene or witch's fly) and is the best thematic fit among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Cold                 BLUE       
+  Fuse                 NEUTRAL    [revealed]
+  Couch                NEUTRAL    
+  Foot                 RED        
+  Fruit                BLUE       [revealed]
+  Apple                RED        [revealed]
+  Bow                  NEUTRAL    
+  Bank                 BLUE       
+  Bulb                 BLUE       [revealed]
+  Fly                  BLUE       [revealed]
+  Sub                  NEUTRAL    
+  Bolt                 RED        [revealed]
+  Reel                 BLUE       
+  Jar                  NEUTRAL    [revealed]
+  Alien                RED        [revealed]
+  Ring                 RED        [revealed]
+  Gene                 BLUE       
+  Boot                 RED        [revealed]
+  Satellite            BLUE       [revealed]
+  Fork                 NEUTRAL    
+  Pit                  RED        
+  Pipe                 ASSASSIN   
+  Dome                 RED        
+  Line                 NEUTRAL    
+  Pumpkin              RED        [revealed]
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+  [RED] HALLOWEEN 3  #1: Alien → red
+  [RED] HALLOWEEN 3  #2: Bolt → red
+  [RED] HALLOWEEN 3  #3: Apple → red
+  [RED] HALLOWEEN 3  #4: Fly → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, APPLE, BANK, BOLT, BOOT, BOW, BULB, COLD, COUCH, DOME, FLY, FOOT, FORK, FRUIT, FUSE, GENE, JAR, LINE, PIPE, PIT, PUMPKIN, REEL, RING, SATELLITE, SUB
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Cold
+- Bank
+- Reel
+- Gene
+
+I need to find a connection between these words while avoiding the assassin (Pipe) and red words (Foot, Pit, Dome).
+
+"Cold" and "Bank" can both relate to water - a cold river/lake, and a river bank. "Reel" also connects to water through fishing reels. "Gene" doesn't fit this pattern as well, but the water connection for 3 words is strong.
+
+Let me check if "water" could lead to dangerous words:
+- Pipe: Could relate to water pipes, but it's the assassin so this is risky
+- Red words (Foot, Pit, Dome): These don't strongly relate to water
+
+The water connection is strong for Cold, Bank, and Reel, while being relatively safe from the assassin and opponent words.
+
+{"clue": "WATER", "number": 3, "reasoning": "Cold water, river bank, and fishing reel all relate to water. Avoids assassin pipe and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cold
+  Couch
+  Foot
+  Bow
+  Bank
+  Sub
+  Reel
+  Gene
+  Fork
+  Pit
+  Pipe
+  Dome
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] HALLOWEEN 3  #1: Pumpkin → red
+  [RED] HALLOWEEN 3  #2: Fruit → blue
+  [BLUE] ELECTRICAL 3  #1: Fuse → neutral
+  [RED] HALLOWEEN 3  #1: Boot → red
+  [RED] HALLOWEEN 3  #2: Jar → neutral
+  [BLUE] LIGHT 3  #1: Bulb → blue
+  [BLUE] LIGHT 3  #2: Satellite → blue
+  [BLUE] LIGHT 3  #3: Ring → red
+  [RED] HALLOWEEN 3  #1: Alien → red
+  [RED] HALLOWEEN 3  #2: Bolt → red
+  [RED] HALLOWEEN 3  #3: Apple → red
+  [RED] HALLOWEEN 3  #4: Fly → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "WATER" and the available words, I need to find connections to water.
+
+Let me analyze the options:
+- **Pipe** - water flows through pipes, strong connection
+- **Bank** - riverbank, where water meets land
+- **Sub** - submarine, goes underwater
+- **Cold** - water can be cold
+- **Line** - fishing line used in water
+- **Reel** - fishing reel used for water activities
+
+**Pipe** seems like the strongest connection since water literally flows through pipes in plumbing systems, making it a very direct relationship.
+
+{"guess": "Pipe", "reasoning": "Pipe has a strong connection to water as water flows through pipes in plumbing systems"}
+============================================================

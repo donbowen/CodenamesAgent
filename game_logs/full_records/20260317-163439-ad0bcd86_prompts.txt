@@ -1,0 +1,1226 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Exile                RED        
+  Berry                RED        
+  Steam                NEUTRAL    
+  Blade                NEUTRAL    
+  Base                 ASSASSIN   
+  Gorge                BLUE       
+  Plane                BLUE       
+  Eye                  NEUTRAL    
+  Bun                  NEUTRAL    
+  March                BLUE       
+  Crop                 NEUTRAL    
+  Bow                  BLUE       
+  Staff                BLUE       
+  Jungle               BLUE       
+  Gold                 RED        
+  Roller               NEUTRAL    
+  Cabin                BLUE       
+  Toast                RED        
+  Zoo                  RED        
+  Ambulance            RED        
+  Copper               RED        
+  Chase                BLUE       
+  Spider               RED        
+  Leaf                 RED        
+  Blur                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, BASE, BERRY, BLADE, BLUR, BOW, BUN, CABIN, CHASE, COPPER, CROP, EXILE, EYE, GOLD, GORGE, JUNGLE, LEAF, MARCH, PLANE, ROLLER, SPIDER, STAFF, STEAM, TOAST, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "metal", "number": 2, "reasoning": "Copper and Gold are both metals; other words are less strongly connected, and it avoids pointing toward the assassin 'Base' or clear blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Exile
+  Berry
+  Steam
+  Blade
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Jungle
+  Gold
+  Roller
+  Cabin
+  Toast
+  Zoo
+  Ambulance
+  Copper
+  Chase
+  Spider
+  Leaf
+  Blur
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Copper", "reasoning": "Copper is a common metal and directly matches the clue 'METAL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Exile
+  Berry
+  Steam
+  Blade
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Jungle
+  Gold
+  Roller
+  Cabin
+  Toast
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Leaf
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gold", "reasoning": "Gold is a metal, and directly matches the clue METAL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Exile
+  Berry
+  Steam
+  Blade
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Jungle
+  Roller
+  Cabin
+  Toast
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Leaf
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blade", "reasoning": "A blade is commonly made of metal, so it fits the METAL clue better than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Exile                RED        
+  Berry                RED        
+  Steam                NEUTRAL    
+  Blade                NEUTRAL    [revealed]
+  Base                 ASSASSIN   
+  Gorge                BLUE       
+  Plane                BLUE       
+  Eye                  NEUTRAL    
+  Bun                  NEUTRAL    
+  March                BLUE       
+  Crop                 NEUTRAL    
+  Bow                  BLUE       
+  Staff                BLUE       
+  Jungle               BLUE       
+  Gold                 RED        [revealed]
+  Roller               NEUTRAL    
+  Cabin                BLUE       
+  Toast                RED        
+  Zoo                  RED        
+  Ambulance            RED        
+  Copper               RED        [revealed]
+  Chase                BLUE       
+  Spider               RED        
+  Leaf                 RED        
+  Blur                 NEUTRAL    
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, BASE, BERRY, BLADE, BLUR, BOW, BUN, CABIN, CHASE, COPPER, CROP, EXILE, EYE, GOLD, GORGE, JUNGLE, LEAF, MARCH, PLANE, ROLLER, SPIDER, STAFF, STEAM, TOAST, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "forest", "number": 2, "reasoning": "Forest connects to 'Jungle' and 'Gorge', both are blue words. No red or assassin words are strongly associated with this clue, minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Exile
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Jungle
+  Roller
+  Cabin
+  Toast
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Leaf
+  Blur
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jungle", "reasoning": "'Jungle' is strongly associated with 'FOREST' as both are types of dense, wooded areas. This is the most direct and obvious connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Exile
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Roller
+  Cabin
+  Toast
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Leaf
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Leaves are a prominent feature of forests, making 'Leaf' a strong association with the clue 'FOREST'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Exile                RED        
+  Berry                RED        
+  Steam                NEUTRAL    
+  Blade                NEUTRAL    [revealed]
+  Base                 ASSASSIN   
+  Gorge                BLUE       
+  Plane                BLUE       
+  Eye                  NEUTRAL    
+  Bun                  NEUTRAL    
+  March                BLUE       
+  Crop                 NEUTRAL    
+  Bow                  BLUE       
+  Staff                BLUE       
+  Jungle               BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Roller               NEUTRAL    
+  Cabin                BLUE       
+  Toast                RED        
+  Zoo                  RED        
+  Ambulance            RED        
+  Copper               RED        [revealed]
+  Chase                BLUE       
+  Spider               RED        
+  Leaf                 RED        [revealed]
+  Blur                 NEUTRAL    
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, BASE, BERRY, BLADE, BLUR, BOW, BUN, CABIN, CHASE, COPPER, CROP, EXILE, EYE, GOLD, GORGE, JUNGLE, LEAF, MARCH, PLANE, ROLLER, SPIDER, STAFF, STEAM, TOAST, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Breakfast", "number": 3, "reasoning": "Breakfast connects strongly to Toast, Berry, and Bun, all red and with minimal pull toward blue or the assassin Base; other neutrals (like Crop, Roller, Steam, Eye) are weaker associations."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BREAKFAST' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Exile
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Roller
+  Cabin
+  Toast
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Blur
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Toast", "reasoning": "Toast is a direct and common breakfast food, making it the strongest match for the clue BREAKFAST."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BREAKFAST' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Exile
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  Bun
+  March
+  Crop
+  Bow
+  Staff
+  Roller
+  Cabin
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bun", "reasoning": "A bun is a common breakfast food (e.g., breakfast buns, pastries), making it the strongest direct association with BREAKFAST among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Exile                RED        
+  Berry                RED        
+  Steam                NEUTRAL    
+  Blade                NEUTRAL    [revealed]
+  Base                 ASSASSIN   
+  Gorge                BLUE       
+  Plane                BLUE       
+  Eye                  NEUTRAL    
+  Bun                  NEUTRAL    [revealed]
+  March                BLUE       
+  Crop                 NEUTRAL    
+  Bow                  BLUE       
+  Staff                BLUE       
+  Jungle               BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Roller               NEUTRAL    
+  Cabin                BLUE       
+  Toast                RED        [revealed]
+  Zoo                  RED        
+  Ambulance            RED        
+  Copper               RED        [revealed]
+  Chase                BLUE       
+  Spider               RED        
+  Leaf                 RED        [revealed]
+  Blur                 NEUTRAL    
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, BASE, BERRY, BLADE, BLUR, BOW, BUN, CABIN, CHASE, COPPER, CROP, EXILE, EYE, GOLD, GORGE, JUNGLE, LEAF, MARCH, PLANE, ROLLER, SPIDER, STAFF, STEAM, TOAST, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "retreat", "number": 2, "reasoning": "The words 'Gorge' and 'Cabin' both relate to places where someone might retreat or seek shelter. This avoids opponent and assassin words, and helps connect two Blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RETREAT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Exile
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  March
+  Crop
+  Bow
+  Staff
+  Roller
+  Cabin
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Blur
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Exile", "reasoning": "'Exile' fits well with the clue 'RETREAT', as both suggest withdrawing or pulling back from a place or situation."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Exile                RED        [revealed]
+  Berry                RED        
+  Steam                NEUTRAL    
+  Blade                NEUTRAL    [revealed]
+  Base                 ASSASSIN   
+  Gorge                BLUE       
+  Plane                BLUE       
+  Eye                  NEUTRAL    
+  Bun                  NEUTRAL    [revealed]
+  March                BLUE       
+  Crop                 NEUTRAL    
+  Bow                  BLUE       
+  Staff                BLUE       
+  Jungle               BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Roller               NEUTRAL    
+  Cabin                BLUE       
+  Toast                RED        [revealed]
+  Zoo                  RED        
+  Ambulance            RED        
+  Copper               RED        [revealed]
+  Chase                BLUE       
+  Spider               RED        
+  Leaf                 RED        [revealed]
+  Blur                 NEUTRAL    
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, BASE, BERRY, BLADE, BLUR, BOW, BUN, CABIN, CHASE, COPPER, CROP, EXILE, EYE, GOLD, GORGE, JUNGLE, LEAF, MARCH, PLANE, ROLLER, SPIDER, STAFF, STEAM, TOAST, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "hospital", "number": 2, "reasoning": "Connects strongly to AMBULANCE and also to ZOO via animal hospitals/vets, while avoiding clear ties to blue words or the assassin BASE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HOSPITAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  March
+  Crop
+  Bow
+  Staff
+  Roller
+  Cabin
+  Zoo
+  Ambulance
+  Chase
+  Spider
+  Blur
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ambulance", "reasoning": "Ambulances are directly associated with hospitals for emergency transport and care."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HOSPITAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  March
+  Crop
+  Bow
+  Staff
+  Roller
+  Cabin
+  Zoo
+  Chase
+  Spider
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+  [RED] HOSPITAL 2  #1: Ambulance → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Staff", "reasoning": "Hospitals have medical staff; strong direct association with the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Exile                RED        [revealed]
+  Berry                RED        
+  Steam                NEUTRAL    
+  Blade                NEUTRAL    [revealed]
+  Base                 ASSASSIN   
+  Gorge                BLUE       
+  Plane                BLUE       
+  Eye                  NEUTRAL    
+  Bun                  NEUTRAL    [revealed]
+  March                BLUE       
+  Crop                 NEUTRAL    
+  Bow                  BLUE       
+  Staff                BLUE       [revealed]
+  Jungle               BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Roller               NEUTRAL    
+  Cabin                BLUE       
+  Toast                RED        [revealed]
+  Zoo                  RED        
+  Ambulance            RED        [revealed]
+  Copper               RED        [revealed]
+  Chase                BLUE       
+  Spider               RED        
+  Leaf                 RED        [revealed]
+  Blur                 NEUTRAL    
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+  [RED] HOSPITAL 2  #1: Ambulance → red
+  [RED] HOSPITAL 2  #2: Staff → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, BASE, BERRY, BLADE, BLUR, BOW, BUN, CABIN, CHASE, COPPER, CROP, EXILE, EYE, GOLD, GORGE, JUNGLE, LEAF, MARCH, PLANE, ROLLER, SPIDER, STAFF, STEAM, TOAST, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "flight", "number": 2, "reasoning": "Plane and March are both Blue words. 'Flight' relates to 'Plane' directly, and 'March' can refer to a flight of soldiers (military march or movement). There is little risk of accidentally leading to Red or the Assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLIGHT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Berry
+  Steam
+  Base
+  Gorge
+  Plane
+  Eye
+  March
+  Crop
+  Bow
+  Roller
+  Cabin
+  Zoo
+  Chase
+  Spider
+  Blur
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+  [RED] HOSPITAL 2  #1: Ambulance → red
+  [RED] HOSPITAL 2  #2: Staff → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Plane", "reasoning": "'Plane' is directly associated with 'FLIGHT' as airplanes are a primary method of flying."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLIGHT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Berry
+  Steam
+  Base
+  Gorge
+  Eye
+  March
+  Crop
+  Bow
+  Roller
+  Cabin
+  Zoo
+  Chase
+  Spider
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+  [RED] HOSPITAL 2  #1: Ambulance → red
+  [RED] HOSPITAL 2  #2: Staff → blue
+  [BLUE] FLIGHT 2  #1: Plane → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cabin", "reasoning": "Cabin is relevant to 'flight' because airplane cabins are a core part of commercial flight. It is a strong association with the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLIGHT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Berry
+  Steam
+  Base
+  Gorge
+  Eye
+  March
+  Crop
+  Bow
+  Roller
+  Zoo
+  Chase
+  Spider
+  Blur
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Blade → neutral
+  [BLUE] FOREST 2  #1: Jungle → blue
+  [BLUE] FOREST 2  #2: Leaf → red
+  [RED] BREAKFAST 3  #1: Toast → red
+  [RED] BREAKFAST 3  #2: Bun → neutral
+  [BLUE] RETREAT 2  #1: Exile → red
+  [RED] HOSPITAL 2  #1: Ambulance → red
+  [RED] HOSPITAL 2  #2: Staff → blue
+  [BLUE] FLIGHT 2  #1: Plane → blue
+  [BLUE] FLIGHT 2  #2: Cabin → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Base", "reasoning": "An airport has a 'base' of operations, often called an airbase, which is strongly associated with flight. This is the most plausible remaining connection to the clue 'FLIGHT' from the given options."}
+============================================================

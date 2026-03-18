@@ -1,0 +1,1730 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        
+  High                 NEUTRAL    
+  Unicorn              BLUE       
+  Burst                BLUE       
+  Space                BLUE       
+  Chill                BLUE       
+  Plate                RED        
+  Staff                NEUTRAL    
+  Lemon                RED        
+  Ring                 RED        
+  Bolt                 RED        
+  Eagle                RED        
+  Apple                NEUTRAL    
+  Back                 RED        
+  Berry                BLUE       
+  Plane                RED        
+  Heart                BLUE       
+  State                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Fastener","number":3,"reasoning":"Clip, Bolt, and Ring are all types of fasteners."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FASTENER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Clock
+  Gate
+  Chamber
+  Clip
+  High
+  Unicorn
+  Burst
+  Space
+  Chill
+  Plate
+  Staff
+  Lemon
+  Ring
+  Bolt
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Clip", "reasoning": "A clip is a direct type of fastener (holds things together), closely matching the clue 'FASTENER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FASTENER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Clock
+  Gate
+  Chamber
+  High
+  Unicorn
+  Burst
+  Space
+  Chill
+  Plate
+  Staff
+  Lemon
+  Ring
+  Bolt
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Bolt","reasoning":"A bolt is a common type of fastener and clearly matches the clue FASTENER."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FASTENER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Clock
+  Gate
+  Chamber
+  High
+  Unicorn
+  Burst
+  Space
+  Chill
+  Plate
+  Staff
+  Lemon
+  Ring
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ring", "reasoning": "Ring can function as a fastener (e.g., key/retaining ring), matching the previous FASTENER answers Clip and Bolt."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FASTENER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Clock
+  Gate
+  Chamber
+  High
+  Unicorn
+  Burst
+  Space
+  Chill
+  Plate
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I’ve already found the three FASTENER words (Clip, Bolt, Ring) this turn, so I’ll pass to avoid risking a wrong guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        [revealed]
+  High                 NEUTRAL    
+  Unicorn              BLUE       
+  Burst                BLUE       
+  Space                BLUE       
+  Chill                BLUE       
+  Plate                RED        
+  Staff                NEUTRAL    
+  Lemon                RED        
+  Ring                 RED        [revealed]
+  Bolt                 RED        [revealed]
+  Eagle                RED        
+  Apple                NEUTRAL    
+  Back                 RED        
+  Berry                BLUE       
+  Plane                RED        
+  Heart                BLUE       
+  State                RED        
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "TIME", "number": 2, "reasoning": "Connects to CLOCK; 'space-time' links to SPACE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TIME' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Clock
+  Gate
+  Chamber
+  High
+  Unicorn
+  Burst
+  Space
+  Chill
+  Plate
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Clock", "reasoning": "Strongly linked to the concept of time; directly fits the TIME clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TIME' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  High
+  Unicorn
+  Burst
+  Space
+  Chill
+  Plate
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Space", "reasoning": "Second time-related word; fits with 'time' via spacetime."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TIME' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  High
+  Unicorn
+  Burst
+  Chill
+  Plate
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "High", "reasoning": "Strong link to TIME via the common phrase 'it's high time'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       [revealed]
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        [revealed]
+  High                 NEUTRAL    [revealed]
+  Unicorn              BLUE       
+  Burst                BLUE       
+  Space                BLUE       [revealed]
+  Chill                BLUE       
+  Plate                RED        
+  Staff                NEUTRAL    
+  Lemon                RED        
+  Ring                 RED        [revealed]
+  Bolt                 RED        [revealed]
+  Eagle                RED        
+  Apple                NEUTRAL    
+  Back                 RED        
+  Berry                BLUE       
+  Plane                RED        
+  Heart                BLUE       
+  State                RED        
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"LICENSE","number":3,"reasoning":"Plate (license plate), State (issues licenses/plates), Plane (pilot’s license)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LICENSE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Plate
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Plate","reasoning":"Direct match: 'license plate'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LICENSE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+  State
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"State","reasoning":"Licenses (driver's licenses, plates) are issued by the state — fits LICENSE and pairs with the already-found Plate."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LICENSE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Plane
+  Heart
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Plane","reasoning":"Pilot’s license — strong association with an airplane (pilot/license) and completes the LICENSE trio after Plate and State."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LICENSE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Heart
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"I’ve already used the allotted guesses for this clue and the likely license-related words were already found earlier (Plate/State/Plane). No clear, safe remaining match — avoid risking a wrong/assassin guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       [revealed]
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        [revealed]
+  High                 NEUTRAL    [revealed]
+  Unicorn              BLUE       
+  Burst                BLUE       
+  Space                BLUE       [revealed]
+  Chill                BLUE       
+  Plate                RED        [revealed]
+  Staff                NEUTRAL    
+  Lemon                RED        
+  Ring                 RED        [revealed]
+  Bolt                 RED        [revealed]
+  Eagle                RED        
+  Apple                NEUTRAL    
+  Back                 RED        
+  Berry                BLUE       
+  Plane                RED        [revealed]
+  Heart                BLUE       
+  State                RED        [revealed]
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SWEET", "number": 2, "reasoning": "Sweetheart → Heart; Sweet berries → Berry."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SWEET' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Berry
+  Heart
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Berry", "reasoning": "Strong association with SWEET (berries are commonly described as sweet); likely one of the two blue cards."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SWEET' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+  Heart
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Heart", "reasoning": "Heart pairs with SWEET to form 'Sweetheart', a common phrase."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SWEET' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Lemon
+  Eagle
+  Apple
+  Back
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lemon", "reasoning": "SWEET strongly points to Lemon; a safe third guess to grab a blue word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       [revealed]
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        [revealed]
+  High                 NEUTRAL    [revealed]
+  Unicorn              BLUE       
+  Burst                BLUE       
+  Space                BLUE       [revealed]
+  Chill                BLUE       
+  Plate                RED        [revealed]
+  Staff                NEUTRAL    
+  Lemon                RED        [revealed]
+  Ring                 RED        [revealed]
+  Bolt                 RED        [revealed]
+  Eagle                RED        
+  Apple                NEUTRAL    
+  Back                 RED        
+  Berry                BLUE       [revealed]
+  Plane                RED        [revealed]
+  Heart                BLUE       [revealed]
+  State                RED        [revealed]
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"raptor","number":1,"reasoning":"Refers to a bird of prey — points to Eagle."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAPTOR' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Eagle
+  Apple
+  Back
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Eagle", "reasoning": "An eagle is a bird of prey—a raptor—so it best matches the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAPTOR' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Apple
+  Back
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+  [RED] RAPTOR 1  #1: Eagle → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I already found the RAPTOR word (Eagle). Safer to stop now rather than risk a wrong/assassin guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       [revealed]
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        [revealed]
+  High                 NEUTRAL    [revealed]
+  Unicorn              BLUE       
+  Burst                BLUE       
+  Space                BLUE       [revealed]
+  Chill                BLUE       
+  Plate                RED        [revealed]
+  Staff                NEUTRAL    
+  Lemon                RED        [revealed]
+  Ring                 RED        [revealed]
+  Bolt                 RED        [revealed]
+  Eagle                RED        [revealed]
+  Apple                NEUTRAL    
+  Back                 RED        
+  Berry                BLUE       [revealed]
+  Plane                RED        [revealed]
+  Heart                BLUE       [revealed]
+  State                RED        [revealed]
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+  [RED] RAPTOR 1  #1: Eagle → red
+  [RED] RAPTOR 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "myth", "number": 1, "reasoning": "Unicorn is a mythical creature; 'myth' points to Unicorn. Other blue words (Hollow, Burst, Chill) are not strongly tied to 'myth'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYTH' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Unicorn
+  Burst
+  Chill
+  Staff
+  Apple
+  Back
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+  [RED] RAPTOR 1  #1: Eagle → red
+  [RED] RAPTOR 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Unicorn","reasoning":"Directly connected to myths; most likely the blue word for the clue MYTH."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYTH' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Burst
+  Chill
+  Staff
+  Apple
+  Back
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+  [RED] RAPTOR 1  #1: Eagle → red
+  [RED] RAPTOR 1  #2: PASS
+  [BLUE] MYTH 1  #1: Unicorn → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Apple", "reasoning": "Apple is a classic myth-related item (e.g., forbidden/golden apple), making it a plausible blue word for MYTH."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Soldier              NEUTRAL    
+  Cage                 NEUTRAL    
+  Chapel               ASSASSIN   
+  Hollow               BLUE       
+  Clock                BLUE       [revealed]
+  Gate                 NEUTRAL    
+  Chamber              NEUTRAL    
+  Clip                 RED        [revealed]
+  High                 NEUTRAL    [revealed]
+  Unicorn              BLUE       [revealed]
+  Burst                BLUE       
+  Space                BLUE       [revealed]
+  Chill                BLUE       
+  Plate                RED        [revealed]
+  Staff                NEUTRAL    
+  Lemon                RED        [revealed]
+  Ring                 RED        [revealed]
+  Bolt                 RED        [revealed]
+  Eagle                RED        [revealed]
+  Apple                NEUTRAL    [revealed]
+  Back                 RED        
+  Berry                BLUE       [revealed]
+  Plane                RED        [revealed]
+  Heart                BLUE       [revealed]
+  State                RED        [revealed]
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+  [RED] RAPTOR 1  #1: Eagle → red
+  [RED] RAPTOR 1  #2: PASS
+  [BLUE] MYTH 1  #1: Unicorn → blue
+  [BLUE] MYTH 1  #2: Apple → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BACK, BERRY, BOLT, BURST, CAGE, CHAMBER, CHAPEL, CHILL, CLIP, CLOCK, EAGLE, GATE, HEART, HIGH, HOLLOW, LEMON, PLANE, PLATE, RING, SOLDIER, SPACE, STAFF, STATE, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"SPINE","number":1,"reasoning":"A spine is the backbone/part of the back — points clearly to Back without linking to the blue words or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPINE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Soldier
+  Cage
+  Chapel
+  Hollow
+  Gate
+  Chamber
+  Burst
+  Chill
+  Staff
+  Back
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FASTENER 3  #1: Clip → red
+  [RED] FASTENER 3  #2: Bolt → red
+  [RED] FASTENER 3  #3: Ring → red
+  [RED] FASTENER 3  #4: PASS
+  [BLUE] TIME 2  #1: Clock → blue
+  [BLUE] TIME 2  #2: Space → blue
+  [BLUE] TIME 2  #3: High → neutral
+  [RED] LICENSE 3  #1: Plate → red
+  [RED] LICENSE 3  #2: State → red
+  [RED] LICENSE 3  #3: Plane → red
+  [RED] LICENSE 3  #4: PASS
+  [BLUE] SWEET 2  #1: Berry → blue
+  [BLUE] SWEET 2  #2: Heart → blue
+  [BLUE] SWEET 2  #3: Lemon → red
+  [RED] RAPTOR 1  #1: Eagle → red
+  [RED] RAPTOR 1  #2: PASS
+  [BLUE] MYTH 1  #1: Unicorn → blue
+  [BLUE] MYTH 1  #2: Apple → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Back", "reasoning": "Directly related to spine (the spine is in the back); strongest match among the options."}
+============================================================

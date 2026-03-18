@@ -1,0 +1,1864 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    
+  King                 NEUTRAL    
+  Empire               BLUE       
+  Strike               RED        
+  Tank                 NEUTRAL    
+  Bed                  BLUE       
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       
+  Arm                  RED        
+  Elm                  RED        
+  Blank                NEUTRAL    
+  Cube                 BLUE       
+  Dinosaur             BLUE       
+  Chime                BLUE       
+  Cup                  BLUE       
+  Soldier              RED        
+  Queen                NEUTRAL    
+  Isle                 BLUE       
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Russia", "number": 2, "reasoning": "Moscow is the capital of Russia, and Flag relates to a country, specifically Russia in this context. Both are Red words, and the clue avoids connections to assassin (Stadium) or Blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RUSSIA' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Tank
+  Bed
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Cube
+  Dinosaur
+  Chime
+  Cup
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+  Moscow
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Moscow", "reasoning": "Moscow is the capital city of Russia and directly relates to the clue 'RUSSIA', making it the strongest connection on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RUSSIA' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Tank
+  Bed
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Cube
+  Dinosaur
+  Chime
+  Cup
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Tank", "reasoning": "Russia is known for its military and tanks, especially in historical contexts. 'Tank' is strongly associated with Russia, particularly in WWII and modern times."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    
+  King                 NEUTRAL    
+  Empire               BLUE       
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       
+  Arm                  RED        
+  Elm                  RED        
+  Blank                NEUTRAL    
+  Cube                 BLUE       
+  Dinosaur             BLUE       
+  Chime                BLUE       
+  Cup                  BLUE       
+  Soldier              RED        
+  Queen                NEUTRAL    
+  Isle                 BLUE       
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words that need to be found:
+- Empire, Bed, Africa, Cube, Dinosaur, Chime, Cup, Isle
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Stadium).
+
+I notice that several blue words can be associated with containers or shapes:
+- Cup (drinking container)
+- Cube (3D shape/container-like)
+- Bed (contains/holds a person)
+
+The word "CONTAINER" could work for these three words. It's not on the board, it's a single English word, and it relates to things that hold or contain other things.
+
+Let me verify this doesn't accidentally point to red or dangerous words:
+- Red words: Flag, Bridge, Strike, Arm, Elm, Soldier, Cook, Fountain - none of these strongly relate to "container"
+- Assassin: Stadium - not really a container in the typical sense
+- Neutrals: Horn, King, Heart, Blank, Queen, Train - minimal connection to containers
+
+{"clue": "CONTAINER", "number": 3, "reasoning": "Cup is a container, Cube is a container-like shape, and Bed contains/holds people when sleeping"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONTAINER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Bed
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Cube
+  Dinosaur
+  Chime
+  Cup
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "CONTAINER" and the available words, I need to find words that can hold or contain things.
+
+The most obvious match is "Cup" - cups are literally containers used to hold liquids. This is a very strong and direct connection to the clue.
+
+Other potential containers I see:
+- "Bed" could contain/hold a person
+- "Stadium" contains/holds people and events
+- "Train" contains/holds passengers
+
+But "Cup" is by far the most straightforward container among these options.
+
+{"guess": "Cup", "reasoning": "Cup is a direct match for CONTAINER - it's literally a vessel designed to hold liquids"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONTAINER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Bed
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Cube
+  Dinosaur
+  Chime
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "CONTAINER" and the remaining valid guesses, I need to find words that could relate to containers or things that hold other things.
+
+From the list, "Cube" stands out as a strong match - cubes are geometric containers that can hold objects, and in many contexts (like storage cubes, ice cubes in containers, etc.) they function as containers.
+
+Other possibilities like "Bed" (contains/holds a person) or "Heart" (contains blood) seem less directly connected to the container concept.
+
+Since I've already successfully guessed one word with this clue and have 2 more guesses available, I should continue with my most confident choice.
+
+{"guess": "Cube", "reasoning": "Cube is a geometric shape that functions as a container - storage cubes, ice cubes, etc. Strong direct connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONTAINER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Bed
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Dinosaur
+  Chime
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "CONTAINER" and the remaining words, I need to find something that can hold or contain things.
+
+From the valid guesses, "Bed" stands out as a container-like object - it contains/holds a person when they sleep. It's a piece of furniture designed to hold someone.
+
+Other possibilities I considered:
+- "Train" could be seen as containing passengers, but it's more of a vehicle
+- "Stadium" contains people but it's more of a venue
+- "Heart" contains blood but that's quite abstract
+
+Since I've already successfully guessed 2 words with this clue and have one more guess available, "Bed" seems like the most reasonable container-related word remaining.
+
+{"guess": "Bed", "reasoning": "A bed is a container that holds/contains a person when sleeping, fitting the container theme"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONTAINER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Dinosaur
+  Chime
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 words correctly for the CONTAINER clue, matching the clue number exactly. None of the remaining words clearly relate to containers, and continuing to guess risks hitting a neutral, red, or assassin card. With only 5 blue cards remaining versus 8 red cards, I should play conservatively and pass to preserve our position."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    
+  King                 NEUTRAL    
+  Empire               BLUE       
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       [revealed]
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       
+  Arm                  RED        
+  Elm                  RED        
+  Blank                NEUTRAL    
+  Cube                 BLUE       [revealed]
+  Dinosaur             BLUE       
+  Chime                BLUE       
+  Cup                  BLUE       [revealed]
+  Soldier              RED        
+  Queen                NEUTRAL    
+  Isle                 BLUE       
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "battle", "number": 3, "reasoning": "The clue 'battle' connects well to FLAG (flags are used in battles), SOLDIER (soldiers fight in battles), and STRIKE (strikes can refer to attacks in battle). All three are RED words, and the clue avoids the assassin ('Stadium'), blue words, and does not match any board word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BATTLE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Dinosaur
+  Chime
+  Soldier
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Soldier", "reasoning": "Soldiers are directly involved in battles, making this the most obvious connection to the clue 'BATTLE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BATTLE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Horn
+  King
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Dinosaur
+  Chime
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "King", "reasoning": "Kings are often associated with battles, either as leaders or central figures in wars. This is a strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    
+  King                 NEUTRAL    [revealed]
+  Empire               BLUE       
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       [revealed]
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       
+  Arm                  RED        
+  Elm                  RED        
+  Blank                NEUTRAL    
+  Cube                 BLUE       [revealed]
+  Dinosaur             BLUE       
+  Chime                BLUE       
+  Cup                  BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Isle                 BLUE       
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Empire
+- Africa  
+- Dinosaur
+- Chime
+- Isle
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Stadium).
+
+Let me consider "SOUND" as a clue:
+- Chime: directly relates to sound (bells make chiming sounds)
+- Dinosaur: could relate to sound (dinosaur roars)
+
+This seems like a safe 2-word clue that avoids pointing to any red words or the assassin.
+
+{"clue": "SOUND", "number": 2, "reasoning": "Connects CHIME (makes sound) and DINOSAUR (roars), avoiding red words and assassin"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Horn
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Dinosaur
+  Chime
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "SOUND" and the available words, I need to find words that relate to sound or noise.
+
+From the valid guesses, I can see:
+- **Horn** - This is a clear sound-related word, as horns make sounds (car horns, musical horns, etc.)
+- **Chime** - This is also sound-related, as chimes make musical sounds
+- **Train** - Trains make distinctive sounds (whistles, chugging, etc.)
+- **Strike** - Could relate to sound (striking something makes noise)
+
+Horn seems like the strongest connection to "SOUND" as it's directly a sound-making object.
+
+{"guess": "Horn", "reasoning": "Horn is directly related to sound - horns are instruments or devices that produce sound, making it the clearest match for the clue SOUND"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    [revealed]
+  King                 NEUTRAL    [revealed]
+  Empire               BLUE       
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       [revealed]
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       
+  Arm                  RED        
+  Elm                  RED        
+  Blank                NEUTRAL    
+  Cube                 BLUE       [revealed]
+  Dinosaur             BLUE       
+  Chime                BLUE       
+  Cup                  BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Isle                 BLUE       
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "tree", "number": 2, "reasoning": "Elm and Fountain are both associated with trees; Elm is directly a tree, and a fountain is often found in a park or garden with trees. This clue avoids blue words and the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Elm
+  Blank
+  Dinosaur
+  Chime
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Elm", "reasoning": "Elm is a type of tree, which directly matches the clue 'TREE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Blank
+  Dinosaur
+  Chime
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chime", "reasoning": "Chime can be associated with 'tree' because wind chimes are often hung from trees, and they can be made from wood. It is the closest connection to 'tree' among the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    [revealed]
+  King                 NEUTRAL    [revealed]
+  Empire               BLUE       
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       [revealed]
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       
+  Arm                  RED        
+  Elm                  RED        [revealed]
+  Blank                NEUTRAL    
+  Cube                 BLUE       [revealed]
+  Dinosaur             BLUE       
+  Chime                BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Isle                 BLUE       
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Empire
+- Africa  
+- Dinosaur
+- Isle
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Stadium).
+
+"LAND" connects well to:
+- Empire (empires control land/territory)
+- Africa (a landmass/continent)
+- Isle (a piece of land surrounded by water)
+
+Dinosaur is less directly connected to "land" but could work since dinosaurs lived on land. However, to be safe and ensure strong connections, I'll go with 3.
+
+This avoids red words like Flag, Bridge, Strike, Arm, Cook, Fountain and the dangerous Stadium assassin.
+
+{"clue": "LAND", "number": 3, "reasoning": "Connects Empire (territory), Africa (continent), and Isle (land surrounded by water)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAND' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Empire
+  Strike
+  Heart
+  Stadium
+  Africa
+  Arm
+  Blank
+  Dinosaur
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "LAND" and the available words, I need to find words that relate to land or territory.
+
+Let me analyze the options:
+- **Africa** - This is a continent, a large landmass
+- **Empire** - Empires control land/territory
+- **Isle** - This is a piece of land surrounded by water
+- **Bridge** - Connects land areas
+- **Stadium** - Built on land, but weaker connection
+
+Africa seems like the strongest connection to "LAND" as it's literally a massive landmass/continent.
+
+{"guess": "Africa", "reasoning": "Africa is a continent, which is a large landmass - the most direct connection to LAND"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAND' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Empire
+  Strike
+  Heart
+  Stadium
+  Arm
+  Blank
+  Dinosaur
+  Queen
+  Isle
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "LAND" with 3 words, and having already correctly guessed "Africa" (which is clearly a landmass), I need to find other words that relate to land.
+
+From the valid guesses, "Isle" stands out as the strongest connection to LAND. An isle is literally a piece of land surrounded by water - it's directly related to the concept of land.
+
+Other possibilities like "Empire" (which can control land) or "Bridge" (which connects land) are much weaker connections and riskier guesses.
+
+Since we only have 3 blue cards remaining and need to be efficient, I should go with the clearest connection.
+
+{"guess": "Isle", "reasoning": "Isle is a piece of land surrounded by water, making it a strong direct connection to the clue LAND"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAND' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Empire
+  Strike
+  Heart
+  Stadium
+  Arm
+  Blank
+  Dinosaur
+  Queen
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "LAND" and the remaining words, I need to find one more word that connects to land/territory concepts.
+
+I've already successfully guessed "Africa" and "Isle" for this clue. Looking at the remaining options:
+
+- **Empire** - This strongly connects to LAND as empires are territories/lands ruled by a single authority
+- **Bridge** - Could connect to land (spans between land masses)
+- **Stadium** - Built on land but weaker connection
+- **Train** - Travels on land but not primarily about land itself
+
+Since I only have 2 blue cards remaining and need to be very careful about the assassin, I should focus on the strongest connection. Empire is clearly land-related as it refers to territories and dominions.
+
+{"guess": "Empire", "reasoning": "Empire strongly connects to LAND as it refers to territories and dominions ruled by a single authority"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAND' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Flag
+  Bridge
+  Strike
+  Heart
+  Stadium
+  Arm
+  Blank
+  Dinosaur
+  Queen
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+  [BLUE] LAND 3  #3: Empire → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 words correctly for the LAND clue (Africa, Isle, Empire), matching the clue number exactly. With only 1 blue card remaining and having used 3/4 guesses, it's extremely risky to continue. Any wrong guess could hit a red card (giving them a point), a neutral (ending my turn), or worst case the assassin (instant loss). The smart play is to pass and preserve our position."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Flag                 RED        
+  Bridge               RED        
+  Horn                 NEUTRAL    [revealed]
+  King                 NEUTRAL    [revealed]
+  Empire               BLUE       [revealed]
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       [revealed]
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       [revealed]
+  Arm                  RED        
+  Elm                  RED        [revealed]
+  Blank                NEUTRAL    
+  Cube                 BLUE       [revealed]
+  Dinosaur             BLUE       
+  Chime                BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    
+  Isle                 BLUE       [revealed]
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+  [BLUE] LAND 3  #3: Empire → blue
+  [BLUE] LAND 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "parade", "number": 2, "reasoning": "The clue 'parade' connects to FLAG and STRIKE. Parades often have flags, and a strike can refer to a labor march or parade. This avoids the assassin (STADIUM) and blue words. ARM and COOK are less directly related, making this a strong clue for two red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PARADE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Flag
+  Bridge
+  Strike
+  Heart
+  Stadium
+  Arm
+  Blank
+  Dinosaur
+  Queen
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+  [BLUE] LAND 3  #3: Empire → blue
+  [BLUE] LAND 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flag", "reasoning": "Flags are commonly displayed and carried during parades, making this a strong association with the clue 'PARADE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PARADE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bridge
+  Strike
+  Heart
+  Stadium
+  Arm
+  Blank
+  Dinosaur
+  Queen
+  Cook
+  Train
+  Fountain
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+  [BLUE] LAND 3  #3: Empire → blue
+  [BLUE] LAND 3  #4: PASS
+  [RED] PARADE 2  #1: Flag → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Queen", "reasoning": "A queen is often featured in parades, especially ceremonial or celebratory ones, making it a strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Flag                 RED        [revealed]
+  Bridge               RED        
+  Horn                 NEUTRAL    [revealed]
+  King                 NEUTRAL    [revealed]
+  Empire               BLUE       [revealed]
+  Strike               RED        
+  Tank                 NEUTRAL    [revealed]
+  Bed                  BLUE       [revealed]
+  Heart                NEUTRAL    
+  Stadium              ASSASSIN   
+  Africa               BLUE       [revealed]
+  Arm                  RED        
+  Elm                  RED        [revealed]
+  Blank                NEUTRAL    
+  Cube                 BLUE       [revealed]
+  Dinosaur             BLUE       
+  Chime                BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Queen                NEUTRAL    [revealed]
+  Isle                 BLUE       [revealed]
+  Cook                 RED        
+  Train                NEUTRAL    
+  Fountain             RED        
+  Moscow               RED        [revealed]
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+  [BLUE] LAND 3  #3: Empire → blue
+  [BLUE] LAND 3  #4: PASS
+  [RED] PARADE 2  #1: Flag → red
+  [RED] PARADE 2  #2: Queen → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, ARM, BED, BLANK, BRIDGE, CHIME, COOK, CUBE, CUP, DINOSAUR, ELM, EMPIRE, FLAG, FOUNTAIN, HEART, HORN, ISLE, KING, MOSCOW, QUEEN, SOLDIER, STADIUM, STRIKE, TANK, TRAIN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the board, I need to find the remaining BLUE word that hasn't been revealed yet.
+
+The only unrevealed BLUE word is: **Dinosaur**
+
+I need to give a clue that points to "Dinosaur" while avoiding:
+- The ASSASSIN word "Stadium" 
+- RED words: Bridge, Strike, Arm, Cook, Fountain
+- NEUTRAL words: Heart, Blank, Train
+
+For "Dinosaur", I can think of several good clues:
+- EXTINCT (refers to dinosaurs being extinct)
+- PREHISTORIC (dinosaurs lived in prehistoric times)
+- REPTILE (dinosaurs were reptiles)
+- FOSSIL (dinosaurs are known from fossils)
+
+Let me check these don't accidentally point to other words:
+- None of these seem to relate to Stadium, the red words, or problematic neutrals
+- EXTINCT seems like the clearest, most direct clue for Dinosaur
+
+{"clue": "EXTINCT", "number": 1, "reasoning": "Points directly to Dinosaur, the only remaining blue word, as dinosaurs are famously extinct"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EXTINCT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bridge
+  Strike
+  Heart
+  Stadium
+  Arm
+  Blank
+  Dinosaur
+  Cook
+  Train
+  Fountain
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] RUSSIA 2  #1: Moscow → red
+  [RED] RUSSIA 2  #2: Tank → neutral
+  [BLUE] CONTAINER 3  #1: Cup → blue
+  [BLUE] CONTAINER 3  #2: Cube → blue
+  [BLUE] CONTAINER 3  #3: Bed → blue
+  [BLUE] CONTAINER 3  #4: PASS
+  [RED] BATTLE 3  #1: Soldier → red
+  [RED] BATTLE 3  #2: King → neutral
+  [BLUE] SOUND 2  #1: Horn → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Chime → blue
+  [BLUE] LAND 3  #1: Africa → blue
+  [BLUE] LAND 3  #2: Isle → blue
+  [BLUE] LAND 3  #3: Empire → blue
+  [BLUE] LAND 3  #4: PASS
+  [RED] PARADE 2  #1: Flag → red
+  [RED] PARADE 2  #2: Queen → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "EXTINCT" and the available words, I need to find a connection to something that no longer exists or has died out.
+
+The most obvious connection is "Dinosaur" - dinosaurs are the classic example of extinct creatures that died out millions of years ago. This is a very strong and direct match to the clue.
+
+Looking at the other options, none have as clear a connection to extinction:
+- Bridge, Strike, Heart, Stadium, Arm, Blank, Cook, Train, Fountain don't relate to things that have died out or become extinct
+
+Since we only have 1 Blue card remaining and this seems like a very confident match, I should go for it.
+
+{"guess": "Dinosaur", "reasoning": "Dinosaurs are the most famous example of extinct creatures, making this a very strong match for the clue EXTINCT"}
+============================================================

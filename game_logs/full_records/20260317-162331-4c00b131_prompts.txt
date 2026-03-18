@@ -1,0 +1,1508 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       
+  Film                 RED        
+  Police               BLUE       
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        
+  Glove                RED        
+  Lily                 RED        
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       
+  Rose                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"flower","number":2,"reasoning":"Connects LILY and APPLE via apple blossom, while avoiding the assassin UNION and only weakly relating to neutral ROSE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Force
+  Film
+  Police
+  Joint
+  Ice
+  Ring
+  Glove
+  Lily
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Fort
+  Head
+  Bow
+  Teacher
+  Rose
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Lily","reasoning":"Lily is directly a flower and the strongest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Force
+  Film
+  Police
+  Joint
+  Ice
+  Ring
+  Glove
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Fort
+  Head
+  Bow
+  Teacher
+  Rose
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Rose","reasoning":"Strong match to the clue FLOWER; with Lily already found, Rose is the most likely second target."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       
+  Film                 RED        
+  Police               BLUE       
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        
+  Glove                RED        
+  Lily                 RED        [revealed]
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       
+  Rose                 NEUTRAL    [revealed]
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "strength", "number": 3, "reasoning": "Strength connects well to FORCE (physical power), POLICE (law enforcement strength), and JOINT (as in joint strength/strong joints), while being relatively distant from the remaining red and neutral words and safely away from the assassin UNION."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STRENGTH' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Force
+  Film
+  Police
+  Joint
+  Ice
+  Ring
+  Glove
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Fort
+  Head
+  Bow
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Force", "reasoning": "Force is directly associated with strength (physical or mechanical), making it the strongest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STRENGTH' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Ring
+  Glove
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Fort
+  Head
+  Bow
+  Teacher
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fort", "reasoning": "Fort connotes strength, defense, and fortification, which strongly matches the clue 'STRENGTH'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       [revealed]
+  Film                 RED        
+  Police               BLUE       
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        
+  Glove                RED        
+  Lily                 RED        [revealed]
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    [revealed]
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       
+  Rose                 NEUTRAL    [revealed]
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"boxing","number":2,"reasoning":"Links GLOVE and RING strongly via boxing ring/boxing glove, while avoiding the assassin UNION and having limited pull toward blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BOXING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Ring
+  Glove
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"GLOVE","reasoning":"Boxing is strongly associated with a glove; this is the clearest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BOXING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Ring
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+  Teacher
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"RING","reasoning":"Boxing ring is a strong direct match to the clue after Glove."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BOXING' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+  Teacher
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found the 2 strongest matches for BOXING (Glove, Ring). A third guess would be a risky stretch with no clear remaining boxing-related word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       [revealed]
+  Film                 RED        
+  Police               BLUE       
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        [revealed]
+  Glove                RED        [revealed]
+  Lily                 RED        [revealed]
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    [revealed]
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       
+  Rose                 NEUTRAL    [revealed]
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "classroom", "number": 2, "reasoning": "Points strongly to TEACHER and POLICE (as in school resource officer), with minimal connection to remaining red words or the assassin UNION."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLASSROOM' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Teacher", "reasoning": "Teacher is directly associated with a classroom, more strongly than any other option."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLASSROOM' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Ruler
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ruler", "reasoning": "A ruler is a common classroom object used by students and teachers, closely matching the clue 'CLASSROOM'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       [revealed]
+  Film                 RED        
+  Police               BLUE       
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        [revealed]
+  Glove                RED        [revealed]
+  Lily                 RED        [revealed]
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    [revealed]
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    [revealed]
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       [revealed]
+  Rose                 NEUTRAL    [revealed]
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"cinema","number":1,"reasoning":"Targets FILM cleanly. It avoids the assassin UNION and has limited pull toward other unrevealed words compared with broader clues."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CINEMA' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Film
+  Police
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Film","reasoning":"'Cinema' most directly matches FILM."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CINEMA' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Police
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the 1 obvious match for CINEMA with Film. A second guess would be a risky stretch, so passing is safest."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       [revealed]
+  Film                 RED        [revealed]
+  Police               BLUE       
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        [revealed]
+  Glove                RED        [revealed]
+  Lily                 RED        [revealed]
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    [revealed]
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    [revealed]
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       [revealed]
+  Rose                 NEUTRAL    [revealed]
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "law", "number": 2, "reasoning": "Points to POLICE (law enforcement) and CODE (legal code), while avoiding strong connections to remaining red words or the assassin UNION."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAW' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Police
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Police", "reasoning": "Police are directly associated with law enforcement, making this the strongest match for the clue LAW."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAW' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Code
+  Door
+  Train
+  Head
+  Bow
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+  [BLUE] LAW 2  #1: Police → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "“Law” strongly connects to “code” as in legal code (criminal code, civil code). Other options like Union (law of unions) or Joint (joint law enforcement) are weaker; Code is the most direct legal term."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LAW' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Door
+  Train
+  Head
+  Bow
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+  [BLUE] LAW 2  #1: Police → blue
+  [BLUE] LAW 2  #2: Code → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found both LAW-related words (Police, Code). None of the remaining options clearly connect to LAW, so an extra guess risks hitting red or the assassin for no gain."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Apple                RED        
+  Union                ASSASSIN   
+  Force                BLUE       [revealed]
+  Film                 RED        [revealed]
+  Police               BLUE       [revealed]
+  Joint                BLUE       
+  Ice                  NEUTRAL    
+  Ring                 RED        [revealed]
+  Glove                RED        [revealed]
+  Lily                 RED        [revealed]
+  Lime                 NEUTRAL    
+  Mount                RED        
+  Echo                 BLUE       
+  Gorge                BLUE       
+  Ruler                NEUTRAL    [revealed]
+  Russia               RED        
+  Letter               RED        
+  Code                 BLUE       [revealed]
+  Door                 BLUE       
+  Train                RED        
+  Fort                 NEUTRAL    [revealed]
+  Head                 NEUTRAL    
+  Bow                  NEUTRAL    
+  Teacher              BLUE       [revealed]
+  Rose                 NEUTRAL    [revealed]
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+  [BLUE] LAW 2  #1: Police → blue
+  [BLUE] LAW 2  #2: Code → blue
+  [BLUE] LAW 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BOW, CODE, DOOR, ECHO, FILM, FORCE, FORT, GLOVE, GORGE, HEAD, ICE, JOINT, LETTER, LILY, LIME, MOUNT, POLICE, RING, ROSE, RULER, RUSSIA, TEACHER, TRAIN, UNION
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"railway","number":2,"reasoning":"Connects TRAIN and UNION strongly via rail workers/labor unions, while avoiding the assassin UNION as a clue word itself and only weakly relating to other board words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAILWAY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Apple
+  Union
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Door
+  Train
+  Head
+  Bow
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+  [BLUE] LAW 2  #1: Police → blue
+  [BLUE] LAW 2  #2: Code → blue
+  [BLUE] LAW 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Train","reasoning":"Most direct match to 'RAILWAY'; highly likely one of the two intended words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAILWAY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Apple
+  Union
+  Joint
+  Ice
+  Lime
+  Mount
+  Echo
+  Gorge
+  Russia
+  Letter
+  Door
+  Head
+  Bow
+
+Game history:
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → neutral
+  [BLUE] STRENGTH 3  #1: Force → blue
+  [BLUE] STRENGTH 3  #2: Fort → neutral
+  [RED] BOXING 2  #1: Glove → red
+  [RED] BOXING 2  #2: Ring → red
+  [RED] BOXING 2  #3: PASS
+  [BLUE] CLASSROOM 2  #1: Teacher → blue
+  [BLUE] CLASSROOM 2  #2: Ruler → neutral
+  [RED] CINEMA 1  #1: Film → red
+  [RED] CINEMA 1  #2: PASS
+  [BLUE] LAW 2  #1: Police → blue
+  [BLUE] LAW 2  #2: Code → blue
+  [BLUE] LAW 2  #3: PASS
+  [RED] RAILWAY 2  #1: Train → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Union","reasoning":"'Union' fits railway best via railroad/railway union station; stronger match than the remaining options."}
+============================================================

@@ -1,0 +1,1978 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    
+  Sugar                BLUE       
+  Elm                  NEUTRAL    
+  Film                 NEUTRAL    
+  Ruler                RED        
+  Cap                  BLUE       
+  Apple                RED        
+  Dew                  BLUE       
+  Bill                 RED        
+  Flag                 BLUE       
+  Jade                 RED        
+  Fossil               RED        
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    
+  Haze                 BLUE       
+  Satellite            BLUE       
+  Torch                RED        
+  Cord                 RED        
+  Hymn                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Measurement", "number": 2, "reasoning": "Ruler and Cord are related to measurement tools, connecting two red words safely without touching the assassin or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEASUREMENT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Field
+  Sugar
+  Elm
+  Film
+  Ruler
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Jade
+  Fossil
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Torch
+  Cord
+  Hymn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ruler", "reasoning": "A ruler is a direct tool for measurement, making it a strong candidate for the clue 'MEASUREMENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEASUREMENT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Field
+  Sugar
+  Elm
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Jade
+  Fossil
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Torch
+  Cord
+  Hymn
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Field", "reasoning": "Field can relate to measurement in contexts like field measurements or scientific data collection, fitting the clue 'MEASUREMENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       
+  Apple                RED        
+  Dew                  BLUE       
+  Bill                 RED        
+  Flag                 BLUE       
+  Jade                 RED        
+  Fossil               RED        
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    
+  Haze                 BLUE       
+  Satellite            BLUE       
+  Torch                RED        
+  Cord                 RED        
+  Hymn                 RED        
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Light", "number": 3, "reasoning": "Relates to 'Haze', 'Torch', and 'Satellite', all of which involve light or illumination."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Sugar
+  Elm
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Jade
+  Fossil
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Torch
+  Cord
+  Hymn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Torch", "reasoning": "A torch generates light, making it a strong match for the clue 'LIGHT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       
+  Apple                RED        
+  Dew                  BLUE       
+  Bill                 RED        
+  Flag                 BLUE       
+  Jade                 RED        
+  Fossil               RED        
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    
+  Haze                 BLUE       
+  Satellite            BLUE       
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ancient", "number": 2, "reasoning": "Fossil and Jade are associated with ancient times or objects, linking these two red words safely without connecting to blue or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Sugar
+  Elm
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Jade
+  Fossil
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Cord
+  Hymn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fossil", "reasoning": "Fossils are directly associated with ancient times, making it the strongest fit for the clue 'ANCIENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Elm
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Jade
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Cord
+  Hymn
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Jade", "reasoning": "Jade is often associated with ancient artifacts and history, fitting the clue 'ANCIENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Elm
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Cord
+  Hymn
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Elm", "reasoning": "Elm is an ancient type of tree, fitting the clue 'ANCIENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       
+  Apple                RED        
+  Dew                  BLUE       
+  Bill                 RED        
+  Flag                 BLUE       
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    
+  Haze                 BLUE       
+  Satellite            BLUE       
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "LIGHT", "number": 3, "reasoning": "This relates to the words Dew, Haze, and Satellite, which can all be associated with light."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Sugar
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Star
+  Haze
+  Satellite
+  Cord
+  Hymn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Star", "reasoning": "Stars emit light, fitting the clue 'LIGHT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       
+  Apple                RED        
+  Dew                  BLUE       
+  Bill                 RED        
+  Flag                 BLUE       
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Haze                 BLUE       
+  Satellite            BLUE       
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "anthem", "number": 2, "reasoning": "Hymn and Bill (as in bill of rights or legislative bill, related to official documents) can be connected to anthem, which is a formal song often associated with flags and official events."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANTHEM' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Sugar
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Haze
+  Satellite
+  Cord
+  Hymn
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hymn", "reasoning": "A hymn is a type of anthem, so it strongly relates to the clue 'ANTHEM'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANTHEM' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Flag
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Haze
+  Satellite
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Flag", "reasoning": "An anthem is often associated with a flag, as both are national symbols typically presented together at stadiums and events."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       
+  Apple                RED        
+  Dew                  BLUE       
+  Bill                 RED        
+  Flag                 BLUE       [revealed]
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Haze                 BLUE       
+  Satellite            BLUE       
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        [revealed]
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Sky", "number": 3, "reasoning": "Sky relates to Satellite, Star, and Haze which are all part of the blue team's words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SKY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Sugar
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Haze
+  Satellite
+  Cord
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Satellite", "reasoning": "The clue 'SKY' relates well to 'Satellite' as satellites orbit the Earth in the sky."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SKY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Film
+  Cap
+  Apple
+  Dew
+  Bill
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Haze
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cap", "reasoning": "A cap can refer to a capstone or top cover, which can relate to the sky as the upper limit or surface of something."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SKY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Film
+  Apple
+  Dew
+  Bill
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Haze
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Haze", "reasoning": "Haze is associated with the sky, as it refers to the atmospheric condition that affects visibility."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SKY' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Film
+  Apple
+  Dew
+  Bill
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dew", "reasoning": "Dew forms in the sky and is often associated with the morning and the atmosphere."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Cast                 BLUE       
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       [revealed]
+  Apple                RED        
+  Dew                  BLUE       [revealed]
+  Bill                 RED        
+  Flag                 BLUE       [revealed]
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Haze                 BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        [revealed]
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Money", "number": 2, "reasoning": "Bill and Cord are related to money (bill as a banknote, cord as a measure of wood often bought/sold). This clue avoids blue, neutral, and assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MONEY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Stadium
+  Sugar
+  Film
+  Apple
+  Bill
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Cord
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bill", "reasoning": "Bill is strongly associated with money (e.g., dollar bill), fitting the clue 'MONEY'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MONEY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Film
+  Apple
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Apple", "reasoning": "Apple is often associated with money (Apple Inc., money for apples), and fits the clue MONEY well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MONEY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Stadium
+  Sugar
+  Film
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cast", "reasoning": "Cast can relate to money in the context of 'cast money' or investment in the entertainment industry, which deals with casting. Among the remaining words, 'Cast' is the most plausible connection to money."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Cast                 BLUE       [revealed]
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    
+  Ruler                RED        [revealed]
+  Cap                  BLUE       [revealed]
+  Apple                RED        [revealed]
+  Dew                  BLUE       [revealed]
+  Bill                 RED        [revealed]
+  Flag                 BLUE       [revealed]
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Haze                 BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        [revealed]
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "LIGHT", "number": 2, "reasoning": "Both 'Haze' and 'Dew' relate to light, as they can refer to atmospheric conditions that affect light visibility."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Stadium
+  Sugar
+  Film
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Cord
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Film", "reasoning": "Film can refer to a light-sensitive material used in photography, which relates to the clue 'LIGHT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Cast                 BLUE       [revealed]
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    [revealed]
+  Ruler                RED        [revealed]
+  Cap                  BLUE       [revealed]
+  Apple                RED        [revealed]
+  Dew                  BLUE       [revealed]
+  Bill                 RED        [revealed]
+  Flag                 BLUE       [revealed]
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Haze                 BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        [revealed]
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+  [BLUE] LIGHT 2  #1: Film → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "wood", "number": 2, "reasoning": "Brown and Cord are related to wood and natural materials, connecting both remaining red words without risking opponent or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WOOD' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Stadium
+  Sugar
+  Bottle
+  Brown
+  Cage
+  Die
+  Plant
+  Cord
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+  [BLUE] LIGHT 2  #1: Film → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Brown", "reasoning": "Brown is closely associated with wood color and natural wood tones, making it a strong match for the clue 'WOOD'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WOOD' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Stadium
+  Sugar
+  Bottle
+  Cage
+  Die
+  Plant
+  Cord
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+  [BLUE] LIGHT 2  #1: Film → neutral
+  [RED] WOOD 2  #1: Brown → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plant", "reasoning": "Plant is related to wood as wood comes from plants and trees, making it a strong association with the clue 'WOOD'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Cast                 BLUE       [revealed]
+  Stadium              BLUE       
+  Field                NEUTRAL    [revealed]
+  Sugar                BLUE       
+  Elm                  NEUTRAL    [revealed]
+  Film                 NEUTRAL    [revealed]
+  Ruler                RED        [revealed]
+  Cap                  BLUE       [revealed]
+  Apple                RED        [revealed]
+  Dew                  BLUE       [revealed]
+  Bill                 RED        [revealed]
+  Flag                 BLUE       [revealed]
+  Jade                 RED        [revealed]
+  Fossil               RED        [revealed]
+  Bottle               ASSASSIN   
+  Brown                RED        [revealed]
+  Cage                 NEUTRAL    
+  Die                  NEUTRAL    
+  Plant                NEUTRAL    [revealed]
+  Star                 NEUTRAL    [revealed]
+  Haze                 BLUE       [revealed]
+  Satellite            BLUE       [revealed]
+  Torch                RED        [revealed]
+  Cord                 RED        
+  Hymn                 RED        [revealed]
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+  [BLUE] LIGHT 2  #1: Film → neutral
+  [RED] WOOD 2  #1: Brown → red
+  [RED] WOOD 2  #2: Plant → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, BILL, BOTTLE, BROWN, CAGE, CAP, CAST, CORD, DEW, DIE, ELM, FIELD, FILM, FLAG, FOSSIL, HAZE, HYMN, JADE, PLANT, RULER, SATELLITE, STADIUM, STAR, SUGAR, TORCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "GLOW", "number": 2, "reasoning": "Both 'Haze' and 'Dew' can be associated with a glowing or shimmering effect, especially in the context of natural phenomena."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GLOW' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Stadium
+  Sugar
+  Bottle
+  Cage
+  Die
+  Cord
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MEASUREMENT 2  #1: Ruler → red
+  [RED] MEASUREMENT 2  #2: Field → neutral
+  [BLUE] LIGHT 3  #1: Torch → red
+  [RED] ANCIENT 2  #1: Fossil → red
+  [RED] ANCIENT 2  #2: Jade → red
+  [RED] ANCIENT 2  #3: Elm → neutral
+  [BLUE] LIGHT 3  #1: Star → neutral
+  [RED] ANTHEM 2  #1: Hymn → red
+  [RED] ANTHEM 2  #2: Flag → blue
+  [BLUE] SKY 3  #1: Satellite → blue
+  [BLUE] SKY 3  #2: Cap → blue
+  [BLUE] SKY 3  #3: Haze → blue
+  [BLUE] SKY 3  #4: Dew → blue
+  [RED] MONEY 2  #1: Bill → red
+  [RED] MONEY 2  #2: Apple → red
+  [RED] MONEY 2  #3: Cast → blue
+  [BLUE] LIGHT 2  #1: Film → neutral
+  [RED] WOOD 2  #1: Brown → red
+  [RED] WOOD 2  #2: Plant → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bottle", "reasoning": "A bottle can glow when it contains luminous liquid or is made of glass that reflects light."}
+============================================================

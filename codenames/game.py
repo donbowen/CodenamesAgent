@@ -47,11 +47,12 @@ class Clue:
 class GuessRecord:
     """A recorded guess by a Field Operative."""
     word: str
-    result: str  # "correct", "wrong_team", "neutral", "assassin", "pass"
+    result: str      # "correct", "wrong_team", "neutral", "assassin", "pass"
+    card_color: str  # actual card color: "red", "blue", "neutral", "assassin", "pass"
     team: TeamColor
     clue_word: str = ""
     clue_number: int = 0
-    guess_number: int = 0  # 1-indexed position within the turn (0 = PASS with no prior guesses)
+    guess_number: int = 0  # 1-indexed position within the turn
 
 
 class CodenamesGame:
@@ -205,13 +206,16 @@ class CodenamesGame:
         if card.revealed:
             raise ValueError(f"'{word}' has already been revealed.")
 
-        # Capture clue info before any _end_turn() call clears current_clue
+        # Capture everything before _end_turn() can mutate current_team /
+        # guesses_this_turn / current_clue.
         _clue_word = self.current_clue.word
         _clue_number = self.current_clue.number
+        _guessing_team = self.current_team
 
         # Reveal and record
         card.revealed = True
         self.guesses_this_turn += 1
+        _guess_number = self.guesses_this_turn  # capture after increment
 
         own_color = CardColor(self.current_team.value)
 
@@ -252,10 +256,11 @@ class CodenamesGame:
             GuessRecord(
                 word=matched,
                 result=result,
-                team=self.current_team,
+                card_color=card.color.value,
+                team=_guessing_team,
                 clue_word=_clue_word,
                 clue_number=_clue_number,
-                guess_number=self.guesses_this_turn,
+                guess_number=_guess_number,
             )
         )
         return result
@@ -270,6 +275,7 @@ class CodenamesGame:
             GuessRecord(
                 word="PASS",
                 result="pass",
+                card_color="pass",
                 team=self.current_team,
                 clue_word=self.current_clue.word,
                 clue_number=self.current_clue.number,
@@ -306,6 +312,7 @@ class CodenamesGame:
                 {
                     "word": g.word,
                     "result": g.result,
+                    "card_color": g.card_color,
                     "team": g.team.value,
                     "clue_word": g.clue_word,
                     "clue_number": g.clue_number,
@@ -347,6 +354,7 @@ class CodenamesGame:
                 {
                     "word": g.word,
                     "result": g.result,
+                    "card_color": g.card_color,
                     "team": g.team.value,
                     "clue_word": g.clue_word,
                     "clue_number": g.clue_number,

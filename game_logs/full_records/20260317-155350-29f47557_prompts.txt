@@ -1,0 +1,328 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Husk                 NEUTRAL    
+  Bridge               RED        
+  Bulb                 RED        
+  Cell                 RED        
+  Well                 NEUTRAL    
+  Dice                 BLUE       
+  Staff                NEUTRAL    
+  Pit                  NEUTRAL    
+  Worm                 BLUE       
+  Dove                 RED        
+  Seal                 RED        
+  Etch                 BLUE       
+  Crane                BLUE       
+  Bush                 BLUE       
+  Axe                  RED        
+  Plate                BLUE       
+  Spider               NEUTRAL    
+  Lead                 RED        
+  Fountain             RED        
+  Star                 BLUE       
+  India                NEUTRAL    
+  Phoenix              BLUE       
+  Wake                 ASSASSIN   
+  Escape               RED        
+  Door                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AXE, BRIDGE, BULB, BUSH, CELL, CRANE, DICE, DOOR, DOVE, ESCAPE, ETCH, FOUNTAIN, HUSK, INDIA, LEAD, PHOENIX, PIT, PLATE, SEAL, SPIDER, STAFF, STAR, WAKE, WELL, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (Wake).
+
+RED words remaining:
+- Bridge
+- Bulb
+- Cell
+- Dove
+- Seal
+- Axe
+- Lead
+- Fountain
+- Escape
+
+Let me consider potential connections:
+
+1. **Water/Aquatic theme**: Seal, Fountain, Bridge (spans water), Dove (Noah's dove)
+2. **Light theme**: Bulb, Star (but Star is BLUE)
+3. **Prison/Confinement**: Cell, Escape, Lead (as in being led away)
+4. **Metal/Tool theme**: Axe, Lead (the metal)
+5. **Biology**: Cell, Seal (animal), Dove (bird)
+
+Looking at "WATER" or aquatic connections:
+- Seal (marine animal) ✓
+- Fountain (water feature) ✓
+- Bridge (over water) ✓
+- Dove (can relate through baptism/water symbolism, but weaker)
+
+But I need to be careful - "WAKE" is the ASSASSIN, and it has water connections (boat wake, funeral wake).
+
+Let me try **ANIMAL** theme:
+- Seal ✓
+- Dove ✓
+- Spider is NEUTRAL (avoid)
+- Crane is BLUE (avoid)
+- Phoenix is BLUE (avoid)
+
+Let me try **METAL**:
+- Lead (the metal) ✓
+- Axe (metal tool) ✓
+- Seal (can be metal stamp) ✓
+
+Actually, thinking about **GARDEN** or **PLANT**:
+- Bulb (flower bulb) ✓
+- Fountain (garden feature) ✓
+- Bridge (garden bridges) ✓
+- But Bush is BLUE (dangerous)
+
+Let me try **BATTERY** or **POWER**:
+- Cell (battery cell) ✓
+- Lead (battery lead) ✓
+- Bulb (light bulb) ✓
+
+This seems safer! "BATTERY" connects these three without risk of hitting Wake, Bush, or other BLUE words.
+
+{"clue": "BATTERY", "number": 3, "reasoning": "Connects CELL (battery cell), LEAD (battery terminal/lead), and BULB (powered by battery). Avoids assassin and opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BATTERY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Husk
+  Bridge
+  Bulb
+  Cell
+  Well
+  Dice
+  Staff
+  Pit
+  Worm
+  Dove
+  Seal
+  Etch
+  Crane
+  Bush
+  Axe
+  Plate
+  Spider
+  Lead
+  Fountain
+  Star
+  India
+  Phoenix
+  Wake
+  Escape
+  Door
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "BATTERY" with 3 guesses allowed (plus 1 bonus = 4 total).
+
+Let me think about what "BATTERY" could mean:
+1. Battery as in electrical battery - contains CELLS, has a positive/negative LEAD, uses PLATES
+2. Battery as in assault and battery - physical attack
+3. Battery as in a battery of tests
+4. Battery as in artillery battery
+
+Looking at the valid guesses:
+
+**Cell** - This is a very strong match! A battery is made up of cells (electrical cells). This seems like the most direct connection.
+
+**Lead** - Batteries often contain lead (lead-acid batteries), and have lead terminals. This is also a good match.
+
+**Plate** - Batteries contain plates (positive and negative plates). Another solid connection.
+
+**Well** - Could relate to a battery well (where you insert batteries), but weaker.
+
+**Star** - Possibly battery terminals are sometimes marked with stars? Weak connection.
+
+**Bulb** - Light bulbs are powered by batteries, but indirect.
+
+I'm most confident about **Cell** as it's the most direct relationship - batteries are literally made of cells.
+
+{"guess": "Cell", "reasoning": "A battery is composed of electrical cells - this is the most direct and literal connection to the clue word BATTERY"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BATTERY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Husk
+  Bridge
+  Bulb
+  Well
+  Dice
+  Staff
+  Pit
+  Worm
+  Dove
+  Seal
+  Etch
+  Crane
+  Bush
+  Axe
+  Plate
+  Spider
+  Lead
+  Fountain
+  Star
+  India
+  Phoenix
+  Wake
+  Escape
+  Door
+
+Game history:
+  [RED] BATTERY 3  #1: Cell → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Lead",
+  "reasoning": "BATTERY strongly connects to 'Lead' - lead-acid batteries are a fundamental type of battery. This is my second guess after correctly identifying 'Cell'. Lead is a core component in traditional batteries."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BATTERY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Husk
+  Bridge
+  Bulb
+  Well
+  Dice
+  Staff
+  Pit
+  Worm
+  Dove
+  Seal
+  Etch
+  Crane
+  Bush
+  Axe
+  Plate
+  Spider
+  Fountain
+  Star
+  India
+  Phoenix
+  Wake
+  Escape
+  Door
+
+Game history:
+  [RED] BATTERY 3  #1: Cell → red
+  [RED] BATTERY 3  #2: Lead → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+

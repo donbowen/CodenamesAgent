@@ -1,0 +1,1727 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    
+  Toast                RED        
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        
+  Band                 NEUTRAL    
+  Jet                  BLUE       
+  Champion             BLUE       
+  Match                BLUE       
+  Die                  NEUTRAL    
+  Sugar                BLUE       
+  Crew                 BLUE       
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       
+  Knight               NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "music", "number": 2, "reasoning": "This clue connects to 'Drum' and 'Comic' (as in musical comedy or comic band acts). Both are red words, and 'Band' is neutral but could be a stretch; however, 'music' is a strong connection for 'Drum' and a plausible secondary for 'Comic'. None of the opponent or assassin words are directly related to 'music', making this a safe clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Blade
+  Toast
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Drum
+  Band
+  Jet
+  Champion
+  Match
+  Die
+  Sugar
+  Crew
+  Cake
+  Gorge
+  Link
+  Knight
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Drum", "reasoning": "Drum is directly related to music as it is a musical instrument, making it a strong candidate for the clue 'MUSIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Blade
+  Toast
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Band
+  Jet
+  Champion
+  Match
+  Die
+  Sugar
+  Crew
+  Cake
+  Gorge
+  Link
+  Knight
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Band", "reasoning": "A 'band' is directly related to music, as bands are musical groups. This is the strongest connection to the clue 'MUSIC' among the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    
+  Toast                RED        
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       
+  Match                BLUE       
+  Die                  NEUTRAL    
+  Sugar                BLUE       
+  Crew                 BLUE       
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       
+  Knight               NEUTRAL    
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "team", "number": 2, "reasoning": "Points to CREW and CHAMPION via sports/competition teams, with relatively low pull toward dangerous words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TEAM' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Blade
+  Toast
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Champion
+  Match
+  Die
+  Sugar
+  Crew
+  Cake
+  Gorge
+  Link
+  Knight
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crew", "reasoning": "A crew is a group working together, strongly fitting the idea of a team."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TEAM' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Blade
+  Toast
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Champion
+  Match
+  Die
+  Sugar
+  Cake
+  Gorge
+  Link
+  Knight
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Champion", "reasoning": "A champion is often part of a sports team; TEAM strongly connects to champion more than the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TEAM' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Blade
+  Toast
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Sugar
+  Cake
+  Gorge
+  Link
+  Knight
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the two TEAM words (Crew, Champion). Any further guess would be a speculative attempt at an old or future clue and risks hitting red or the assassin, so it's safer to pass."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    
+  Toast                RED        
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       
+  Die                  NEUTRAL    
+  Sugar                BLUE       
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       
+  Knight               NEUTRAL    
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "breakfast", "number": 2, "reasoning": "Toast and Eagle (as in 'eggs and toast' or 'Eagle Brand syrup' sometimes associated with breakfast) are both Red words. This clue connects to two unrevealed Red words without strongly pointing toward the assassin (Space) or Blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BREAKFAST' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Blade
+  Toast
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Sugar
+  Cake
+  Gorge
+  Link
+  Knight
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Toast", "reasoning": "'Toast' is directly associated with breakfast as it is a common breakfast food."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BREAKFAST' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Blade
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Sugar
+  Cake
+  Gorge
+  Link
+  Knight
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Sugar", "reasoning": "'Sugar' is commonly associated with breakfast foods like cereal, pastries, and coffee. It fits the 'BREAKFAST' clue well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    
+  Toast                RED        [revealed]
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       
+  Die                  NEUTRAL    
+  Sugar                BLUE       [revealed]
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       
+  Knight               NEUTRAL    
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "archer", "number": 2, "reasoning": "Points to BOW and KNIGHT via medieval/weapon theme while staying relatively distant from dangerous words like WOLF or COMET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ARCHER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Blade
+  Comet
+  Vacuum
+  Comic
+  Day
+  Bow
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Cake
+  Gorge
+  Link
+  Knight
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bow", "reasoning": "An archer uses a bow to shoot arrows, making this the strongest and most direct association with the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ARCHER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Blade
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Cake
+  Gorge
+  Link
+  Knight
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Knight", "reasoning": "An archer is a medieval fighter like a knight; both are strongly associated with bows and castles, and no other remaining word fits the ARCHER theme as well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    
+  Toast                RED        [revealed]
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       
+  Die                  NEUTRAL    
+  Sugar                BLUE       [revealed]
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       
+  Knight               NEUTRAL    [revealed]
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Superhero", "number": 2, "reasoning": "The words 'Comic' and 'Eagle' both relate to superheroes: 'Comic' as in comic books where superheroes appear, and 'Eagle' as in superhero names or symbols (e.g., American Eagle, or superheroes with eagle motifs). No strong connection to assassin or blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SUPERHERO' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Blade
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Cake
+  Gorge
+  Link
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Blade", "reasoning": "Blade is a Marvel superhero, directly matching the 'SUPERHERO' clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    [revealed]
+  Toast                RED        [revealed]
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       
+  Die                  NEUTRAL    
+  Sugar                BLUE       [revealed]
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       
+  Knight               NEUTRAL    [revealed]
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "connection", "number": 2, "reasoning": "Points strongly to LINK and MATCH as things that join or correspond, with minimal pull toward any red or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONNECTION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Cake
+  Gorge
+  Link
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Link", "reasoning": "‘Connection’ most directly corresponds to ‘Link’ as a synonym, making it the strongest and safest match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONNECTION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Match
+  Die
+  Cake
+  Gorge
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Match", "reasoning": "A match is a pairing or connection between two opponents or items, fitting the clue CONNECTION better than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONNECTION' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Dark
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Die
+  Cake
+  Gorge
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found 2 blue words for CONNECTION; taking an extra guess now is unnecessary and risky with the assassin still unknown and only 2 blue cards remaining."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    
+  Marble               RED        
+  Blade                NEUTRAL    [revealed]
+  Toast                RED        [revealed]
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       [revealed]
+  Die                  NEUTRAL    
+  Sugar                BLUE       [revealed]
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       [revealed]
+  Knight               NEUTRAL    [revealed]
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "supernatural", "number": 3, "reasoning": "The remaining red words are Marble, Comet, Vacuum, Comic, Day, Eagle, and Wolf. 'Supernatural' connects well to Wolf (as in werewolf), Comic (supernatural themes are common in comics), and Eagle (as a mythological or supernatural creature in some contexts). It avoids dangerous associations with the assassin (Space) and blue words (Jet, Gorge)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SUPERNATURAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Dark
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Die
+  Cake
+  Gorge
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dark", "reasoning": "'Dark' is strongly associated with supernatural themes such as darkness, the unknown, and many supernatural stories or creatures."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    [revealed]
+  Marble               RED        
+  Blade                NEUTRAL    [revealed]
+  Toast                RED        [revealed]
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       [revealed]
+  Die                  NEUTRAL    
+  Sugar                BLUE       [revealed]
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       
+  Link                 BLUE       [revealed]
+  Knight               NEUTRAL    [revealed]
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+  [RED] SUPERNATURAL 3  #1: Dark → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Canyon", "number": 1, "reasoning": "Targets GORGE while staying safely away from SPACE (assassin) and unrelated red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CANYON' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 7  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Die
+  Cake
+  Gorge
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+  [RED] SUPERNATURAL 3  #1: Dark → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Gorge", "reasoning": "A canyon is a deep gorge between cliffs; Gorge is the closest direct synonym to Canyon among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CANYON' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 7  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Space
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Die
+  Cake
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+  [RED] SUPERNATURAL 3  #1: Dark → neutral
+  [BLUE] CANYON 1  #1: Gorge → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the intended word (Gorge) for CANYON and only need one more blue word; an extra guess risks hitting red or the assassin with no strong canyon-related candidates among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Space                ASSASSIN   
+  Dark                 NEUTRAL    [revealed]
+  Marble               RED        
+  Blade                NEUTRAL    [revealed]
+  Toast                RED        [revealed]
+  Comet                RED        
+  Vacuum               RED        
+  Comic                RED        
+  Day                  RED        
+  Bow                  BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Eagle                RED        
+  Wolf                 RED        
+  Drum                 RED        [revealed]
+  Band                 NEUTRAL    [revealed]
+  Jet                  BLUE       
+  Champion             BLUE       [revealed]
+  Match                BLUE       [revealed]
+  Die                  NEUTRAL    
+  Sugar                BLUE       [revealed]
+  Crew                 BLUE       [revealed]
+  Cake                 NEUTRAL    
+  Gorge                BLUE       [revealed]
+  Link                 BLUE       [revealed]
+  Knight               NEUTRAL    [revealed]
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+  [RED] SUPERNATURAL 3  #1: Dark → neutral
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAND, BLADE, BOW, CAKE, CHAMPION, COMET, COMIC, CREW, DARK, DAY, DIE, DRUM, EAGLE, GORGE, INK, JET, KNIGHT, LINK, MARBLE, MATCH, SPACE, SUGAR, TOAST, VACUUM, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Astro", "number": 2, "reasoning": "Astro relates to both COMET and VACUUM, as comets are celestial objects and vacuums are associated with outer space. This connects two red words without risking the assassin ('Space') or blue ('Jet'). 'Astro' is not a board word or proper noun."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ASTRO' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Space
+  Marble
+  Comet
+  Vacuum
+  Comic
+  Day
+  Ink
+  Eagle
+  Wolf
+  Jet
+  Die
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MUSIC 2  #1: Drum → red
+  [RED] MUSIC 2  #2: Band → neutral
+  [BLUE] TEAM 2  #1: Crew → blue
+  [BLUE] TEAM 2  #2: Champion → blue
+  [BLUE] TEAM 2  #3: PASS
+  [RED] BREAKFAST 2  #1: Toast → red
+  [RED] BREAKFAST 2  #2: Sugar → blue
+  [BLUE] ARCHER 2  #1: Bow → blue
+  [BLUE] ARCHER 2  #2: Knight → neutral
+  [RED] SUPERHERO 2  #1: Blade → neutral
+  [BLUE] CONNECTION 2  #1: Link → blue
+  [BLUE] CONNECTION 2  #2: Match → blue
+  [BLUE] CONNECTION 2  #3: PASS
+  [RED] SUPERNATURAL 3  #1: Dark → neutral
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Space", "reasoning": "'ASTRO' directly relates to 'Space' (as in astronomy, astronaut, etc.), making it the strongest connection on the board."}
+============================================================

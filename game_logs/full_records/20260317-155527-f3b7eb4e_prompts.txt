@@ -1,0 +1,1437 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Diamond              RED        
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        
+  Japan                RED        
+  Cast                 RED        
+  Pole                 RED        
+  Deer                 BLUE       
+  Sub                  BLUE       
+  Hero                 NEUTRAL    
+  Brooch               NEUTRAL    
+  Cement               BLUE       
+  Husk                 RED        
+  Screen               RED        
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "movie", "number": 3, "reasoning": "Connects CAST, SCREEN, and HERO (as in movie hero) while avoiding strong links to blue or the assassin ALPS."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Diamond
+  Link
+  Buddy
+  Shark
+  Japan
+  Cast
+  Pole
+  Deer
+  Sub
+  Hero
+  Brooch
+  Cement
+  Husk
+  Screen
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Screen", "reasoning": "Movies are shown on a screen; this is the strongest and most direct association with the clue MOVIE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Diamond
+  Link
+  Buddy
+  Shark
+  Japan
+  Cast
+  Pole
+  Deer
+  Sub
+  Hero
+  Brooch
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cast", "reasoning": "‘Cast’ is strongly associated with movies (actors in a film), making it the safest and most direct connection to the clue ‘MOVIE’ among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Diamond
+  Link
+  Buddy
+  Shark
+  Japan
+  Pole
+  Deer
+  Sub
+  Hero
+  Brooch
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hero", "reasoning": "Many movies feature a hero; it fits the MOVIE clue better than the remaining options and seems the safest thematic connection."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Diamond              RED        
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        
+  Japan                RED        
+  Cast                 RED        [revealed]
+  Pole                 RED        
+  Deer                 BLUE       
+  Sub                  BLUE       
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    
+  Cement               BLUE       
+  Husk                 RED        
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ocean", "number": 2, "reasoning": "Both 'Shark' and 'Sub' are related to the ocean."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Diamond
+  Link
+  Buddy
+  Shark
+  Japan
+  Pole
+  Deer
+  Sub
+  Brooch
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Shark", "reasoning": "Sharks are commonly associated with the ocean, making it a strong guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Diamond              RED        
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        [revealed]
+  Japan                RED        
+  Cast                 RED        [revealed]
+  Pole                 RED        
+  Deer                 BLUE       
+  Sub                  BLUE       
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    
+  Cement               BLUE       
+  Husk                 RED        
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Gemstone", "number": 1, "reasoning": "Points to DIAMOND while avoiding strong connections to blue words or the assassin ALPS."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GEMSTONE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Diamond
+  Link
+  Buddy
+  Japan
+  Pole
+  Deer
+  Sub
+  Brooch
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Diamond", "reasoning": "Diamond is a gemstone; it is the most direct and obvious match to the clue GEMSTONE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GEMSTONE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Link
+  Buddy
+  Japan
+  Pole
+  Deer
+  Sub
+  Brooch
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Brooch", "reasoning": "Brooches commonly feature gemstones; it’s the strongest remaining association with GEMSTONE among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Diamond              RED        [revealed]
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        [revealed]
+  Japan                RED        
+  Cast                 RED        [revealed]
+  Pole                 RED        
+  Deer                 BLUE       
+  Sub                  BLUE       
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    [revealed]
+  Cement               BLUE       
+  Husk                 RED        
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ocean", "number": 2, "reasoning": "Both 'Sub' and 'Shark' are related to the ocean."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Link
+  Buddy
+  Japan
+  Pole
+  Deer
+  Sub
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Sub", "reasoning": "A submarine operates in the ocean, making it a fitting guess related to the clue 'OCEAN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Link
+  Buddy
+  Japan
+  Pole
+  Deer
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Pole", "reasoning": "The word 'Pole' can refer to the North and South Poles, which are associated with the ocean and its ecosystems."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Diamond              RED        [revealed]
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        [revealed]
+  Japan                RED        
+  Cast                 RED        [revealed]
+  Pole                 RED        [revealed]
+  Deer                 BLUE       
+  Sub                  BLUE       [revealed]
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    [revealed]
+  Cement               BLUE       
+  Husk                 RED        
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "grain", "number": 1, "reasoning": "Husk is strongly associated with grain (e.g., corn husk), while the other unrevealed words have weak or no direct connection to this concept, minimizing risk of hitting blue or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GRAIN' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Link
+  Buddy
+  Japan
+  Deer
+  Cement
+  Husk
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Husk", "reasoning": "Husk is directly related to grain, as it is the outer shell of grains like wheat or rice."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GRAIN' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Link
+  Buddy
+  Japan
+  Deer
+  Cement
+  Dial
+  Alps
+  Paper
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Paper", "reasoning": "Grain most strongly associates with paper grain direction; other options fit less directly. With only 3 red left and 7 blue, a single confident guess is reasonable."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Diamond              RED        [revealed]
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        [revealed]
+  Japan                RED        
+  Cast                 RED        [revealed]
+  Pole                 RED        [revealed]
+  Deer                 BLUE       
+  Sub                  BLUE       [revealed]
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    [revealed]
+  Cement               BLUE       
+  Husk                 RED        [revealed]
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       [revealed]
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ocean", "number": 3, "reasoning": "Three of our words relate to the theme of ocean: Sub, Pole (as in the North Pole), and Dark (as in deep ocean darkness)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Link
+  Buddy
+  Japan
+  Deer
+  Cement
+  Dial
+  Alps
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Japan", "reasoning": "Japan is an island nation surrounded by the ocean, making it a relevant guess for the clue 'OCEAN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Diamond              RED        [revealed]
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        [revealed]
+  Japan                RED        [revealed]
+  Cast                 RED        [revealed]
+  Pole                 RED        [revealed]
+  Deer                 BLUE       
+  Sub                  BLUE       [revealed]
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    [revealed]
+  Cement               BLUE       
+  Husk                 RED        [revealed]
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       [revealed]
+  Russia               NEUTRAL    
+  Pin                  RED        
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+  [BLUE] OCEAN 3  #1: Japan → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Needle", "number": 1, "reasoning": "Points to PIN while avoiding strong connections to any blue or assassin word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NEEDLE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Link
+  Buddy
+  Deer
+  Cement
+  Dial
+  Alps
+  Russia
+  Pin
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+  [BLUE] OCEAN 3  #1: Japan → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Pin", "reasoning": "A needle is a thin pointed object used for sewing, very similar to a pin, making 'Pin' the closest match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NEEDLE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Link
+  Buddy
+  Deer
+  Cement
+  Dial
+  Alps
+  Russia
+  Dark
+  Clear
+  Light
+  Day
+  Board
+  Well
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+  [BLUE] OCEAN 3  #1: Japan → red
+  [RED] NEEDLE 1  #1: Pin → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Light", "reasoning": "A needle is thin and sharp like a beam of light; of the remaining options, Light seems the most plausible tenuous connection for a risky extra guess, but this is speculative."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Diamond              RED        [revealed]
+  Link                 NEUTRAL    
+  Buddy                NEUTRAL    
+  Shark                RED        [revealed]
+  Japan                RED        [revealed]
+  Cast                 RED        [revealed]
+  Pole                 RED        [revealed]
+  Deer                 BLUE       
+  Sub                  BLUE       [revealed]
+  Hero                 NEUTRAL    [revealed]
+  Brooch               NEUTRAL    [revealed]
+  Cement               BLUE       
+  Husk                 RED        [revealed]
+  Screen               RED        [revealed]
+  Dial                 BLUE       
+  Alps                 ASSASSIN   
+  Paper                BLUE       [revealed]
+  Russia               NEUTRAL    
+  Pin                  RED        [revealed]
+  Dark                 BLUE       
+  Clear                NEUTRAL    
+  Light                NEUTRAL    [revealed]
+  Day                  BLUE       
+  Board                BLUE       
+  Well                 RED        
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+  [BLUE] OCEAN 3  #1: Japan → red
+  [RED] NEEDLE 1  #1: Pin → red
+  [RED] NEEDLE 1  #2: Light → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BOARD, BROOCH, BUDDY, CAST, CEMENT, CLEAR, DARK, DAY, DEER, DIAL, DIAMOND, HERO, HUSK, JAPAN, LIGHT, LINK, PAPER, PIN, POLE, RUSSIA, SCREEN, SHARK, SUB, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ocean", "number": 3, "reasoning": "The clue relates to the words 'Sub', 'Cement', and 'Dial', which can be associated with ocean themes."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 1  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Link
+  Buddy
+  Deer
+  Cement
+  Dial
+  Alps
+  Russia
+  Dark
+  Clear
+  Day
+  Board
+  Well
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MOVIE 3  #1: Screen → red
+  [RED] MOVIE 3  #2: Cast → red
+  [RED] MOVIE 3  #3: Hero → neutral
+  [BLUE] OCEAN 2  #1: Shark → red
+  [RED] GEMSTONE 1  #1: Diamond → red
+  [RED] GEMSTONE 1  #2: Brooch → neutral
+  [BLUE] OCEAN 2  #1: Sub → blue
+  [BLUE] OCEAN 2  #2: Pole → red
+  [RED] GRAIN 1  #1: Husk → red
+  [RED] GRAIN 1  #2: Paper → blue
+  [BLUE] OCEAN 3  #1: Japan → red
+  [RED] NEEDLE 1  #1: Pin → red
+  [RED] NEEDLE 1  #2: Light → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Well", "reasoning": "A well can be associated with water sources, like oceans."}
+============================================================

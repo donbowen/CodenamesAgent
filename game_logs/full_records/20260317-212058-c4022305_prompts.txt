@@ -1,0 +1,1699 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        
+  Cap                  RED        
+  Crew                 RED        
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    
+  Diamond              RED        
+  Bridge               NEUTRAL    
+  Feather              RED        
+  Mirror               NEUTRAL    
+  Dew                  NEUTRAL    
+  Spring               BLUE       
+  France               BLUE       
+  Burst                BLUE       
+  Lock                 RED        
+  Front                NEUTRAL    
+  Yard                 BLUE       
+  Beacon               BLUE       
+  Ring                 RED        
+  Whale                BLUE       
+  Cargo                ASSASSIN   
+  Comet                BLUE       
+  Deer                 RED        
+  Chip                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ornament", "number": 3, "reasoning": "Red words Diamond, Ring, and Feather can all be associated with decorative or ornamental items."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ORNAMENT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Diamond
+  Bridge
+  Feather
+  Mirror
+  Dew
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Yard
+  Beacon
+  Ring
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Diamond", "reasoning": "Diamonds are commonly used as ornamental gemstones, making it a strong match for the clue 'ORNAMENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ORNAMENT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Feather
+  Mirror
+  Dew
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Yard
+  Beacon
+  Ring
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ring", "reasoning": "A ring is a common type of ornament, closely related to the clue ORNAMENT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ORNAMENT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Feather
+  Mirror
+  Dew
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Yard
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Feather", "reasoning": "Feathers can be used as ornaments or decoration, fitting the clue 'ORNAMENT' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ORNAMENT' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Mirror
+  Dew
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Yard
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Mirror", "reasoning": "A mirror can be decorative and ornamental, fitting the clue 'ORNAMENT' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        
+  Cap                  RED        
+  Crew                 RED        
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    
+  Diamond              RED        [revealed]
+  Bridge               NEUTRAL    
+  Feather              RED        [revealed]
+  Mirror               NEUTRAL    [revealed]
+  Dew                  NEUTRAL    
+  Spring               BLUE       
+  France               BLUE       
+  Burst                BLUE       
+  Lock                 RED        
+  Front                NEUTRAL    
+  Yard                 BLUE       
+  Beacon               BLUE       
+  Ring                 RED        [revealed]
+  Whale                BLUE       
+  Cargo                ASSASSIN   
+  Comet                BLUE       
+  Deer                 RED        
+  Chip                 RED        
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Garden", "number": 2, "reasoning": "Links Spring (season/gardening) and Yard (backyard/garden); unlikely to point to the assassin or red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Dew
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Yard
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Yard", "reasoning": "Direct match: yard = garden/backyard, strong and obvious association with 'GARDEN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GARDEN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Dew
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Dew","reasoning":"Dew is closely associated with gardens (morning moisture on plants), a strong match for GARDEN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        
+  Cap                  RED        
+  Crew                 RED        
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    
+  Diamond              RED        [revealed]
+  Bridge               NEUTRAL    
+  Feather              RED        [revealed]
+  Mirror               NEUTRAL    [revealed]
+  Dew                  NEUTRAL    [revealed]
+  Spring               BLUE       
+  France               BLUE       
+  Burst                BLUE       
+  Lock                 RED        
+  Front                NEUTRAL    
+  Yard                 BLUE       [revealed]
+  Beacon               BLUE       
+  Ring                 RED        [revealed]
+  Whale                BLUE       
+  Cargo                ASSASSIN   
+  Comet                BLUE       
+  Deer                 RED        
+  Chip                 RED        
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Headgear", "number": 2, "reasoning": "Cap and Crew both relate to headgear or groups associated with headgear, helping identify these two red words without risking the assassin or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HEADGEAR' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Beam
+  Cap
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cap", "reasoning": "Cap is a type of headgear, which directly matches the clue 'HEADGEAR'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HEADGEAR' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Burst
+  Lock
+  Front
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lock", "reasoning": "Lock can relate to 'lock' of hair, which can be associated with headgear or hairstyles often covered or styled with headgear."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HEADGEAR' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Burst
+  Front
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+  Chip
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chip", "reasoning": "Chip can be associated with 'chip on your shoulder,' which relates to headgear metaphorically, and likely fits the clue better than other options remaining."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        
+  Cap                  RED        [revealed]
+  Crew                 RED        
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    
+  Diamond              RED        [revealed]
+  Bridge               NEUTRAL    
+  Feather              RED        [revealed]
+  Mirror               NEUTRAL    [revealed]
+  Dew                  NEUTRAL    [revealed]
+  Spring               BLUE       
+  France               BLUE       
+  Burst                BLUE       
+  Lock                 RED        [revealed]
+  Front                NEUTRAL    
+  Yard                 BLUE       [revealed]
+  Beacon               BLUE       
+  Ring                 RED        [revealed]
+  Whale                BLUE       
+  Cargo                ASSASSIN   
+  Comet                BLUE       
+  Deer                 RED        
+  Chip                 RED        [revealed]
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Star","number":3,"reasoning":"Connects Comet, Burst, and Beacon (celestial/bright objects) while avoiding Cargo and the remaining red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STAR' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Beam
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Burst
+  Front
+  Beacon
+  Whale
+  Cargo
+  Comet
+  Deer
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Comet","reasoning":"Direct astronomical/space match to 'STAR' — strongest single fit among the STAR=3 clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STAR' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Burst
+  Front
+  Beacon
+  Whale
+  Cargo
+  Deer
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Beacon", "reasoning": "A star as a guiding beacon/North Star fits strongly with STAR (guiding light) — good match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STAR' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Burst
+  Front
+  Whale
+  Cargo
+  Deer
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Burst","reasoning":"'Starburst' is a direct match to STAR; pairs well with prior Comet and Beacon guesses."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STAR' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Beam
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Front
+  Whale
+  Cargo
+  Deer
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Beam","reasoning":"Fits STAR (light/stellar beam; similar theme to Comet/Beacon/Burst) — likely the remaining STAR-related word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Crew                 RED        
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    
+  Diamond              RED        [revealed]
+  Bridge               NEUTRAL    
+  Feather              RED        [revealed]
+  Mirror               NEUTRAL    [revealed]
+  Dew                  NEUTRAL    [revealed]
+  Spring               BLUE       
+  France               BLUE       
+  Burst                BLUE       [revealed]
+  Lock                 RED        [revealed]
+  Front                NEUTRAL    
+  Yard                 BLUE       [revealed]
+  Beacon               BLUE       [revealed]
+  Ring                 RED        [revealed]
+  Whale                BLUE       
+  Cargo                ASSASSIN   
+  Comet                BLUE       [revealed]
+  Deer                 RED        
+  Chip                 RED        [revealed]
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Teamwork", "number": 2, "reasoning": "Both 'Crew' and 'Deer' can be associated with groups: 'Crew' is a team, and 'Deer' often move in groups, linking the idea of collective units."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEAMWORK' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Crew
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Front
+  Whale
+  Cargo
+  Deer
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crew", "reasoning": "Crew relates directly to teamwork as it involves people working together."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEAMWORK' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Brook
+  Club
+  Alien
+  Bridge
+  Spring
+  France
+  Front
+  Whale
+  Cargo
+  Deer
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bridge", "reasoning": "Bridge is often associated with teamwork and collaboration, making it a strong guess for the clue 'TEAMWORK'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Crew                 RED        [revealed]
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    
+  Diamond              RED        [revealed]
+  Bridge               NEUTRAL    [revealed]
+  Feather              RED        [revealed]
+  Mirror               NEUTRAL    [revealed]
+  Dew                  NEUTRAL    [revealed]
+  Spring               BLUE       
+  France               BLUE       
+  Burst                BLUE       [revealed]
+  Lock                 RED        [revealed]
+  Front                NEUTRAL    
+  Yard                 BLUE       [revealed]
+  Beacon               BLUE       [revealed]
+  Ring                 RED        [revealed]
+  Whale                BLUE       
+  Cargo                ASSASSIN   
+  Comet                BLUE       [revealed]
+  Deer                 RED        
+  Chip                 RED        [revealed]
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+  [RED] TEAMWORK 2  #2: Bridge → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"blue","number":4,"reasoning":"Each unrevealed BLUE word pairs with 'blue' (Blue Whale; Blue Spring; France = bleu; Blue Club)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLUE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Brook
+  Club
+  Alien
+  Spring
+  France
+  Front
+  Whale
+  Cargo
+  Deer
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+  [RED] TEAMWORK 2  #2: Bridge → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Whale", "reasoning": "'Blue whale' is a clear, strong association with the clue 'BLUE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLUE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Brook
+  Club
+  Alien
+  Spring
+  France
+  Front
+  Cargo
+  Deer
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+  [RED] TEAMWORK 2  #2: Bridge → neutral
+  [BLUE] BLUE 4  #1: Whale → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "France", "reasoning": "France is strongly associated with the color blue (the French Tricolore), a clear match for the clue 'BLUE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLUE' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Die
+  Brook
+  Club
+  Alien
+  Spring
+  Front
+  Cargo
+  Deer
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+  [RED] TEAMWORK 2  #2: Bridge → neutral
+  [BLUE] BLUE 4  #1: Whale → blue
+  [BLUE] BLUE 4  #2: France → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Alien", "reasoning": "Strong association: famous blue aliens (e.g., Avatar/Na'vi) — clear BLUE connection."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Die                  NEUTRAL    
+  Beam                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Crew                 RED        [revealed]
+  Brook                NEUTRAL    
+  Club                 BLUE       
+  Alien                NEUTRAL    [revealed]
+  Diamond              RED        [revealed]
+  Bridge               NEUTRAL    [revealed]
+  Feather              RED        [revealed]
+  Mirror               NEUTRAL    [revealed]
+  Dew                  NEUTRAL    [revealed]
+  Spring               BLUE       
+  France               BLUE       [revealed]
+  Burst                BLUE       [revealed]
+  Lock                 RED        [revealed]
+  Front                NEUTRAL    
+  Yard                 BLUE       [revealed]
+  Beacon               BLUE       [revealed]
+  Ring                 RED        [revealed]
+  Whale                BLUE       [revealed]
+  Cargo                ASSASSIN   
+  Comet                BLUE       [revealed]
+  Deer                 RED        
+  Chip                 RED        [revealed]
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+  [RED] TEAMWORK 2  #2: Bridge → neutral
+  [BLUE] BLUE 4  #1: Whale → blue
+  [BLUE] BLUE 4  #2: France → blue
+  [BLUE] BLUE 4  #3: Alien → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BEACON, BEAM, BRIDGE, BROOK, BURST, CAP, CARGO, CHIP, CLUB, COMET, CREW, DEER, DEW, DIAMOND, DIE, FEATHER, FRANCE, FRONT, LOCK, MIRROR, RING, SPRING, WHALE, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Forest", "number": 1, "reasoning": "Deer is associated with forests and wildlife, distinct from other words on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Die
+  Brook
+  Club
+  Spring
+  Front
+  Cargo
+  Deer
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ORNAMENT 3  #1: Diamond → red
+  [RED] ORNAMENT 3  #2: Ring → red
+  [RED] ORNAMENT 3  #3: Feather → red
+  [RED] ORNAMENT 3  #4: Mirror → neutral
+  [BLUE] GARDEN 2  #1: Yard → blue
+  [BLUE] GARDEN 2  #2: Dew → neutral
+  [RED] HEADGEAR 2  #1: Cap → red
+  [RED] HEADGEAR 2  #2: Lock → red
+  [RED] HEADGEAR 2  #3: Chip → red
+  [BLUE] STAR 3  #1: Comet → blue
+  [BLUE] STAR 3  #2: Beacon → blue
+  [BLUE] STAR 3  #3: Burst → blue
+  [BLUE] STAR 3  #4: Beam → red
+  [RED] TEAMWORK 2  #1: Crew → red
+  [RED] TEAMWORK 2  #2: Bridge → neutral
+  [BLUE] BLUE 4  #1: Whale → blue
+  [BLUE] BLUE 4  #2: France → blue
+  [BLUE] BLUE 4  #3: Alien → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Deer", "reasoning": "Deer are commonly associated with forests, making it the strongest connection to the clue 'FOREST'."}
+============================================================

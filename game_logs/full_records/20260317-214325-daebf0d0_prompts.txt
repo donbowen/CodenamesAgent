@@ -1,0 +1,1363 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Heart                RED        
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    
+  Game                 BLUE       
+  Diamond              BLUE       
+  Nail                 RED        
+  Gorge                BLUE       
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    
+  Gold                 RED        
+  Gust                 RED        
+  Track                ASSASSIN   
+  Drive                NEUTRAL    
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Precious", "number": 2, "reasoning": "The clue 'Precious' relates to Gold and Diamond, but since Diamond is Blue (opponent), it points mainly to Gold (Red) and possibly Glass (Red) as something valuable or precious; cautious to avoid opponent words, focusing on Gold and Glass."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PRECIOUS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Diamond
+  Nail
+  Gorge
+  Ember
+  Chest
+  Gold
+  Gust
+  Track
+  Drive
+  Eagle
+  Gate
+  Fleet
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Diamond", "reasoning": "Diamond is a precious gemstone, strongly matching the clue 'PRECIOUS'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Heart                RED        
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    
+  Gold                 RED        
+  Gust                 RED        
+  Track                ASSASSIN   
+  Drive                NEUTRAL    
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Canyon", "number": 1, "reasoning": "Gorge is a term related to canyons, and it is one of my team's words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CANYON' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Gorge
+  Ember
+  Chest
+  Gold
+  Gust
+  Track
+  Drive
+  Eagle
+  Gate
+  Fleet
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Gorge", "reasoning": "A canyon is often referred to as a gorge, making it a strong match for the clue 'CANYON'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CANYON' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Ember
+  Chest
+  Gold
+  Gust
+  Track
+  Drive
+  Eagle
+  Gate
+  Fleet
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gust", "reasoning": "A canyon is often associated with wind patterns and gusts, making 'Gust' a fitting guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Heart                RED        
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       [revealed]
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    
+  Gold                 RED        
+  Gust                 RED        [revealed]
+  Track                ASSASSIN   
+  Drive                NEUTRAL    
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Value", "number": 3, "reasoning": "The clue 'Value' relates to Gold, Glass, and Book as valuable items or concepts, helping to connect these red words without touching opponent or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VALUE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Ember
+  Chest
+  Gold
+  Track
+  Drive
+  Eagle
+  Gate
+  Fleet
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Gold", "reasoning": "Gold is strongly associated with value and worth, making it a very likely match for the clue 'VALUE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VALUE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Ember
+  Chest
+  Track
+  Drive
+  Eagle
+  Gate
+  Fleet
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chest", "reasoning": "Chest is associated with treasure or value, fitting the clue 'VALUE' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Heart                RED        
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       [revealed]
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    [revealed]
+  Gold                 RED        [revealed]
+  Gust                 RED        [revealed]
+  Track                ASSASSIN   
+  Drive                NEUTRAL    
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 3, "reasoning": "This relates to 'Charge', 'Hotel', and 'Gate' as they can all be associated with travel or movement."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Ember
+  Track
+  Drive
+  Eagle
+  Gate
+  Fleet
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fleet", "reasoning": "Fleet relates to a group of vehicles used for transport."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Heart                RED        
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       [revealed]
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    [revealed]
+  Gold                 RED        [revealed]
+  Gust                 RED        [revealed]
+  Track                ASSASSIN   
+  Drive                NEUTRAL    
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    [revealed]
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Valuable", "number": 2, "reasoning": "Both Heart and Nail can be associated with something valuable or precious, similar to Gold which is already revealed."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VALUABLE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Heart
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Ember
+  Track
+  Drive
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Heart", "reasoning": "Heart is often considered valuable, symbolizing love and life, fitting the clue 'VALUABLE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VALUABLE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Farm
+  Code
+  Game
+  Nail
+  Ember
+  Track
+  Drive
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "Code can be valuable, as valuable information or valuable coding skills are important assets."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Heart                RED        [revealed]
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    [revealed]
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       [revealed]
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    [revealed]
+  Gold                 RED        [revealed]
+  Gust                 RED        [revealed]
+  Track                ASSASSIN   
+  Drive                NEUTRAL    
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    [revealed]
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 3, "reasoning": "The words 'Charge', 'Gate', and 'Hotel' can relate to the theme of transport."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Book
+  Farm
+  Game
+  Nail
+  Ember
+  Track
+  Drive
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Drive", "reasoning": "Drive is directly related to transport as it involves operating a vehicle."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Heart                RED        [revealed]
+  Book                 RED        
+  Farm                 BLUE       
+  Code                 NEUTRAL    [revealed]
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       [revealed]
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    [revealed]
+  Gold                 RED        [revealed]
+  Gust                 RED        [revealed]
+  Track                ASSASSIN   
+  Drive                NEUTRAL    [revealed]
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    [revealed]
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+  [BLUE] TRANSPORT 3  #1: Drive → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Literature", "number": 2, "reasoning": "Both Book and Jaw can be associated with literature and reading; Book directly and Jaw indirectly as part of speaking or storytelling, avoiding any forbidden or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LITERATURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Book
+  Farm
+  Game
+  Nail
+  Ember
+  Track
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+  [BLUE] TRANSPORT 3  #1: Drive → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Book", "reasoning": "Book is directly related to literature and is a strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LITERATURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Game
+  Nail
+  Ember
+  Track
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+  Reel
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+  [BLUE] TRANSPORT 3  #1: Drive → neutral
+  [RED] LITERATURE 2  #1: Book → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Reel", "reasoning": "Reel can relate to literature through storytelling, films adapted from books, or as a metaphor for narrative sequences."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LITERATURE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Game
+  Nail
+  Ember
+  Track
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hint
+  Hotel
+  Jaw
+  Phoenix
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+  [BLUE] TRANSPORT 3  #1: Drive → neutral
+  [RED] LITERATURE 2  #1: Book → red
+  [RED] LITERATURE 2  #2: Reel → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hint", "reasoning": "Hint is related to literature as it can pertain to clues or prompts, fitting the clue 'LITERATURE' and likely a red word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Heart                RED        [revealed]
+  Book                 RED        [revealed]
+  Farm                 BLUE       
+  Code                 NEUTRAL    [revealed]
+  Game                 BLUE       
+  Diamond              BLUE       [revealed]
+  Nail                 RED        
+  Gorge                BLUE       [revealed]
+  Ember                NEUTRAL    
+  Chest                NEUTRAL    [revealed]
+  Gold                 RED        [revealed]
+  Gust                 RED        [revealed]
+  Track                ASSASSIN   
+  Drive                NEUTRAL    [revealed]
+  Eagle                NEUTRAL    
+  Gate                 BLUE       
+  Fleet                NEUTRAL    [revealed]
+  Glass                RED        
+  Charge               BLUE       
+  India                RED        
+  Hint                 NEUTRAL    [revealed]
+  Hotel                BLUE       
+  Jaw                  RED        
+  Phoenix              BLUE       
+  Reel                 RED        [revealed]
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+  [BLUE] TRANSPORT 3  #1: Drive → neutral
+  [RED] LITERATURE 2  #1: Book → red
+  [RED] LITERATURE 2  #2: Reel → red
+  [RED] LITERATURE 2  #3: Hint → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOOK, CHARGE, CHEST, CODE, DIAMOND, DRIVE, EAGLE, EMBER, FARM, FLEET, GAME, GATE, GLASS, GOLD, GORGE, GUST, HEART, HINT, HOTEL, INDIA, JAW, NAIL, PHOENIX, REEL, TRACK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 3, "reasoning": "Transport relates to movement, which connects to the words 'Drive', 'Fleet', and 'Charge', all of which are associated with transportation."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Farm
+  Game
+  Nail
+  Ember
+  Track
+  Eagle
+  Gate
+  Glass
+  Charge
+  India
+  Hotel
+  Jaw
+  Phoenix
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PRECIOUS 2  #1: Diamond → blue
+  [BLUE] CANYON 1  #1: Gorge → blue
+  [BLUE] CANYON 1  #2: Gust → red
+  [RED] VALUE 3  #1: Gold → red
+  [RED] VALUE 3  #2: Chest → neutral
+  [BLUE] TRANSPORT 3  #1: Fleet → neutral
+  [RED] VALUABLE 2  #1: Heart → red
+  [RED] VALUABLE 2  #2: Code → neutral
+  [BLUE] TRANSPORT 3  #1: Drive → neutral
+  [RED] LITERATURE 2  #1: Book → red
+  [RED] LITERATURE 2  #2: Reel → red
+  [RED] LITERATURE 2  #3: Hint → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Track", "reasoning": "Track relates to transport as it refers to railway tracks used for trains, which are a mode of transportation."}
+============================================================

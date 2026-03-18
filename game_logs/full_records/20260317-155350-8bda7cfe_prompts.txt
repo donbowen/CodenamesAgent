@@ -1,0 +1,1242 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Hand                 NEUTRAL    
+  Jar                  RED        
+  Gate                 BLUE       
+  Cat                  RED        
+  Etch                 NEUTRAL    
+  Branch               BLUE       
+  Drop                 RED        
+  Japan                NEUTRAL    
+  Den                  ASSASSIN   
+  Helm                 BLUE       
+  Trip                 NEUTRAL    
+  Night                BLUE       
+  Kettle               RED        
+  Plant                RED        
+  Forge                BLUE       
+  Capital              NEUTRAL    
+  Fly                  RED        
+  Ember                RED        
+  Cold                 BLUE       
+  Delta                BLUE       
+  Gene                 RED        
+  Lion                 NEUTRAL    
+  Ground               BLUE       
+  Line                 RED        
+  Avalanche            NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AVALANCHE, BRANCH, CAPITAL, CAT, COLD, DELTA, DEN, DROP, EMBER, ETCH, FLY, FORGE, GATE, GENE, GROUND, HAND, HELM, JAPAN, JAR, KETTLE, LINE, LION, NIGHT, PLANT, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Laboratory","number":2,"reasoning":"Connects JAR and GENE strongly (specimen jar, genetics lab) while avoiding strong ties to the assassin DEN and most blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LABORATORY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hand
+  Jar
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Helm
+  Trip
+  Night
+  Kettle
+  Plant
+  Forge
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Gene
+  Lion
+  Ground
+  Line
+  Avalanche
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"GENE","reasoning":"Strong laboratory association through genetics and biological research; among the options, this is the clearest fit."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LABORATORY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Jar
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Helm
+  Trip
+  Night
+  Kettle
+  Plant
+  Forge
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Jar","reasoning":"Laboratories commonly use jars/containers for samples and chemicals; among the remaining words, this is the strongest fit."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LABORATORY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Helm
+  Trip
+  Night
+  Kettle
+  Plant
+  Forge
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found the 2 intended LABORATORY words (Gene, Jar). No strong safe remaining match, so passing avoids risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Hand                 NEUTRAL    
+  Jar                  RED        [revealed]
+  Gate                 BLUE       
+  Cat                  RED        
+  Etch                 NEUTRAL    
+  Branch               BLUE       
+  Drop                 RED        
+  Japan                NEUTRAL    
+  Den                  ASSASSIN   
+  Helm                 BLUE       
+  Trip                 NEUTRAL    
+  Night                BLUE       
+  Kettle               RED        
+  Plant                RED        
+  Forge                BLUE       
+  Capital              NEUTRAL    
+  Fly                  RED        
+  Ember                RED        
+  Cold                 BLUE       
+  Delta                BLUE       
+  Gene                 RED        [revealed]
+  Lion                 NEUTRAL    
+  Ground               BLUE       
+  Line                 RED        
+  Avalanche            NEUTRAL    
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AVALANCHE, BRANCH, CAPITAL, CAT, COLD, DELTA, DEN, DROP, EMBER, ETCH, FLY, FORGE, GATE, GENE, GROUND, HAND, HELM, JAPAN, JAR, KETTLE, LINE, LION, NIGHT, PLANT, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "metal", "number": 2, "reasoning": "Metal strongly connects to HELM (metal helmet) and FORGE (where metal is worked), with weaker links to other words and no strong pull toward the assassin DEN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hand
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Helm
+  Trip
+  Night
+  Kettle
+  Plant
+  Forge
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Forge", "reasoning": "A forge is directly associated with working and shaping metal, making it the strongest match to the clue METAL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Helm
+  Trip
+  Night
+  Kettle
+  Plant
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Helm", "reasoning": "A helm is often made of metal (e.g., a helmet or ship’s helm), making it the strongest remaining association with the clue METAL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Kettle
+  Plant
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Kettle", "reasoning": "Kettles are commonly made of metal, and no other remaining word has a stronger direct association with metal."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Hand                 NEUTRAL    
+  Jar                  RED        [revealed]
+  Gate                 BLUE       
+  Cat                  RED        
+  Etch                 NEUTRAL    
+  Branch               BLUE       
+  Drop                 RED        
+  Japan                NEUTRAL    
+  Den                  ASSASSIN   
+  Helm                 BLUE       [revealed]
+  Trip                 NEUTRAL    
+  Night                BLUE       
+  Kettle               RED        [revealed]
+  Plant                RED        
+  Forge                BLUE       [revealed]
+  Capital              NEUTRAL    
+  Fly                  RED        
+  Ember                RED        
+  Cold                 BLUE       
+  Delta                BLUE       
+  Gene                 RED        [revealed]
+  Lion                 NEUTRAL    
+  Ground               BLUE       
+  Line                 RED        
+  Avalanche            NEUTRAL    
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AVALANCHE, BRANCH, CAPITAL, CAT, COLD, DELTA, DEN, DROP, EMBER, ETCH, FLY, FORGE, GATE, GENE, GROUND, HAND, HELM, JAPAN, JAR, KETTLE, LINE, LION, NIGHT, PLANT, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Feline","number":1,"reasoning":"Targets CAT cleanly. It avoids the assassin DEN and has limited pull toward blue words; stronger multi-word options risk overlap with dangerous or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FELINE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hand
+  Gate
+  Cat
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Cat","reasoning":"'Feline' most directly matches CAT; it's the strongest and safest fit."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FELINE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Gate
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the likely intended match for FELINE with Cat, and an extra guess would be a risky stretch."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Hand                 NEUTRAL    
+  Jar                  RED        [revealed]
+  Gate                 BLUE       
+  Cat                  RED        [revealed]
+  Etch                 NEUTRAL    
+  Branch               BLUE       
+  Drop                 RED        
+  Japan                NEUTRAL    
+  Den                  ASSASSIN   
+  Helm                 BLUE       [revealed]
+  Trip                 NEUTRAL    
+  Night                BLUE       
+  Kettle               RED        [revealed]
+  Plant                RED        
+  Forge                BLUE       [revealed]
+  Capital              NEUTRAL    
+  Fly                  RED        
+  Ember                RED        
+  Cold                 BLUE       
+  Delta                BLUE       
+  Gene                 RED        [revealed]
+  Lion                 NEUTRAL    
+  Ground               BLUE       
+  Line                 RED        
+  Avalanche            NEUTRAL    
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AVALANCHE, BRANCH, CAPITAL, CAT, COLD, DELTA, DEN, DROP, EMBER, ETCH, FLY, FORGE, GATE, GENE, GROUND, HAND, HELM, JAPAN, JAR, KETTLE, LINE, LION, NIGHT, PLANT, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "snow", "number": 2, "reasoning": "Connects strongly to COLD and AVALANCHE, both blue-related concepts of wintry conditions, while avoiding clear ties to remaining red words and the assassin DEN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SNOW' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hand
+  Gate
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+  Avalanche
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Avalanche", "reasoning": "Avalanches are directly associated with snow on mountains, making this the strongest match for the clue SNOW."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Hand                 NEUTRAL    
+  Jar                  RED        [revealed]
+  Gate                 BLUE       
+  Cat                  RED        [revealed]
+  Etch                 NEUTRAL    
+  Branch               BLUE       
+  Drop                 RED        
+  Japan                NEUTRAL    
+  Den                  ASSASSIN   
+  Helm                 BLUE       [revealed]
+  Trip                 NEUTRAL    
+  Night                BLUE       
+  Kettle               RED        [revealed]
+  Plant                RED        
+  Forge                BLUE       [revealed]
+  Capital              NEUTRAL    
+  Fly                  RED        
+  Ember                RED        
+  Cold                 BLUE       
+  Delta                BLUE       
+  Gene                 RED        [revealed]
+  Lion                 NEUTRAL    
+  Ground               BLUE       
+  Line                 RED        
+  Avalanche            NEUTRAL    [revealed]
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+  [BLUE] SNOW 2  #1: Avalanche → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AVALANCHE, BRANCH, CAPITAL, CAT, COLD, DELTA, DEN, DROP, EMBER, ETCH, FLY, FORGE, GATE, GENE, GROUND, HAND, HELM, JAPAN, JAR, KETTLE, LINE, LION, NIGHT, PLANT, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Fire", "number":2, "reasoning":"Connects strongly to EMBER and DROP via fire/teardrop imagery less directly, while avoiding the assassin DEN and minimizing pull toward blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FIRE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hand
+  Gate
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Ember
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+  [BLUE] SNOW 2  #1: Avalanche → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"EMBER","reasoning":"‘Ember’ is the strongest direct association with FIRE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FIRE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Gate
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Cold
+  Delta
+  Lion
+  Ground
+  Line
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+  [BLUE] SNOW 2  #1: Avalanche → neutral
+  [RED] FIRE 2  #1: Ember → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"COLD","reasoning":"Best remaining match to FIRE as an opposite/common pairing (fire and cold). Safer than looser associations like PLANT or NIGHT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Hand                 NEUTRAL    
+  Jar                  RED        [revealed]
+  Gate                 BLUE       
+  Cat                  RED        [revealed]
+  Etch                 NEUTRAL    
+  Branch               BLUE       
+  Drop                 RED        
+  Japan                NEUTRAL    
+  Den                  ASSASSIN   
+  Helm                 BLUE       [revealed]
+  Trip                 NEUTRAL    
+  Night                BLUE       
+  Kettle               RED        [revealed]
+  Plant                RED        
+  Forge                BLUE       [revealed]
+  Capital              NEUTRAL    
+  Fly                  RED        
+  Ember                RED        [revealed]
+  Cold                 BLUE       [revealed]
+  Delta                BLUE       
+  Gene                 RED        [revealed]
+  Lion                 NEUTRAL    
+  Ground               BLUE       
+  Line                 RED        
+  Avalanche            NEUTRAL    [revealed]
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+  [BLUE] SNOW 2  #1: Avalanche → neutral
+  [RED] FIRE 2  #1: Ember → red
+  [RED] FIRE 2  #2: Cold → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AVALANCHE, BRANCH, CAPITAL, CAT, COLD, DELTA, DEN, DROP, EMBER, ETCH, FLY, FORGE, GATE, GENE, GROUND, HAND, HELM, JAPAN, JAR, KETTLE, LINE, LION, NIGHT, PLANT, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "forest", "number": 2, "reasoning": "Forest connects strongly to BRANCH and GROUND while avoiding clear ties to remaining red words or the assassin DEN; it’s a safe way to group two blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hand
+  Gate
+  Etch
+  Branch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Delta
+  Lion
+  Ground
+  Line
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+  [BLUE] SNOW 2  #1: Avalanche → neutral
+  [RED] FIRE 2  #1: Ember → red
+  [RED] FIRE 2  #2: Cold → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Branch", "reasoning": "Branches are directly associated with trees, which are found in a forest."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hand
+  Gate
+  Etch
+  Drop
+  Japan
+  Den
+  Trip
+  Night
+  Plant
+  Capital
+  Fly
+  Delta
+  Lion
+  Ground
+  Line
+
+Game history:
+  [RED] LABORATORY 2  #1: Gene → red
+  [RED] LABORATORY 2  #2: Jar → red
+  [RED] LABORATORY 2  #3: PASS
+  [BLUE] METAL 2  #1: Forge → blue
+  [BLUE] METAL 2  #2: Helm → blue
+  [BLUE] METAL 2  #3: Kettle → red
+  [RED] FELINE 1  #1: Cat → red
+  [RED] FELINE 1  #2: PASS
+  [BLUE] SNOW 2  #1: Avalanche → neutral
+  [RED] FIRE 2  #1: Ember → red
+  [RED] FIRE 2  #2: Cold → blue
+  [BLUE] FOREST 2  #1: Branch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+

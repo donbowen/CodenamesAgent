@@ -1,0 +1,1677 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Crew                 RED        
+  Dash                 RED        
+  Jungle               RED        
+  Glove                RED        
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       
+  Blade                NEUTRAL    
+  Cap                  RED        
+  Chip                 NEUTRAL    
+  Bond                 BLUE       
+  Vest                 RED        
+  Chart                NEUTRAL    
+  Lily                 RED        
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       
+  Union                BLUE       
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       
+  Flight               BLUE       
+  Bear                 RED        
+  Flat                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "CLOTHING", "number": 3, "reasoning": "Cap, Glove, and Vest are clothing items."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLOTHING' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Crew
+  Dash
+  Jungle
+  Glove
+  Flag
+  Deep
+  Ash
+  Blade
+  Cap
+  Chip
+  Bond
+  Vest
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Glove", "reasoning": "Direct clothing item; clearly tied to the clue CLOTHING."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLOTHING' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Crew
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Cap
+  Chip
+  Bond
+  Vest
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cap", "reasoning": "Direct clothing item; cap is a clear, unambiguous clothing word matching the CLOTHING clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLOTHING' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Crew
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Chip
+  Bond
+  Vest
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Vest","reasoning":"Clothing item; completes the CLOTHING trio with glove and cap."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLOTHING' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Crew
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Chip
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"All three clothing-related red words have been found; passing avoids risking a non-clothing word that could hit a blue/neutral card."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Crew                 RED        
+  Dash                 RED        
+  Jungle               RED        
+  Glove                RED        [revealed]
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       
+  Blade                NEUTRAL    
+  Cap                  RED        [revealed]
+  Chip                 NEUTRAL    
+  Bond                 BLUE       
+  Vest                 RED        [revealed]
+  Chart                NEUTRAL    
+  Lily                 RED        
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       
+  Union                BLUE       
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       
+  Flight               BLUE       
+  Bear                 RED        
+  Flat                 BLUE       
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words that need to be found:
+- Ash, Bond, Disk, Screen, Union, Branch, Flight, Flat
+
+I need to find a clue that connects multiple blue words while avoiding the assassin (Flag) and red words.
+
+I notice that several blue words relate to computing/technology:
+- Disk (computer storage)
+- Screen (computer display)
+- Branch (programming concept)
+- Bond (can relate to network connections)
+
+The word "COMPUTER" could connect these four words effectively. It's not on the board, relates strongly to disk and screen, and branch is a common programming term. Bond could be interpreted as network bonds/connections in computing.
+
+This avoids the assassin Flag and doesn't strongly point to any red words.
+
+{"clue": "COMPUTER", "number": 4, "reasoning": "Connects Disk (storage), Screen (display), Branch (programming), and Bond (network connections) - all computing-related terms"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Crew
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Chip
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "COMPUTER" and the available words, I need to find terms that relate to computers or technology.
+
+The strongest connections I can see are:
+- **CHIP** - computer chips/processors are fundamental computer components
+- **DISK** - hard disks, floppy disks, optical disks are all computer storage devices
+- **SCREEN** - computer monitors/displays
+- **BRANCH** - could relate to code branching in programming
+
+CHIP seems like the most direct and certain connection to computers, as computer chips are essential components that everyone associates with computers.
+
+{"guess": "CHIP", "reasoning": "CHIP is strongly connected to computers - computer chips/processors are fundamental components of any computer system"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Crew                 RED        
+  Dash                 RED        
+  Jungle               RED        
+  Glove                RED        [revealed]
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       
+  Blade                NEUTRAL    
+  Cap                  RED        [revealed]
+  Chip                 NEUTRAL    [revealed]
+  Bond                 BLUE       
+  Vest                 RED        [revealed]
+  Chart                NEUTRAL    
+  Lily                 RED        
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       
+  Union                BLUE       
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       
+  Flight               BLUE       
+  Bear                 RED        
+  Flat                 BLUE       
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "TEAM", "number": 3, "reasoning": "Crew = team; Bear = sports team name (Bears); America = Team USA; targets 3 red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEAM' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Crew
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crew", "reasoning": "Direct synonym for a group of people working as a team."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEAM' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Union
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Union", "reasoning": "Union is a strong synonym for 'team' and could be one of the remaining red team words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Crew                 RED        [revealed]
+  Dash                 RED        
+  Jungle               RED        
+  Glove                RED        [revealed]
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       
+  Blade                NEUTRAL    
+  Cap                  RED        [revealed]
+  Chip                 NEUTRAL    [revealed]
+  Bond                 BLUE       
+  Vest                 RED        [revealed]
+  Chart                NEUTRAL    
+  Lily                 RED        
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       
+  Union                BLUE       [revealed]
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       
+  Flight               BLUE       
+  Bear                 RED        
+  Flat                 BLUE       
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Ash, Bond, Disk, Screen, Branch, Flight, Flat
+
+I need to find a clue that connects multiple blue words while avoiding red words and the assassin (Flag).
+
+Let me analyze potential connections:
+
+"TREE" could work for Branch and Ash (tree parts), but I need to be careful about other words.
+
+"COMPUTER" was already used, but looking at technology connections: Disk and Screen are computer-related.
+
+"FLAT" could relate to apartment/dwelling, but that's risky with other words.
+
+Looking at "WOOD" - this could connect:
+- Ash (type of wood/tree)
+- Branch (part of tree)
+- Flat (could be a stretch, but wooden flat surfaces exist)
+
+But I should be more conservative. Let me focus on stronger connections:
+
+"TREE" connects:
+- Branch (part of a tree)
+- Ash (type of tree)
+
+This avoids red words like Bear, Jungle, Lily and the assassin Flag. It's a safe 2-word clue.
+
+{"clue": "TREE", "number": 2, "reasoning": "Connects Branch (part of tree) and Ash (type of tree). Safe from red words and assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Branch
+  Flight
+  Bear
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Branch", "reasoning": "Branch is directly related to trees as it's a part of a tree. This is the most obvious connection to the clue 'TREE' from the available words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Jungle
+  Flag
+  Deep
+  Ash
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ash", "reasoning": "Ash is a type of tree (ash tree), which directly connects to the clue 'TREE'. This seems like a strong match for the second word of the TREE clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Jungle
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already made 2 correct guesses for the TREE clue (Branch and Ash), which matches the clue number of 2. I should pass now to avoid risking a wrong guess that could end our turn or help the opponent, especially since both teams have equal cards remaining."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Crew                 RED        [revealed]
+  Dash                 RED        
+  Jungle               RED        
+  Glove                RED        [revealed]
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       [revealed]
+  Blade                NEUTRAL    
+  Cap                  RED        [revealed]
+  Chip                 NEUTRAL    [revealed]
+  Bond                 BLUE       
+  Vest                 RED        [revealed]
+  Chart                NEUTRAL    
+  Lily                 RED        
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       
+  Union                BLUE       [revealed]
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       [revealed]
+  Flight               BLUE       
+  Bear                 RED        
+  Flat                 BLUE       
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FOREST", "number": 3, "reasoning": "Jungle -> forest; Bear -> forest-dwelling; Lily -> common in forested areas."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dash
+  Jungle
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Bear
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jungle", "reasoning": "Direct association with FOREST; forests are closely linked to jungles."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Bear
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bear", "reasoning": "Strong forest association; bears live in forests, making it a likely red word tied to the FOREST clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  Lily
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lily", "reasoning": "Forest clue likely points to flora; Jungle and Bear found, Lily fits forest flora."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+  [RED] FOREST 3  #3: Lily → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "All forest-related red words (Jungle, Bear, Lily) are found. Any extra guess risks hitting a non-red/blue/neutral word; pass to avoid a misstatement."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Crew                 RED        [revealed]
+  Dash                 RED        
+  Jungle               RED        [revealed]
+  Glove                RED        [revealed]
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       [revealed]
+  Blade                NEUTRAL    
+  Cap                  RED        [revealed]
+  Chip                 NEUTRAL    [revealed]
+  Bond                 BLUE       
+  Vest                 RED        [revealed]
+  Chart                NEUTRAL    
+  Lily                 RED        [revealed]
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       
+  Union                BLUE       [revealed]
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       [revealed]
+  Flight               BLUE       
+  Bear                 RED        [revealed]
+  Flat                 BLUE       
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+  [RED] FOREST 3  #3: Lily → red
+  [RED] FOREST 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- Bond
+- Disk  
+- Screen
+- Flight
+- Flat
+
+I need to find a clue that connects multiple blue words while avoiding the assassin (Flag) and remaining red words (Dash, America).
+
+Let me analyze potential connections:
+
+"COMPUTER" could work for Disk and Screen (computer components), but was already used.
+
+"TRAVEL" could connect Bond (James Bond travels), Flight (obvious), and potentially Disk (travel disk/frisbee), but might be risky.
+
+"MOVIE" could connect Bond (James Bond movies), Screen (movie screen), Flight (flight movies), but might lead to confusion.
+
+"STORAGE" could work for Disk (storage disk) and Flat (flat storage), but only 2 words.
+
+"DISPLAY" works well for Screen and Disk (display disk/DVD), and is safe from assassin and red words.
+
+Actually, "ROUND" could work for Disk (round shape) and Bond (round bond/ring), but risky with other interpretations.
+
+I think "DISPLAY" is the safest option connecting Screen and Disk clearly.
+
+{"clue": "DISPLAY", "number": 2, "reasoning": "Connects Screen (display screen) and Disk (display disk/DVD) safely without risking assassin Flag or red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DISPLAY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dash
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  America
+  Decay
+  Disk
+  Screen
+  Harbor
+  Anchor
+  Flight
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+  [RED] FOREST 3  #3: Lily → red
+  [RED] FOREST 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "DISPLAY" and the available words, I need to find words that relate to showing or presenting something.
+
+The strongest connection I see is "Screen" - screens are literally display devices used to show information, images, or content. This is a very direct match to the concept of display.
+
+"Chart" could also work as charts display data visually, but "Screen" seems like the most obvious and direct connection to "DISPLAY."
+
+{"guess": "Screen", "reasoning": "Screen is the most direct match to DISPLAY as screens are devices specifically designed to display information, images, and content"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DISPLAY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dash
+  Flag
+  Deep
+  Blade
+  Bond
+  Chart
+  America
+  Decay
+  Disk
+  Harbor
+  Anchor
+  Flight
+  Flat
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+  [RED] FOREST 3  #3: Lily → red
+  [RED] FOREST 3  #4: PASS
+  [BLUE] DISPLAY 2  #1: Screen → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "DISPLAY" and the remaining words, I need to find another word that relates to displaying or showing something.
+
+From the valid guesses, "Chart" stands out as something that displays information - charts are used to display data, statistics, or information visually. This seems like a strong connection to the clue "DISPLAY."
+
+Other words like "Flag" could potentially display something (like a country's symbol), but "Chart" has a more direct connection to the concept of displaying information.
+
+Since I've already gotten one correct guess with "Screen" and the clue number is 2, I should make one more guess before considering passing.
+
+{"guess": "Chart", "reasoning": "Charts are used to display data and information visually, making it a strong match for the clue DISPLAY"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Crew                 RED        [revealed]
+  Dash                 RED        
+  Jungle               RED        [revealed]
+  Glove                RED        [revealed]
+  Flag                 ASSASSIN   
+  Deep                 NEUTRAL    
+  Ash                  BLUE       [revealed]
+  Blade                NEUTRAL    
+  Cap                  RED        [revealed]
+  Chip                 NEUTRAL    [revealed]
+  Bond                 BLUE       
+  Vest                 RED        [revealed]
+  Chart                NEUTRAL    [revealed]
+  Lily                 RED        [revealed]
+  America              RED        
+  Decay                NEUTRAL    
+  Disk                 BLUE       
+  Screen               BLUE       [revealed]
+  Union                BLUE       [revealed]
+  Harbor               NEUTRAL    
+  Anchor               NEUTRAL    
+  Branch               BLUE       [revealed]
+  Flight               BLUE       
+  Bear                 RED        [revealed]
+  Flat                 BLUE       
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+  [RED] FOREST 3  #3: Lily → red
+  [RED] FOREST 3  #4: PASS
+  [BLUE] DISPLAY 2  #1: Screen → blue
+  [BLUE] DISPLAY 2  #2: Chart → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMERICA, ANCHOR, ASH, BEAR, BLADE, BOND, BRANCH, CAP, CHART, CHIP, CREW, DASH, DECAY, DEEP, DISK, FLAG, FLAT, FLIGHT, GLOVE, HARBOR, JUNGLE, LILY, SCREEN, UNION, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "STARS", "number": 2, "reasoning": "America's flag has stars; Ursa Major (the Great Bear) is a well-known constellation of stars."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STARS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dash
+  Flag
+  Deep
+  Blade
+  Bond
+  America
+  Decay
+  Disk
+  Harbor
+  Anchor
+  Flight
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CLOTHING 3  #1: Glove → red
+  [RED] CLOTHING 3  #2: Cap → red
+  [RED] CLOTHING 3  #3: Vest → red
+  [RED] CLOTHING 3  #4: PASS
+  [BLUE] COMPUTER 4  #1: Chip → neutral
+  [RED] TEAM 3  #1: Crew → red
+  [RED] TEAM 3  #2: Union → blue
+  [BLUE] TREE 2  #1: Branch → blue
+  [BLUE] TREE 2  #2: Ash → blue
+  [BLUE] TREE 2  #3: PASS
+  [RED] FOREST 3  #1: Jungle → red
+  [RED] FOREST 3  #2: Bear → red
+  [RED] FOREST 3  #3: Lily → red
+  [RED] FOREST 3  #4: PASS
+  [BLUE] DISPLAY 2  #1: Screen → blue
+  [BLUE] DISPLAY 2  #2: Chart → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Flag","reasoning":"Best star connection: flags commonly display stars; the US flag is iconic for stars."}
+============================================================

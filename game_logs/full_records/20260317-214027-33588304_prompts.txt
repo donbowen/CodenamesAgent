@@ -1,0 +1,1805 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        
+  Lure                 RED        
+  Dew                  BLUE       
+  Glove                BLUE       
+  Arrow                RED        
+  Fountain             NEUTRAL    
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    
+  Boom                 BLUE       
+  Atlantis             BLUE       
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       
+  Dome                 RED        
+  Zombie               BLUE       
+  Teacher              BLUE       
+  Dam                  NEUTRAL    
+  Exile                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Emergency", "number": 3, "reasoning": "Emergency relates to Nurse, Ambulance, and Hook, which are associated with medical or urgent situations."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EMERGENCY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Nurse
+  Lure
+  Dew
+  Glove
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Ambulance
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dawn
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ambulance", "reasoning": "Ambulance is directly related to emergencies, making it a strong first guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        
+  Lure                 RED        
+  Dew                  BLUE       
+  Glove                BLUE       
+  Arrow                RED        
+  Fountain             NEUTRAL    
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       
+  Atlantis             BLUE       
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       
+  Dome                 RED        
+  Zombie               BLUE       
+  Teacher              BLUE       
+  Dam                  NEUTRAL    
+  Exile                BLUE       
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for BLUE words while avoiding RED words, NEUTRAL words, and especially the ASSASSIN (Match).
+
+BLUE words remaining (8):
+- Dew
+- Glove
+- Boom
+- Atlantis
+- Dawn
+- Zombie
+- Teacher
+- Exile
+
+Let me look for connections:
+
+**Mythical/Fantasy connection**: Atlantis, Zombie - could use "LEGENDARY" or "MYTHICAL"
+
+**Time of day**: Dawn, Dew (morning) - could use "MORNING" (2 words)
+
+**Hand/clothing**: Glove - single word
+
+**Sound**: Boom - single word
+
+**Profession**: Teacher - single word
+
+**Banishment**: Exile - single word
+
+Let me try "MORNING" for Dawn and Dew - both strongly associated with morning time.
+
+Checking against RED words:
+- Bill, Nurse, Lure, Arrow, Cliff, Hook, Lemon, Cap, Dome - none strongly connected to morning
+
+Checking ASSASSIN:
+- Match - not related to morning
+
+Checking NEUTRAL:
+- Canyon, Button, Fountain, Brim, Coal, Dam - none strongly connected to morning
+
+This seems safe and connects 2 BLUE words clearly.
+
+{"clue": "MORNING", "number": 2, "reasoning": "Dawn and Dew are both strongly associated with morning time - dawn is the morning itself, and dew forms in the early morning."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MORNING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Nurse
+  Lure
+  Dew
+  Glove
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dawn
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Dew",
+  "reasoning": "Morning dew is a very strong association - dew forms during the early morning hours when temperatures drop. This is a classic morning phenomenon and fits the clue perfectly."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MORNING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Nurse
+  Lure
+  Glove
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dawn
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Dawn",
+  "reasoning": "Dawn is strongly associated with morning as it represents the early morning time when the sun rises. This is a clear and direct connection to the clue 'MORNING'. I've already successfully guessed one word (Dew, which relates to morning moisture), and Dawn is another natural morning-related word."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MORNING' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Nurse
+  Lure
+  Glove
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words (Dew and Dawn) matching the clue MORNING 2, which was the target number. Both were correct blue cards. Continuing to guess risks hitting a neutral, red, or assassin card. With Blue at 6 remaining and Red at 9, we're ahead but should play carefully. Passing now preserves our advantage."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        
+  Lure                 RED        
+  Dew                  BLUE       [revealed]
+  Glove                BLUE       
+  Arrow                RED        
+  Fountain             NEUTRAL    
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       
+  Atlantis             BLUE       
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       [revealed]
+  Dome                 RED        
+  Zombie               BLUE       
+  Teacher              BLUE       
+  Dam                  NEUTRAL    
+  Exile                BLUE       
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Hospital", "number": 2, "reasoning": "Both 'Nurse' and 'Ambulance' are related to the medical field, with 'Nurse' being directly associated with hospitals."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HOSPITAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Nurse
+  Lure
+  Glove
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Nurse", "reasoning": "Nurse is directly related to a hospital, fitting the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HOSPITAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Lure
+  Glove
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Glove", "reasoning": "Gloves are commonly associated with hospitals, especially in medical settings, making it a strong guess related to 'HOSPITAL'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        [revealed]
+  Lure                 RED        
+  Dew                  BLUE       [revealed]
+  Glove                BLUE       [revealed]
+  Arrow                RED        
+  Fountain             NEUTRAL    
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       
+  Atlantis             BLUE       
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       [revealed]
+  Dome                 RED        
+  Zombie               BLUE       
+  Teacher              BLUE       
+  Dam                  NEUTRAL    
+  Exile                BLUE       
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Boom
+- Atlantis
+- Zombie
+- Teacher
+- Exile
+
+Let me analyze each:
+- **Boom**: explosive sound, economic boom, boom box
+- **Atlantis**: legendary lost city/civilization
+- **Zombie**: undead creature, horror genre
+- **Teacher**: educator, instructor
+- **Exile**: banishment, being cast out
+
+Let me look for connections:
+
+1. **MYTH/LEGEND**: Could connect Atlantis (legendary city) and Zombie (mythical creature), but doesn't fit Teacher, Boom, or Exile well.
+
+2. **APOCALYPSE/END**: Zombie (apocalypse scenario), Boom (explosion/destruction), Exile (being cast out after disaster). Atlantis could fit (destroyed civilization). Teacher is weak here.
+
+3. **UNDEAD**: Only really fits Zombie strongly.
+
+4. **CITY/CIVILIZATION**: Atlantis is a city. Weak for others.
+
+5. **SCHOOL/EDUCATION**: Teacher fits perfectly. Could stretch to Exile (expelled from school). Others don't fit.
+
+6. **BANISH/OUTCAST**: Exile fits perfectly, Atlantis (lost/submerged), Zombie (outcast from living). Boom and Teacher don't fit well.
+
+Let me try safer 2-word combinations:
+
+- **LOST**: Atlantis (lost city), Exile (lost/cast away), Zombie (lost souls). Avoids dangerous words. Boom and Teacher don't fit strongly.
+
+- **ANCIENT**: Atlantis (ancient city), Zombie (ancient curse/mummy connection). Teacher and Exile less strong.
+
+- **LEGEND**: Atlantis (legendary city), Zombie (legendary creatures). Safe from assassin and red words.
+
+Looking at the board dangers:
+- ASSASSIN: Match
+- RED words to avoid: Bill, Lure, Arrow, Cliff, Hook, Lemon, Cap, Dome
+
+I'll go with **LEGEND** for Atlantis and Zombie - both strongly connected, safe from all dangerous words.
+
+{"clue": "LEGEND", "number": 2, "reasoning": "Connects Atlantis (legendary lost city) and Zombie (legendary undead creatures). Both are strongly associated with myths and legends. Avoids assassin Match and all red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LEGEND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Atlantis
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Atlantis",
+  "reasoning": "LEGEND strongly connects to Atlantis, the legendary lost city from ancient mythology. This is a classic example of something described as legendary. The clue number is 2, so there should be another word, but Atlantis is the strongest connection to LEGEND on the board."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LEGEND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Fountain
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Fountain",
+  "reasoning": "LEGEND connects to 'Fountain' through the Fountain of Youth, a famous legendary location. This is my second guess on this clue. With 4 blue cards remaining and having successfully found Atlantis (a legendary city), Fountain fits the legendary theme well. I'll guess this and then consider passing since I'll have used the clue number (2)."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        [revealed]
+  Lure                 RED        
+  Dew                  BLUE       [revealed]
+  Glove                BLUE       [revealed]
+  Arrow                RED        
+  Fountain             NEUTRAL    [revealed]
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       
+  Atlantis             BLUE       [revealed]
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       [revealed]
+  Dome                 RED        
+  Zombie               BLUE       
+  Teacher              BLUE       
+  Dam                  NEUTRAL    
+  Exile                BLUE       
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Emergency", "number": 3, "reasoning": "Clue relates to 'Nurse', 'Ambulance', and 'Bill' as they all connect to emergency services."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EMERGENCY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ambulance", "reasoning": "Ambulances are associated with emergencies."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EMERGENCY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Dam
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "Ambulance", "reasoning": "Ambulances are associated with emergencies."}
+
+[USER]
+Invalid response: 'AMBULANCE' is not in the valid guesses list. Choose from: ARROW, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DOME, EXILE, HOOK, LEMON, LURE, MATCH, TEACHER, ZOMBIE. Try again.
+
+[RESPONSE]
+{"guess": "DAM", "reasoning": "A dam can represent an emergency situation if it fails or overflows."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        [revealed]
+  Lure                 RED        
+  Dew                  BLUE       [revealed]
+  Glove                BLUE       [revealed]
+  Arrow                RED        
+  Fountain             NEUTRAL    [revealed]
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       
+  Atlantis             BLUE       [revealed]
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       [revealed]
+  Dome                 RED        
+  Zombie               BLUE       
+  Teacher              BLUE       
+  Dam                  NEUTRAL    [revealed]
+  Exile                BLUE       
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Boom
+- Zombie
+- Teacher
+- Exile
+
+Let me analyze each:
+- **Boom**: explosion, sound, loud noise
+- **Zombie**: undead, horror, brain-eater
+- **Teacher**: educator, school, instructor
+- **Exile**: banishment, outcast, expulsion
+
+I need to avoid the ASSASSIN (Match) and RED words (Bill, Lure, Arrow, Cliff, Hook, Lemon, Cap, Dome).
+
+Let me consider possible connections:
+
+1. **School**: Could connect Teacher (obvious) and potentially Zombie (school settings in zombie movies), but risky and weak for Zombie.
+
+2. **Loud**: Could connect Boom (explosion sound) and Teacher (loud voice), but very weak connection to Teacher.
+
+3. **Expulsion**: Could connect Exile (banishment) and Teacher (can expel students) and maybe Boom (explosive ejection), but "expulsion" might be too abstract.
+
+4. **Sound**: Boom is a sound, but hard to connect others.
+
+5. **Dead**: Zombie (undead), Exile (dead to society), but risky as it's morbid and weak.
+
+6. **Class**: Teacher (teaches class), but doesn't connect well to others.
+
+Looking at pairs:
+- **Boom + Zombie**: Horror/apocalypse theme? "Apocalypse" could work.
+- **Teacher + Exile**: Education/punishment theme? "Discipline" or "Punishment"
+- **Boom + Teacher**: "Classroom" has neither...
+
+Let me try **"Apocalypse"**: strongly connects to Zombie (zombie apocalypse) and Boom (explosions in apocalyptic scenarios). This seems like the safest 2-word clue.
+
+Checking safety: Match (assassin) - no connection. RED words - no strong connections.
+
+{"clue": "Apocalypse", "number": 2, "reasoning": "Connects Zombie (zombie apocalypse) and Boom (explosions in apocalyptic scenarios). Safe from assassin Match and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'APOCALYPSE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Zombie
+  Teacher
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Zombie",
+  "reasoning": "APOCALYPSE strongly connects to Zombie - zombies are a classic apocalyptic scenario. This is a very confident match. The other potential connection might be Exile (post-apocalyptic survivors being exiled), but Zombie is much more directly associated with apocalyptic themes."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'APOCALYPSE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Teacher
+  Exile
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "DOOM",
+  "reasoning": "Wait, DOOM is not in the valid guesses list. Looking at the apocalypse theme: Cliff could relate to apocalyptic scenarios (falling off cliffs, end of world imagery), Exile fits with post-apocalyptic themes (being cast out, wandering wasteland), Coal could connect to nuclear winter/burnt world. However, I already got Zombie which was clearly apocalyptic. Since I've used 1 of 3 guesses and got the clue number (2) correct with Zombie, I should consider passing to avoid hitting a neutral, opponent card, or assassin. But let me think - Exile is strongly thematic for apocalypse (biblical exile, post-apocalyptic exile). I'll try Exile as it has strong thematic connection."
+}
+```
+
+Wait, let me reconsider and provide a proper response:
+
+```json
+{
+  "guess": "EXILE",
+  "reasoning": "EXILE has strong apocalyptic connections - biblical exile, post-apocalyptic banishment, end-times themes. Since I've already correctly guessed one word (Zombie) matching the clue number of 2, this is my bonus guess. Exile seems like a reasonable thematic match, but given we only have 3 blue cards left versus 8 red, I should be somewhat cautious. Still, Exile feels strong enough to risk."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'APOCALYPSE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Teacher
+  Exile
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+```json
+{
+  "guess": "DOOM",
+  "reasoning": "Wait, DOOM is not in the valid guesses list. Looking at the apocalypse theme: Cliff could relate to apocalyptic scenarios (falling off cliffs, end of world imagery), Exile fits with post-apocalyptic themes (being cast out, wandering wasteland), Coal could connect to nuclear winter/burnt world. However, I already got Zombie which was clearly apocalyptic. Since I've used 1 of 3 guesses and got the clue number (2) correct with Zombie, I should consider passing to avoid hitting a neutral, opponent card, or assassin. But let me think - Exile is strongly thematic for apocalypse (biblical exile, post-apocalyptic exile). I'll try Exile as it has strong thematic connection."
+}
+```
+
+Wait, let me reconsider and provide a proper response:
+
+```json
+{
+  "guess": "EXILE",
+  "reasoning": "EXILE has strong apocalyptic connections - biblical exile, post-apocalyptic banishment, end-times themes. Since I've already correctly guessed one word (Zombie) matching the clue number of 2, this is my bonus guess. Exile seems like a reasonable thematic match, but given we only have 3 blue cards left versus 8 red, I should be somewhat cautious. Still, Exile feels strong enough to risk."
+}
+```
+
+[USER]
+Invalid response: Extra data: line 6 column 1 (char 715). Try again.
+
+[RESPONSE]
+```json
+{
+  "guess": "EXILE",
+  "reasoning": "EXILE has strong apocalyptic connections - biblical exile, post-apocalyptic banishment, end-times themes. Since I've already correctly guessed one word (Zombie) matching the clue number of 2, this is my bonus guess. Exile feels like a reasonable thematic match worth risking."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'APOCALYPSE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 8  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Teacher
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+  [BLUE] APOCALYPSE 2  #2: Exile → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Zombie and Exile) matching the clue number of 2. With only 2 blue cards remaining total and 8 red cards left, we're in a critical endgame position. The remaining words don't have strong apocalypse connections, and guessing wrong now (hitting red, neutral, or assassin) could be catastrophic. It's strategically sound to pass and let our spymaster give us a more targeted clue for the final cards."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        [revealed]
+  Lure                 RED        
+  Dew                  BLUE       [revealed]
+  Glove                BLUE       [revealed]
+  Arrow                RED        
+  Fountain             NEUTRAL    [revealed]
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       
+  Atlantis             BLUE       [revealed]
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       [revealed]
+  Dome                 RED        
+  Zombie               BLUE       [revealed]
+  Teacher              BLUE       
+  Dam                  NEUTRAL    [revealed]
+  Exile                BLUE       [revealed]
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+  [BLUE] APOCALYPSE 2  #2: Exile → blue
+  [BLUE] APOCALYPSE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Emergency", "number": 4, "reasoning": "This relates to the words 'Bill', 'Lure', 'Cliff', and 'Dome', all of which can be associated with emergencies or urgent situations."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'EMERGENCY' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 8  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Boom
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+  [BLUE] APOCALYPSE 2  #2: Exile → blue
+  [BLUE] APOCALYPSE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Boom", "reasoning": "Boom relates to emergency situations, often associated with explosions or urgent incidents."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Canyon               NEUTRAL    
+  Bill                 RED        
+  Button               NEUTRAL    
+  Nurse                RED        [revealed]
+  Lure                 RED        
+  Dew                  BLUE       [revealed]
+  Glove                BLUE       [revealed]
+  Arrow                RED        
+  Fountain             NEUTRAL    [revealed]
+  Brim                 NEUTRAL    
+  Cliff                RED        
+  Hook                 RED        
+  Ambulance            NEUTRAL    [revealed]
+  Boom                 BLUE       [revealed]
+  Atlantis             BLUE       [revealed]
+  Coal                 NEUTRAL    
+  Lemon                RED        
+  Cap                  RED        
+  Match                ASSASSIN   
+  Dawn                 BLUE       [revealed]
+  Dome                 RED        
+  Zombie               BLUE       [revealed]
+  Teacher              BLUE       
+  Dam                  NEUTRAL    [revealed]
+  Exile                BLUE       [revealed]
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+  [BLUE] APOCALYPSE 2  #2: Exile → blue
+  [BLUE] APOCALYPSE 2  #3: PASS
+  [RED] EMERGENCY 4  #1: Boom → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ARROW, ATLANTIS, BILL, BOOM, BRIM, BUTTON, CANYON, CAP, CLIFF, COAL, DAM, DAWN, DEW, DOME, EXILE, FOUNTAIN, GLOVE, HOOK, LEMON, LURE, MATCH, NURSE, TEACHER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the single remaining BLUE word: **Teacher**.
+
+Let me analyze the situation:
+- Blue has only 1 word left: Teacher
+- Red has 8 words remaining
+- There's an ASSASSIN: Match
+
+I need a clue that points to "Teacher" without risking the assassin or red words.
+
+Good clue options for "Teacher":
+- "School" - strongly relates to Teacher
+- "Professor" - synonym/related profession
+- "Educator" - synonym
+- "Student" - related concept
+- "Classroom" - related location
+- "Lesson" - what teachers give
+- "Instructor" - synonym
+
+Let me check if any of these could accidentally point to other words:
+- Match (ASSASSIN) - could relate to matching in teaching, but not strongly
+- Bill, Button, Nurse, Lure, Arrow, Cliff, Hook, Lemon, Cap, Dome (RED words) - none strongly relate to teaching
+- Canyon, Button, Brim, Coal (NEUTRAL) - none strongly relate to teaching
+
+"School" is the strongest, most direct clue for Teacher with minimal risk.
+
+{"clue": "School", "number": 1, "reasoning": "Direct connection to Teacher, the only remaining blue word. Minimal risk of confusion with assassin Match or any red/neutral words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCHOOL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 8  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Canyon
+  Bill
+  Button
+  Lure
+  Arrow
+  Brim
+  Cliff
+  Hook
+  Coal
+  Lemon
+  Cap
+  Match
+  Dome
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] EMERGENCY 3  #1: Ambulance → neutral
+  [BLUE] MORNING 2  #1: Dew → blue
+  [BLUE] MORNING 2  #2: Dawn → blue
+  [BLUE] MORNING 2  #3: PASS
+  [RED] HOSPITAL 2  #1: Nurse → red
+  [RED] HOSPITAL 2  #2: Glove → blue
+  [BLUE] LEGEND 2  #1: Atlantis → blue
+  [BLUE] LEGEND 2  #2: Fountain → neutral
+  [RED] EMERGENCY 3  #1: Dam → neutral
+  [BLUE] APOCALYPSE 2  #1: Zombie → blue
+  [BLUE] APOCALYPSE 2  #2: Exile → blue
+  [BLUE] APOCALYPSE 2  #3: PASS
+  [RED] EMERGENCY 4  #1: Boom → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Teacher",
+  "reasoning": "SCHOOL directly relates to Teacher - this is a very strong and obvious connection. With only 1 blue card remaining and 8 red cards left, we need this final card to win. Teacher is the safest and most direct match to SCHOOL among all available words."
+}
+```
+============================================================

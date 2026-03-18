@@ -1,0 +1,1922 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 RED        
+  Helicopter           RED        
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        
+  Lemon                NEUTRAL    
+  Chip                 BLUE       
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       
+  Jet                  BLUE       
+  Drive                NEUTRAL    
+  Pupil                NEUTRAL    
+  Knot                 BLUE       
+  Letter               RED        
+  Club                 RED        
+  Back                 BLUE       
+  Comic                RED        
+  Sub                  RED        
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Mail","number":2,"reasoning":"Links NOTE and LETTER — both are types of mail/are mailed items."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAIL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Fold
+  Heart
+  Cover
+  Note
+  Lemon
+  Chip
+  Atlantis
+  Eagle
+  Server
+  Jet
+  Drive
+  Pupil
+  Knot
+  Letter
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Letter","reasoning":"Direct match to MAIL — a letter is sent through mail (high confidence)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAIL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Fold
+  Heart
+  Cover
+  Note
+  Lemon
+  Chip
+  Atlantis
+  Eagle
+  Server
+  Jet
+  Drive
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Note", "reasoning": "A note is synonymous with a short message/letter — closely matches 'MAIL' and complements the earlier 'Letter' guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAIL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Fold
+  Heart
+  Cover
+  Lemon
+  Chip
+  Atlantis
+  Eagle
+  Server
+  Jet
+  Drive
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fold", "reasoning": "Physical mail items (letters, notes) are folded before mailing—fits with the previous guesses Letter and Note for MAIL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Cast                 RED        
+  Helicopter           RED        
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       
+  Jet                  BLUE       
+  Drive                NEUTRAL    
+  Pupil                NEUTRAL    
+  Knot                 BLUE       
+  Letter               RED        [revealed]
+  Club                 RED        
+  Back                 BLUE       
+  Comic                RED        
+  Sub                  RED        
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Technology", "number": 3, "reasoning": "Server, Chip, and Channel are all related to technology or communication."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TECHNOLOGY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Chip
+  Atlantis
+  Eagle
+  Server
+  Jet
+  Drive
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chip", "reasoning": "Chip is strongly associated with technology, such as computer chips or microchips."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TECHNOLOGY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Server
+  Jet
+  Drive
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Server", "reasoning": "Server is strongly related to technology as it refers to a computer system or software that provides services."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TECHNOLOGY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Jet
+  Drive
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Drive", "reasoning": "Drive is strongly associated with technology, as in hard drives or drives for data storage, fitting well with the clue 'TECHNOLOGY'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Cast                 RED        
+  Helicopter           RED        
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       [revealed]
+  Jet                  BLUE       
+  Drive                NEUTRAL    [revealed]
+  Pupil                NEUTRAL    
+  Knot                 BLUE       
+  Letter               RED        [revealed]
+  Club                 RED        
+  Back                 BLUE       
+  Comic                RED        
+  Sub                  RED        
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Actor","number":2,"reasoning":"Targets Cast (actors) and Comic (a comic is a performer/actor)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ACTOR' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cast
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Jet
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Cast","reasoning":"'Cast' directly relates to actors — the group of actors in a production, a very strong match to 'ACTOR'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ACTOR' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Jet
+  Pupil
+  Knot
+  Club
+  Back
+  Comic
+  Sub
+  Jade
+  Channel
+  Lantern
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Comic", "reasoning": "A comic is a performer/actor (comedian); pairs well with the earlier 'Cast' guess for ACTOR."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ACTOR' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Jet
+  Pupil
+  Knot
+  Club
+  Back
+  Sub
+  Jade
+  Channel
+  Lantern
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the two ACTOR targets (Cast, Comic). No remaining valid word strongly matches ACTOR—passing avoids risking a wrong/assassin guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Cast                 RED        [revealed]
+  Helicopter           RED        
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       [revealed]
+  Jet                  BLUE       
+  Drive                NEUTRAL    [revealed]
+  Pupil                NEUTRAL    
+  Knot                 BLUE       
+  Letter               RED        [revealed]
+  Club                 RED        
+  Back                 BLUE       
+  Comic                RED        [revealed]
+  Sub                  RED        
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Light", "number": 2, "reasoning": "Lantern and Jade both relate to light or brightness, helping team identify two blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Jet
+  Pupil
+  Knot
+  Club
+  Back
+  Sub
+  Jade
+  Channel
+  Lantern
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lantern", "reasoning": "Lantern is strongly associated with light, fitting the clue LIGHT well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Jet
+  Pupil
+  Knot
+  Club
+  Back
+  Sub
+  Jade
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Jet", "reasoning": "Jet is strongly associated with light in terms of speed and jet light trails, fitting the clue 'LIGHT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Pupil
+  Knot
+  Club
+  Back
+  Sub
+  Jade
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Pupil", "reasoning": "Pupil relates to light as it is part of the eye controlling light intake, fitting the clue 'LIGHT' well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Cast                 RED        [revealed]
+  Helicopter           RED        
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       [revealed]
+  Jet                  BLUE       [revealed]
+  Drive                NEUTRAL    [revealed]
+  Pupil                NEUTRAL    [revealed]
+  Knot                 BLUE       
+  Letter               RED        [revealed]
+  Club                 RED        
+  Back                 BLUE       
+  Comic                RED        [revealed]
+  Sub                  RED        
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       [revealed]
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Sandwich","number":2,"reasoning":"Club (club sandwich) and Sub (submarine sandwich) are both types of sandwiches."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SANDWICH' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Knot
+  Club
+  Back
+  Sub
+  Jade
+  Channel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Club", "reasoning": "Club is a direct sandwich type (club sandwich). The clue 'SANDWICH 2' likely targets Club and Sub; picking Club first."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SANDWICH' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Knot
+  Back
+  Sub
+  Jade
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Sub", "reasoning": "Sub is a submarine sandwich — matches the SANDWICH clue as the second target."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SANDWICH' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Knot
+  Back
+  Jade
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the two SANDWICH answers (Club, Sub). Avoid risking a neutral/opponent/assassin with the extra guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Cast                 RED        [revealed]
+  Helicopter           RED        
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       [revealed]
+  Jet                  BLUE       [revealed]
+  Drive                NEUTRAL    [revealed]
+  Pupil                NEUTRAL    [revealed]
+  Knot                 BLUE       
+  Letter               RED        [revealed]
+  Club                 RED        [revealed]
+  Back                 BLUE       
+  Comic                RED        [revealed]
+  Sub                  RED        [revealed]
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       [revealed]
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Rope", "number": 2, "reasoning": "Rope relates to Knot and Back (as in 'back rope' or 'backing rope'), both blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ROPE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Knot
+  Back
+  Jade
+  Channel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Knot", "reasoning": "A knot is directly related to rope, making it a strong candidate for the clue 'ROPE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ROPE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Helicopter
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Back
+  Jade
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Helicopter", "reasoning": "Helicopters use a rescue rope or winch, which closely relates to the clue 'ROPE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Cast                 RED        [revealed]
+  Helicopter           RED        [revealed]
+  Ambulance            RED        
+  Undertaker           RED        
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       [revealed]
+  Jet                  BLUE       [revealed]
+  Drive                NEUTRAL    [revealed]
+  Pupil                NEUTRAL    [revealed]
+  Knot                 BLUE       [revealed]
+  Letter               RED        [revealed]
+  Club                 RED        [revealed]
+  Back                 BLUE       
+  Comic                RED        [revealed]
+  Sub                  RED        [revealed]
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       [revealed]
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+  [BLUE] ROPE 2  #2: Helicopter → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "mortuary", "number": 2, "reasoning": "Both Undertaker and Ambulance are associated with the mortuary/moving the deceased."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MORTUARY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ambulance
+  Undertaker
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Back
+  Jade
+  Channel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+  [BLUE] ROPE 2  #2: Helicopter → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Undertaker","reasoning":"Direct, obvious match — an undertaker works in/for a mortuary and handles the deceased."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MORTUARY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ambulance
+  Heart
+  Cover
+  Lemon
+  Atlantis
+  Eagle
+  Back
+  Jade
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+  [BLUE] ROPE 2  #2: Helicopter → red
+  [RED] MORTUARY 2  #1: Undertaker → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Cover","reasoning":"A mortuary uses shrouds/covers/coffins to cover bodies — 'Cover' most directly fits 'mortuary' among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Cast                 RED        [revealed]
+  Helicopter           RED        [revealed]
+  Ambulance            RED        
+  Undertaker           RED        [revealed]
+  Fold                 NEUTRAL    [revealed]
+  Heart                ASSASSIN   
+  Cover                NEUTRAL    [revealed]
+  Note                 RED        [revealed]
+  Lemon                NEUTRAL    
+  Chip                 BLUE       [revealed]
+  Atlantis             NEUTRAL    
+  Eagle                NEUTRAL    
+  Server               BLUE       [revealed]
+  Jet                  BLUE       [revealed]
+  Drive                NEUTRAL    [revealed]
+  Pupil                NEUTRAL    [revealed]
+  Knot                 BLUE       [revealed]
+  Letter               RED        [revealed]
+  Club                 RED        [revealed]
+  Back                 BLUE       
+  Comic                RED        [revealed]
+  Sub                  RED        [revealed]
+  Jade                 BLUE       
+  Channel              BLUE       
+  Lantern              BLUE       [revealed]
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+  [BLUE] ROPE 2  #2: Helicopter → red
+  [RED] MORTUARY 2  #1: Undertaker → red
+  [RED] MORTUARY 2  #2: Cover → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, ATLANTIS, BACK, CAST, CHANNEL, CHIP, CLUB, COMIC, COVER, DRIVE, EAGLE, FOLD, HEART, HELICOPTER, JADE, JET, KNOT, LANTERN, LEMON, LETTER, NOTE, PUPIL, SERVER, SUB, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Precious", "number": 3, "reasoning": "Jade and Channel can be associated with valuable or precious items; Back relates less directly but could imply support or base, which is key or precious in structure."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PRECIOUS' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ambulance
+  Heart
+  Lemon
+  Atlantis
+  Eagle
+  Back
+  Jade
+  Channel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+  [BLUE] ROPE 2  #2: Helicopter → red
+  [RED] MORTUARY 2  #1: Undertaker → red
+  [RED] MORTUARY 2  #2: Cover → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jade", "reasoning": "Jade is a precious stone, strongly matching the clue 'PRECIOUS'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PRECIOUS' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ambulance
+  Heart
+  Lemon
+  Atlantis
+  Eagle
+  Back
+  Channel
+
+Game history:
+  [RED] MAIL 2  #1: Letter → red
+  [RED] MAIL 2  #2: Note → red
+  [RED] MAIL 2  #3: Fold → neutral
+  [BLUE] TECHNOLOGY 3  #1: Chip → blue
+  [BLUE] TECHNOLOGY 3  #2: Server → blue
+  [BLUE] TECHNOLOGY 3  #3: Drive → neutral
+  [RED] ACTOR 2  #1: Cast → red
+  [RED] ACTOR 2  #2: Comic → red
+  [RED] ACTOR 2  #3: PASS
+  [BLUE] LIGHT 2  #1: Lantern → blue
+  [BLUE] LIGHT 2  #2: Jet → blue
+  [BLUE] LIGHT 2  #3: Pupil → neutral
+  [RED] SANDWICH 2  #1: Club → red
+  [RED] SANDWICH 2  #2: Sub → red
+  [RED] SANDWICH 2  #3: PASS
+  [BLUE] ROPE 2  #1: Knot → blue
+  [BLUE] ROPE 2  #2: Helicopter → red
+  [RED] MORTUARY 2  #1: Undertaker → red
+  [RED] MORTUARY 2  #2: Cover → neutral
+  [BLUE] PRECIOUS 3  #1: Jade → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Heart", "reasoning": "Heart is often considered precious and valuable, fitting the clue 'PRECIOUS' well."}
+============================================================

@@ -1,0 +1,2565 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    
+  Jet                  NEUTRAL    
+  Comet                RED        
+  Time                 NEUTRAL    
+  Egypt                RED        
+  Exile                RED        
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       
+  Jungle               BLUE       
+  Plane                BLUE       
+  Oil                  BLUE       
+  Undertaker           RED        
+  Model                BLUE       
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       
+  Force                NEUTRAL    
+  Flag                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "grave", "number": 2, "reasoning": "Connects clearly to Undertaker and Egypt (pyramids, tombs) while being relatively distant from dangerous words like Trip (assassin) and the blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GRAVE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Jet
+  Comet
+  Time
+  Egypt
+  Exile
+  Front
+  Cap
+  Hospital
+  Cement
+  Jungle
+  Plane
+  Oil
+  Undertaker
+  Model
+  Foam
+  Trip
+  Spirit
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Undertaker", "reasoning": "An undertaker is directly associated with graves and burials, making it the strongest match for the clue GRAVE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GRAVE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Jet
+  Comet
+  Time
+  Egypt
+  Exile
+  Front
+  Cap
+  Hospital
+  Cement
+  Jungle
+  Plane
+  Oil
+  Model
+  Foam
+  Trip
+  Spirit
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cement", "reasoning": "Graves are often lined or marked with cement or concrete, making CEMENT strongly associated with GRAVE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    
+  Jet                  NEUTRAL    
+  Comet                RED        
+  Time                 NEUTRAL    
+  Egypt                RED        
+  Exile                RED        
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       
+  Oil                  BLUE       
+  Undertaker           RED        [revealed]
+  Model                BLUE       
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED, NEUTRAL, and especially the ASSASSIN (Trip).
+
+My remaining BLUE words are:
+- Dagger
+- Cap
+- Jungle
+- Plane
+- Oil
+- Model
+- Spirit
+
+Let me consider potential clues:
+
+1. **FASHION** - could connect Cap (fashion accessory) and Model (fashion model), but that's only 2 words.
+
+2. **AVIATION** - could connect Plane and Jet, but Jet is NEUTRAL.
+
+3. **WEAPON** - could connect Dagger, but only 1 word strongly.
+
+4. **FUEL** - could connect Oil and Plane (planes use fuel), possibly Jet (NEUTRAL - risky).
+
+5. **MILITARY** - could connect Dagger, Plane, Cap (captain), Spirit (esprit de corps). But this is quite abstract.
+
+6. **AIRCRAFT** - connects Plane strongly, possibly Spirit (Spirit Airlines), but Spirit connection is weak.
+
+7. **AMAZON** - connects Jungle (Amazon rainforest) and Plane (Amazon planes/delivery). Only 2 words.
+
+8. **PETROLEUM** - connects Oil strongly, possibly Plane (uses petroleum products). Only 2 words clearly.
+
+9. **RUNWAY** - connects Plane and Model (fashion runway). Good connection for 2 words.
+
+10. **WILDERNESS** - connects Jungle, but limited.
+
+Let me try **RUNWAY** - it connects:
+- Plane (runway for takeoff/landing)
+- Model (fashion runway)
+
+This seems safe, avoiding the assassin Trip and RED words.
+
+{"clue": "RUNWAY", "number": 2, "reasoning": "Connects Plane (aircraft runway) and Model (fashion runway) - two clear associations that avoid the assassin and opponent words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RUNWAY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Jet
+  Comet
+  Time
+  Egypt
+  Exile
+  Front
+  Cap
+  Hospital
+  Jungle
+  Plane
+  Oil
+  Model
+  Foam
+  Trip
+  Spirit
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Model",
+  "reasoning": "RUNWAY strongly suggests fashion runway, and MODEL is the most direct connection - models walk on runways. JET and PLANE are also runway-related (aircraft runway), but MODEL feels like the primary association with the clue word RUNWAY."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RUNWAY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Jet
+  Comet
+  Time
+  Egypt
+  Exile
+  Front
+  Cap
+  Hospital
+  Jungle
+  Plane
+  Oil
+  Foam
+  Trip
+  Spirit
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Jet",
+  "reasoning": "RUNWAY strongly connects to Jet (aircraft use runways for takeoff/landing). Model was correctly guessed as blue (fashion runway), so this aviation interpretation makes sense for the second word. Jet is a very safe guess given the clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        
+  Time                 NEUTRAL    
+  Egypt                RED        
+  Exile                RED        
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       
+  Oil                  BLUE       
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "banish", "number": 1, "reasoning": "Safest is to target EXILE alone; broader clues risk associations with the assassin TRIP or blue words like JUNGLE, PLANE, or SPIRIT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BANISH' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Exile
+  Front
+  Cap
+  Hospital
+  Jungle
+  Plane
+  Oil
+  Foam
+  Trip
+  Spirit
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Exile", "reasoning": "To banish someone is to exile them; this is the closest direct synonym on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BANISH' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Plane
+  Oil
+  Foam
+  Trip
+  Spirit
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Spirit", "reasoning": "To banish is commonly used with spirits or ghosts (banish a spirit), making SPIRIT the strongest semantic match among remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        
+  Time                 NEUTRAL    
+  Egypt                RED        
+  Exile                RED        [revealed]
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       
+  Oil                  BLUE       
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Dagger
+- Cap
+- Jungle
+- Plane
+- Oil
+
+Let me consider potential clues:
+
+1. **AVIATION** - Could connect Plane, but that's only 1 word and seems weak.
+
+2. **WEAPON** - Could connect Dagger, but only 1 word.
+
+3. **PETROLEUM** - Could connect Oil, but only 1 word.
+
+4. **BASEBALL** - Could connect Cap (baseball cap), but only 1 word and risky.
+
+5. **FLIGHT** - Could connect Plane, but only 1 word.
+
+6. **TROPICAL** - Could connect Jungle and potentially Oil (palm oil), but risky with 2.
+
+7. **HAT** - Could connect Cap, but only 1 word.
+
+8. **AMAZON** - Could connect Jungle, but only 1 word and might be a proper noun issue.
+
+9. **BLADE** - Could connect Dagger, but only 1 word.
+
+10. **FUEL** - Could connect Oil and Plane (planes use fuel). This seems promising for 2 words.
+
+11. **COOKING** - Could connect Oil, but only 1 word.
+
+Let me reconsider **FUEL**: 
+- Oil ✓ (fuel source)
+- Plane ✓ (uses fuel)
+- Dagger ✗ (no connection)
+- Cap ✗ (weak - gas cap? too risky)
+- Jungle ✗ (no connection)
+
+Checking dangers:
+- Trip (ASSASSIN) - no connection to fuel
+- Red words - no strong fuel connections
+
+This seems like a solid 2-word clue.
+
+{"clue": "FUEL", "number": 2, "reasoning": "Connects OIL (a fuel source) and PLANE (which uses fuel). Avoids the assassin TRIP and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FUEL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Plane
+  Oil
+  Foam
+  Trip
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'FUEL' with 2 words, I need to identify which unrevealed words best relate to fuel.
+
+The most obvious connection is **Oil** - oil is a primary type of fuel used for energy, heating, and powering vehicles.
+
+**Plane** is also strongly connected - planes require fuel (jet fuel/aviation fuel) to fly.
+
+These are the two clearest connections to FUEL from the available words.
+
+Since I must make at least one guess and Oil has the strongest direct connection to fuel, I'll start there.
+
+{"guess": "Oil", "reasoning": "Oil is a direct type of fuel - petroleum/crude oil is refined into various fuels for vehicles, heating, and energy production"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FUEL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Plane
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PLANE",
+  "reasoning": "FUEL is strongly associated with planes (aircraft fuel, jet fuel). This is a clear connection. I've already guessed correctly once this turn (Oil), so I have one more guess matching the clue number. PLANE is a strong match for FUEL."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FUEL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 2 words correctly (Oil and Plane) which matches the clue number of 2. We only have 3 blue cards remaining and I've successfully found 2 of them this turn. The remaining words don't have a strong connection to FUEL, and with the assassin still in play and only 3 blues left versus 7 reds, the risk of guessing incorrectly outweighs the potential benefit. It's better to pass and let our spymaster give us a new clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bulb                 RED        
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        
+  Time                 NEUTRAL    
+  Egypt                RED        
+  Exile                RED        [revealed]
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "light", "number": 2, "reasoning": "Connects clearly to BULB and COMET as sources of light, while being relatively distant from the assassin TRIP and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bulb
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bulb", "reasoning": "A bulb directly relates to light as a light source, making it the strongest match for the clue 'LIGHT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Comet
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Comet", "reasoning": "Comets can appear as bright lights in the sky, fitting the clue LIGHT better than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clay
+  Dagger
+  Seal
+  Crack
+  Telescope
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Telescope", "reasoning": "A telescope gathers light; this is the strongest remaining connection to the clue LIGHT among the unrevealed words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        [revealed]
+  Time                 NEUTRAL    
+  Egypt                RED        
+  Exile                RED        [revealed]
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to identify the remaining BLUE words:
+- Dagger
+- Cap
+- Jungle
+
+Let me think about potential clues:
+
+1. **Dagger** - weapon, blade, knife, sharp
+2. **Cap** - hat, lid, top, cover
+3. **Jungle** - rainforest, tropical, wild, vegetation
+
+Let me consider clues that could connect multiple words:
+
+- "Knife" for Dagger - but only connects 1 word
+- "Hat" for Cap - but only connects 1 word
+- "Tropical" for Jungle - but only connects 1 word
+
+Can I connect 2 or more?
+
+- **Dagger + Cap**: Both can be related to "head" (dagger to the head, cap on head) but risky
+- **Cap + Jungle**: "Safari" could work (safari cap, safari in jungle)
+- **Dagger + Jungle**: "Adventure" (adventure with dagger, jungle adventure)
+
+Let me check the dangerous words:
+- ASSASSIN: Trip
+- RED words: Clay, Crack, Egypt, Hospital, Flag
+
+"Safari" risks:
+- Could it point to Trip? Not really
+- Could it point to RED words? Egypt maybe (safari in Egypt), but safari is more associated with African jungles
+
+"Adventure" risks:
+- Could point to Trip (adventure trip) - DANGEROUS
+- Could point to Egypt (adventure in Egypt)
+
+Let me try "Jungle" connections:
+- "Rainforest" for Jungle alone
+- "Wild" for Jungle
+
+Or "Cap" connections:
+- "Baseball" for Cap - but only 1 word
+
+"Blade" for Dagger - safe, only 1 word but guarantees a point
+
+Actually, let me reconsider "Safari":
+- Safari strongly suggests Jungle (safari tours in jungle)
+- Safari cap is a thing
+- Safari doesn't really connect to Trip, Egypt, or other dangerous words
+
+{"clue": "safari", "number": 2, "reasoning": "Safari connects to Jungle (safari tours) and Cap (safari hat/cap). Avoids assassin Trip and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SAFARI' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clay
+  Dagger
+  Seal
+  Crack
+  Time
+  Egypt
+  Front
+  Cap
+  Hospital
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "SAFARI" from the valid guesses list.
+
+SAFARI is typically associated with:
+- African wildlife expeditions
+- Jungle environments
+- Egypt (safaris can occur there)
+- Trip (a safari is a type of trip)
+
+Looking at the valid guesses:
+- **Egypt** - Safaris are common in Egypt (desert safaris)
+- **Jungle** - Safari environments often include jungles
+- **Trip** - A safari is literally a type of trip
+
+These three words have strong connections to SAFARI. Given that the clue number is 2, the Spymaster likely intended 2 specific words.
+
+The strongest connections appear to be:
+1. **Egypt** - Geographic location strongly associated with safaris
+2. **Jungle** - Direct environmental connection to safari settings
+
+I'll start with "Egypt" as it has a very strong, specific connection to safaris.
+
+{"guess": "Egypt", "reasoning": "Egypt is strongly associated with safaris, particularly desert safaris. It's a geographic location where safaris commonly occur."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Clay                 RED        
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        [revealed]
+  Time                 NEUTRAL    
+  Egypt                RED        [revealed]
+  Exile                RED        [revealed]
+  Front                NEUTRAL    
+  Cap                  BLUE       
+  Hospital             RED        
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "building", "number": 2, "reasoning": "Hospital and Clay both strongly relate to buildings (a hospital is a building; clay is a common building material). This avoids clear connections to any blue words or the assassin Trip."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BUILDING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clay
+  Dagger
+  Seal
+  Crack
+  Time
+  Front
+  Cap
+  Hospital
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hospital", "reasoning": "A hospital is a type of building; it’s the most direct and unambiguous match to the clue from the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BUILDING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clay
+  Dagger
+  Seal
+  Crack
+  Time
+  Front
+  Cap
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Clay", "reasoning": "Clay is a common material used in building (e.g., bricks), making it the best remaining match to the clue 'BUILDING' among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BUILDING' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dagger
+  Seal
+  Crack
+  Time
+  Front
+  Cap
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Front", "reasoning": "A building commonly has a front (front of the building, building front), which fits the clue better than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Clay                 RED        [revealed]
+  Dagger               BLUE       
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        [revealed]
+  Time                 NEUTRAL    
+  Egypt                RED        [revealed]
+  Exile                RED        [revealed]
+  Front                NEUTRAL    [revealed]
+  Cap                  BLUE       
+  Hospital             RED        [revealed]
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining words for BLUE team:
+- Dagger (weapon)
+- Cap (headwear/top)
+- Jungle (tropical forest)
+
+Let me consider potential clues:
+
+1. **KNIFE** for Dagger - but this is too obvious and only connects to 1 word
+2. **HAT** for Cap - again only 1 word
+3. **FOREST** for Jungle - only 1 word
+4. **BLADE** for Dagger - only 1 word
+
+Let me think about multi-word connections:
+- Cap + Dagger: Could use "CLOAK" (cloak and dagger phrase, and cap could be a cloak's hood?)
+- Jungle + Cap: "CANOPY" (jungle canopy, bottle cap?)
+- Dagger + Jungle: "ADVENTURE" (jungle adventure, dagger for adventure?)
+
+Wait, let me reconsider:
+- **BOTTLE** could connect to Cap (bottle cap) and potentially Jungle (message in a bottle? weak)
+- **BASEBALL** could connect to Cap (baseball cap) and... no
+- **TOP** is too close to Cap itself
+
+Looking at the assassin (TRIP) and remaining reds (Crack, Flag), I need to be careful:
+- Avoid journey/travel words (TRIP)
+- Avoid breaking/split words (CRACK)
+- Avoid country/banner words (FLAG)
+
+Best option: **KNIFE** for Dagger (1) - safe and clear
+Or: **RAINFOREST** for Jungle (1) - but rainforest might be considered a compound
+
+Actually, **BLADE** for Dagger is strong and safe, avoiding all dangers.
+
+For trying 2 words: **WILD** could connect Jungle (wild jungle) and Dagger (wild west, cowboys with daggers/knives? weak)
+
+I'll go with a safe, clear clue:
+
+{"clue": "KNIFE", "number": 1, "reasoning": "Direct connection to Dagger as a blade weapon. Safe from assassin TRIP and red words Crack/Flag."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'KNIFE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dagger
+  Seal
+  Crack
+  Time
+  Cap
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Dagger",
+  "reasoning": "KNIFE is a clear synonym for Dagger - both are bladed weapons. This is a very strong, direct connection. Given that we have 3 cards remaining vs Red's 2, and this is such a confident match, it's worth the guess even though guessing wrong could be costly at this stage."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'KNIFE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Seal
+  Crack
+  Time
+  Cap
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 'Dagger' which clearly connects to KNIFE. The clue was for 1 word, and I've found it. With only 2 blue cards and 2 red cards remaining, the game is tied and very close. Guessing again risks hitting a neutral (ending our turn) or worse, hitting a red card (giving them the win) or the assassin (instant loss). The safe play is to PASS and let our Spymaster give us another clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Clay                 RED        [revealed]
+  Dagger               BLUE       [revealed]
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        [revealed]
+  Time                 NEUTRAL    
+  Egypt                RED        [revealed]
+  Exile                RED        [revealed]
+  Front                NEUTRAL    [revealed]
+  Cap                  BLUE       
+  Hospital             RED        [revealed]
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    
+  Flag                 RED        
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "patriot", "number": 1, "reasoning": "Points clearly to FLAG while avoiding strong connections to Crack or the assassin Trip."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PATRIOT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Seal
+  Crack
+  Time
+  Cap
+  Jungle
+  Foam
+  Trip
+  Force
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flag", "reasoning": "Patriot strongly connects to national symbols like a flag; none of the other options have as direct a link to patriotism."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PATRIOT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Seal
+  Crack
+  Time
+  Cap
+  Jungle
+  Foam
+  Trip
+  Force
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+  [RED] PATRIOT 1  #1: Flag → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Force", "reasoning": "Patriot most strongly evokes patriotic military or defense forces (e.g., Patriot missile, armed forces), so Force is the best remaining match."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Clay                 RED        [revealed]
+  Dagger               BLUE       [revealed]
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        [revealed]
+  Time                 NEUTRAL    
+  Egypt                RED        [revealed]
+  Exile                RED        [revealed]
+  Front                NEUTRAL    [revealed]
+  Cap                  BLUE       
+  Hospital             RED        [revealed]
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    [revealed]
+  Flag                 RED        [revealed]
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+  [RED] PATRIOT 1  #1: Flag → red
+  [RED] PATRIOT 1  #2: Force → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to identify the remaining BLUE words:
+- Cap
+- Jungle
+
+I need to avoid:
+- ASSASSIN: Trip
+- RED: Crack
+- NEUTRAL: Seal, Time, Foam
+
+Let me think of clues that connect "Cap" and "Jungle":
+
+1. "Hat" - relates to Cap, but not to Jungle
+2. "Green" - relates to Jungle, but not strongly to Cap
+3. "Baseball" - relates to Cap (baseball cap), but not to Jungle
+4. "Canopy" - relates to Jungle (jungle canopy), but not to Cap
+5. "Top" - relates to Cap (top/cap), but not to Jungle
+6. "Explorer" - could relate to both (explorer's cap, jungle explorer)
+7. "Safari" - already used, and relates to Jungle
+8. "Adventure" - relates to Jungle, less so to Cap
+
+Given the risk, I should focus on getting one word safely rather than trying for both and risking the ASSASSIN (Trip) or the remaining RED word (Crack).
+
+"Jungle" is safer to clue alone:
+- "Rainforest" - directly relates to Jungle
+- "Vine" - relates to Jungle
+- "Amazon" - relates to Jungle
+
+"Cap" alone:
+- "Hat" - directly relates to Cap
+- "Bottle" - relates to Cap (bottle cap)
+- "Knee" - relates to Cap (kneecap)
+
+Since we're so close to winning (only 2 words left vs Red's 1), I should play it safe and give a clue for just one word to avoid any risk of hitting Trip or Crack.
+
+{"clue": "hat", "number": 1, "reasoning": "Hat directly relates to Cap. Playing safe with 1 word since we only need 2 to win and Red needs 1."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HAT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Seal
+  Crack
+  Time
+  Cap
+  Jungle
+  Foam
+  Trip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+  [RED] PATRIOT 1  #1: Flag → red
+  [RED] PATRIOT 1  #2: Force → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find a word that connects to "HAT" from the valid guesses list.
+
+Let me analyze each option:
+- **Seal**: Not strongly connected to hat
+- **Crack**: Not connected to hat
+- **Time**: Not directly connected to hat
+- **Cap**: This is strongly connected! A cap is a type of hat
+- **Jungle**: Not connected to hat
+- **Foam**: Not connected to hat
+- **Trip**: Not connected to hat
+
+"Cap" is clearly the best match here, as a cap is literally a type of hat (baseball cap, ski cap, etc.).
+
+Given that:
+- We have 2 blue cards remaining and Red has only 1
+- This is a straightforward clue with a clear connection
+- The risk is relatively low since we're ahead
+
+I should guess Cap confidently.
+
+```json
+{"guess": "Cap", "reasoning": "Cap is a type of hat (baseball cap, ski cap, etc.) - direct and clear connection to the clue HAT"}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HAT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Seal
+  Crack
+  Time
+  Jungle
+  Foam
+  Trip
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+  [RED] PATRIOT 1  #1: Flag → red
+  [RED] PATRIOT 1  #2: Force → neutral
+  [BLUE] HAT 1  #1: Cap → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 'Cap' which matches HAT perfectly. Both teams have only 1 card remaining, making this a critical moment. The clue was for 1 word, and I've already guessed it correctly. Looking at the remaining words (Seal, Crack, Time, Jungle, Foam, Trip), none have a strong connection to HAT. Guessing incorrectly now could hit the assassin or give Red the win. The safe play is to PASS and let our Spymaster give us a better clue for the final card."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bulb                 RED        [revealed]
+  Clay                 RED        [revealed]
+  Dagger               BLUE       [revealed]
+  Seal                 NEUTRAL    
+  Crack                RED        
+  Telescope            NEUTRAL    [revealed]
+  Jet                  NEUTRAL    [revealed]
+  Comet                RED        [revealed]
+  Time                 NEUTRAL    
+  Egypt                RED        [revealed]
+  Exile                RED        [revealed]
+  Front                NEUTRAL    [revealed]
+  Cap                  BLUE       [revealed]
+  Hospital             RED        [revealed]
+  Cement               BLUE       [revealed]
+  Jungle               BLUE       
+  Plane                BLUE       [revealed]
+  Oil                  BLUE       [revealed]
+  Undertaker           RED        [revealed]
+  Model                BLUE       [revealed]
+  Foam                 NEUTRAL    
+  Trip                 ASSASSIN   
+  Spirit               BLUE       [revealed]
+  Force                NEUTRAL    [revealed]
+  Flag                 RED        [revealed]
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+  [RED] PATRIOT 1  #1: Flag → red
+  [RED] PATRIOT 1  #2: Force → neutral
+  [BLUE] HAT 1  #1: Cap → blue
+  [BLUE] HAT 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BULB, CAP, CEMENT, CLAY, COMET, CRACK, DAGGER, EGYPT, EXILE, FLAG, FOAM, FORCE, FRONT, HOSPITAL, JET, JUNGLE, MODEL, OIL, PLANE, SEAL, SPIRIT, TELESCOPE, TIME, TRIP, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Fissure", "number": 1, "reasoning": "Only unrevealed red word is CRACK; fissure is a close synonym and doesn’t strongly suggest any other unrevealed words, while avoiding the assassin TRIP."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISSURE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Seal
+  Crack
+  Time
+  Jungle
+  Foam
+  Trip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] GRAVE 2  #1: Undertaker → red
+  [RED] GRAVE 2  #2: Cement → blue
+  [BLUE] RUNWAY 2  #1: Model → blue
+  [BLUE] RUNWAY 2  #2: Jet → neutral
+  [RED] BANISH 1  #1: Exile → red
+  [RED] BANISH 1  #2: Spirit → blue
+  [BLUE] FUEL 2  #1: Oil → blue
+  [BLUE] FUEL 2  #2: Plane → blue
+  [BLUE] FUEL 2  #3: PASS
+  [RED] LIGHT 2  #1: Bulb → red
+  [RED] LIGHT 2  #2: Comet → red
+  [RED] LIGHT 2  #3: Telescope → neutral
+  [BLUE] SAFARI 2  #1: Egypt → red
+  [RED] BUILDING 2  #1: Hospital → red
+  [RED] BUILDING 2  #2: Clay → red
+  [RED] BUILDING 2  #3: Front → neutral
+  [BLUE] KNIFE 1  #1: Dagger → blue
+  [BLUE] KNIFE 1  #2: PASS
+  [RED] PATRIOT 1  #1: Flag → red
+  [RED] PATRIOT 1  #2: Force → neutral
+  [BLUE] HAT 1  #1: Cap → blue
+  [BLUE] HAT 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crack", "reasoning": "A fissure is directly synonymous with a crack, making it the strongest match among the options."}
+============================================================

@@ -1,0 +1,2141 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       
+  Door                 RED        
+  Brain                NEUTRAL    
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        
+  Line                 NEUTRAL    
+  Slug                 BLUE       
+  Drive                RED        
+  Pit                  ASSASSIN   
+  Server               RED        
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        
+  Ice                  RED        
+  Arrow                BLUE       
+  Bar                  NEUTRAL    
+  Chime                BLUE       
+  Hand                 BLUE       
+  Flat                 BLUE       
+  London               NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "weapon", "number": 3, "reasoning": "Dagger, Bond (James Bond uses weapons), and Iron (iron weapons) are all associated with 'weapon'. None of the blue words or the assassin (Pit) are closely related to 'weapon', making it a safe and strong clue for these red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEAPON' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Iron
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Dagger
+  Ice
+  Arrow
+  Bar
+  Chime
+  Hand
+  Flat
+  London
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dagger", "reasoning": "A dagger is a type of weapon and matches the clue directly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEAPON' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Iron
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Arrow
+  Bar
+  Chime
+  Hand
+  Flat
+  London
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Arrow", "reasoning": "An arrow is a classic weapon, fitting the clue directly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       
+  Door                 RED        
+  Brain                NEUTRAL    
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        
+  Line                 NEUTRAL    
+  Slug                 BLUE       
+  Drive                RED        
+  Pit                  ASSASSIN   
+  Server               RED        
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    
+  Chime                BLUE       
+  Hand                 BLUE       
+  Flat                 BLUE       
+  London               NEUTRAL    
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"CLOCK","number":2,"reasoning":"Targets Chime and Hand — both are parts/attributes of clocks."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLOCK' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Iron
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Bar
+  Chime
+  Hand
+  Flat
+  London
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hand", "reasoning": "A clock has hands—this is the strongest match for CLOCK (likely paired with Chime as the second)." }
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLOCK' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Iron
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Bar
+  Chime
+  Flat
+  London
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chime", "reasoning": "Directly associated with clocks (clock chimes/bells); likely the second 'CLOCK' card after Hand."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLOCK' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Iron
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Bar
+  Flat
+  London
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "London", "reasoning": "Big Ben and other famous clocks are in London — clearly related to CLOCK."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       
+  Door                 RED        
+  Brain                NEUTRAL    
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        
+  Line                 NEUTRAL    
+  Slug                 BLUE       
+  Drive                RED        
+  Pit                  ASSASSIN   
+  Server               RED        
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "metal", "number": 2, "reasoning": "Both 'Iron' and 'Clay' are types of materials, with 'Iron' being a metal and 'Clay' sometimes associated with metalwork or casting. 'Iron' is a very direct connection to 'metal', and 'Clay' can be inferred as related through context. No blue words are an obvious risk, and the assassin 'Pit' is not closely connected to 'metal'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Iron
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Bar
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Iron", "reasoning": "Iron is a metal and clearly matches the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Bar
+  Flat
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bar", "reasoning": "A 'bar' is commonly made of metal, such as a metal bar. This fits the clue 'METAL' and is a strong association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       
+  Door                 RED        
+  Brain                NEUTRAL    
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    
+  Slug                 BLUE       
+  Drive                RED        
+  Pit                  ASSASSIN   
+  Server               RED        
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"slimy","number":2,"reasoning":"Targets Slug and Worm — both slimy creatures."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SLIMY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Slug
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Slug", "reasoning": "Direct match to 'SLIMY' — a slug is slimy (likely paired with Worm as the second intended target)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SLIMY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Worm
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Flat
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Worm", "reasoning": "Worm is a slimy creature and fits the 'SLIMY' clue, especially alongside the already-found Slug."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SLIMY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Flat
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already used the two SLIMY guesses this turn (2/2). Avoid risking a wrong pick with the extra guess; pass to end the turn."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       [revealed]
+  Door                 RED        
+  Brain                NEUTRAL    
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    
+  Slug                 BLUE       [revealed]
+  Drive                RED        
+  Pit                  ASSASSIN   
+  Server               RED        
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "computer", "number": 2, "reasoning": "The words 'Server' and 'Model' can both relate to computers: 'Server' directly, and 'Model' as in computational models or computer models. No blue words are strongly related, and the assassin 'Pit' is not connected."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COMPUTER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Drive
+  Pit
+  Server
+  Ivy
+  Light
+  Ice
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Server", "reasoning": "A 'Server' is directly related to computers, as it refers to a type of computer that provides data to other computers."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COMPUTER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Drive
+  Pit
+  Ivy
+  Light
+  Ice
+  Flat
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Drive", "reasoning": "A 'Drive' is a common component of computers (hard drive, solid-state drive), making it a strong match for the clue 'COMPUTER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COMPUTER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Brain
+  Model
+  Ink
+  Line
+  Pit
+  Ivy
+  Light
+  Ice
+  Flat
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Brain", "reasoning": "Of the remaining words, 'Brain' has a clear metaphorical connection to 'Computer' as both are used to process information. It's the most likely connection for a third guess related to COMPUTER, potentially from a previous clue or an extra guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       [revealed]
+  Door                 RED        
+  Brain                NEUTRAL    [revealed]
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    
+  Slug                 BLUE       [revealed]
+  Drive                RED        [revealed]
+  Pit                  ASSASSIN   
+  Server               RED        [revealed]
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Shoe", "number": 2, "reasoning": "Shoe -> Flat (ballet flat) and Clip (shoe clip accessory)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHOE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Model
+  Ink
+  Line
+  Pit
+  Ivy
+  Light
+  Ice
+  Flat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Flat","reasoning":"A 'flat' is a type of shoe — the strongest match to the clue SHOE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHOE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Model
+  Ink
+  Line
+  Pit
+  Ivy
+  Light
+  Ice
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Line", "reasoning": "A 'shoe line' (product/collection) fits SHOE and pairs with Flat as shoe-related words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        
+  Clip                 BLUE       
+  Worm                 BLUE       [revealed]
+  Door                 RED        
+  Brain                NEUTRAL    [revealed]
+  Model                RED        
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    [revealed]
+  Slug                 BLUE       [revealed]
+  Drive                RED        [revealed]
+  Pit                  ASSASSIN   
+  Server               RED        [revealed]
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       [revealed]
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "sculpture", "number": 2, "reasoning": "The words 'Clay' and 'Model' are both commonly associated with sculpture: clay is used as a material, and models are often sculpted. No other unrevealed words strongly connect to 'sculpture', and it avoids the assassin and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SCULPTURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clay
+  Clip
+  Door
+  Model
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Clay", "reasoning": "Clay is a common material used in sculpture, making it a strong association with the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SCULPTURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clip
+  Door
+  Model
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Model", "reasoning": "A 'model' is often used as a reference or base for sculpture, or can itself be a sculpted figure. This fits well with the clue 'SCULPTURE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SCULPTURE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Clip
+  Door
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Both 'Clay' and 'Model' were likely the intended words for the clue 'SCULPTURE'. None of the remaining words strongly connect to 'SCULPTURE', and since we've already guessed two, it's safest to pass and avoid risking the assassin or an opponent's word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        [revealed]
+  Clip                 BLUE       
+  Worm                 BLUE       [revealed]
+  Door                 RED        
+  Brain                NEUTRAL    [revealed]
+  Model                RED        [revealed]
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    [revealed]
+  Slug                 BLUE       [revealed]
+  Drive                RED        [revealed]
+  Pit                  ASSASSIN   
+  Server               RED        [revealed]
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       [revealed]
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "staple", "number": 1, "reasoning": "An office fastener points to CLIP (paperclip/binder); avoids links to the assassin or remaining red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STAPLE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Clip
+  Door
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Clip","reasoning":"'Staple' as an office fastener — paperclip/clip is the closest match from the list."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STAPLE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bond
+  Antarctica
+  Door
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+  [BLUE] STAPLE 1  #1: Clip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Unclear which remaining word matches STAPLE (we already took Clip earlier). With only one blue left and three reds remaining, it's safer to pass than risk hitting a red/assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    
+  Clay                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Worm                 BLUE       [revealed]
+  Door                 RED        
+  Brain                NEUTRAL    [revealed]
+  Model                RED        [revealed]
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    [revealed]
+  Slug                 BLUE       [revealed]
+  Drive                RED        [revealed]
+  Pit                  ASSASSIN   
+  Server               RED        [revealed]
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       [revealed]
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+  [BLUE] STAPLE 1  #1: Clip → blue
+  [BLUE] STAPLE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "cold", "number": 2, "reasoning": "Both 'Ice' and 'Antarctica' are strongly associated with cold temperatures. 'Door' is unrelated, and the only assassin is 'Pit', which has no connection to 'cold'. This clue should help your team find two of your remaining words safely."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COLD' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Antarctica
+  Door
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+  [BLUE] STAPLE 1  #1: Clip → blue
+  [BLUE] STAPLE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Antarctica", "reasoning": "Antarctica is one of the coldest places on Earth and directly fits the clue 'COLD'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bond                 RED        
+  Antarctica           NEUTRAL    [revealed]
+  Clay                 RED        [revealed]
+  Clip                 BLUE       [revealed]
+  Worm                 BLUE       [revealed]
+  Door                 RED        
+  Brain                NEUTRAL    [revealed]
+  Model                RED        [revealed]
+  Ink                  NEUTRAL    
+  Iron                 RED        [revealed]
+  Line                 NEUTRAL    [revealed]
+  Slug                 BLUE       [revealed]
+  Drive                RED        [revealed]
+  Pit                  ASSASSIN   
+  Server               RED        [revealed]
+  Ivy                  BLUE       
+  Light                NEUTRAL    
+  Dagger               RED        [revealed]
+  Ice                  RED        
+  Arrow                BLUE       [revealed]
+  Bar                  NEUTRAL    [revealed]
+  Chime                BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Flat                 BLUE       [revealed]
+  London               NEUTRAL    [revealed]
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+  [BLUE] STAPLE 1  #1: Clip → blue
+  [BLUE] STAPLE 1  #2: PASS
+  [RED] COLD 2  #1: Antarctica → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ARROW, BAR, BOND, BRAIN, CHIME, CLAY, CLIP, DAGGER, DOOR, DRIVE, FLAT, HAND, ICE, INK, IRON, IVY, LIGHT, LINE, LONDON, MODEL, PIT, SERVER, SLUG, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"VINE","number":1,"reasoning":"Ivy is a climbing vine — directly points to Ivy while not suggesting the assassin (Pit) or remaining red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VINE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bond
+  Door
+  Ink
+  Pit
+  Ivy
+  Light
+  Ice
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WEAPON 3  #1: Dagger → red
+  [RED] WEAPON 3  #2: Arrow → blue
+  [BLUE] CLOCK 2  #1: Hand → blue
+  [BLUE] CLOCK 2  #2: Chime → blue
+  [BLUE] CLOCK 2  #3: London → neutral
+  [RED] METAL 2  #1: Iron → red
+  [RED] METAL 2  #2: Bar → neutral
+  [BLUE] SLIMY 2  #1: Slug → blue
+  [BLUE] SLIMY 2  #2: Worm → blue
+  [BLUE] SLIMY 2  #3: PASS
+  [RED] COMPUTER 2  #1: Server → red
+  [RED] COMPUTER 2  #2: Drive → red
+  [RED] COMPUTER 2  #3: Brain → neutral
+  [BLUE] SHOE 2  #1: Flat → blue
+  [BLUE] SHOE 2  #2: Line → neutral
+  [RED] SCULPTURE 2  #1: Clay → red
+  [RED] SCULPTURE 2  #2: Model → red
+  [RED] SCULPTURE 2  #3: PASS
+  [BLUE] STAPLE 1  #1: Clip → blue
+  [BLUE] STAPLE 1  #2: PASS
+  [RED] COLD 2  #1: Antarctica → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Ivy","reasoning":"Ivy is a climbing plant and a common vine — direct match to 'VINE'."}
+============================================================

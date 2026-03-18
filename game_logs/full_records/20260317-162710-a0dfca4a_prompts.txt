@@ -1,0 +1,2427 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Ball                 RED        
+  Venus                BLUE       
+  Fossil               NEUTRAL    
+  Couch                RED        
+  Bark                 RED        
+  Edge                 BLUE       
+  Echo                 BLUE       
+  Light                BLUE       
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        
+  Copper               RED        
+  Telescope            RED        
+  Square               BLUE       
+  Train                NEUTRAL    
+  Float                BLUE       
+  Post                 BLUE       
+  Table                BLUE       
+  Card                 NEUTRAL    
+  Space                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"astronomy","number":2,"reasoning":"Connects TELESCOPE and SPACE strongly, with limited pull toward blue words; avoids the assassin RUSSIA."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ASTRONOMY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ball
+  Venus
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Exile
+  Teacher
+  Engine
+  Court
+  Copper
+  Telescope
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+  Space
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Telescope","reasoning":"Strongest match to ASTRONOMY; a telescope is a primary astronomy instrument."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ASTRONOMY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ball
+  Venus
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Exile
+  Teacher
+  Engine
+  Court
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+  Space
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Space","reasoning":"Strong direct match to ASTRONOMY; likely the second intended word after Telescope."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ASTRONOMY' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ball
+  Venus
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Exile
+  Teacher
+  Engine
+  Court
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Venus","reasoning":"Strong astronomy connection as a planet; likely the intended extra guess after Telescope and Space."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Ball                 RED        
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        
+  Bark                 RED        
+  Edge                 BLUE       
+  Echo                 BLUE       
+  Light                BLUE       
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        
+  Copper               RED        
+  Telescope            RED        [revealed]
+  Square               BLUE       
+  Train                NEUTRAL    
+  Float                BLUE       
+  Post                 BLUE       
+  Table                BLUE       
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Edge
+- Echo
+- Light
+- Square
+- Float
+- Post
+- Table
+
+Let me consider potential clues:
+
+1. **SOUND** - Could connect to Echo (sound waves), but risky as it might not clearly connect to others.
+
+2. **GEOMETRY** - Could connect Square and Edge, possibly Light (light rays), but only 2-3 words.
+
+3. **FURNITURE** - Table is furniture, Post could be a post (furniture piece), but weak connections.
+
+4. **MAIL** - Post (mail), but only 1 word clearly.
+
+5. **WATER** - Float (floating on water), Edge (water's edge), Table (water table). This could work for 3 words.
+
+6. **CORNER** - Edge and Square both relate to corners, Table (corner table), Post (corner post). This could connect 3-4 words.
+
+7. **WOODEN** - Table (wooden table), Post (wooden post), Float (wooden float/dock). Could work for 3 words, avoids dangerous words.
+
+8. **POOL** - Table (pool table), Float (pool float), Edge (pool edge), Corner (pool corner if thinking Square). This is strong for 3-4 words and avoids all red/assassin words.
+
+Let me go with **POOL** as it clearly connects:
+- Table (pool table)
+- Float (pool float)
+- Edge (pool edge)
+
+And possibly Square (pool has square/rectangular shape), but I'll be conservative with 3.
+
+{"clue": "POOL", "number": 3, "reasoning": "Connects TABLE (pool table), FLOAT (pool float), and EDGE (pool edge). Avoids all red words and assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POOL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ball
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Exile
+  Teacher
+  Engine
+  Court
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Ball",
+  "reasoning": "POOL strongly connects to 'Ball' through pool balls used in billiards/pool games. This is a very common and direct association. Other possibilities like 'Table' (pool table) or 'Float' (pool float) exist, but Ball is the most immediate connection to the word POOL."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        
+  Bark                 RED        
+  Edge                 BLUE       
+  Echo                 BLUE       
+  Light                BLUE       
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        
+  Copper               RED        
+  Telescope            RED        [revealed]
+  Square               BLUE       
+  Train                NEUTRAL    
+  Float                BLUE       
+  Post                 BLUE       
+  Table                BLUE       
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"legal","number":2,"reasoning":"Links COURT and EXILE strongly via legal/judicial context, while being relatively distant from the assassin RUSSIA and most blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LEGAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Exile
+  Teacher
+  Engine
+  Court
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Court","reasoning":"'Court' is the strongest direct match to 'LEGAL' (law/courts)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LEGAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Exile
+  Teacher
+  Engine
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"EXILE","reasoning":"Exile is strongly connected to legal punishment/status and fits the clue LEGAL better than the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LEGAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We’ve already found both likely LEGAL words (Court, Exile). A third guess would be speculative and risks hitting neutral, blue, or assassin, so passing is safest."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        
+  Bark                 RED        
+  Edge                 BLUE       
+  Echo                 BLUE       
+  Light                BLUE       
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        [revealed]
+  Copper               RED        
+  Telescope            RED        [revealed]
+  Square               BLUE       
+  Train                NEUTRAL    
+  Float                BLUE       
+  Post                 BLUE       
+  Table                BLUE       
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Edge
+- Echo
+- Light
+- Square
+- Float
+- Post
+- Table
+
+Let me analyze potential connections:
+
+1. **Furniture group**: Table, Post (weak - post isn't really furniture)
+2. **Sound/reflection**: Echo, Light (both involve reflection/bouncing)
+3. **Geometry/shapes**: Edge, Square
+4. **Water-related**: Float
+5. **Mail/communication**: Post
+
+Let me think about broader connections:
+
+- **SOUND** could connect: Echo (sound reflection), Light (sound and light are both waves), Post (sound post in audio)
+- **WATER**: Float (obvious), Light (light on water), Table (water table), Edge (water's edge), Post (fence post by water - weak)
+- **CORNER**: Edge, Square, Table (table has edges/corners)
+- **MAIL**: Post (mail post), Table (could table a motion - weak)
+
+Looking at geometric/mathematical connections:
+- **GEOMETRY**: Square, Edge, Light (light ray), Table (multiplication table)
+- **CORNER**: Edge, Square, Table (corners of table)
+
+Let me try **CORNER**:
+- Square: has 4 corners ✓
+- Edge: edges meet at corners ✓
+- Table: has corners ✓
+- Post: corner post ✓
+
+But I need to avoid RED words:
+- Bark: tree bark corner? (weak)
+- Couch: couch corner (possible confusion)
+- Engine: no
+- Copper: no
+
+CORNER seems safe from RED and ASSASSIN (Russia).
+
+{"clue": "CORNER", "number": 4, "reasoning": "Square has corners, edges meet at corners, table has corners, and corner post. Avoids red words and assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CORNER' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Couch
+  Bark
+  Edge
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Edge", "reasoning": "CORNER strongly relates to EDGE as corners are where edges meet. This is a very direct geometric/spatial connection and seems like the most obvious match for the clue CORNER."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CORNER' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Couch
+  Bark
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Table
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Table",
+  "reasoning": "CORNER strongly suggests Table (corner of a table, corner table) and Square (corner has square angles, town square has corners). Table feels like the strongest connection as 'corner table' is a common phrase, and it's a physical object with corners."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CORNER' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Couch
+  Bark
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Square
+  Train
+  Float
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Square",
+  "reasoning": "A square has four corners, making it a strong geometric connection to the clue 'CORNER'. I've already correctly guessed Edge and Table (both furniture/geometric items that have corners). Square fits perfectly with the corner theme. With 5 blue cards remaining vs 4 red, I should continue guessing confidently when I have a strong match like this."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CORNER' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Couch
+  Bark
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Train
+  Float
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 3 words for the clue 'CORNER 4', matching the clue number. The remaining words don't have strong corner-related connections. With both teams at 4 cards remaining, it's risky to guess further - hitting a red card would give them a significant advantage, and hitting the assassin would lose the game. The smart play is to pass and let our spymaster give us a new clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        
+  Bark                 RED        
+  Edge                 BLUE       [revealed]
+  Echo                 BLUE       
+  Light                BLUE       
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        [revealed]
+  Copper               RED        
+  Telescope            RED        [revealed]
+  Square               BLUE       [revealed]
+  Train                NEUTRAL    
+  Float                BLUE       
+  Post                 BLUE       
+  Table                BLUE       [revealed]
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"livingroom","number":2,"reasoning":"Targets COUCH and BARK via living-room furniture and the sound a dog makes at home; avoids the assassin RUSSIA and has limited pull toward blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIVINGROOM' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Couch
+  Bark
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Train
+  Float
+  Post
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"COUCH","reasoning":"Couch is the strongest direct match for LIVINGROOM."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIVINGROOM' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Bark
+  Echo
+  Light
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Train
+  Float
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Light","reasoning":"Living rooms commonly have lights/lamps; this is the strongest remaining match to the clue after Couch."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        [revealed]
+  Bark                 RED        
+  Edge                 BLUE       [revealed]
+  Echo                 BLUE       
+  Light                BLUE       [revealed]
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        [revealed]
+  Copper               RED        
+  Telescope            RED        [revealed]
+  Square               BLUE       [revealed]
+  Train                NEUTRAL    
+  Float                BLUE       
+  Post                 BLUE       
+  Table                BLUE       [revealed]
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining words for BLUE team:
+- Echo (unrevealed)
+- Float (unrevealed)
+- Post (unrevealed)
+
+Let me consider clues for these words while avoiding RED words (Bark, Engine, Copper) and the ASSASSIN (Russia).
+
+**Echo**: Could relate to sound, repetition, reverberation
+**Float**: Could relate to water, buoyancy, parade, swimming
+**Post**: Could relate to mail, pole, publish, job position
+
+Let me think of clues that could connect multiple BLUE words:
+
+1. **SOUND** - Could connect to Echo (sound repetition), but doesn't clearly connect to Float or Post
+2. **WATER** - Could connect to Float (floating on water), but Echo and Post are weak connections
+3. **MAIL** - Could connect to Post (mail post), but not Echo or Float
+4. **BUOY** - Could connect to Float (buoyancy), and possibly Echo (buoys have bells that echo), but Post is weak
+
+Looking at potential 2-word combinations:
+- Echo + Float: "DRIFT" (sound drifts, things float/drift)
+- Echo + Post: "REPEAT" (echo repeats, repost)
+- Float + Post: "POLE" (flagpole/post, float on a pole in parades) - but POLE might be too close to POST
+
+Let me try **DRIFT**: 
+- Echo: sounds can drift
+- Float: things drift when they float
+This seems reasonable for 2 words.
+
+However, I should check if any RED words could be associated:
+- Bark: not really related to drift
+- Engine: not really related to drift
+- Copper: not really related to drift
+
+{"clue": "DRIFT", "number": 2, "reasoning": "Connects Echo (sound drifts/carries) and Float (objects drift when floating). Avoids RED words and ASSASSIN."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DRIFT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Bark
+  Echo
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Train
+  Float
+  Post
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "DRIFT" from the valid guesses list.
+
+Let me think about what "DRIFT" could mean:
+- Continental drift (geological) → "Fossil" could relate to geology/paleontology
+- Drifting on water → "Float" is very closely related to drifting
+- Snow drift → less obvious connections here
+- Drift as in slowly move → "Float" again fits well
+
+Looking at the valid guesses:
+- **Float**: Strongly connected to drift - both involve moving slowly/aimlessly, especially on water
+- **Fossil**: Could relate through continental drift (geological concept)
+- **Train**: Trains don't really drift
+- **Engine**: Engines don't drift in the typical sense
+- **Echo**: Sound can drift, but this is a weaker connection
+- **Server**: No clear connection
+- **Post**: No clear connection
+- **Bark**: Tree bark or dog bark - no strong connection
+- **Chain**: No clear connection
+- **Fabric**: No clear connection
+- **Russia**: No clear connection
+- **Copper**: No clear connection
+- **Card**: No clear connection
+- **Teacher**: No clear connection
+
+"Float" is the strongest connection to "DRIFT" - they're nearly synonymous in many contexts (drifting/floating on water, drifting/floating through air or space).
+
+{"guess": "Float", "reasoning": "Float and drift are closely related concepts - both describe slow, aimless movement, especially on water. This is the strongest semantic connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DRIFT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Bark
+  Echo
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Train
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've successfully guessed 1 word (Float) for the DRIFT clue. With only 2 blue cards remaining total and having already found one, there's only 1 blue card left on the board. The risk of hitting a red card (3 remaining) or the assassin is significant. Since I've matched the clue number (2), and the game is very close (Red: 3, Blue: 1 remaining), I should play conservatively and pass rather than risk ending our turn on a neutral or worse, hitting a red card or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        [revealed]
+  Bark                 RED        
+  Edge                 BLUE       [revealed]
+  Echo                 BLUE       
+  Light                BLUE       [revealed]
+  Chain                NEUTRAL    
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        [revealed]
+  Copper               RED        
+  Telescope            RED        [revealed]
+  Square               BLUE       [revealed]
+  Train                NEUTRAL    
+  Float                BLUE       [revealed]
+  Post                 BLUE       
+  Table                BLUE       [revealed]
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Metal","number":1,"reasoning":"Targets COPPER strongly and specifically. It avoids the assassin RUSSIA and has weaker pull toward other unrevealed words than broader clues would."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Bark
+  Echo
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Copper
+  Train
+  Post
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Copper","reasoning":"Copper is directly a metal and is the strongest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Bark
+  Echo
+  Chain
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Train
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"CHAIN","reasoning":"Best remaining fit for METAL; a chain is commonly made of metal, stronger match than the other options."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        [revealed]
+  Bark                 RED        
+  Edge                 BLUE       [revealed]
+  Echo                 BLUE       
+  Light                BLUE       [revealed]
+  Chain                NEUTRAL    [revealed]
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        [revealed]
+  Copper               RED        [revealed]
+  Telescope            RED        [revealed]
+  Square               BLUE       [revealed]
+  Train                NEUTRAL    
+  Float                BLUE       [revealed]
+  Post                 BLUE       
+  Table                BLUE       [revealed]
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to identify the remaining blue words:
+- Echo (unrevealed)
+- Post (unrevealed)
+
+I need to find a clue that connects these two words while avoiding:
+- Red words: Bark, Engine
+- Neutral words: Fossil, Fabric, Server, Teacher, Train, Card
+- Assassin: Russia
+
+Let me think about connections between Echo and Post:
+- Echo: sound reflection, repetition
+- Post: mail delivery, pole/column, or to publish/send
+
+A strong connection is "REPEAT" - Echo means to repeat sound, and you can re-post something (repeat a post). However, this might be too abstract for "post."
+
+Another angle: "SOUND" - Echo is a sound phenomenon, and you can post sound/audio. But this seems weak for post.
+
+Let me try "MAIL" - You can post mail, but echo doesn't relate to mail well.
+
+"REPEAT" seems like the best option:
+- Echo = repetition of sound
+- Post can be re-posted (repeated)
+
+However, I'm concerned this might be too abstract. Let me consider just going for one word safely.
+
+For "Echo" alone: SOUND, REPEAT, REVERBERATE, SONAR
+For "Post" alone: MAIL, POLE, PUBLISH, FENCE
+
+Actually, "FENCE" could work for Post (fence post), but doesn't connect to Echo.
+
+I'll go with "REPEAT" for 2, as it's the strongest connection I can find between Echo and Post.
+
+{"clue": "REPEAT", "number": 2, "reasoning": "Echo is a repeated sound, and Post can mean to re-post or repeat content. Avoids red words Bark/Engine and assassin Russia."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'REPEAT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Bark
+  Echo
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Train
+  Post
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "REPEAT" from the valid guesses list.
+
+Let me think about what "REPEAT" could mean:
+- Something that repeats or echoes
+- Something that happens again
+- A pattern or cycle
+
+Looking at the valid guesses:
+- **Echo** - This is a direct match! An echo is literally a repetition of sound.
+- **Train** - Could relate to repeated schedules or railway patterns
+- **Post** - Could mean reposting something
+- **Bark** - Dogs bark repeatedly
+- **Engine** - Has repeated cycles/pistons
+- **Card** - Could be a repeat card in a deck
+- **Fabric** - Has repeated patterns/weaves
+- **Server** - Serves repeatedly
+- **Teacher** - Repeats lessons
+- **Fossil** - Ancient repeated patterns
+- **Russia** - No clear connection
+
+"Echo" is the strongest connection to "REPEAT" as it's literally the phenomenon of sound repeating. This seems like a very safe first guess.
+
+Since the clue number is 2, the Spymaster likely has 2 words in mind that relate to REPEAT. After Echo, I'll need to think about what else could work.
+
+{"guess": "Echo", "reasoning": "Echo is a direct match for REPEAT - it's literally the repetition of sound bouncing back"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'REPEAT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Bark
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Train
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+  [BLUE] REPEAT 2  #1: Echo → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "TRAIN",
+  "reasoning": "The clue REPEAT-2 likely connects to things that repeat or cycle. TRAIN has repeating schedules and routes, making regular repeated journeys. I've already guessed Echo (which was correct), so this is my second guess. With only 1 blue card remaining vs 2 red cards, I need to be aggressive but careful. TRAIN seems like a reasonable connection to repetition/cycling, though I should consider passing after this since we're so close to winning and a wrong guess could be costly."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        [revealed]
+  Bark                 RED        
+  Edge                 BLUE       [revealed]
+  Echo                 BLUE       [revealed]
+  Light                BLUE       [revealed]
+  Chain                NEUTRAL    [revealed]
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        
+  Court                RED        [revealed]
+  Copper               RED        [revealed]
+  Telescope            RED        [revealed]
+  Square               BLUE       [revealed]
+  Train                NEUTRAL    [revealed]
+  Float                BLUE       [revealed]
+  Post                 BLUE       
+  Table                BLUE       [revealed]
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+  [BLUE] REPEAT 2  #1: Echo → blue
+  [BLUE] REPEAT 2  #2: Train → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Mechanical","number":1,"reasoning":"Targets ENGINE strongly. BARK is not naturally suggested by this clue, and it avoids steering toward the assassin RUSSIA or the remaining blue word POST."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MECHANICAL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Bark
+  Fabric
+  Russia
+  Server
+  Teacher
+  Engine
+  Post
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+  [BLUE] REPEAT 2  #1: Echo → blue
+  [BLUE] REPEAT 2  #2: Train → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Engine","reasoning":"'Mechanical' most directly matches ENGINE among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MECHANICAL' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fossil
+  Bark
+  Fabric
+  Russia
+  Server
+  Teacher
+  Post
+  Card
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+  [BLUE] REPEAT 2  #1: Echo → blue
+  [BLUE] REPEAT 2  #2: Train → neutral
+  [RED] MECHANICAL 1  #1: Engine → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already hit the 1 intended word for MECHANICAL with Engine. With both teams at 1 remaining, an extra guess is too risky and could lose the game if it hits blue or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Ball                 RED        [revealed]
+  Venus                BLUE       [revealed]
+  Fossil               NEUTRAL    
+  Couch                RED        [revealed]
+  Bark                 RED        
+  Edge                 BLUE       [revealed]
+  Echo                 BLUE       [revealed]
+  Light                BLUE       [revealed]
+  Chain                NEUTRAL    [revealed]
+  Fabric               NEUTRAL    
+  Russia               ASSASSIN   
+  Server               NEUTRAL    
+  Exile                RED        [revealed]
+  Teacher              NEUTRAL    
+  Engine               RED        [revealed]
+  Court                RED        [revealed]
+  Copper               RED        [revealed]
+  Telescope            RED        [revealed]
+  Square               BLUE       [revealed]
+  Train                NEUTRAL    [revealed]
+  Float                BLUE       [revealed]
+  Post                 BLUE       
+  Table                BLUE       [revealed]
+  Card                 NEUTRAL    
+  Space                RED        [revealed]
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+  [BLUE] REPEAT 2  #1: Echo → blue
+  [BLUE] REPEAT 2  #2: Train → neutral
+  [RED] MECHANICAL 1  #1: Engine → red
+  [RED] MECHANICAL 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BALL, BARK, CARD, CHAIN, COPPER, COUCH, COURT, ECHO, EDGE, ENGINE, EXILE, FABRIC, FLOAT, FOSSIL, LIGHT, POST, RUSSIA, SERVER, SPACE, SQUARE, TABLE, TEACHER, TELESCOPE, TRAIN, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the current board state:
+
+**Blue remaining (unrevealed):** Post, Bark
+**Red remaining (unrevealed):** Bark
+**Assassin:** Russia
+**Neutrals (unrevealed):** Fossil, Fabric, Server, Teacher, Card
+
+Wait, I need to recount. Let me check the board again:
+- **Bark** is marked as RED
+- **Post** is marked as BLUE
+
+So Blue has only 1 word remaining: **Post**
+Red has only 1 word remaining: **Bark**
+
+This is a critical situation. I need to give a clue for "Post" that:
+1. Clearly points to Post
+2. Doesn't risk pointing to Bark (Red)
+3. Doesn't risk pointing to Russia (Assassin)
+4. Doesn't point to neutrals
+
+Good clues for "Post":
+- MAIL (relates to post office, mailbox)
+- POLE (fence post, goal post)
+- PILLAR (upright post)
+- STAKE (wooden post)
+- MAST (ship's post)
+- COLUMN (architectural post)
+
+Let me consider safety:
+- MAIL: Safe, clearly relates to Post, unlikely to connect to Bark or Russia
+- POLE: Could work, but might be confused with other meanings
+- PILLAR: Good, but less direct
+- STAKE: Could work but has gambling connotations
+- COLUMN: Could work but might be too abstract
+
+MAIL seems like the safest and most direct clue for Post.
+
+{"clue": "MAIL", "number": 1, "reasoning": "Post relates to mail/postal service. This is the only Blue word remaining and we need to win. MAIL clearly points to Post without risking Bark (Red) or Russia (Assassin)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MAIL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fossil
+  Bark
+  Fabric
+  Russia
+  Server
+  Teacher
+  Post
+  Card
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ASTRONOMY 2  #1: Telescope → red
+  [RED] ASTRONOMY 2  #2: Space → red
+  [RED] ASTRONOMY 2  #3: Venus → blue
+  [BLUE] POOL 3  #1: Ball → red
+  [RED] LEGAL 2  #1: Court → red
+  [RED] LEGAL 2  #2: Exile → red
+  [RED] LEGAL 2  #3: PASS
+  [BLUE] CORNER 4  #1: Edge → blue
+  [BLUE] CORNER 4  #2: Table → blue
+  [BLUE] CORNER 4  #3: Square → blue
+  [BLUE] CORNER 4  #4: PASS
+  [RED] LIVINGROOM 2  #1: Couch → red
+  [RED] LIVINGROOM 2  #2: Light → blue
+  [BLUE] DRIFT 2  #1: Float → blue
+  [BLUE] DRIFT 2  #2: PASS
+  [RED] METAL 1  #1: Copper → red
+  [RED] METAL 1  #2: Chain → neutral
+  [BLUE] REPEAT 2  #1: Echo → blue
+  [BLUE] REPEAT 2  #2: Train → neutral
+  [RED] MECHANICAL 1  #1: Engine → red
+  [RED] MECHANICAL 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'MAIL' with 1 word, I need to find the connection among the remaining words.
+
+The word "Post" has a strong connection to MAIL:
+- "Post" can mean postal service/mail system
+- "Post office" handles mail
+- "To post a letter" means to mail it
+
+Let me check other possibilities:
+- **Fossil**: No clear connection to mail
+- **Bark**: Tree bark or dog bark - no mail connection
+- **Fabric**: Material for clothing - no mail connection
+- **Russia**: Country - no direct mail connection
+- **Server**: Could be email server, but that's a weaker connection
+- **Teacher**: No mail connection
+- **Card**: Could be postcard, which relates to mail, but "Post" is more direct
+
+Given that both teams have only 1 card remaining, this is a critical moment. "Post" has the strongest and most direct connection to MAIL. If I'm wrong, the opponent wins. But "Post" is clearly the intended answer here.
+
+{"guess": "Post", "reasoning": "Post directly relates to MAIL through postal service, post office, and posting letters. This is the clearest connection among remaining words."}
+============================================================

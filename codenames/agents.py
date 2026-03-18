@@ -170,7 +170,7 @@ class SpymasterAgent(BaseAgent):
                 else:
                     lines.append(
                         f"  [{g['team'].upper()}] {g['clue_word']} {g['clue_number']}"
-                        f"  #{g['guess_number']}: {g['word']} → {g['result']}"
+                        f"  #{g['guess_number']}: {g['word']} → {g['card_color']}"
                     )
         elif game_view.get("clue_history"):
             lines.append("\nPrevious clues this game:")
@@ -290,7 +290,7 @@ class GuesserAgent(BaseAgent):
                 else:
                     lines.append(
                         f"  [{g['team'].upper()}] {g['clue_word']} {g['clue_number']}"
-                        f"  #{g['guess_number']}: {g['word']} → {g['result']}"
+                        f"  #{g['guess_number']}: {g['word']} → {g['card_color']}"
                     )
         if must_guess:
             lines.append("\nGuess one word from the VALID GUESSES list above. You cannot pass yet.")

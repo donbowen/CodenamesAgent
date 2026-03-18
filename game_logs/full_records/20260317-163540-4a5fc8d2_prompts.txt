@@ -1,0 +1,1781 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Steam                RED        
+  Arm                  RED        
+  Box                  RED        
+  Match                BLUE       
+  Wolf                 BLUE       
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        
+  Corner               NEUTRAL    
+  Fall                 RED        
+  Cabin                BLUE       
+  Cube                 RED        
+  Letter               RED        
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       
+  Lever                NEUTRAL    
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    
+  Chill                NEUTRAL    
+  Core                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "physics", "number": 4, "reasoning": "Connects strongly to STEAM (thermodynamics), ARM (lever/force), FALL (gravity), and CUBE (geometry/volume), while being only loosely related to any blue or assassin word, so it should steer guesses mainly toward red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PHYSICS' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Steam
+  Arm
+  Box
+  Match
+  Wolf
+  Moon
+  Edge
+  France
+  Plate
+  Fog
+  Corner
+  Fall
+  Cabin
+  Cube
+  Letter
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Lever
+  Glove
+  Lily
+  Chill
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lever", "reasoning": "Lever is directly related to mechanics, a core area of physics involving forces and torque."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Steam                RED        
+  Arm                  RED        
+  Box                  RED        
+  Match                BLUE       
+  Wolf                 BLUE       
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        
+  Corner               NEUTRAL    
+  Fall                 RED        
+  Cabin                BLUE       
+  Cube                 RED        
+  Letter               RED        
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    
+  Chill                NEUTRAL    
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Wilderness", "number": 3, "reasoning": "Cabin, Wolf, and Fall are associated with outdoor or wilderness environments."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WILDERNESS' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Steam
+  Arm
+  Box
+  Match
+  Wolf
+  Moon
+  Edge
+  France
+  Plate
+  Fog
+  Corner
+  Fall
+  Cabin
+  Cube
+  Letter
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Wolf", "reasoning": "Wolf is strongly associated with wilderness, being a wild animal often found in forests and untamed nature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WILDERNESS' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Steam
+  Arm
+  Box
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fog
+  Corner
+  Fall
+  Cabin
+  Cube
+  Letter
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cabin", "reasoning": "Cabin is strongly associated with wilderness, often found in remote natural areas."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WILDERNESS' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Steam
+  Arm
+  Box
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fog
+  Corner
+  Fall
+  Cube
+  Letter
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fog", "reasoning": "Fog is commonly associated with wilderness environments and fits the clue well."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Steam                RED        
+  Arm                  RED        
+  Box                  RED        
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    
+  Chill                NEUTRAL    
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "post", "number": 3, "reasoning": "Post connects to ARM (armrest/arm post), BOX (mailbox/postbox), and LETTER (mail/post), while avoiding strong links to blue words or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POST' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Steam
+  Arm
+  Box
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Corner
+  Fall
+  Cube
+  Letter
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Letter", "reasoning": "Post most directly refers to mail, making LETTER the strongest association with the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POST' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Steam
+  Arm
+  Box
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Corner
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Box", "reasoning": "Postbox/post office box strongly matches the clue POST; it’s the clearest remaining association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POST' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Steam
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Corner
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Corner", "reasoning": "Corner post is a common phrase (e.g., fence corner post); strongest remaining association with POST compared to other options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Steam                RED        
+  Arm                  RED        
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    
+  Chill                NEUTRAL    
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Wilderness", "number": 3, "reasoning": "Previously successful clue connecting Wolf, Cabin, and Fog; now aiming for Pilot, Tank, and Flesh which can also relate to wilderness survival or environment."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WILDERNESS' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Steam
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Lily
+  Chill
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lily", "reasoning": "Lily is a plant often found in wilderness or natural settings, fitting the clue 'WILDERNESS'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Steam                RED        
+  Arm                  RED        
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    [revealed]
+  Chill                NEUTRAL    
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "engine", "number": 2, "reasoning": "Connects clearly to STEAM (steam engine) and TANK (tank engine) while being relatively distant from dangerous words like GLOVE and avoiding strong ties to blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ENGINE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Steam
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Chill
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Steam", "reasoning": "Steam engine is a direct and common phrase, strongly matching the clue ENGINE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ENGINE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Tank
+  Glove
+  Chill
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Tank", "reasoning": "Engines are commonly used in tanks (military vehicles), making TANK a strong association with ENGINE compared to the other options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Steam                RED        [revealed]
+  Arm                  RED        
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       [revealed]
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    [revealed]
+  Chill                NEUTRAL    
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Arctic", "number": 3, "reasoning": "The clue 'Arctic' relates to cold and wilderness environments, connecting the words Pilot (as in arctic pilots), Flesh (survival context), and Plate (ice plate or tectonic plate in arctic regions). This avoids assassin and red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ARCTIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Glove
+  Chill
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chill", "reasoning": "Chill is strongly associated with Arctic due to the cold temperature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Steam                RED        [revealed]
+  Arm                  RED        
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       
+  Cell                 RED        
+  Tank                 BLUE       [revealed]
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    [revealed]
+  Chill                NEUTRAL    [revealed]
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "body", "number": 2, "reasoning": "Connects ARM and CELL (as in biological cell) while avoiding strong ties to blue or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BODY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Pilot
+  Flesh
+  Cell
+  Glove
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flesh", "reasoning": "Flesh is directly part of a body, making it the strongest match for the clue BODY."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Steam                RED        [revealed]
+  Arm                  RED        
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       
+  Flesh                BLUE       [revealed]
+  Cell                 RED        
+  Tank                 BLUE       [revealed]
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    [revealed]
+  Chill                NEUTRAL    [revealed]
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "HUNT", "number": 2, "reasoning": "The clue 'HUNT' relates to 'Wolf' (already revealed), 'Match', and 'Pilot'. Wolves are hunters, matches can be part of hunting fires, and pilots often guide hunting or search missions. This clue aims to connect 'Match' and 'Pilot' for the team."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HUNT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Pilot
+  Cell
+  Glove
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Pilot", "reasoning": "Pilot is strongly associated with hunting, e.g., a pilot hunting in aerial combat or a hunter pilot; it fits the clue 'HUNT' better than other words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HUNT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Arm
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Cell
+  Glove
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+  [BLUE] HUNT 2  #1: Pilot → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Arm", "reasoning": "'Arm' can be associated with 'HUNT' as hunters use their arms to hold weapons or tools for hunting."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Steam                RED        [revealed]
+  Arm                  RED        [revealed]
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       [revealed]
+  Flesh                BLUE       [revealed]
+  Cell                 RED        
+  Tank                 BLUE       [revealed]
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    [revealed]
+  Chill                NEUTRAL    [revealed]
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+  [BLUE] HUNT 2  #1: Pilot → blue
+  [BLUE] HUNT 2  #2: Arm → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Lunar", "number": 1, "reasoning": "Safely targets MOON alone; other remaining words (FALL, CUBE, CELL) are less clearly connected and could cause confusion or risky guesses."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LUNAR' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Match
+  Moon
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Cell
+  Glove
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+  [BLUE] HUNT 2  #1: Pilot → blue
+  [BLUE] HUNT 2  #2: Arm → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Moon", "reasoning": "Lunar directly refers to the Moon; it is by far the strongest and most literal connection among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LUNAR' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Match
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Cell
+  Glove
+  Core
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+  [BLUE] HUNT 2  #1: Pilot → blue
+  [BLUE] HUNT 2  #2: Arm → red
+  [RED] LUNAR 1  #1: Moon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already used the LUNAR clue to correctly guess Moon; any further guess would be a risky stretch with no strong lunar association among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Steam                RED        [revealed]
+  Arm                  RED        [revealed]
+  Box                  RED        [revealed]
+  Match                BLUE       
+  Wolf                 BLUE       [revealed]
+  Moon                 RED        [revealed]
+  Edge                 NEUTRAL    
+  France               NEUTRAL    
+  Plate                BLUE       
+  Fog                  RED        [revealed]
+  Corner               NEUTRAL    [revealed]
+  Fall                 RED        
+  Cabin                BLUE       [revealed]
+  Cube                 RED        
+  Letter               RED        [revealed]
+  Oil                  NEUTRAL    
+  Pilot                BLUE       [revealed]
+  Flesh                BLUE       [revealed]
+  Cell                 RED        
+  Tank                 BLUE       [revealed]
+  Lever                NEUTRAL    [revealed]
+  Glove                ASSASSIN   
+  Lily                 NEUTRAL    [revealed]
+  Chill                NEUTRAL    [revealed]
+  Core                 BLUE       
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+  [BLUE] HUNT 2  #1: Pilot → blue
+  [BLUE] HUNT 2  #2: Arm → red
+  [RED] LUNAR 1  #1: Moon → red
+  [RED] LUNAR 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BOX, CABIN, CELL, CHILL, CORE, CORNER, CUBE, EDGE, FALL, FLESH, FOG, FRANCE, GLOVE, LETTER, LEVER, LILY, MATCH, MOON, OIL, PILOT, PLATE, STEAM, TANK, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "HUNTING", "number": 2, "reasoning": "The clue 'HUNTING' relates to 'Match' and 'Plate' as hunting matches and hunting plates are concepts associated with hunting, which fits the theme of the previous clue 'HUNT' and avoids risky words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HUNTING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Match
+  Edge
+  France
+  Plate
+  Fall
+  Cube
+  Oil
+  Cell
+  Glove
+  Core
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PHYSICS 4  #1: Lever → neutral
+  [BLUE] WILDERNESS 3  #1: Wolf → blue
+  [BLUE] WILDERNESS 3  #2: Cabin → blue
+  [BLUE] WILDERNESS 3  #3: Fog → red
+  [RED] POST 3  #1: Letter → red
+  [RED] POST 3  #2: Box → red
+  [RED] POST 3  #3: Corner → neutral
+  [BLUE] WILDERNESS 3  #1: Lily → neutral
+  [RED] ENGINE 2  #1: Steam → red
+  [RED] ENGINE 2  #2: Tank → blue
+  [BLUE] ARCTIC 3  #1: Chill → neutral
+  [RED] BODY 2  #1: Flesh → blue
+  [BLUE] HUNT 2  #1: Pilot → blue
+  [BLUE] HUNT 2  #2: Arm → red
+  [RED] LUNAR 1  #1: Moon → red
+  [RED] LUNAR 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Glove", "reasoning": "Glove is strongly associated with hunting, as gloves are commonly used for protection during hunting activities."}
+============================================================

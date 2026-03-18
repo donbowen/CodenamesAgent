@@ -1,0 +1,2269 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        
+  Code                 NEUTRAL    
+  Paste                BLUE       
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        
+  Fall                 RED        
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        
+  Circle               RED        
+  Crop                 BLUE       
+  Wake                 NEUTRAL    
+  Bite                 BLUE       
+  Duck                 BLUE       
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       
+  Beam                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "bird", "number": 2, "reasoning": "Connects strongly to PENGUIN and DUCK, but DUCK is blue; however other red words are hard to link safely without risking BULLET or multiple blues, so taking a small, controlled risk on a clear animal connection may still be best."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BIRD' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Penguin
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Beach
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Crop
+  Wake
+  Bite
+  Duck
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+  Beam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Penguin", "reasoning": "Penguin is a type of bird and is the strongest direct match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BIRD' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Beach
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Crop
+  Wake
+  Bite
+  Duck
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+  Beam
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Duck", "reasoning": "Duck is directly a type of bird, making it the strongest remaining match for the clue 'BIRD'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        
+  Fall                 RED        
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        
+  Circle               RED        
+  Crop                 BLUE       
+  Wake                 NEUTRAL    
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       
+  Beam                 BLUE       
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for BLUE's unrevealed words: Paste, Mine, Corner, Crop, Bite, Log, Beam.
+
+Let me analyze potential connections:
+
+**Computing/Technology angle:**
+- Paste, Corner, Crop could relate to image/photo editing
+- Log could be a computer log
+- Beam could be a laser beam
+
+**Physical objects/actions:**
+- Corner, Beam (structural)
+- Bite (eating)
+- Mine (excavation or possessive)
+
+**Strong grouping - Image Editing:**
+- CROP (trim an image)
+- PASTE (paste content)
+- CORNER (corner of an image/selection)
+
+The word "IMAGE" could connect these three, but let me check if it's safe:
+- Assassin: Bullet ✓ (no connection)
+- Red words: Escape, Beach, Fall, Fork, Circle, Eye, Venus, Dig ✓ (no strong connections)
+- Neutral: Clock, Code, Slug, Clear, Wake, Chart, Heart ✓ (mostly safe)
+
+Actually, "PHOTO" might be even better for Crop, Paste, Corner (all photo editing operations).
+
+Let me also consider "WOOD" for Log and Beam:
+- LOG (wood log)
+- BEAM (wood beam)
+But only 2 words, and less certain.
+
+I'll go with IMAGE/PHOTO for 3 words (Crop, Paste, Corner) as they're all common image editing operations.
+
+{"clue": "PHOTO", "number": 3, "reasoning": "CROP, PASTE, and CORNER are all common photo/image editing operations. Avoids assassin BULLET and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PHOTO' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Beach
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Crop
+  Wake
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+  Beam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "PHOTO" from the valid guesses list.
+
+Let me think about photo-related concepts:
+- CROP - photos are often cropped
+- BEAM - light beam, which is essential for photography
+- CLEAR - photo clarity/clear images
+- EYE - the camera eye, or the eye viewing photos
+- CHART - could be a photo chart
+- CIRCLE - aperture is circular
+- CORNER - photo corners/framing
+
+The strongest connection seems to be **CROP** - it's a very common photography term (cropping photos to improve composition or focus). This is a direct and strong association with photography.
+
+**EYE** is also strong (camera eye, photographer's eye), and **BEAM** relates to light beams in photography.
+
+I'll start with CROP as it's the most directly photo-related term.
+
+{"guess": "Crop", "reasoning": "CROP is a fundamental photography term - cropping images is a core part of photo editing and composition"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PHOTO' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Beach
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Wake
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+  Beam
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "BEAM",
+  "reasoning": "PHOTO relates to light/photography. BEAM connects to light beam, which is fundamental to photography. This is my second guess out of 3 for the clue, so I'll continue being somewhat aggressive since we're behind (6 blue vs 8 red remaining)."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PHOTO' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Beach
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Wake
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words (Crop and Beam) that relate to PHOTO. With 2/3 correct guesses made, I should pass rather than risk hitting a red card, neutral, or the assassin. We're ahead (5 blue remaining vs 8 red), so conservative play is wise. The remaining words don't have strong photo connections that I'm confident about."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        
+  Fall                 RED        
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        
+  Circle               RED        
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "ocean", "number": 2, "reasoning": "Connects strongly to BEACH and VENUS (as a sea goddess), while avoiding clear ties to blue words or the assassin BULLET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OCEAN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Beach
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Wake
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Beach", "reasoning": "Beach is directly associated with the ocean (ocean beach), making it the strongest match to the clue OCEAN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OCEAN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Wake
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Wake", "reasoning": "A ship moving through the ocean leaves a wake behind it; this is the strongest remaining ocean-related word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        
+  Circle               RED        
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Paste
+- Mine
+- Corner
+- Bite
+- Log
+
+Let me consider potential clues:
+
+1. **ADHESIVE** for Paste - but only connects to 1 word
+2. **WOOD** for Log - but only connects to 1 word
+3. **COPY** for Paste (copy-paste) - but only 1 word
+4. **EDGE** for Corner - but only 1 word
+5. **TEETH** for Bite - but only 1 word
+
+Let me think of broader connections:
+
+- **COMPUTER**: Could connect to Paste (copy-paste), Log (error log), Mine (data mining). That's 3 words, but I need to check risks.
+  - ASSASSIN: Bullet - no clear connection
+  - RED words: Code (could be risky - code/computer), Fork (code fork - risky)
+  - This seems too risky with "Code" on the board as neutral and "Fork" as red.
+
+- **JOURNAL**: Log (journal/log), but weak for others
+
+- **ANGLE**: Corner (angle in corner), but only 1-2 words
+
+- **TEETH/MOUTH**: Bite, Corner (corner of mouth), but Corner connection is weak
+
+- **GLUE**: Paste, Corner (corner pieces glue together - weak)
+
+- **RECORD**: Log (record/log), Mine (mining records), but weak
+
+- **TIMBER**: Log (timber/log), Mine (timber mine), Corner (timber corner post) - this could work for 2-3 words
+  - Checking risks: Bullet, Fork, Fall, Escape, etc. - no strong connections
+
+- **SHAFT**: Mine (mine shaft), Corner (corner shaft in architecture) - only 2, somewhat risky
+
+Let me try **TIMBER** for Log and Mine (2 words):
+- Log = timber/wood
+- Mine = timber mine/timber support beams
+- Low risk of hitting Bullet (assassin) or red words
+
+{"clue": "TIMBER", "number": 2, "reasoning": "Connects to LOG (timber is wood) and MINE (timber supports in mines)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TIMBER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+  Log
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Log", "reasoning": "TIMBER directly relates to LOG - timber is processed wood/logs from trees. This is a strong, clear connection and should be a blue card."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TIMBER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Fall
+  Clear
+  Bullet
+  Fork
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Fall",
+  "reasoning": "TIMBER is strongly associated with 'Fall' through the logging phrase 'Timber!' shouted when a tree falls. I've already correctly guessed 'Log' (1/2), so this is my second guess matching the clue number. Fall fits perfectly with the timber/logging theme."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        [revealed]
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        
+  Circle               RED        
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "utensil", "number": 1, "reasoning": "Points to FORK while avoiding strong connections to any blue words or the assassin BULLET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'UTENSIL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Fork
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fork", "reasoning": "A fork is a common eating utensil, and it is the only word in the list that directly names a utensil."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'UTENSIL' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the intended word for UTENSIL (Fork). None of the remaining words clearly connect to utensils, so an extra guess would be an unnecessary risk with the assassin still unknown."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        [revealed]
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        [revealed]
+  Circle               RED        
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Paste
+- Mine
+- Corner
+- Bite
+
+Let me analyze each:
+- **Paste**: glue, adhesive, copy-paste (computer), paste (food)
+- **Mine**: excavation, possessive pronoun, explosive, coal mine
+- **Corner**: angle, edge, trapped position
+- **Bite**: teeth, food, sting
+
+I need to avoid:
+- ASSASSIN: Bullet
+- RED words: Circle, Escape, Eye, Venus, Dig
+- NEUTRAL words: Clock, Code, Slug, Clear, Chart, Heart
+
+Let me consider potential clues:
+
+1. **TOOTH** → connects to Bite (teeth bite), but only 1 word
+2. **EDGE** → Corner (edge/corner), Bite (cutting edge), Mine (edge of excavation) - but "edge" might be weak for Mine
+3. **ANGLE** → Corner (has angles), but only 1 word clearly
+4. **COPY** → Paste (copy-paste), but only 1 word
+5. **GOLD** → Mine (gold mine), but only 1 word, and might risk Venus (planet/goddess)
+6. **COAL** → Mine (coal mine), but only 1 word
+7. **TRAP** → Corner (cornered/trapped), Mine (trap/explosive), but risky with "Bullet"
+8. **EXCAVATE** → Mine, Dig is RED - too risky
+9. **JAW** → Bite (jaw bites), Corner (jaw line?), weak connection
+10. **GLUE** → Paste (adhesive), Corner (glue in corner), Mine (mining glue?), weak
+
+**TOOTH** for Bite is safe and clear, though only 1 word.
+
+Let me try **ANGLE** → Corner is the strongest connection (corners have angles), and it's safe from all dangerous words.
+
+Actually, **COPY** is very strong for Paste (copy-paste is a common computer operation), and it's completely safe.
+
+I'll go with **COPY** for 1, as it's the safest and clearest connection.
+
+{"clue": "COPY", "number": 1, "reasoning": "COPY strongly relates to PASTE (copy-paste operation), avoiding all dangerous words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COPY' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Paste
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "COPY" with 1 word, I need to find a word that relates to copying.
+
+The strongest connection I see is **"Paste"** - this is part of the classic "Copy and Paste" command used in computing. When you copy something, you typically paste it somewhere else. This is a very direct and common pairing.
+
+Other words I considered:
+- "Code" - you can copy code, but the connection is weaker
+- "Chart" - you can copy a chart, but again less direct
+- "Clear" - less related to copying
+
+Given that this is a 1-word clue and "Paste" has such a strong, idiomatic connection to "copy," I'm confident this is the intended word.
+
+{"guess": "Paste", "reasoning": "Paste is the direct counterpart to Copy in the copy-paste operation, making it the strongest connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COPY' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've successfully guessed 'Paste' which connects to 'COPY' (copy-paste). The clue number was 1, meaning only one word was intended. I've already found it, so continuing would be risky with 3 blue cards remaining vs 5 red cards. Passing is the safe play here."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       [revealed]
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        [revealed]
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        [revealed]
+  Circle               RED        
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "planet", "number": 2, "reasoning": "Links strongly to VENUS (a planet) and EYE via the phrase 'eye planet' is weak; main intent is to secure VENUS plus a potential later tie-in, while avoiding dangerous ties to BULLET or blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Circle
+  Bite
+  Eye
+  Venus
+  Chart
+  Heart
+  Dig
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Venus", "reasoning": "Venus is a planet and directly matches the clue PLANET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Circle
+  Bite
+  Eye
+  Chart
+  Heart
+  Dig
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Circle", "reasoning": "Planets are roughly circular and orbit in circular paths; Circle is the strongest remaining planetary association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLANET' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Bite
+  Eye
+  Chart
+  Heart
+  Dig
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the two PLANET words (Venus, Circle). No remaining word clearly ties to PLANET, and with the score close (3–3) it’s too risky to guess further."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       [revealed]
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        [revealed]
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        [revealed]
+  Circle               RED        [revealed]
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       
+  Duck                 BLUE       [revealed]
+  Eye                  RED        
+  Venus                RED        [revealed]
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words: Mine, Corner, and Bite.
+
+Let me analyze each:
+- **Mine**: Could relate to mining, possession ("mine"), or explosive
+- **Corner**: A geometric location, angle, or being trapped
+- **Bite**: Using teeth, a small amount of food, or something sharp
+
+Let me consider potential clues:
+
+1. **TOOTH/TEETH** - connects to "Bite" strongly, but only 1 word
+2. **ANGLE** - connects to "Corner" (geometric angle), possibly "Bite" (angle of a bite?)
+3. **EDGE** - connects to "Corner" (edges meet at corners), possibly "Bite" (sharp edge)
+4. **GOLD** - connects to "Mine" (gold mine), but risky as it might suggest other words
+5. **COAL** - connects to "Mine" (coal mine)
+6. **TRAP** - connects to "Corner" (cornered/trapped), possibly "Mine" (landmine trap)
+
+Looking at dangerous words to avoid:
+- **ASSASSIN: Bullet** - avoid anything gun/weapon related that's too broad
+- **RED words remaining: Escape, Eye, Dig**
+
+Let me reconsider:
+- **EXCAVATE/DIG** - Can't use DIG (it's on the board)
+- **QUARRY** - relates to "Mine" (quarry mine)
+- **GEOMETRY** - relates to "Corner" 
+- **SHARP** - relates to "Corner" (sharp corner), "Bite" (sharp teeth)
+
+**SHARP** seems promising:
+- Corner: sharp corner/angle
+- Bite: sharp teeth/bite
+- Avoids Bullet (not specifically sharp), Dig, Eye, Escape
+
+{"clue": "SHARP", "number": 2, "reasoning": "Connects Corner (sharp angle/corner) and Bite (sharp teeth). Avoids assassin Bullet and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHARP' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Bite
+  Eye
+  Chart
+  Heart
+  Dig
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bite", "reasoning": "SHARP connects strongly to 'Bite' (sharp teeth, sharp bite). 'Bullet' could work (sharp shooter) but is riskier. 'Corner' (sharp corner) is possible but weaker. Starting with the most direct connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHARP' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Eye
+  Chart
+  Heart
+  Dig
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+  [BLUE] SHARP 2  #1: Bite → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Eye",
+  "reasoning": "SHARP can relate to 'sharp eye' (keen vision/observation). I've already guessed one word correctly (Bite - sharp teeth/bite), so I have one more guess to match the clue number of 2. Eye seems like a strong connection to sharp (sharp-eyed, sharp vision). We're tied 2-2 on remaining cards, so getting this right wins the game, but I need to be careful about the assassin."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       [revealed]
+  Mine                 BLUE       
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        [revealed]
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        [revealed]
+  Circle               RED        [revealed]
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       [revealed]
+  Duck                 BLUE       [revealed]
+  Eye                  RED        [revealed]
+  Venus                RED        [revealed]
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+  [BLUE] SHARP 2  #1: Bite → blue
+  [BLUE] SHARP 2  #2: Eye → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "tunnel", "number": 2, "reasoning": "Both DIG and ESCAPE strongly relate to tunneling (digging a tunnel to escape), while avoiding clear ties to any blue words or the assassin BULLET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TUNNEL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Mine
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Chart
+  Heart
+  Dig
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+  [BLUE] SHARP 2  #1: Bite → blue
+  [BLUE] SHARP 2  #2: Eye → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Mine", "reasoning": "Mines are commonly associated with tunnels underground, making this the strongest connection to the clue TUNNEL."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Clock                NEUTRAL    
+  Penguin              RED        [revealed]
+  Code                 NEUTRAL    
+  Paste                BLUE       [revealed]
+  Mine                 BLUE       [revealed]
+  Corner               BLUE       
+  Escape               RED        
+  Slug                 NEUTRAL    
+  Beach                RED        [revealed]
+  Fall                 RED        [revealed]
+  Clear                NEUTRAL    
+  Bullet               ASSASSIN   
+  Fork                 RED        [revealed]
+  Circle               RED        [revealed]
+  Crop                 BLUE       [revealed]
+  Wake                 NEUTRAL    [revealed]
+  Bite                 BLUE       [revealed]
+  Duck                 BLUE       [revealed]
+  Eye                  RED        [revealed]
+  Venus                RED        [revealed]
+  Chart                NEUTRAL    
+  Heart                NEUTRAL    
+  Dig                  RED        
+  Log                  BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+  [BLUE] SHARP 2  #1: Bite → blue
+  [BLUE] SHARP 2  #2: Eye → red
+  [RED] TUNNEL 2  #1: Mine → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACH, BEAM, BITE, BULLET, CHART, CIRCLE, CLEAR, CLOCK, CODE, CORNER, CROP, DIG, DUCK, ESCAPE, EYE, FALL, FORK, HEART, LOG, MINE, PASTE, PENGUIN, SLUG, VENUS, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the current board state to find the best clue for Blue.
+
+**Blue's remaining word:**
+- Corner (only 1 word left!)
+
+**Red's remaining words:**
+- Escape
+- Dig
+
+**Assassin:**
+- Bullet
+
+**Neutral words:**
+- Clock, Code, Slug, Clear, Chart, Heart
+
+Since Blue only has 1 word remaining (Corner), I need to give a clue that points to "Corner" without risking the assassin (Bullet) or red words (Escape, Dig).
+
+Let me think about "Corner":
+- Physical corner of a room/building
+- Corner of a street/intersection
+- Corner in sports (corner kick, boxing corner)
+- To corner someone (trap)
+
+Good clue options:
+- "Angle" - relates to corner geometrically
+- "Street" - street corner
+- "Turn" - turning a corner
+- "Edge" - corner is where edges meet
+- "Intersection" - relates to corner
+
+Let me check these aren't on the forbidden list and don't risk other words:
+- "Angle" - safe, geometric relation to corner
+- "Street" - could work for corner
+- "Edge" - relates to corner but might be confused with other words
+- "Intersection" - clear connection to corner
+
+I'll go with "ANGLE" as it has a strong geometric connection to corner and doesn't risk pointing to Bullet, Escape, or Dig.
+
+{"clue": "ANGLE", "number": 1, "reasoning": "Corner is the only remaining blue word. Angle strongly relates to corner geometrically (corners form angles) and avoids the assassin Bullet and red words Escape and Dig."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ANGLE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Clock
+  Code
+  Corner
+  Escape
+  Slug
+  Clear
+  Bullet
+  Chart
+  Heart
+  Dig
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BIRD 2  #1: Penguin → red
+  [RED] BIRD 2  #2: Duck → blue
+  [BLUE] PHOTO 3  #1: Crop → blue
+  [BLUE] PHOTO 3  #2: Beam → blue
+  [BLUE] PHOTO 3  #3: PASS
+  [RED] OCEAN 2  #1: Beach → red
+  [RED] OCEAN 2  #2: Wake → neutral
+  [BLUE] TIMBER 2  #1: Log → blue
+  [BLUE] TIMBER 2  #2: Fall → red
+  [RED] UTENSIL 1  #1: Fork → red
+  [RED] UTENSIL 1  #2: PASS
+  [BLUE] COPY 1  #1: Paste → blue
+  [BLUE] COPY 1  #2: PASS
+  [RED] PLANET 2  #1: Venus → red
+  [RED] PLANET 2  #2: Circle → red
+  [RED] PLANET 2  #3: PASS
+  [BLUE] SHARP 2  #1: Bite → blue
+  [BLUE] SHARP 2  #2: Eye → red
+  [RED] TUNNEL 2  #1: Mine → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find a word that connects to "ANGLE" with 1 word expected.
+
+Let me analyze the valid guesses:
+- **Corner**: This is strongly related to ANGLE - corners are formed by angles, and we often measure the angle of a corner
+- Clock: Has angles on its face (hour/minute hands form angles)
+- Code: No clear angle connection
+- Escape: No clear angle connection
+- Slug: No clear angle connection
+- Clear: No clear angle connection
+- Bullet: Bullet trajectory involves angles, but weak connection
+- Chart: Charts can show angles, but indirect
+- Heart: Heart shape has no particular angle association
+- Dig: No clear angle connection
+
+**Corner** is by far the strongest connection to ANGLE. Corners are literally defined by angles - a 90-degree corner, acute corner, etc. This is a geometric relationship.
+
+Since we only need 1 blue card remaining to win, and this is a very strong connection, I should take this guess confidently.
+
+{"guess": "Corner", "reasoning": "Corner is directly related to ANGLE - corners are formed by angles and defined by their angular measurements (90 degrees, acute, obtuse, etc.). This is a strong geometric connection."}
+============================================================

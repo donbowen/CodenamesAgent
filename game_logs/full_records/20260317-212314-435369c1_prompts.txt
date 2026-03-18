@@ -1,0 +1,2526 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       
+  Soldier              RED        
+  Empire               RED        
+  Idol                 RED        
+  Antarctica           NEUTRAL    
+  Crest                BLUE       
+  Bone                 BLUE       
+  Paste                RED        
+  Jade                 RED        
+  Chime                BLUE       
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        
+  Spell                BLUE       
+  Pin                  BLUE       
+  Seal                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "ARMY", "number": 3, "reasoning": "Links Soldier, Empire, and Amazon—each is associated with an army."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARMY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Clock
+  Soldier
+  Empire
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Chime
+  Flash
+  Dew
+  Brooch
+  Tank
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Soldier", "reasoning": "Directly tied to the Army; a soldier is a primary member of an army."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARMY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Clock
+  Empire
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Chime
+  Flash
+  Dew
+  Brooch
+  Tank
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Tank", "reasoning": "Army-related item (tank) fits the ARMY clue and is a strong red candidate alongside Soldier."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       
+  Soldier              RED        [revealed]
+  Empire               RED        
+  Idol                 RED        
+  Antarctica           NEUTRAL    
+  Crest                BLUE       
+  Bone                 BLUE       
+  Paste                RED        
+  Jade                 RED        
+  Chime                BLUE       
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        
+  Spell                BLUE       
+  Pin                  BLUE       
+  Seal                 BLUE       
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the BLUE words that haven't been revealed yet:
+- Clock
+- Crest
+- Bone
+- Chime
+- Flash
+- Spell
+- Pin
+- Seal
+
+Let me analyze potential connections:
+
+**Sound-related group**: Chime, Flash (lightning/thunder)
+**Time-related**: Clock, Chime (both time-keeping)
+**Body/Physical**: Bone, Crest (body parts)
+**Fastening**: Pin, Seal (both can secure things)
+
+Let me consider "TIME" for Clock and Chime - but I need to avoid the ASSASSIN (Nail) and RED words.
+
+Actually, looking at "BADGE" - this could connect to:
+- Pin (badge pin)
+- Crest (family crest/badge)
+- Seal (official seal/badge)
+
+But let me think about "SOUND":
+- Chime (makes sound)
+- Spell (you spell out loud)
+- Seal (seals bark)
+- Clock (ticks)
+
+Wait, "ALARM" could work:
+- Clock (alarm clock)
+- Chime (alarm chimes)
+- Flash (alarm flash)
+
+Let me try "BELL":
+- Chime (bell chimes)
+- Clock (bell tower clock)
+- Seal (bell seal? no...)
+
+Actually, "SECURITY" is strong:
+- Pin (security pin)
+- Seal (security seal)
+- Clock (security clock/timer)
+
+But "FASTENER" or "FASTEN" could work for Pin and Seal.
+
+Let me go with "ALARM" for 3 words (Clock, Chime, Flash) - these all relate to alarm systems or alarm functions.
+
+{"clue": "ALARM", "number": 3, "reasoning": "Clock (alarm clock), Chime (alarm chimes), Flash (alarm light flashes) - all relate to alarm systems"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ALARM' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Clock
+  Empire
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Chime
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "ALARM" from the valid guesses list.
+
+Let me think about what connects to ALARM:
+- **Clock** - Alarm clocks are a very strong, direct connection
+- **Chime** - Alarms often chime or make sounds
+- **Flash** - Some alarms have flashing lights (like fire alarms)
+- **Bell** - Wait, that's not in the list
+
+The strongest connection is clearly **Clock** (alarm clock is a common phrase). **Chime** is also good since alarms make chiming sounds. **Flash** could work for visual alarms.
+
+Given that the Spymaster said 3 words, they likely see three strong connections. Clock seems like the safest and most obvious first guess.
+
+```json
+{"guess": "Clock", "reasoning": "Alarm clock is a very common and direct association - this is almost certainly one of the intended words for the clue ALARM."}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ALARM' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Empire
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Chime
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Chime",
+  "reasoning": "ALARM relates to sounds that alert or wake you. Clock was correctly guessed (alarm clock). Chime is another sound-making device that can serve as an alarm or alert, like doorbell chimes or clock chimes. This is a strong connection to the clue ALARM."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ALARM' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Empire
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words (Clock and Chime) matching the ALARM clue, which equals the clue number of 3. The remaining words don't have strong connections to ALARM. Guessing incorrectly now risks hitting a red card (giving them an advantage when they're ahead 8-6) or worse, the assassin. It's strategically sound to pass and preserve our position."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        
+  Idol                 RED        
+  Antarctica           NEUTRAL    
+  Crest                BLUE       
+  Bone                 BLUE       
+  Paste                RED        
+  Jade                 RED        
+  Chime                BLUE       [revealed]
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        
+  Spell                BLUE       
+  Pin                  BLUE       
+  Seal                 BLUE       
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "ancient", "number": 4, "reasoning": "Targets four red words via ancient empires, idol artifacts, ancient jade, and the legendary Amazons."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Empire
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Empire", "reasoning": "Strong link to ancient civilizations and history."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Idol
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Idol", "reasoning": "Strong direct link to ancient civilizations; most likely red word for ANCIENT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Jade
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Jade", "reasoning": "Strong link to ANCIENT; Jade artifacts are iconic in ancient cultures; likely one of the remaining red words (Empire, Idol, Jade, Seal)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+  Seal
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Seal", "reasoning": "Most clearly tied to ancient times (ancient seals/artifacts), aligning with the ANCIENT clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    
+  Crest                BLUE       
+  Bone                 BLUE       
+  Paste                RED        
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        
+  Spell                BLUE       
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Crest
+- Bone
+- Flash
+- Spell
+- Pin
+
+Let me analyze each:
+- **Crest**: toothpaste brand, mountain top, family emblem, wave top
+- **Bone**: skeleton part, dog treat
+- **Flash**: lightning, camera flash, superhero, quick movement
+- **Spell**: magic spell, spelling words
+- **Pin**: bowling pin, safety pin, push pin, brooch-like
+
+I need to avoid the ASSASSIN (Nail) and RED words (Trick, Paste, Amazon, Fold, Flag).
+
+Let me consider some connections:
+
+**"Lightning"** could connect to:
+- Flash (lightning flash)
+- Bone (lightning-shaped bone? weak)
+- Crest (lightning on a crest? weak)
+
+**"Magic"** could connect to:
+- Spell (magic spell) ✓
+- Trick (magic trick) ✗ RED word - dangerous!
+
+**"Tooth"** could connect to:
+- Crest (Crest toothpaste) ✓
+- Bone (teeth are bones) ✓
+- Pin (dental pin? weak)
+
+**"Body"** could connect to:
+- Bone (body part) ✓
+- Flash (flash of body? weak)
+- Pin (body pin? weak)
+
+**"Mountain"** could connect to:
+- Crest (mountain crest) ✓
+- Bone (weak)
+- Flash (flash flood? weak)
+
+**"Wave"** could connect to:
+- Crest (wave crest) ✓
+- Flash (flash in waves? weak)
+
+**"Skeleton"** could connect to:
+- Bone (skeleton bone) ✓
+- Crest (skull crest) ✓
+- Flash (weak)
+
+Let me try **"Tooth"** for Crest and Bone (2 words). This avoids the assassin Nail and red words well.
+
+{"clue": "tooth", "number": 2, "reasoning": "Connects CREST (toothpaste brand) and BONE (teeth are bones). Safe from assassin NAIL and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOOTH' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Antarctica
+  Crest
+  Bone
+  Paste
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Crest",
+  "reasoning": "TOOTH strongly connects to Crest - toothpaste brand Crest is well-known, and 'crest' can also refer to the top ridge of something including teeth. This is a very strong association with the clue TOOTH."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOOTH' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Antarctica
+  Bone
+  Paste
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Paste",
+  "reasoning": "TOOTH strongly connects to 'toothpaste' - Paste is the most obvious remaining word related to TOOTH. Since I've already guessed Crest (toothpaste brand), Paste completes the dental hygiene connection and is very likely the second word for this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    
+  Crest                BLUE       [revealed]
+  Bone                 BLUE       
+  Paste                RED        [revealed]
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        
+  Spell                BLUE       
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SHIP", "number": 2, "reasoning": "Amazon ships goods; 'flagship' links to Flag."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHIP' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Antarctica
+  Bone
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Flag
+  Spell
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flag", "reasoning": "Directly associated with ships; ships fly a flag and it fits the SHIP clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHIP' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Antarctica
+  Bone
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Spell
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Antarctica", "reasoning": "Strong ship-related link; explorers and voyages to Antarctica are classic ship associations."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    [revealed]
+  Crest                BLUE       [revealed]
+  Bone                 BLUE       
+  Paste                RED        [revealed]
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        [revealed]
+  Spell                BLUE       
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to identify the remaining BLUE words and find a clue that connects them while avoiding RED words, NEUTRAL words, and especially the ASSASSIN (Nail).
+
+Remaining BLUE words:
+- Bone
+- Flash
+- Spell
+- Pin
+
+Remaining RED words:
+- Trick
+- Amazon
+- Fold
+
+ASSASSIN:
+- Nail
+
+Let me think about connections:
+
+1. **Bone + Pin**: Both can relate to medical/anatomy (bone pin used in surgery)
+2. **Flash + Spell**: Both relate to magic/fantasy
+3. **Pin + Flash**: Pin can be a wrestling move, flash photography
+4. **Spell + Bone**: Magic spells, bone-related spells
+
+Looking for a word that could connect multiple BLUE words:
+
+- "MAGIC" could connect Spell (magic spell) and Flash (magic flash), but less so Bone and Pin
+- "LIGHT" could connect Flash (flash of light) and Spell (spell can be a period/stretch), but weak
+- "LIGHTNING" could connect Flash and Spell (lightning spell), but risky with other words
+- "WIZARD" could connect Spell and Bone (wizard bone?), Flash (wizard flash)
+- "BREAK" could connect Bone (bone break) and Spell (break a spell), but weak
+
+Let me try "LIGHTNING":
+- Flash: lightning flash ✓
+- Spell: lightning spell (in games/fantasy) ✓
+- Bone: lightning bone? ✗
+- Pin: lightning pin? ✗
+
+Actually, "HARRY" could work:
+- Bone: Harry Bone? No
+- Flash: Harry Flash? No
+- Spell: Harry Potter spells ✓
+- Pin: Bowling pin? No
+
+Let me think of "CAST":
+- Spell: cast a spell ✓
+- Bone: bone cast (medical) ✓
+- Flash: cast flash? Weak
+- Pin: cast pin? Weak
+
+This could work for 2 words safely.
+
+{"clue": "CAST", "number": 2, "reasoning": "CAST connects Spell (cast a spell) and Bone (bone cast for broken bones). Avoids ASSASSIN Nail and RED words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CAST' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Bone
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Spell
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that connect to "CAST" with a target of 2 words.
+
+Let me think about meanings of "CAST":
+1. **Cast** as in throwing/casting something
+2. **Cast** as in a plaster cast for broken bones
+3. **Cast** as in casting a spell (magic)
+4. **Cast** as in a cast of actors
+
+Looking at the valid guesses:
+
+- **Spell**: "Cast a spell" is a very strong connection - this is a common phrase in magic/fantasy contexts
+- **Bone**: You put a cast on a broken bone - strong medical connection
+- **Nail**: Could relate to casting/throwing, but weaker
+- **Fall**: Could relate to casting/throwing or falling, but indirect
+- **Trick**: Magic tricks involve casting spells, moderate connection
+- **Pin**: Weak connection
+- **Fold**: Weak connection
+
+The two strongest connections are:
+1. **Spell** - "cast a spell" is an extremely common phrase
+2. **Bone** - "cast on a bone" for medical treatment
+
+I'll start with **Spell** as it has the most direct and common association with "cast."
+
+{"guess": "Spell", "reasoning": "Cast a spell is a very common phrase in magic/fantasy contexts, making this the strongest connection to CAST"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CAST' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Bone
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Bone",
+  "reasoning": "CAST connects to 'bone' as in 'cast a broken bone' (medical cast). This is a strong connection. I've already guessed 'Spell' (cast a spell) correctly. With 3 blue and 3 red remaining, I should take this reasonable guess before passing, as it's a common meaning of CAST."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CAST' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Spell and Bone) matching the clue number of 2. We now have only 2 blue cards remaining vs 3 red cards. Since I've fulfilled the clue and the game is close, continuing to guess risks hitting a neutral (ending turn) or worse, hitting red (giving them an advantage) or the assassin. The safe play is to PASS and let our Spymaster give us a new clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    [revealed]
+  Crest                BLUE       [revealed]
+  Bone                 BLUE       [revealed]
+  Paste                RED        [revealed]
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        [revealed]
+  Spell                BLUE       [revealed]
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "River", "number": 3, "reasoning": "Amazon River; in poker there is a river card used to complete a hand (relating to Trick and Fold)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Fall
+  Trick
+  Flash
+  Dew
+  Brooch
+  Amazon
+  Server
+  Fold
+  Nail
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Amazon", "reasoning": "Direct river reference (Amazon River). Likely one of the red words for clue 'RIVER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Fall
+  Trick
+  Flash
+  Dew
+  Brooch
+  Server
+  Fold
+  Nail
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fall", "reasoning": "RIVER clue best maps to waterfall (Fall); among the remaining unrevealed words, Fall has the strongest river association."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    [revealed]
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    [revealed]
+  Crest                BLUE       [revealed]
+  Bone                 BLUE       [revealed]
+  Paste                RED        [revealed]
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        [revealed]
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        [revealed]
+  Spell                BLUE       [revealed]
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to help Blue identify their remaining 2 words: **Flash** and **Pin**.
+
+Let me analyze these words:
+- **Flash**: Can mean a burst of light, a quick movement, or photography flash
+- **Pin**: Can mean a fastener, to hold something down, or a bowling pin
+
+I need to avoid:
+- **Nail** (ASSASSIN) - very dangerous, relates to Pin
+- **Trick** (RED) - could relate to Flash (as in card tricks or sleight of hand)
+- **Fold** (RED) - could relate to Pin (as in wrestling)
+
+Let me think of clues:
+- "LIGHT" for Flash - but could point to many things
+- "LIGHTNING" for Flash - strong connection
+- "CAMERA" for Flash - good connection
+- "BOWLING" for Pin - good connection
+- "BROOCH" is on the board (neutral), so I can't use it, but Pin is similar
+
+Looking for a word that connects both:
+- "FASTENER" - Pin is a fastener, but Flash isn't
+- "QUICK" - Flash is quick, but Pin isn't really
+
+I think I should focus on one word safely. **Flash** seems safer since Pin is dangerously close to **Nail** (the assassin).
+
+"LIGHTNING" strongly connects to Flash and shouldn't point to the assassin or red words.
+
+{"clue": "LIGHTNING", "number": 1, "reasoning": "Lightning produces a flash of light. This targets Flash safely while avoiding the assassin Nail and red words Trick/Fold."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHTNING' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Trick
+  Flash
+  Dew
+  Brooch
+  Server
+  Fold
+  Nail
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "LIGHTNING" and the available words, I need to find the strongest connection.
+
+Lightning is associated with:
+- **Flash** - This is the most direct connection. Lightning produces a flash of light, and "lightning flash" is a common phrase.
+- Fabric - No clear connection
+- Trick - No clear connection
+- Dew - No connection
+- Brooch - No connection (jewelry)
+- Server - No connection
+- Fold - No connection
+- Nail - No connection
+- Pin - No connection
+
+Flash is clearly the intended word here, as it's the only one with a strong, natural connection to lightning.
+
+{"guess": "Flash", "reasoning": "Lightning produces a flash of light - this is the most direct and obvious connection to the clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LIGHTNING' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Trick
+  Dew
+  Brooch
+  Server
+  Fold
+  Nail
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+  [BLUE] LIGHTNING 1  #1: Flash → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I successfully guessed 'Flash' which connects to lightning. With only 1 blue card remaining vs 2 red cards, and having already made a correct guess for the clue number given (1), I should pass to avoid risking hitting a neutral, opponent card, or the assassin. The remaining words don't have strong lightning connections."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    [revealed]
+  Trick                RED        
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    [revealed]
+  Crest                BLUE       [revealed]
+  Bone                 BLUE       [revealed]
+  Paste                RED        [revealed]
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       [revealed]
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        [revealed]
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        [revealed]
+  Spell                BLUE       [revealed]
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+  [BLUE] LIGHTNING 1  #1: Flash → blue
+  [BLUE] LIGHTNING 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "CARD", "number": 2, "reasoning": "Card trick (Trick) and folding in card games (Fold)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CARD' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Trick
+  Dew
+  Brooch
+  Server
+  Fold
+  Nail
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+  [BLUE] LIGHTNING 1  #1: Flash → blue
+  [BLUE] LIGHTNING 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Trick", "reasoning": "Direct phrase 'card trick' strongly links to CARD."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CARD' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fabric
+  Dew
+  Brooch
+  Server
+  Fold
+  Nail
+  Pin
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+  [BLUE] LIGHTNING 1  #1: Flash → blue
+  [BLUE] LIGHTNING 1  #2: PASS
+  [RED] CARD 2  #1: Trick → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Clue CARD 2 but only 1 red word remains; guessing risks hitting a blue/neutral word and ending the turn."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Fabric               NEUTRAL    
+  Fall                 NEUTRAL    [revealed]
+  Trick                RED        [revealed]
+  Clock                BLUE       [revealed]
+  Soldier              RED        [revealed]
+  Empire               RED        [revealed]
+  Idol                 RED        [revealed]
+  Antarctica           NEUTRAL    [revealed]
+  Crest                BLUE       [revealed]
+  Bone                 BLUE       [revealed]
+  Paste                RED        [revealed]
+  Jade                 RED        [revealed]
+  Chime                BLUE       [revealed]
+  Flash                BLUE       [revealed]
+  Dew                  NEUTRAL    
+  Brooch               NEUTRAL    
+  Tank                 NEUTRAL    [revealed]
+  Amazon               RED        [revealed]
+  Server               NEUTRAL    
+  Fold                 RED        
+  Nail                 ASSASSIN   
+  Flag                 RED        [revealed]
+  Spell                BLUE       [revealed]
+  Pin                  BLUE       
+  Seal                 BLUE       [revealed]
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+  [BLUE] LIGHTNING 1  #1: Flash → blue
+  [BLUE] LIGHTNING 1  #2: PASS
+  [RED] CARD 2  #1: Trick → red
+  [RED] CARD 2  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANTARCTICA, BONE, BROOCH, CHIME, CLOCK, CREST, DEW, EMPIRE, FABRIC, FALL, FLAG, FLASH, FOLD, IDOL, JADE, NAIL, PASTE, PIN, SEAL, SERVER, SOLDIER, SPELL, TANK, TRICK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the single remaining BLUE word: **Pin**
+
+Let me analyze the situation:
+- Blue remaining: 1 (Pin)
+- Red remaining: 1 (Fold)
+- Assassin: Nail
+- Unrevealed neutrals: Fabric, Dew, Brooch, Server
+
+The word "Pin" has multiple meanings:
+- A fastener (safety pin, push pin)
+- To pin something down
+- A bowling pin
+- A PIN number
+- A lapel pin/badge
+
+I need to avoid:
+- "Nail" (assassin) - both are fasteners
+- "Fold" (red) - poker term connection
+- Any neutral words
+
+Good clue options:
+- "Bowling" - connects to bowling pin
+- "Badge" - connects to lapel pin
+- "Cushion" - connects to pin cushion
+- "Fastener" - but too close to nail
+- "Attach" - connects to pinning something
+- "Sew" - connects to sewing pins
+
+"Bowling" is strong because:
+- Clearly points to "Pin" (bowling pin)
+- No connection to Nail (assassin)
+- No connection to Fold (red)
+- No connection to neutrals (Fabric, Dew, Brooch, Server)
+
+{"clue": "Bowling", "number": 1, "reasoning": "Points to Pin (bowling pin). Safe from assassin Nail and red word Fold."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOWLING' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fabric
+  Dew
+  Brooch
+  Server
+  Fold
+  Nail
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARMY 3  #1: Soldier → red
+  [RED] ARMY 3  #2: Tank → neutral
+  [BLUE] ALARM 3  #1: Clock → blue
+  [BLUE] ALARM 3  #2: Chime → blue
+  [BLUE] ALARM 3  #3: PASS
+  [RED] ANCIENT 4  #1: Empire → red
+  [RED] ANCIENT 4  #2: Idol → red
+  [RED] ANCIENT 4  #3: Jade → red
+  [RED] ANCIENT 4  #4: Seal → blue
+  [BLUE] TOOTH 2  #1: Crest → blue
+  [BLUE] TOOTH 2  #2: Paste → red
+  [RED] SHIP 2  #1: Flag → red
+  [RED] SHIP 2  #2: Antarctica → neutral
+  [BLUE] CAST 2  #1: Spell → blue
+  [BLUE] CAST 2  #2: Bone → blue
+  [BLUE] CAST 2  #3: PASS
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Fall → neutral
+  [BLUE] LIGHTNING 1  #1: Flash → blue
+  [BLUE] LIGHTNING 1  #2: PASS
+  [RED] CARD 2  #1: Trick → red
+  [RED] CARD 2  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Pin",
+  "reasoning": "BOWLING strongly connects to 'Pin' (bowling pins are the targets you knock down when bowling). This is a very direct connection. With only 1 blue card remaining and 1 red card remaining, this is a critical moment - I need to be confident in my guess. Pin is the clear bowling-related word on the board."
+}
+```
+============================================================

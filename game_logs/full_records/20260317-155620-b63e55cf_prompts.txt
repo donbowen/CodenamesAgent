@@ -1,0 +1,2059 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    
+  Hotel                BLUE       
+  Crest                BLUE       
+  Bed                  ASSASSIN   
+  Beacon               RED        
+  Canyon               BLUE       
+  Chest                RED        
+  Exile                BLUE       
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Cave", "number": 5, "reasoning": "Cave relates to Pit, Gorge, and other words associated with depth or hollowness, helping the team identify multiple red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAVE' — 5 word(s).
+Guesses used this turn: 0 / 6.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  Tower
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Gorge
+  Hotel
+  Crest
+  Bed
+  Beacon
+  Canyon
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+  Empire
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Canyon", "reasoning": "A canyon is a deep gorge, which relates to the clue 'CAVE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    
+  Hotel                BLUE       
+  Crest                BLUE       
+  Bed                  ASSASSIN   
+  Beacon               RED        
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "building", "number": 2, "reasoning": "Both 'Tower' and 'Hotel' are types of buildings, and both are blue words. No red or assassin words are strongly associated with 'building', minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BUILDING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  Tower
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Gorge
+  Hotel
+  Crest
+  Bed
+  Beacon
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+  Empire
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Tower", "reasoning": "'Tower' is directly related to the clue 'BUILDING', as towers are a type of building."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BUILDING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Gorge
+  Hotel
+  Crest
+  Bed
+  Beacon
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+  Empire
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hotel", "reasoning": "A hotel is a type of building, which directly matches the clue 'BUILDING'. This is the most obvious and direct connection to the clue among the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BUILDING' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 9  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Gorge
+  Crest
+  Bed
+  Beacon
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+  Empire
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Empire", "reasoning": "Empire State Building is a famous building, making 'Empire' a good fit for the clue 'BUILDING.'"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       
+  Bed                  ASSASSIN   
+  Beacon               RED        
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Mountain", "number": 4, "reasoning": "The clue 'Mountain' relates to 'Canyon', 'Gorge', 'Pit', and 'Fall' as they all can be associated with mountain or elevated terrain features."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Gorge
+  Crest
+  Bed
+  Beacon
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Gorge", "reasoning": "A gorge is a narrow valley between hills or mountains, fitting the clue 'MOUNTAIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       
+  Bed                  ASSASSIN   
+  Beacon               RED        
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "signal", "number": 2, "reasoning": "The unrevealed blue words are Crest, Exile, Code, Blank, and Staff. 'Signal' connects to 'Code' (as in signal code or coded signal) and 'Staff' (as in musical staff, which carries signals/information). The other blue words are less directly linked, and this clue avoids dangerous associations with the assassin ('Bed') and red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SIGNAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Crest
+  Bed
+  Beacon
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Beacon", "reasoning": "'Beacon' is strongly associated with 'signal', as beacons are used to send signals, especially in navigation or communication contexts."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       
+  Bed                  ASSASSIN   
+  Beacon               RED        [revealed]
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "MOUNTAIN", "number": 4, "reasoning": "MOUNTAIN relates to 'Pit', 'Gorge', 'Fall', and 'Cold', all of which can be associated with mountainous terrain."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Crest
+  Bed
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Crest", "reasoning": "Crest can refer to the top of a mountain, which fits the clue 'MOUNTAIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Bed                  ASSASSIN   
+  Beacon               RED        [revealed]
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "banish", "number": 1, "reasoning": "The only remaining unrevealed blue word is 'Exile'. 'Banish' is a strong synonym for 'Exile' and does not relate to any red words or the assassin ('Bed'). This minimizes risk and targets the last blue word efficiently."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BANISH' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Exile
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Exile", "reasoning": "'Banish' most directly relates to 'Exile', as both involve sending someone away or expelling them. This is the strongest connection among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BANISH' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 8  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We have already guessed one word for the clue 'BANISH' and there are no clear secondary connections. Since the clue was 'BANISH' 1, it's safest to pass and avoid unnecessary risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    
+  Pit                  RED        
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Bed                  ASSASSIN   
+  Beacon               RED        [revealed]
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       [revealed]
+  Cold                 RED        
+  Fall                 RED        
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "MOUNTAIN", "number": 4, "reasoning": "The clue relates to Pit, Fall, Cold, and Chest, as they can all be associated with mountainous terrain."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 8  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Cold
+  Fall
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fall", "reasoning": "Fall could relate to mountains in terms of autumn scenery or falling rocks."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Cold
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Crest", "reasoning": "Crest is related to mountains, referring to the top edge or peak. It's a reasonable guess given the clue 'MOUNTAIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Cold
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Crest", "reasoning": "Crest is related to mountains, referring to the top edge or peak. It's a reasonable guess given the clue 'MOUNTAIN'."}
+
+[USER]
+Invalid response: 'CREST' is not in the valid guesses list. Choose from: BED, BLANK, BONE, CHASE, CHEST, CHINA, CODE, COLD, EGYPT, FOOT, HOOK, LEAF, PIT, STAFF, STAR, VEST. Try again.
+
+[RESPONSE]
+{"guess": "COLD", "reasoning": "Cold is often associated with mountains due to the climate and weather conditions at high altitudes. It's a valid guess for the clue 'MOUNTAIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Crest", "reasoning": "Crest is a term associated with mountains, fitting the clue 'MOUNTAIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Pit
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Crest", "reasoning": "Crest is a term associated with mountains, fitting the clue 'MOUNTAIN'."}
+
+[USER]
+Invalid response: 'CREST' is not in the valid guesses list. Choose from: BED, BLANK, BONE, CHASE, CHEST, CHINA, CODE, EGYPT, FOOT, HOOK, LEAF, PIT, STAFF, STAR, VEST. Try again.
+
+[RESPONSE]
+{"guess": "PIT", "reasoning": "A pit can be a geological feature related to mountains, fitting the clue 'MOUNTAIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Crest", "reasoning": "Crest is related to mountains as it refers to the top or highest point of a mountain."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MOUNTAIN' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Star
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Crest", "reasoning": "Crest is related to mountains as it refers to the top or highest point of a mountain."}
+
+[USER]
+Invalid response: 'CREST' is not in the valid guesses list. Choose from: BED, BLANK, BONE, CHASE, CHEST, CHINA, CODE, EGYPT, FOOT, HOOK, LEAF, STAFF, STAR, VEST. Try again.
+
+[RESPONSE]
+{"guess": "STAR", "reasoning": "Star can relate to mountains in terms of stargazing or being high up in the mountains where stars are more visible."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Pit                  RED        [revealed]
+  Blank                BLUE       
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Bed                  ASSASSIN   
+  Beacon               RED        [revealed]
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       [revealed]
+  Cold                 RED        [revealed]
+  Fall                 RED        [revealed]
+  Bone                 RED        
+  Code                 BLUE       
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "message", "number": 2, "reasoning": "Both 'Code' and 'Blank' can be associated with 'message': 'Code' as in coded messages, and 'Blank' as in a blank message or a blank in a message. 'Staff' is less directly related, but 'message' does not connect to any opponent words or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MESSAGE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Code
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "A 'code' is a common way to send a message, as in a secret or coded message. This is the strongest association with 'MESSAGE' from the remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MESSAGE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Blank
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+  [BLUE] MESSAGE 2  #1: Code → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blank", "reasoning": "A 'blank' message can refer to a message with no content or a blank space, which is a common term in communication. This fits well with the clue 'MESSAGE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MESSAGE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chase
+  China
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Staff
+  Egypt
+  Hook
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+  [BLUE] MESSAGE 2  #1: Code → blue
+  [BLUE] MESSAGE 2  #2: Blank → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We've already guessed two words for 'MESSAGE', which matches the clue number. With only one blue word remaining and several possible risky options, it's safer to pass rather than risk hitting the assassin or an opponent's word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    
+  Star                 NEUTRAL    [revealed]
+  Pit                  RED        [revealed]
+  Blank                BLUE       [revealed]
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Bed                  ASSASSIN   
+  Beacon               RED        [revealed]
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       [revealed]
+  Cold                 RED        [revealed]
+  Fall                 RED        [revealed]
+  Bone                 RED        
+  Code                 BLUE       [revealed]
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+  [BLUE] MESSAGE 2  #1: Code → blue
+  [BLUE] MESSAGE 2  #2: Blank → blue
+  [BLUE] MESSAGE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Mammal", "number": 2, "reasoning": "Both 'Bone' and 'Foot' can relate to mammals, as they are anatomical features."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAMMAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  China
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+  [BLUE] MESSAGE 2  #1: Code → blue
+  [BLUE] MESSAGE 2  #2: Blank → blue
+  [BLUE] MESSAGE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "CHINA", "reasoning": "China is home to several mammals, including the giant panda, making it a reasonable guess for 'MAMMAL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Chase                NEUTRAL    
+  Tower                BLUE       [revealed]
+  China                NEUTRAL    [revealed]
+  Star                 NEUTRAL    [revealed]
+  Pit                  RED        [revealed]
+  Blank                BLUE       [revealed]
+  Leaf                 NEUTRAL    
+  Foot                 RED        
+  Vest                 RED        
+  Gorge                NEUTRAL    [revealed]
+  Hotel                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Bed                  ASSASSIN   
+  Beacon               RED        [revealed]
+  Canyon               BLUE       [revealed]
+  Chest                RED        
+  Exile                BLUE       [revealed]
+  Cold                 RED        [revealed]
+  Fall                 RED        [revealed]
+  Bone                 RED        
+  Code                 BLUE       [revealed]
+  Staff                BLUE       
+  Egypt                RED        
+  Hook                 NEUTRAL    
+  Empire               NEUTRAL    [revealed]
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+  [BLUE] MESSAGE 2  #1: Code → blue
+  [BLUE] MESSAGE 2  #2: Blank → blue
+  [BLUE] MESSAGE 2  #3: PASS
+  [RED] MAMMAL 2  #1: China → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BED, BLANK, BONE, CANYON, CHASE, CHEST, CHINA, CODE, COLD, CREST, EGYPT, EMPIRE, EXILE, FALL, FOOT, GORGE, HOOK, HOTEL, LEAF, PIT, STAFF, STAR, TOWER, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "wizard", "number": 1, "reasoning": "The only remaining blue word is 'Staff,' which is strongly associated with wizards (wizard staff). None of the remaining unrevealed words (Foot, Vest, Chest, Leaf, Hook) are strongly connected to 'wizard,' so this clue is safe and direct."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WIZARD' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chase
+  Leaf
+  Foot
+  Vest
+  Bed
+  Chest
+  Bone
+  Staff
+  Egypt
+  Hook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAVE 5  #1: Canyon → blue
+  [BLUE] BUILDING 2  #1: Tower → blue
+  [BLUE] BUILDING 2  #2: Hotel → blue
+  [BLUE] BUILDING 2  #3: Empire → neutral
+  [RED] MOUNTAIN 4  #1: Gorge → neutral
+  [BLUE] SIGNAL 2  #1: Beacon → red
+  [RED] MOUNTAIN 4  #1: Crest → blue
+  [BLUE] BANISH 1  #1: Exile → blue
+  [BLUE] BANISH 1  #2: PASS
+  [RED] MOUNTAIN 4  #1: Fall → red
+  [RED] MOUNTAIN 4  #2: Cold → red
+  [RED] MOUNTAIN 4  #3: Pit → red
+  [RED] MOUNTAIN 4  #4: Star → neutral
+  [BLUE] MESSAGE 2  #1: Code → blue
+  [BLUE] MESSAGE 2  #2: Blank → blue
+  [BLUE] MESSAGE 2  #3: PASS
+  [RED] MAMMAL 2  #1: China → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Staff", "reasoning": "A 'wizard' commonly uses a 'staff' as a magical tool, making this the most direct and fitting association among the remaining words."}
+============================================================

@@ -1,0 +1,414 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Ferry                NEUTRAL    
+  Giant                NEUTRAL    
+  Bar                  RED        
+  China                BLUE       
+  Coal                 RED        
+  Antarctica           RED        
+  Burst                BLUE       
+  Pole                 BLUE       
+  Bush                 RED        
+  Branch               NEUTRAL    
+  Satellite            RED        
+  Bark                 RED        
+  Head                 NEUTRAL    
+  Root                 RED        
+  Bounce               NEUTRAL    
+  Moscow               RED        
+  Mercury              BLUE       
+  Lure                 BLUE       
+  Space                ASSASSIN   
+  Drill                RED        
+  Apple                BLUE       
+  Cold                 BLUE       
+  Ball                 NEUTRAL    
+  Square               BLUE       
+  Bear                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, APPLE, BALL, BAR, BARK, BEAR, BOUNCE, BRANCH, BURST, BUSH, CHINA, COAL, COLD, DRILL, FERRY, GIANT, HEAD, LURE, MERCURY, MOSCOW, POLE, ROOT, SATELLITE, SPACE, SQUARE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Tree","number":3,"reasoning":"Connects BARK, ROOT, and BUSH strongly. It avoids the assassin SPACE and has limited pull toward opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ferry
+  Giant
+  Bar
+  China
+  Coal
+  Antarctica
+  Burst
+  Pole
+  Bush
+  Branch
+  Satellite
+  Bark
+  Head
+  Root
+  Bounce
+  Moscow
+  Mercury
+  Lure
+  Space
+  Drill
+  Apple
+  Cold
+  Ball
+  Square
+  Bear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"BARK","reasoning":"Strong tree association; bark is the outer covering of a tree and is one of the clearest matches for TREE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ferry
+  Giant
+  Bar
+  China
+  Coal
+  Antarctica
+  Burst
+  Pole
+  Bush
+  Branch
+  Satellite
+  Head
+  Root
+  Bounce
+  Moscow
+  Mercury
+  Lure
+  Space
+  Drill
+  Apple
+  Cold
+  Ball
+  Square
+  Bear
+
+Game history:
+  [RED] TREE 3  #1: Bark → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"BRANCH","reasoning":"Strong direct association with TREE; likely one of the intended words along with Bark."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Ferry                NEUTRAL    
+  Giant                NEUTRAL    
+  Bar                  RED        
+  China                BLUE       
+  Coal                 RED        
+  Antarctica           RED        
+  Burst                BLUE       
+  Pole                 BLUE       
+  Bush                 RED        
+  Branch               NEUTRAL    [revealed]
+  Satellite            RED        
+  Bark                 RED        [revealed]
+  Head                 NEUTRAL    
+  Root                 RED        
+  Bounce               NEUTRAL    
+  Moscow               RED        
+  Mercury              BLUE       
+  Lure                 BLUE       
+  Space                ASSASSIN   
+  Drill                RED        
+  Apple                BLUE       
+  Cold                 BLUE       
+  Ball                 NEUTRAL    
+  Square               BLUE       
+  Bear                 NEUTRAL    
+
+Game history:
+  [RED] TREE 3  #1: Bark → red
+  [RED] TREE 3  #2: Branch → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, APPLE, BALL, BAR, BARK, BEAR, BOUNCE, BRANCH, BURST, BUSH, CHINA, COAL, COLD, DRILL, FERRY, GIANT, HEAD, LURE, MERCURY, MOSCOW, POLE, ROOT, SATELLITE, SPACE, SQUARE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the blue words that need to be found:
+- China (country)
+- Burst (sudden action/explosion)
+- Pole (rod/stick, or geographic pole)
+- Mercury (planet/element)
+- Lure (bait/attract)
+- Apple (fruit)
+- Cold (temperature)
+- Square (shape)
+
+I need to find a connection that links multiple blue words while avoiding the assassin word "Space" and red words.
+
+I notice that Mercury, Apple, and Cold could all relate to "Metal" - Mercury is a metal, Apple makes metal devices, and metal feels cold. However, this seems weak for Apple.
+
+Let me consider "Element" - Mercury is a chemical element, and this could work, but it might be too close to "Space" thinking.
+
+Looking at another angle: "Round" could work for Apple (round fruit), Mercury (round planet), Ball is neutral so not terrible, but Square contradicts this.
+
+Wait - "Planet" could work for Mercury (planet), but might lead to Space (assassin).
+
+Let me try "Temperature" - Mercury (thermometer), Cold (temperature), but this only gets 2 words clearly.
+
+Actually, "Solid" could work: Apple (solid fruit), Square (solid shape), Cold (makes things solid/freeze), Mercury (liquid metal that can become solid). But Mercury is liquid at room temperature.
+
+Let me reconsider "Fruit" - Apple is obviously fruit, but what else? This seems limited.
+
+I think "Chemical" could work: Mercury (chemical element), and it's distinct enough from Space. But I need more connections.
+
+Actually, let me try "North" - Pole (North Pole), Cold (associated with north), China (northern hemisphere). This avoids the assassin and red words well.
+
+{"clue": "NORTH", "number": 3, "reasoning": "Connects Pole (North Pole), Cold (northern climates), and China (northern hemisphere location) while avoiding assassin Space and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NORTH' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ferry
+  Giant
+  Bar
+  China
+  Coal
+  Antarctica
+  Burst
+  Pole
+  Bush
+  Satellite
+  Head
+  Root
+  Bounce
+  Moscow
+  Mercury
+  Lure
+  Space
+  Drill
+  Apple
+  Cold
+  Ball
+  Square
+  Bear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] TREE 3  #1: Bark → red
+  [RED] TREE 3  #2: Branch → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "NORTH" and the available words, I need to find words that relate to the north or northern direction.
+
+The strongest connection I can see is "Pole" - this likely refers to the North Pole, which is directly associated with north. This seems like a very safe and confident guess.
+
+Other potential connections I notice:
+- "Bear" (polar bears live in the north)
+- "Cold" (northern regions are typically cold)
+- "Moscow" (northern city, though this might be a stretch)
+
+I'll start with the most obvious connection.
+
+{"guess": "Pole", "reasoning": "Pole most likely refers to North Pole, which directly connects to the clue NORTH"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NORTH' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ferry
+  Giant
+  Bar
+  China
+  Coal
+  Antarctica
+  Burst
+  Bush
+  Satellite
+  Head
+  Root
+  Bounce
+  Moscow
+  Mercury
+  Lure
+  Space
+  Drill
+  Apple
+  Cold
+  Ball
+  Square
+  Bear
+
+Game history:
+  [RED] TREE 3  #1: Bark → red
+  [RED] TREE 3  #2: Branch → neutral
+  [BLUE] NORTH 3  #1: Pole → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+

@@ -1,0 +1,2566 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bell                 BLUE       
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       
+  Dice                 RED        
+  Court                RED        
+  Husk                 RED        
+  Chime                BLUE       
+  Burst                RED        
+  Chair                NEUTRAL    
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       
+  Fruit                NEUTRAL    
+  Watch                RED        
+  China                NEUTRAL    
+  Arm                  RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Sports", "number": 3, "reasoning": "The clue 'Sports' relates to 'Fleet', 'Trip', and 'Court' which can all be associated with sports activities (e.g., fleet footed athletes, trip in sports terms, and court as in basketball)." }
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPORTS' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bell
+  Fog
+  Mouse
+  Plane
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Field
+  Dice
+  Court
+  Husk
+  Chime
+  Burst
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Court", "reasoning": "Court is commonly associated with sports, like basketball or tennis."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPORTS' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bell
+  Fog
+  Mouse
+  Plane
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Field
+  Dice
+  Husk
+  Chime
+  Burst
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Field", "reasoning": "Field is commonly associated with sports, such as a playing field or sports field. It's a strong connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Bell                 BLUE       
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       
+  Burst                RED        
+  Chair                NEUTRAL    
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       
+  Fruit                NEUTRAL    
+  Watch                RED        
+  China                NEUTRAL    
+  Arm                  RED        
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Sound", "number": 3, "reasoning": "Bell, Chime, and Watch are all related to sounds or time signals, but Watch is red, so focusing on Bell and Chime which are blue, and also Mouse can make a sound, but since it's blue, it's included to reach 3."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bell
+  Fog
+  Mouse
+  Plane
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Chime
+  Burst
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chime", "reasoning": "Chime is directly related to sound and fits the clue perfectly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bell
+  Fog
+  Mouse
+  Plane
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Burst
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bell", "reasoning": "Bell is strongly associated with sound, fitting the clue well as a clear auditory signal."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SOUND' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fog
+  Mouse
+  Plane
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Burst
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Burst", "reasoning": "Burst is related to a sudden sound, like a burst of noise or explosion, fitting well with the clue 'SOUND'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       
+  Fruit                NEUTRAL    
+  Watch                RED        
+  China                NEUTRAL    
+  Arm                  RED        
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 3, "reasoning": "The clue relates to 'Fleet', 'Plane', and 'Trip', all of which involve movement or travel."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Plane
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Plane", "reasoning": "Plane is a mode of transport that directly relates to the clue 'TRANSPORT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       
+  Fruit                NEUTRAL    
+  Watch                RED        
+  China                NEUTRAL    
+  Arm                  RED        
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Timepiece", "number": 2, "reasoning": "Clue relates to 'Watch' (red, so avoid) and 'Dice' (red), so excluded; instead, it points to 'Rose' and 'Table' as types of timepieces (rose for rose gold watches, table clocks), and 'Flight' as in 'flight time'; careful to avoid red words and assassin, so 'Timepiece' targets 'Rose', 'Table', and 'Flight'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TIMEPIECE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  Watch
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Watch", "reasoning": "Watch is directly related to timepiece, making it the most obvious and confident guess for the clue 'TIMEPIECE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       
+  Fruit                NEUTRAL    
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 2, "reasoning": "Both 'Fleet' and 'Trip' relate to modes of transportation."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Flight
+  Fruit
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flight", "reasoning": "Flight is directly related to transport, as it refers to traveling by air."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Furniture", "number": 2, "reasoning": "Table and Chair are related to furniture, but Chair is neutral. Only Table is blue. Rose and Mouse remain blue but less related to furniture."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Chair
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Fruit
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chair", "reasoning": "Chair is a direct piece of furniture and strongly matches the clue 'FURNITURE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    
+  Fleet                RED        
+  Trip                 RED        
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 2, "reasoning": "Both 'Fleet' and 'Trip' relate to the concept of transport."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fleet
+  Trip
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Fruit
+  China
+  Arm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fleet", "reasoning": "Fleet refers to a group of vehicles or ships, which relates directly to transport."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fog
+  Mouse
+  Isle
+  Trip
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Fruit
+  China
+  Arm
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Trip", "reasoning": "A trip often involves transport, making it a good match for the clue 'TRANSPORT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fog
+  Mouse
+  Isle
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Fruit
+  China
+  Arm
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Arm", "reasoning": "An 'arm' can refer to a part of a vehicle (like an arm of a crane) or can relate to transportation in terms of movement and support."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    
+  Table                BLUE       
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Furniture", "number": 2, "reasoning": "Table and Chair are related to furniture, but Chair is already revealed and neutral; Table is blue and unrevealed. Rose is unrelated to furniture, Mouse is a device or animal, so this clue mainly targets Table and potentially Mouse as a stretch (mouse furniture or mouse pad). Given constraints, furniture is a safe clue to indicate Table and possibly Mouse."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Draft
+  Table
+  Fruit
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Table", "reasoning": "Table is a common piece of furniture and fits well with the clue 'FURNITURE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fog
+  Mouse
+  Isle
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Draft
+  Fruit
+  China
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Draft", "reasoning": "Draft can refer to a draft table or drafting furniture, fitting the furniture clue better than other remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    [revealed]
+  Table                BLUE       [revealed]
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 3, "reasoning": "The clue relates to modes of travel, which connects to 'Fleet', 'Trip', and 'Arm'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Fruit
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fleet", "reasoning": "Fleet relates to a group of vehicles, which ties directly to the concept of transport."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Isle
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Fruit
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "Fleet", "reasoning": "Fleet relates to a group of vehicles, which ties directly to the concept of transport."}
+
+[USER]
+Invalid response: 'FLEET' is not in the valid guesses list. Choose from: CHINA, DICE, DIG, ERA, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, ROSE. Try again.
+
+[RESPONSE]
+{"guess": "Isle", "reasoning": "An isle can be a location accessible by transportation, making it relevant to the transport theme."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    [revealed]
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    [revealed]
+  Table                BLUE       [revealed]
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Floral", "number": 1, "reasoning": "Rose is a type of flower, which relates well to the clue Floral. None of the other words fit this clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLORAL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Dice
+  Husk
+  Rose
+  Era
+  Dig
+  Fruit
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Rose", "reasoning": "Rose is strongly associated with floral, fitting the clue perfectly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FLORAL' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fog
+  Mouse
+  Fossil
+  Dice
+  Husk
+  Era
+  Dig
+  Fruit
+  China
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fruit", "reasoning": "Fruit is related to floral as fruits grow from flowers, making it a plausible guess for the clue 'FLORAL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    [revealed]
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       [revealed]
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    
+  Draft                NEUTRAL    [revealed]
+  Table                BLUE       [revealed]
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    [revealed]
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 3, "reasoning": "The clue relates to the remaining words: Fleet, Trip, and Dice, all of which can be associated with transport or movement."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Dice
+  Husk
+  Era
+  Dig
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fleet", "reasoning": "Fleet refers to a group of vehicles or vessels used for transport, making it a strong match for the clue 'TRANSPORT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Dice
+  Husk
+  Era
+  Dig
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "Fleet", "reasoning": "Fleet refers to a group of vehicles or vessels used for transport, making it a strong match for the clue 'TRANSPORT'."}
+
+[USER]
+Invalid response: 'FLEET' is not in the valid guesses list. Choose from: CHINA, DICE, DIG, ERA, FOG, FOSSIL, HUSK, MOUSE. Try again.
+
+[RESPONSE]
+{"guess": "DIG", "reasoning": "DIG can refer to the act of excavating or moving earth, which is often related to transport activities, especially in terms of moving materials."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    [revealed]
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       [revealed]
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    [revealed]
+  Draft                NEUTRAL    [revealed]
+  Table                BLUE       [revealed]
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    [revealed]
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Game", "number": 1, "reasoning": "Mouse is related to a computer game device, and this clue avoids pointing to any assassin or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GAME' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Dice
+  Husk
+  Era
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dice", "reasoning": "Dice are commonly associated with games, making it the strongest match to the clue 'GAME'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    [revealed]
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        [revealed]
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       [revealed]
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    [revealed]
+  Draft                NEUTRAL    [revealed]
+  Table                BLUE       [revealed]
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    [revealed]
+  Watch                RED        [revealed]
+  China                NEUTRAL    
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+  [BLUE] GAME 1  #1: Dice → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Transport", "number": 2, "reasoning": "Both 'Fog' and 'Husk' can be associated with transportation themes."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Husk
+  Era
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+  [BLUE] GAME 1  #1: Dice → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fleet", "reasoning": "Fleet refers to a group of vehicles or ships used for transport, aligning well with the clue 'TRANSPORT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TRANSPORT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Husk
+  Era
+  China
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+  [BLUE] GAME 1  #1: Dice → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "Fleet", "reasoning": "Fleet refers to a group of vehicles or ships used for transport, aligning well with the clue 'TRANSPORT'."}
+
+[USER]
+Invalid response: 'FLEET' is not in the valid guesses list. Choose from: CHINA, ERA, FOG, FOSSIL, HUSK, MOUSE. Try again.
+
+[RESPONSE]
+{"guess": "China", "reasoning": "China is known for its extensive transportation infrastructure and historical trade routes, making it relevant to the clue 'TRANSPORT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Bell                 BLUE       [revealed]
+  Fog                  RED        
+  Mouse                BLUE       
+  Plane                BLUE       [revealed]
+  Isle                 NEUTRAL    [revealed]
+  Fleet                RED        [revealed]
+  Trip                 RED        [revealed]
+  Fossil               ASSASSIN   
+  Field                BLUE       [revealed]
+  Dice                 RED        [revealed]
+  Court                RED        [revealed]
+  Husk                 RED        
+  Chime                BLUE       [revealed]
+  Burst                RED        [revealed]
+  Chair                NEUTRAL    [revealed]
+  Rose                 BLUE       [revealed]
+  Era                  NEUTRAL    
+  Dig                  NEUTRAL    [revealed]
+  Draft                NEUTRAL    [revealed]
+  Table                BLUE       [revealed]
+  Flight               BLUE       [revealed]
+  Fruit                NEUTRAL    [revealed]
+  Watch                RED        [revealed]
+  China                NEUTRAL    [revealed]
+  Arm                  RED        [revealed]
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+  [BLUE] GAME 1  #1: Dice → red
+  [RED] TRANSPORT 2  #1: China → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARM, BELL, BURST, CHAIR, CHIME, CHINA, COURT, DICE, DIG, DRAFT, ERA, FIELD, FLEET, FLIGHT, FOG, FOSSIL, FRUIT, HUSK, ISLE, MOUSE, PLANE, ROSE, TABLE, TRIP, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Rodent", "number": 1, "reasoning": "The only remaining blue word is Mouse, which is a rodent."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RODENT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fog
+  Mouse
+  Fossil
+  Husk
+  Era
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPORTS 3  #1: Court → red
+  [RED] SPORTS 3  #2: Field → blue
+  [BLUE] SOUND 3  #1: Chime → blue
+  [BLUE] SOUND 3  #2: Bell → blue
+  [BLUE] SOUND 3  #3: Burst → red
+  [RED] TRANSPORT 3  #1: Plane → blue
+  [BLUE] TIMEPIECE 2  #1: Watch → red
+  [RED] TRANSPORT 2  #1: Flight → blue
+  [BLUE] FURNITURE 2  #1: Chair → neutral
+  [RED] TRANSPORT 2  #1: Fleet → red
+  [RED] TRANSPORT 2  #2: Trip → red
+  [RED] TRANSPORT 2  #3: Arm → red
+  [BLUE] FURNITURE 2  #1: Table → blue
+  [BLUE] FURNITURE 2  #2: Draft → neutral
+  [RED] TRANSPORT 3  #1: Isle → neutral
+  [BLUE] FLORAL 1  #1: Rose → blue
+  [BLUE] FLORAL 1  #2: Fruit → neutral
+  [RED] TRANSPORT 3  #1: Dig → neutral
+  [BLUE] GAME 1  #1: Dice → red
+  [RED] TRANSPORT 2  #1: China → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Mouse", "reasoning": "Mouse is directly associated with rodents, making it the most likely blue word for the clue 'RODENT'."}
+============================================================

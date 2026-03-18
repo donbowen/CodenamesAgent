@@ -1,0 +1,1028 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Base                 RED        
+  March                BLUE       
+  Apple                BLUE       
+  Coach                NEUTRAL    
+  Foot                 RED        
+  Change               BLUE       
+  Band                 RED        
+  Idol                 RED        
+  Chapel               RED        
+  Arm                  NEUTRAL    
+  Bed                  BLUE       
+  Cone                 BLUE       
+  Blank                RED        
+  Crack                RED        
+  Empire               NEUTRAL    
+  Check                BLUE       
+  Dust                 RED        
+  Venus                RED        
+  Fork                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Brown                NEUTRAL    
+  Copper               BLUE       
+  Gem                  ASSASSIN   
+  Table                NEUTRAL    
+  Capital              BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARM, BAND, BASE, BEAR, BED, BLANK, BROWN, CAPITAL, CHANGE, CHAPEL, CHECK, COACH, CONE, COPPER, CRACK, DUST, EMPIRE, FOOT, FORK, GEM, IDOL, MARCH, TABLE, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Royal", "number": 4, "reasoning": "Clue relates to the concept of royalty, which connects to 'Idol', 'Empire', 'Chapel', and 'Venus'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ROYAL' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Change
+  Band
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Blank
+  Crack
+  Empire
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Copper
+  Gem
+  Table
+  Capital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Empire", "reasoning": "Empire relates to royalty and governance, fitting the clue 'ROYAL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Base                 RED        
+  March                BLUE       
+  Apple                BLUE       
+  Coach                NEUTRAL    
+  Foot                 RED        
+  Change               BLUE       
+  Band                 RED        
+  Idol                 RED        
+  Chapel               RED        
+  Arm                  NEUTRAL    
+  Bed                  BLUE       
+  Cone                 BLUE       
+  Blank                RED        
+  Crack                RED        
+  Empire               NEUTRAL    [revealed]
+  Check                BLUE       
+  Dust                 RED        
+  Venus                RED        
+  Fork                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Brown                NEUTRAL    
+  Copper               BLUE       
+  Gem                  ASSASSIN   
+  Table                NEUTRAL    
+  Capital              BLUE       
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARM, BAND, BASE, BEAR, BED, BLANK, BROWN, CAPITAL, CHANGE, CHAPEL, CHECK, COACH, CONE, COPPER, CRACK, DUST, EMPIRE, FOOT, FORK, GEM, IDOL, MARCH, TABLE, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "COIN", "number": 3, "reasoning": "Coins connect to Change (coins), Copper (metal used for coins), and Capital (money) among blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Change
+  Band
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Blank
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Copper
+  Gem
+  Table
+  Capital
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Copper", "reasoning": "Strongest link to coin: pennies are copper; coin -> copper."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Change
+  Band
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Blank
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+  Capital
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Change", "reasoning": "Direct link to coins (change)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Band
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Blank
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+  Capital
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Capital", "reasoning": "Strong money-related link to coins; 'capital' is a common term connected to money."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 9  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Band
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Blank
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blank", "reasoning": "Coin-related term: a 'blank' (coin planchet) used in minting coins; a strong fit for COIN."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Base                 RED        
+  March                BLUE       
+  Apple                BLUE       
+  Coach                NEUTRAL    
+  Foot                 RED        
+  Change               BLUE       [revealed]
+  Band                 RED        
+  Idol                 RED        
+  Chapel               RED        
+  Arm                  NEUTRAL    
+  Bed                  BLUE       
+  Cone                 BLUE       
+  Blank                RED        [revealed]
+  Crack                RED        
+  Empire               NEUTRAL    [revealed]
+  Check                BLUE       
+  Dust                 RED        
+  Venus                RED        
+  Fork                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Brown                NEUTRAL    
+  Copper               BLUE       [revealed]
+  Gem                  ASSASSIN   
+  Table                NEUTRAL    
+  Capital              BLUE       [revealed]
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARM, BAND, BASE, BEAR, BED, BLANK, BROWN, CAPITAL, CHANGE, CHAPEL, CHECK, COACH, CONE, COPPER, CRACK, DUST, EMPIRE, FOOT, FORK, GEM, IDOL, MARCH, TABLE, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Music", "number": 3, "reasoning": "Clue relates to 'Band', 'Idol', and 'Foot' due to associations with music and performance."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Band
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Band", "reasoning": "Band is directly related to music, making it a strong guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Idol
+  Chapel
+  Arm
+  Bed
+  Cone
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Idol", "reasoning": "Idol can refer to a music idol or celebrity, making it a strong connection to the clue 'MUSIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MUSIC' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Base
+  March
+  Apple
+  Coach
+  Foot
+  Chapel
+  Arm
+  Bed
+  Cone
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+  [RED] MUSIC 3  #2: Idol → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "March", "reasoning": "March is a musical term, referring to a type of music often played in a marching context."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Base                 RED        
+  March                BLUE       [revealed]
+  Apple                BLUE       
+  Coach                NEUTRAL    
+  Foot                 RED        
+  Change               BLUE       [revealed]
+  Band                 RED        [revealed]
+  Idol                 RED        [revealed]
+  Chapel               RED        
+  Arm                  NEUTRAL    
+  Bed                  BLUE       
+  Cone                 BLUE       
+  Blank                RED        [revealed]
+  Crack                RED        
+  Empire               NEUTRAL    [revealed]
+  Check                BLUE       
+  Dust                 RED        
+  Venus                RED        
+  Fork                 NEUTRAL    
+  Bear                 NEUTRAL    
+  Brown                NEUTRAL    
+  Copper               BLUE       [revealed]
+  Gem                  ASSASSIN   
+  Table                NEUTRAL    
+  Capital              BLUE       [revealed]
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+  [RED] MUSIC 3  #2: Idol → red
+  [RED] MUSIC 3  #3: March → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARM, BAND, BASE, BEAR, BED, BLANK, BROWN, CAPITAL, CHANGE, CHAPEL, CHECK, COACH, CONE, COPPER, CRACK, DUST, EMPIRE, FOOT, FORK, GEM, IDOL, MARCH, TABLE, VENUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FRUIT", "number": 1, "reasoning": "Apple is the only unrevealed blue word that clearly fits the clue; Bed, Cone, and Check do not relate to 'fruit'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FRUIT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Base
+  Apple
+  Coach
+  Foot
+  Chapel
+  Arm
+  Bed
+  Cone
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+  [RED] MUSIC 3  #2: Idol → red
+  [RED] MUSIC 3  #3: March → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Apple", "reasoning": "FRUIT clue directly points to Apple; the most obvious fruit among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FRUIT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Base
+  Coach
+  Foot
+  Chapel
+  Arm
+  Bed
+  Cone
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Bear
+  Brown
+  Gem
+  Table
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+  [RED] MUSIC 3  #2: Idol → red
+  [RED] MUSIC 3  #3: March → blue
+  [BLUE] FRUIT 1  #1: Apple → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bear", "reasoning": "FRUIT clue best matches 'bear' via the phrase 'bear fruit'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Base                 RED        
+  March                BLUE       [revealed]
+  Apple                BLUE       [revealed]
+  Coach                NEUTRAL    
+  Foot                 RED        
+  Change               BLUE       [revealed]
+  Band                 RED        [revealed]
+  Idol                 RED        [revealed]
+  Chapel               RED        
+  Arm                  NEUTRAL    
+  Bed                  BLUE       
+  Cone                 BLUE       
+  Blank                RED        [revealed]
+  Crack                RED        
+  Empire               NEUTRAL    [revealed]
+  Check                BLUE       
+  Dust                 RED        
+  Venus                RED        
+  Fork                 NEUTRAL    
+  Bear                 NEUTRAL    [revealed]
+  Brown                NEUTRAL    
+  Copper               BLUE       [revealed]
+  Gem                  ASSASSIN   
+  Table                NEUTRAL    
+  Capital              BLUE       [revealed]
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+  [RED] MUSIC 3  #2: Idol → red
+  [RED] MUSIC 3  #3: March → blue
+  [BLUE] FRUIT 1  #1: Apple → blue
+  [BLUE] FRUIT 1  #2: Bear → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  APPLE, ARM, BAND, BASE, BEAR, BED, BLANK, BROWN, CAPITAL, CHANGE, CHAPEL, CHECK, COACH, CONE, COPPER, CRACK, DUST, EMPIRE, FOOT, FORK, GEM, IDOL, MARCH, TABLE, VENUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Royalty", "number": 2, "reasoning": "Both 'Chapel' and 'Dust' can be associated with royalty; chapels are often linked to royal ceremonies and dust can symbolize the decay of royal grandeur."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ROYALTY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Base
+  Coach
+  Foot
+  Chapel
+  Arm
+  Bed
+  Cone
+  Crack
+  Check
+  Dust
+  Venus
+  Fork
+  Brown
+  Gem
+  Table
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ROYAL 4  #1: Empire → neutral
+  [BLUE] COIN 3  #1: Copper → blue
+  [BLUE] COIN 3  #2: Change → blue
+  [BLUE] COIN 3  #3: Capital → blue
+  [BLUE] COIN 3  #4: Blank → red
+  [RED] MUSIC 3  #1: Band → red
+  [RED] MUSIC 3  #2: Idol → red
+  [RED] MUSIC 3  #3: March → blue
+  [BLUE] FRUIT 1  #1: Apple → blue
+  [BLUE] FRUIT 1  #2: Bear → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Gem", "reasoning": "Gem can be associated with royalty, as gems are often found in crowns and royal jewelry."}
+============================================================

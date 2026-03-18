@@ -1,0 +1,2051 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        
+  Plane                RED        
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       
+  Bill                 NEUTRAL    
+  Jet                  RED        
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    
+  Lens                 BLUE       
+  Dam                  BLUE       
+  Heart                BLUE       
+  Staff                RED        
+  Code                 NEUTRAL    
+  Stadium              RED        
+  Channel              BLUE       
+  Blank                RED        
+  Cave                 BLUE       
+  Claw                 RED        
+  Cycle                BLUE       
+  Face                 NEUTRAL    
+  India                NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the RED words I need to help my team find:
+- Giant, Plane, Australia, Undertaker, Jet, Staff, Stadium, Blank, Claw
+
+I need to find connections while avoiding the ASSASSIN (Elm) and BLUE words.
+
+I notice several RED words relate to aircraft/aviation:
+- Plane (aircraft)
+- Jet (aircraft)
+- Giant (could refer to large aircraft)
+
+The word "aircraft" connects these three words well and doesn't risk pointing to the assassin or blue words.
+
+{"clue": "AIRCRAFT", "number": 3, "reasoning": "Connects Plane, Jet, and Giant (large aircraft) - three RED words with aviation theme"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AIRCRAFT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Giant
+  Plane
+  Australia
+  Undertaker
+  Back
+  Bill
+  Jet
+  Bow
+  Mind
+  Decay
+  Bolt
+  Lens
+  Dam
+  Heart
+  Staff
+  Code
+  Stadium
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  Face
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jet", "reasoning": "Jet is a type of aircraft and directly matches the clue 'AIRCRAFT'. This is a very confident first guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AIRCRAFT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Giant
+  Plane
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Bolt
+  Lens
+  Dam
+  Heart
+  Staff
+  Code
+  Stadium
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  Face
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plane", "reasoning": "AIRCRAFT is the clue and I already got Jet. Plane is clearly another type of aircraft, making it a very strong match for this clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AIRCRAFT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Giant
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Bolt
+  Lens
+  Dam
+  Heart
+  Staff
+  Code
+  Stadium
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  Face
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "AIRCRAFT" and having already correctly guessed "Jet" and "Plane", I need to find one more aircraft-related word from the remaining options.
+
+Scanning the list, "Bolt" stands out as the best match. Aircraft use many bolts as fasteners - they're critical structural components that hold wings, fuselage sections, and other parts together. Bolts are essential hardware in aircraft construction and maintenance.
+
+While I could consider other options like "Staff" (control stick/yoke), "Bolt" has a much stronger and more direct connection to aircraft as physical components.
+
+{"guess": "Bolt", "reasoning": "Bolts are essential fasteners used extensively in aircraft construction to secure wings, fuselage, and other structural components"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        
+  Plane                RED        [revealed]
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       
+  Heart                BLUE       
+  Staff                RED        
+  Code                 NEUTRAL    
+  Stadium              RED        
+  Channel              BLUE       
+  Blank                RED        
+  Cave                 BLUE       
+  Claw                 RED        
+  Cycle                BLUE       
+  Face                 NEUTRAL    
+  India                NEUTRAL    
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "ANATOMY", "number": 4, "reasoning": "Relates to body parts: back, mind, lens, heart."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ANATOMY' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Giant
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Heart
+  Staff
+  Code
+  Stadium
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  Face
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Heart", "reasoning": "Direct anatomy term matching the clue"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ANATOMY' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Giant
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Staff
+  Code
+  Stadium
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  Face
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Face", "reasoning": "Anatomy-related; a common body part that could be among the four anatomy words (with Heart already revealed)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        
+  Plane                RED        [revealed]
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       
+  Heart                BLUE       [revealed]
+  Staff                RED        
+  Code                 NEUTRAL    
+  Stadium              RED        
+  Channel              BLUE       
+  Blank                RED        
+  Cave                 BLUE       
+  Claw                 RED        
+  Cycle                BLUE       
+  Face                 NEUTRAL    [revealed]
+  India                NEUTRAL    
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words:
+- Giant
+- Australia  
+- Undertaker
+- Staff
+- Stadium
+- Blank
+- Claw
+
+I need to find a clue that connects multiple RED words while avoiding the ASSASSIN (Elm) and BLUE words.
+
+I notice that "Giant", "Australia", and "Stadium" can all be connected to sports/baseball:
+- Giant: San Francisco Giants (baseball team)
+- Australia: Has professional baseball leagues and teams
+- Stadium: Where baseball games are played
+
+This clue should be safe from the assassin and blue words, as none of them have a strong baseball connection.
+
+{"clue": "BASEBALL", "number": 3, "reasoning": "Connects Giant (SF Giants team), Australia (has baseball leagues), and Stadium (where baseball is played). Avoids assassin Elm and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BASEBALL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Giant
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Staff
+  Code
+  Stadium
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "BASEBALL" and the available words, I need to find connections to baseball.
+
+The most obvious connection is "Stadium" - baseball games are played in stadiums, and this is a very strong, direct connection to the sport.
+
+Other potential connections I can see:
+- "Giant" could relate to the San Francisco Giants baseball team
+- "Back" might relate to positions like "back stop" or backing up plays
+- "Staff" could relate to coaching staff or pitching staff
+
+But "Stadium" is by far the strongest and most direct connection to baseball.
+
+{"guess": "Stadium", "reasoning": "Stadium is directly connected to baseball as the venue where baseball games are played"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BASEBALL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Giant
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Staff
+  Code
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "BASEBALL" and the remaining words, I need to find connections to baseball.
+
+From the valid guesses, I can see several potential baseball connections:
+- **Giant** - Could refer to the San Francisco Giants baseball team
+- **Back** - Could relate to "back" in baseball (backing up plays, back of the field)
+- **Staff** - Could refer to pitching staff (a common baseball term)
+- **Bow** - Less likely, but could relate to bowing after a game
+
+Given that this is a 3-word clue and I've already found one correct word (Stadium), I should look for the strongest baseball connection. "Giant" seems most likely as it directly references a major league baseball team.
+
+{"guess": "Giant", "reasoning": "Giant likely refers to the San Francisco Giants baseball team, making it a strong connection to the BASEBALL clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BASEBALL' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Back
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Staff
+  Code
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Back", "reasoning": "Baseball has a 'back' catcher position, and players can 'back up' other players. This seems like a reasonable connection to baseball terminology, and I've already gotten 2 correct guesses for this clue so I should be more cautious about risking a third guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        [revealed]
+  Plane                RED        [revealed]
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       [revealed]
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       
+  Heart                BLUE       [revealed]
+  Staff                RED        
+  Code                 NEUTRAL    
+  Stadium              RED        [revealed]
+  Channel              BLUE       
+  Blank                RED        
+  Cave                 BLUE       
+  Claw                 RED        
+  Cycle                BLUE       
+  Face                 NEUTRAL    [revealed]
+  India                NEUTRAL    
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"BLUE","number":6,"reasoning":"Links to all remaining blue words: Mind, Lens, Dam, Channel, Cave, Cycle."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BLUE' — 6 word(s).
+Guesses used this turn: 0 / 7.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Staff
+  Code
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "Strong direct association: 'Code Blue' is a common phrase, making 'Code' the most probable blue word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        [revealed]
+  Plane                RED        [revealed]
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       [revealed]
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       
+  Heart                BLUE       [revealed]
+  Staff                RED        
+  Code                 NEUTRAL    [revealed]
+  Stadium              RED        [revealed]
+  Channel              BLUE       
+  Blank                RED        
+  Cave                 BLUE       
+  Claw                 RED        
+  Cycle                BLUE       
+  Face                 NEUTRAL    [revealed]
+  India                NEUTRAL    
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words:
+- Australia (country)
+- Undertaker (profession/wrestling)
+- Staff (rod/employees)
+- Blank (empty)
+- Claw (animal part/tool)
+
+I need to find a connection that links multiple words while avoiding the assassin (Elm) and blue words.
+
+"WEAPON" could work for Staff (quarterstaff) and Claw (weapon-like), but that's only 2 words and might be risky.
+
+"WORK" could connect Undertaker (job) and Staff (employees), but again only 2 words.
+
+Looking more carefully, I notice:
+- Staff (rod, stick)
+- Claw (sharp curved tool)
+- Blank (empty space, void)
+
+"TOOL" could work for Staff and Claw, as both can be tools or implements. This seems safer than trying to force a 3+ word connection that might lead to dangerous territory.
+
+{"clue": "TOOL", "number": 2, "reasoning": "Staff can be a tool/rod and Claw can be a tool for gripping or scratching. Avoids assassin Elm and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TOOL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Staff
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "TOOL" and the available words, I need to identify which words could be tools or tool-related.
+
+From the valid guesses:
+- **Staff** - This is clearly a tool (walking staff, wizard's staff, etc.)
+- **Bow** - This could be a tool (bow and arrow, violin bow)
+- **Lens** - This is an optical tool
+- **Claw** - Could be a tool (claw hammer, crowbar)
+- **Bill** - Less likely but could refer to a tool like a billhook
+
+**Staff** seems like the most obvious and direct match for "TOOL" - it's a classic tool/weapon that fits perfectly with the clue.
+
+{"guess": "Staff", "reasoning": "Staff is a clear tool - walking staff, wizard's staff, or staff as a weapon/implement. Most direct match for the TOOL clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TOOL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Channel
+  Blank
+  Cave
+  Claw
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "TOOL" with 2 words, I've already found one tool (Staff). I need to find one more tool from the remaining words.
+
+Scanning the list:
+- **Claw** - This is definitely a tool! It's used for pulling nails, prying things apart, and is part of hammers
+- **Lens** - Could be considered a tool (optical tool)
+- **Dam** - More of a structure than a handheld tool
+- **Bow** - Could be a tool (archery tool) but also has many other meanings
+- **Bill** - Unlikely to be tool-related
+
+Claw is the strongest match - it's clearly a tool used in construction and carpentry.
+
+{"guess": "Claw", "reasoning": "Claw is clearly a tool - it's used for pulling nails and prying, and is part of hammers. This matches the TOOL clue perfectly."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TOOL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Channel
+  Blank
+  Cave
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining words and the clue "TOOL 2", I've already successfully guessed 2 words (Staff and Claw) that matched the clue. Since I've fulfilled the clue number, I should be cautious about continuing.
+
+Examining the remaining options, I don't see any clear tools among the valid guesses. Words like Elm, Australia, Undertaker, Bill, Bow, Mind, Decay, Lens, Dam, Channel, Blank, Cave, Cycle, and India don't strongly connect to tools in an obvious way.
+
+Given that:
+- I've already successfully guessed the 2 words for this clue
+- The remaining words don't clearly relate to "TOOL"
+- There's significant risk of hitting a neutral, opponent card, or worse
+- We're behind (3 red remaining vs 6 blue remaining), so avoiding mistakes is important
+
+{"guess": "PASS", "reasoning": "Already guessed 2 correct words for TOOL clue, no remaining words clearly relate to tools, better to avoid risky guesses when behind"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        [revealed]
+  Plane                RED        [revealed]
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       [revealed]
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       
+  Heart                BLUE       [revealed]
+  Staff                RED        [revealed]
+  Code                 NEUTRAL    [revealed]
+  Stadium              RED        [revealed]
+  Channel              BLUE       
+  Blank                RED        
+  Cave                 BLUE       
+  Claw                 RED        [revealed]
+  Cycle                BLUE       
+  Face                 NEUTRAL    [revealed]
+  India                NEUTRAL    
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "water", "number": 3, "reasoning": "Relates to Dam, Channel, and Cycle (water-related)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Dam
+  Channel
+  Blank
+  Cave
+  Cycle
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dam", "reasoning": "Dam is a strong water-related term; likely a Blue word under the WATER clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Channel
+  Blank
+  Cave
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Channel", "reasoning": "Directly related to water (a water channel)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Blank
+  Cave
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Cycle","reasoning":"Best match to WATER is the water cycle; strong conceptual link and likely blue.”}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Blank
+  Cave
+  Cycle
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess":"Cycle","reasoning":"Best match to WATER is the water cycle; strong conceptual link and likely blue.”}
+
+[USER]
+Invalid response: Unterminated string starting at: line 1 column 30 (char 29). Try again.
+
+[RESPONSE]
+{"guess":"Cycle","reasoning":"Direct link to WATER via the water cycle; strong blue association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Blank
+  Cave
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cave", "reasoning": "Most directly connected to water (water-filled cave/underground river); strong candidate for a Water clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        [revealed]
+  Plane                RED        [revealed]
+  Australia            RED        
+  Undertaker           RED        
+  Back                 BLUE       [revealed]
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       [revealed]
+  Heart                BLUE       [revealed]
+  Staff                RED        [revealed]
+  Code                 NEUTRAL    [revealed]
+  Stadium              RED        [revealed]
+  Channel              BLUE       [revealed]
+  Blank                RED        
+  Cave                 BLUE       [revealed]
+  Claw                 RED        [revealed]
+  Cycle                BLUE       [revealed]
+  Face                 NEUTRAL    [revealed]
+  India                NEUTRAL    
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+  [BLUE] WATER 3  #4: Cave → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words:
+- Australia (country)
+- Undertaker (funeral profession/WWE wrestler)
+- Blank (empty/void)
+
+I need to find a clue that connects these words while avoiding the ASSASSIN (Elm) and remaining BLUE words (Mind, Lens).
+
+"Australia" and "Undertaker" can both be connected through the concept of "COUNTRY" - Australia is a country, and Undertaker could relate to countries through WWE's patriotic storylines or the fact that funeral services exist in every country.
+
+"Blank" is harder to connect, but I could try for 2 words with a stronger connection rather than risk a weaker 3-word clue.
+
+However, looking more carefully, "CONTINENT" could work well for Australia specifically, and might be safer than trying to stretch connections.
+
+Actually, let me consider "NATION" - Australia is a nation, and Undertaker has strong associations with American patriotism in WWE. "Blank" doesn't fit well here either.
+
+I think the safest approach is to go with a 2-word clue focusing on Australia and Undertaker with "COUNTRY".
+
+{"clue": "COUNTRY", "number": 2, "reasoning": "Australia is a country, and Undertaker has strong patriotic/national associations in WWE storylines"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COUNTRY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Australia
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Blank
+  India
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+  [BLUE] WATER 3  #4: Cave → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Australia", "reasoning": "Australia is clearly a country, which directly matches the clue 'COUNTRY'. This is a very confident first guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COUNTRY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Blank
+  India
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+  [BLUE] WATER 3  #4: Cave → blue
+  [RED] COUNTRY 2  #1: Australia → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "COUNTRY" with 2 words, and I've already successfully guessed "Australia" (which is indeed a country).
+
+From the remaining valid guesses, I need to find another word that could relate to COUNTRY:
+
+- **India** - This is clearly a country, making it the most obvious match for the clue
+- Elm - A type of tree, not country-related
+- Undertaker - A profession, not country-related  
+- Bill - Could be a law/legislation or a person's name, weak country connection
+- Bow - A weapon or gesture, not country-related
+- Mind - Mental concept, not country-related
+- Decay - Deterioration process, not country-related
+- Lens - Optical device, not country-related
+- Blank - Empty space, not country-related
+
+India is by far the strongest match as it's literally a country, just like Australia was.
+
+{"guess": "India", "reasoning": "India is clearly a country, matching the clue perfectly like Australia did"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Elm                  ASSASSIN   
+  Giant                RED        [revealed]
+  Plane                RED        [revealed]
+  Australia            RED        [revealed]
+  Undertaker           RED        
+  Back                 BLUE       [revealed]
+  Bill                 NEUTRAL    
+  Jet                  RED        [revealed]
+  Bow                  NEUTRAL    
+  Mind                 BLUE       
+  Decay                NEUTRAL    
+  Bolt                 NEUTRAL    [revealed]
+  Lens                 BLUE       
+  Dam                  BLUE       [revealed]
+  Heart                BLUE       [revealed]
+  Staff                RED        [revealed]
+  Code                 NEUTRAL    [revealed]
+  Stadium              RED        [revealed]
+  Channel              BLUE       [revealed]
+  Blank                RED        
+  Cave                 BLUE       [revealed]
+  Claw                 RED        [revealed]
+  Cycle                BLUE       [revealed]
+  Face                 NEUTRAL    [revealed]
+  India                NEUTRAL    [revealed]
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+  [BLUE] WATER 3  #4: Cave → blue
+  [RED] COUNTRY 2  #1: Australia → red
+  [RED] COUNTRY 2  #2: India → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BACK, BILL, BLANK, BOLT, BOW, CAVE, CHANNEL, CLAW, CODE, CYCLE, DAM, DECAY, ELM, FACE, GIANT, HEART, INDIA, JET, LENS, MIND, PLANE, STADIUM, STAFF, UNDERTAKER
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "VISION", "number": 2, "reasoning": "Both blue words relate to vision: mind's eye (Mind) and the eye's lens (Lens)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VISION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Elm
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Lens
+  Blank
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+  [BLUE] WATER 3  #4: Cave → blue
+  [RED] COUNTRY 2  #1: Australia → red
+  [RED] COUNTRY 2  #2: India → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lens", "reasoning": "Direct association with vision; strongest link to the clue 'VISION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VISION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Elm
+  Undertaker
+  Bill
+  Bow
+  Mind
+  Decay
+  Blank
+
+Game history:
+  [RED] AIRCRAFT 3  #1: Jet → red
+  [RED] AIRCRAFT 3  #2: Plane → red
+  [RED] AIRCRAFT 3  #3: Bolt → neutral
+  [BLUE] ANATOMY 4  #1: Heart → blue
+  [BLUE] ANATOMY 4  #2: Face → neutral
+  [RED] BASEBALL 3  #1: Stadium → red
+  [RED] BASEBALL 3  #2: Giant → red
+  [RED] BASEBALL 3  #3: Back → blue
+  [BLUE] BLUE 6  #1: Code → neutral
+  [RED] TOOL 2  #1: Staff → red
+  [RED] TOOL 2  #2: Claw → red
+  [RED] TOOL 2  #3: PASS
+  [BLUE] WATER 3  #1: Dam → blue
+  [BLUE] WATER 3  #2: Channel → blue
+  [BLUE] WATER 3  #3: Cycle → blue
+  [BLUE] WATER 3  #4: Cave → blue
+  [RED] COUNTRY 2  #1: Australia → red
+  [RED] COUNTRY 2  #2: India → neutral
+  [BLUE] VISION 2  #1: Lens → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Mind", "reasoning": "Strong link to vision (mind's eye) and commonly associated with seeing/vision in cognitive terms."}
+============================================================

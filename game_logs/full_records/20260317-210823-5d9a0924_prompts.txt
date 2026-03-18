@@ -1,0 +1,1424 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Hull                 BLUE       
+  Book                 NEUTRAL    
+  Plane                NEUTRAL    
+  Nail                 RED        
+  Giant                RED        
+  Match                RED        
+  Face                 NEUTRAL    
+  Isle                 BLUE       
+  Head                 RED        
+  Cube                 RED        
+  Tank                 RED        
+  Cloud                BLUE       
+  Steam                NEUTRAL    
+  Fork                 RED        
+  Grass                BLUE       
+  Soldier              BLUE       
+  Bill                 BLUE       
+  Buck                 NEUTRAL    
+  Blade                NEUTRAL    
+  Channel              BLUE       
+  Leaf                 ASSASSIN   
+  Farm                 NEUTRAL    
+  File                 RED        
+  Dice                 RED        
+  Dune                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BLADE, BOOK, BUCK, CHANNEL, CLOUD, CUBE, DICE, DUNE, FACE, FARM, FILE, FORK, GIANT, GRASS, HEAD, HULL, ISLE, LEAF, MATCH, NAIL, PLANE, SOLDIER, STEAM, TANK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SHAPE", "number": 2, "reasoning": "Cube and Dice are both shapes."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHAPE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hull
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Face
+  Isle
+  Head
+  Cube
+  Tank
+  Cloud
+  Steam
+  Fork
+  Grass
+  Soldier
+  Bill
+  Buck
+  Blade
+  Channel
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cube", "reasoning": "SHAPE clue directly points to a geometric shape; Cube is a standard 3D shape and a strong match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHAPE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hull
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Face
+  Isle
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Grass
+  Soldier
+  Bill
+  Buck
+  Blade
+  Channel
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Face","reasoning":"SHAPE clue with 2; Cube was revealed already. The other shape-related word is Face (a cube has faces)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Hull                 BLUE       
+  Book                 NEUTRAL    
+  Plane                NEUTRAL    
+  Nail                 RED        
+  Giant                RED        
+  Match                RED        
+  Face                 NEUTRAL    [revealed]
+  Isle                 BLUE       
+  Head                 RED        
+  Cube                 RED        [revealed]
+  Tank                 RED        
+  Cloud                BLUE       
+  Steam                NEUTRAL    
+  Fork                 RED        
+  Grass                BLUE       
+  Soldier              BLUE       
+  Bill                 BLUE       
+  Buck                 NEUTRAL    
+  Blade                NEUTRAL    
+  Channel              BLUE       
+  Leaf                 ASSASSIN   
+  Farm                 NEUTRAL    
+  File                 RED        
+  Dice                 RED        
+  Dune                 BLUE       
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BLADE, BOOK, BUCK, CHANNEL, CLOUD, CUBE, DICE, DUNE, FACE, FARM, FILE, FORK, GIANT, GRASS, HEAD, HULL, ISLE, LEAF, MATCH, NAIL, PLANE, SOLDIER, STEAM, TANK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SEA", "number": 3, "reasoning": "Points to Hull, Isle, and Channel (nautical/sea-related)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SEA' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Hull
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Isle
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Grass
+  Soldier
+  Bill
+  Buck
+  Blade
+  Channel
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Channel", "reasoning": "Direct sea association (e.g., English Channel) — strong match for 'SEA'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SEA' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Hull
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Isle
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Grass
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hull", "reasoning": "Direct ship part — strongly associated with the sea (good match for SEA)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SEA' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Isle
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Grass
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Isle","reasoning":"Strong SEA association (island), fits clue well and unlikely to be neutral/opponent given context — best remaining sea-related choice."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SEA' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Grass
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Grass","reasoning":"Seagrass is a direct SEA compound—strong match for the SEA clue and likely a remaining blue card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Hull                 BLUE       [revealed]
+  Book                 NEUTRAL    
+  Plane                NEUTRAL    
+  Nail                 RED        
+  Giant                RED        
+  Match                RED        
+  Face                 NEUTRAL    [revealed]
+  Isle                 BLUE       [revealed]
+  Head                 RED        
+  Cube                 RED        [revealed]
+  Tank                 RED        
+  Cloud                BLUE       
+  Steam                NEUTRAL    
+  Fork                 RED        
+  Grass                BLUE       [revealed]
+  Soldier              BLUE       
+  Bill                 BLUE       
+  Buck                 NEUTRAL    
+  Blade                NEUTRAL    
+  Channel              BLUE       [revealed]
+  Leaf                 ASSASSIN   
+  Farm                 NEUTRAL    
+  File                 RED        
+  Dice                 RED        
+  Dune                 BLUE       
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BLADE, BOOK, BUCK, CHANNEL, CLOUD, CUBE, DICE, DUNE, FACE, FARM, FILE, FORK, GIANT, GRASS, HEAD, HULL, ISLE, LEAF, MATCH, NAIL, PLANE, SOLDIER, STEAM, TANK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "STRIKE", "number": 3, "reasoning": "Nail (strike a nail), Match (strike a match), Head (strike the head or strike someone on the head)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STRIKE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Book
+  Plane
+  Nail
+  Giant
+  Match
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Match", "reasoning": "STRIKE commonly pairs with 'strike a match'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STRIKE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Plane
+  Nail
+  Giant
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Nail","reasoning":"Direct association: you strike a nail."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STRIKE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Plane
+  Giant
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plane", "reasoning": "STRIKE commonly relates to an 'air strike,' making Plane a strong match for the clue STRIKE 3 (along with Match and Nail)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Hull                 BLUE       [revealed]
+  Book                 NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Nail                 RED        [revealed]
+  Giant                RED        
+  Match                RED        [revealed]
+  Face                 NEUTRAL    [revealed]
+  Isle                 BLUE       [revealed]
+  Head                 RED        
+  Cube                 RED        [revealed]
+  Tank                 RED        
+  Cloud                BLUE       
+  Steam                NEUTRAL    
+  Fork                 RED        
+  Grass                BLUE       [revealed]
+  Soldier              BLUE       
+  Bill                 BLUE       
+  Buck                 NEUTRAL    
+  Blade                NEUTRAL    
+  Channel              BLUE       [revealed]
+  Leaf                 ASSASSIN   
+  Farm                 NEUTRAL    
+  File                 RED        
+  Dice                 RED        
+  Dune                 BLUE       
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BLADE, BOOK, BUCK, CHANNEL, CLOUD, CUBE, DICE, DUNE, FACE, FARM, FILE, FORK, GIANT, GRASS, HEAD, HULL, ISLE, LEAF, MATCH, NAIL, PLANE, SOLDIER, STEAM, TANK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"bank","number":3,"reasoning":"Bank of clouds (Cloud), banknote/bill (Bill), sandbank/dune (Dune)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BANK' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Book
+  Giant
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Bill
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bill", "reasoning": "Bill = banknote/currency — direct match to 'BANK'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BANK' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Giant
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Buck
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Buck", "reasoning": "Strong money association (buck = dollar), clearly linked to 'bank' and likely a blue card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Hull                 BLUE       [revealed]
+  Book                 NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Nail                 RED        [revealed]
+  Giant                RED        
+  Match                RED        [revealed]
+  Face                 NEUTRAL    [revealed]
+  Isle                 BLUE       [revealed]
+  Head                 RED        
+  Cube                 RED        [revealed]
+  Tank                 RED        
+  Cloud                BLUE       
+  Steam                NEUTRAL    
+  Fork                 RED        
+  Grass                BLUE       [revealed]
+  Soldier              BLUE       
+  Bill                 BLUE       [revealed]
+  Buck                 NEUTRAL    [revealed]
+  Blade                NEUTRAL    
+  Channel              BLUE       [revealed]
+  Leaf                 ASSASSIN   
+  Farm                 NEUTRAL    
+  File                 RED        
+  Dice                 RED        
+  Dune                 BLUE       
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BLADE, BOOK, BUCK, CHANNEL, CLOUD, CUBE, DICE, DUNE, FACE, FARM, FILE, FORK, GIANT, GRASS, HEAD, HULL, ISLE, LEAF, MATCH, NAIL, PLANE, SOLDIER, STEAM, TANK
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "IRON", "number": 5, "reasoning": "Iron links to five unrevealed red words: Giant (Iron Giant), Tank, Fork, File, Head. Dice is already revealed."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 5 word(s).
+Guesses used this turn: 0 / 6.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Book
+  Giant
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Giant", "reasoning": "Strong link: 'Iron Giant' is a famous character; fits the IRON clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 5 word(s).
+Guesses used this turn: 1 / 6.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Head
+  Tank
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+  [RED] IRON 5  #1: Giant → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Tank", "reasoning": "Iron-themed link: tanks are made of iron/steel, so 'Tank' fits the clue IRON."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 5 word(s).
+Guesses used this turn: 2 / 6.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Head
+  Cloud
+  Steam
+  Fork
+  Soldier
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+  [RED] IRON 5  #1: Giant → red
+  [RED] IRON 5  #2: Tank → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Steam", "reasoning": "Direct link to IRON via steam iron; 'Steam' is a common association with iron"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Hull                 BLUE       [revealed]
+  Book                 NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Nail                 RED        [revealed]
+  Giant                RED        [revealed]
+  Match                RED        [revealed]
+  Face                 NEUTRAL    [revealed]
+  Isle                 BLUE       [revealed]
+  Head                 RED        
+  Cube                 RED        [revealed]
+  Tank                 RED        [revealed]
+  Cloud                BLUE       
+  Steam                NEUTRAL    [revealed]
+  Fork                 RED        
+  Grass                BLUE       [revealed]
+  Soldier              BLUE       
+  Bill                 BLUE       [revealed]
+  Buck                 NEUTRAL    [revealed]
+  Blade                NEUTRAL    
+  Channel              BLUE       [revealed]
+  Leaf                 ASSASSIN   
+  Farm                 NEUTRAL    
+  File                 RED        
+  Dice                 RED        
+  Dune                 BLUE       
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+  [RED] IRON 5  #1: Giant → red
+  [RED] IRON 5  #2: Tank → red
+  [RED] IRON 5  #3: Steam → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BILL, BLADE, BOOK, BUCK, CHANNEL, CLOUD, CUBE, DICE, DUNE, FACE, FARM, FILE, FORK, GIANT, GRASS, HEAD, HULL, ISLE, LEAF, MATCH, NAIL, PLANE, SOLDIER, STEAM, TANK
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SPICE", "number": 1, "reasoning": "Strongly points to Dune (the spice melange) without obvious links to assassin or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPICE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Book
+  Head
+  Cloud
+  Fork
+  Soldier
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+  [RED] IRON 5  #1: Giant → red
+  [RED] IRON 5  #2: Tank → red
+  [RED] IRON 5  #3: Steam → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dune", "reasoning": "Reference to the spice melange from the novel Dune — strongest direct association with 'SPICE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPICE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Book
+  Head
+  Cloud
+  Fork
+  Soldier
+  Blade
+  Leaf
+  Farm
+  File
+  Dice
+
+Game history:
+  [RED] SHAPE 2  #1: Cube → red
+  [RED] SHAPE 2  #2: Face → neutral
+  [BLUE] SEA 3  #1: Channel → blue
+  [BLUE] SEA 3  #2: Hull → blue
+  [BLUE] SEA 3  #3: Isle → blue
+  [BLUE] SEA 3  #4: Grass → blue
+  [RED] STRIKE 3  #1: Match → red
+  [RED] STRIKE 3  #2: Nail → red
+  [RED] STRIKE 3  #3: Plane → neutral
+  [BLUE] BANK 3  #1: Bill → blue
+  [BLUE] BANK 3  #2: Buck → neutral
+  [RED] IRON 5  #1: Giant → red
+  [RED] IRON 5  #2: Tank → red
+  [RED] IRON 5  #3: Steam → neutral
+  [BLUE] SPICE 1  #1: Dune → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Leaf","reasoning":"Bay leaf and other leaves are used as spices/seasonings — 'Leaf' is the best match to 'SPICE' among the remaining words."}
+============================================================

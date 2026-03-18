@@ -1,0 +1,1165 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bolt                 NEUTRAL    
+  Ruler                NEUTRAL    
+  Blast                NEUTRAL    
+  Bow                  RED        
+  Crew                 NEUTRAL    
+  Crop                 NEUTRAL    
+  Comic                RED        
+  Pole                 RED        
+  Piano                BLUE       
+  Draft                BLUE       
+  Cover                BLUE       
+  Bun                  RED        
+  Dam                  RED        
+  Coach                BLUE       
+  Flight               RED        
+  Deep                 RED        
+  Chain                RED        
+  Front                BLUE       
+  Glacier              ASSASSIN   
+  Fang                 BLUE       
+  Cotton               BLUE       
+  Capital              RED        
+  Press                BLUE       
+  Field                NEUTRAL    
+  Zombie               NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLAST, BOLT, BOW, BUN, CAPITAL, CHAIN, COACH, COMIC, COTTON, COVER, CREW, CROP, DAM, DEEP, DRAFT, FANG, FIELD, FLIGHT, FRONT, GLACIER, PIANO, POLE, PRESS, RULER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Arrow","number":2,"reasoning":"Connects strongly to BOW and FLIGHT, both red. It has limited pull toward other board words and does not suggest the assassin GLACIER."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARROW' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bolt
+  Ruler
+  Blast
+  Bow
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Cover
+  Bun
+  Dam
+  Coach
+  Flight
+  Deep
+  Chain
+  Front
+  Glacier
+  Fang
+  Cotton
+  Capital
+  Press
+  Field
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Bow","reasoning":"Arrow is most directly associated with a bow; this is the strongest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ARROW' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bolt
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Cover
+  Bun
+  Dam
+  Coach
+  Flight
+  Deep
+  Chain
+  Front
+  Glacier
+  Fang
+  Cotton
+  Capital
+  Press
+  Field
+  Zombie
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Bolt","reasoning":"Best fit with ARROW after Bow; bolt is a similar projectile/ammunition term and the strongest remaining association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bolt                 NEUTRAL    [revealed]
+  Ruler                NEUTRAL    
+  Blast                NEUTRAL    
+  Bow                  RED        [revealed]
+  Crew                 NEUTRAL    
+  Crop                 NEUTRAL    
+  Comic                RED        
+  Pole                 RED        
+  Piano                BLUE       
+  Draft                BLUE       
+  Cover                BLUE       
+  Bun                  RED        
+  Dam                  RED        
+  Coach                BLUE       
+  Flight               RED        
+  Deep                 RED        
+  Chain                RED        
+  Front                BLUE       
+  Glacier              ASSASSIN   
+  Fang                 BLUE       
+  Cotton               BLUE       
+  Capital              RED        
+  Press                BLUE       
+  Field                NEUTRAL    
+  Zombie               NEUTRAL    
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLAST, BOLT, BOW, BUN, CAPITAL, CHAIN, COACH, COMIC, COTTON, COVER, CREW, CROP, DAM, DEEP, DRAFT, FANG, FIELD, FLIGHT, FRONT, GLACIER, PIANO, POLE, PRESS, RULER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "fabric", "number": 1, "reasoning": "The word 'fabric' most closely relates to 'Cotton', which is a blue word. No other blue words are strongly linked to 'fabric', and this clue avoids dangerous connections to assassin or red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FABRIC' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Cover
+  Bun
+  Dam
+  Coach
+  Flight
+  Deep
+  Chain
+  Front
+  Glacier
+  Fang
+  Cotton
+  Capital
+  Press
+  Field
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cotton", "reasoning": "Cotton is a type of fabric, making it the most direct and obvious connection to the clue 'FABRIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FABRIC' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Cover
+  Bun
+  Dam
+  Coach
+  Flight
+  Deep
+  Chain
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cover", "reasoning": "Cover can be made of fabric, such as a book cover or pillow cover. It is the most directly related to fabric among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bolt                 NEUTRAL    [revealed]
+  Ruler                NEUTRAL    
+  Blast                NEUTRAL    
+  Bow                  RED        [revealed]
+  Crew                 NEUTRAL    
+  Crop                 NEUTRAL    
+  Comic                RED        
+  Pole                 RED        
+  Piano                BLUE       
+  Draft                BLUE       
+  Cover                BLUE       [revealed]
+  Bun                  RED        
+  Dam                  RED        
+  Coach                BLUE       
+  Flight               RED        
+  Deep                 RED        
+  Chain                RED        
+  Front                BLUE       
+  Glacier              ASSASSIN   
+  Fang                 BLUE       
+  Cotton               BLUE       [revealed]
+  Capital              RED        
+  Press                BLUE       
+  Field                NEUTRAL    
+  Zombie               NEUTRAL    
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLAST, BOLT, BOW, BUN, CAPITAL, CHAIN, COACH, COMIC, COTTON, COVER, CREW, CROP, DAM, DEEP, DRAFT, FANG, FIELD, FLIGHT, FRONT, GLACIER, PIANO, POLE, PRESS, RULER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Barrier","number":2,"reasoning":"Connects strongly to DAM and POLE (as barrier posts), while avoiding strong ties to the assassin GLACIER and most blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BARRIER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Bun
+  Dam
+  Coach
+  Flight
+  Deep
+  Chain
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Dam","reasoning":"\"Barrier\" most directly matches DAM, which is a structure that blocks water."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BARRIER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Bun
+  Coach
+  Flight
+  Deep
+  Chain
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"CHAIN","reasoning":"Chain is a strong match for 'BARRIER' as in a chain barrier or chain-link barrier; it fits the clue better than the other remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BARRIER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Bun
+  Coach
+  Flight
+  Deep
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found 2 strong matches for BARRIER (Dam, Chain). A third guess would be speculative and risks hitting neutral, blue, or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bolt                 NEUTRAL    [revealed]
+  Ruler                NEUTRAL    
+  Blast                NEUTRAL    
+  Bow                  RED        [revealed]
+  Crew                 NEUTRAL    
+  Crop                 NEUTRAL    
+  Comic                RED        
+  Pole                 RED        
+  Piano                BLUE       
+  Draft                BLUE       
+  Cover                BLUE       [revealed]
+  Bun                  RED        
+  Dam                  RED        [revealed]
+  Coach                BLUE       
+  Flight               RED        
+  Deep                 RED        
+  Chain                RED        [revealed]
+  Front                BLUE       
+  Glacier              ASSASSIN   
+  Fang                 BLUE       
+  Cotton               BLUE       [revealed]
+  Capital              RED        
+  Press                BLUE       
+  Field                NEUTRAL    
+  Zombie               NEUTRAL    
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLAST, BOLT, BOW, BUN, CAPITAL, CHAIN, COACH, COMIC, COTTON, COVER, CREW, CROP, DAM, DEEP, DRAFT, FANG, FIELD, FLIGHT, FRONT, GLACIER, PIANO, POLE, PRESS, RULER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "music", "number": 1, "reasoning": "The word 'Piano' is a blue word and strongly associated with 'music'. None of the remaining blue words directly connect to this clue, so giving 'music' for 1 is safe and focuses the guessers on 'Piano'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Piano
+  Draft
+  Bun
+  Coach
+  Flight
+  Deep
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Piano", "reasoning": "Piano is directly related to music as a musical instrument, making it the most obvious connection to the clue 'MUSIC'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MUSIC' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ruler
+  Blast
+  Crew
+  Crop
+  Comic
+  Pole
+  Draft
+  Bun
+  Coach
+  Flight
+  Deep
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+  [BLUE] MUSIC 1  #1: Piano → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blast", "reasoning": "Of the available words, 'Blast' is most closely associated with music (e.g., music is often played loudly or 'blasted'), making it the best fit for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bolt                 NEUTRAL    [revealed]
+  Ruler                NEUTRAL    
+  Blast                NEUTRAL    [revealed]
+  Bow                  RED        [revealed]
+  Crew                 NEUTRAL    
+  Crop                 NEUTRAL    
+  Comic                RED        
+  Pole                 RED        
+  Piano                BLUE       [revealed]
+  Draft                BLUE       
+  Cover                BLUE       [revealed]
+  Bun                  RED        
+  Dam                  RED        [revealed]
+  Coach                BLUE       
+  Flight               RED        
+  Deep                 RED        
+  Chain                RED        [revealed]
+  Front                BLUE       
+  Glacier              ASSASSIN   
+  Fang                 BLUE       
+  Cotton               BLUE       [revealed]
+  Capital              RED        
+  Press                BLUE       
+  Field                NEUTRAL    
+  Zombie               NEUTRAL    
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+  [BLUE] MUSIC 1  #1: Piano → blue
+  [BLUE] MUSIC 1  #2: Blast → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLAST, BOLT, BOW, BUN, CAPITAL, CHAIN, COACH, COMIC, COTTON, COVER, CREW, CROP, DAM, DEEP, DRAFT, FANG, FIELD, FLIGHT, FRONT, GLACIER, PIANO, POLE, PRESS, RULER, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Aviation","number":2,"reasoning":"Strongly links FLIGHT and POLE (as in a flagpole/windsock or airport pole) while avoiding the assassin GLACIER and having limited pull toward blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AVIATION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ruler
+  Crew
+  Crop
+  Comic
+  Pole
+  Draft
+  Bun
+  Coach
+  Flight
+  Deep
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+  [BLUE] MUSIC 1  #1: Piano → blue
+  [BLUE] MUSIC 1  #2: Blast → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Flight","reasoning":"Most direct match to AVIATION; it's strongly associated with air travel and aircraft."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'AVIATION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ruler
+  Crew
+  Crop
+  Comic
+  Pole
+  Draft
+  Bun
+  Coach
+  Deep
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+  [BLUE] MUSIC 1  #1: Piano → blue
+  [BLUE] MUSIC 1  #2: Blast → neutral
+  [RED] AVIATION 2  #1: Flight → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Crew","reasoning":"Crew fits aviation well, as in flight crew or aircraft crew, and is the strongest remaining match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bolt                 NEUTRAL    [revealed]
+  Ruler                NEUTRAL    
+  Blast                NEUTRAL    [revealed]
+  Bow                  RED        [revealed]
+  Crew                 NEUTRAL    [revealed]
+  Crop                 NEUTRAL    
+  Comic                RED        
+  Pole                 RED        
+  Piano                BLUE       [revealed]
+  Draft                BLUE       
+  Cover                BLUE       [revealed]
+  Bun                  RED        
+  Dam                  RED        [revealed]
+  Coach                BLUE       
+  Flight               RED        [revealed]
+  Deep                 RED        
+  Chain                RED        [revealed]
+  Front                BLUE       
+  Glacier              ASSASSIN   
+  Fang                 BLUE       
+  Cotton               BLUE       [revealed]
+  Capital              RED        
+  Press                BLUE       
+  Field                NEUTRAL    
+  Zombie               NEUTRAL    
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+  [BLUE] MUSIC 1  #1: Piano → blue
+  [BLUE] MUSIC 1  #2: Blast → neutral
+  [RED] AVIATION 2  #1: Flight → red
+  [RED] AVIATION 2  #2: Crew → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLAST, BOLT, BOW, BUN, CAPITAL, CHAIN, COACH, COMIC, COTTON, COVER, CREW, CROP, DAM, DEEP, DRAFT, FANG, FIELD, FLIGHT, FRONT, GLACIER, PIANO, POLE, PRESS, RULER, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "news", "number": 2, "reasoning": "The words 'Press' and 'Draft' are both related to 'news': 'Press' refers to the news media, and 'Draft' can refer to a draft of a news article. These connections are strong, while the risk to other words is minimal, as none of the remaining red or neutral words directly relate to 'news', and the assassin ('Glacier') is unrelated."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NEWS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ruler
+  Crop
+  Comic
+  Pole
+  Draft
+  Bun
+  Coach
+  Deep
+  Front
+  Glacier
+  Fang
+  Capital
+  Press
+  Field
+  Zombie
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ARROW 2  #1: Bow → red
+  [RED] ARROW 2  #2: Bolt → neutral
+  [BLUE] FABRIC 1  #1: Cotton → blue
+  [BLUE] FABRIC 1  #2: Cover → blue
+  [RED] BARRIER 2  #1: Dam → red
+  [RED] BARRIER 2  #2: Chain → red
+  [RED] BARRIER 2  #3: PASS
+  [BLUE] MUSIC 1  #1: Piano → blue
+  [BLUE] MUSIC 1  #2: Blast → neutral
+  [RED] AVIATION 2  #1: Flight → red
+  [RED] AVIATION 2  #2: Crew → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
