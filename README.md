@@ -99,9 +99,10 @@ codenames/
 ├── agents.py         # LLM Spymaster & Guesser agents (via litellm)
 ├── runner.py         # Team class + GameRunner orchestrator
 ├── elo.py            # ELO rating system + JSON-backed leaderboard
-├── tournament.py     # Round-robin benchmark runner (parallel games)
+├── tournament.py     # Round-robin benchmark runner (parallel games), start leaderboard
 ├── inject_tables.py  # Injects HTML tables into README between ESTTAB markers
 └── remove_tables.py  # Removes injected HTML tables from README
+└── addnewmodel.py    # Adds new model to leaderboard
 
 main.py               # CLI: play a single game or view the leaderboard
 tests/                # pytest test suite
@@ -111,7 +112,6 @@ game_logs/
 ├── leaderboard.html        # HTML leaderboard (injected into README)
 ├── games.json              # Per-game records (appended after every game)
 └── full_records/
-    ├── {game_id}.txt        # Play-by-play log
     └── {game_id}_prompts.txt  # Full LLM prompt/response log
 ```
 
