@@ -1,0 +1,1996 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Axe                  BLUE       
+  Lion                 RED        
+  Ash                  BLUE       
+  Lead                 ASSASSIN   
+  Vest                 BLUE       
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        
+  Club                 RED        
+  Lily                 RED        
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       
+  Dark                 NEUTRAL    
+  Telescope            RED        
+  Game                 BLUE       
+  Cup                  BLUE       
+  Moscow               RED        
+  State                RED        
+  Deep                 NEUTRAL    
+  France               NEUTRAL    
+  Match                BLUE       
+  Lava                 NEUTRAL    
+  Rose                 RED        
+  Model                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Capital", "number": 3, "reasoning": "London and Moscow are capitals; 'State' pairs with capital (state capital)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAPITAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Axe
+  Lion
+  Ash
+  Lead
+  Vest
+  Crest
+  Bruise
+  London
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  Moscow
+  State
+  Deep
+  France
+  Match
+  Lava
+  Rose
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"London","reasoning":"Direct match: London is a capital city (United Kingdom), clearly fits the clue 'CAPITAL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAPITAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lion
+  Ash
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  Moscow
+  State
+  Deep
+  France
+  Match
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Moscow","reasoning":"Direct match: Moscow is a capital city and strongly fits the clue; likely one of the three intended (along with State and France)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAPITAL' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lion
+  Ash
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  France
+  Match
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"France","reasoning":"Previous guesses were capitals (London, Moscow). France fits the 'capital' theme (capital = Paris), so it's likely the third red target."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Axe                  BLUE       
+  Lion                 RED        
+  Ash                  BLUE       
+  Lead                 ASSASSIN   
+  Vest                 BLUE       
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        [revealed]
+  Club                 RED        
+  Lily                 RED        
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       
+  Dark                 NEUTRAL    
+  Telescope            RED        
+  Game                 BLUE       
+  Cup                  BLUE       
+  Moscow               RED        [revealed]
+  State                RED        
+  Deep                 NEUTRAL    
+  France               NEUTRAL    [revealed]
+  Match                BLUE       
+  Lava                 NEUTRAL    
+  Rose                 RED        
+  Model                RED        
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED, NEUTRAL, and especially the ASSASSIN (Lead).
+
+Let me look at my BLUE words: Axe, Ash, Vest, Crest, Bush, Game, Cup, Match
+
+Let me think about groupings:
+
+**Fire-related**: Ash (from fire), Match (lights fire), Bush (bush fire) - 3 words
+- Risk: Lava (neutral) could be associated with fire too, but that's just neutral, not deadly.
+
+**Coat of Arms / Heraldry**: Crest, Vest, Axe - these could connect but hard to find one word.
+
+**Tournament/Competition**: Game, Match, Cup (trophy/tournament) - 3 words
+- Risk: Club (RED) could be associated with competition. State (RED) less so.
+
+Let me think about "TOURNAMENT": Game, Match, Cup - all relate to tournaments/competitions. Club (RED) is a risk but "tournament" doesn't directly mean club. 
+
+What about "TROPHY"? Cup (trophy), Game, Crest (like on a trophy)... weaker.
+
+What about "FIREWOOD"? Ash, Bush, Match - but that's a stretch for Bush.
+
+**"BONFIRE"**: Ash, Match, Bush (burning bush) - but bonfire is quite specific.
+
+**"KINDLE"**: Match (kindle a fire), Ash (result of fire), Bush (kindling) - 3 words. Risk: Lava (neutral).
+
+**"CRICKET"**: Match (cricket match), Ash/Ashes (cricket trophy), Game, Bat→Axe? No. But "Cricket" connects Match, Ash (The Ashes is a famous cricket series), Game, Cup - potentially 4! 
+- Risk: Club (RED) could be cricket club. But cricket more strongly connects to Match, Ashes, Game, Cup.
+
+Actually "ASHES" - no, Ash is on the board.
+
+Let me reconsider "CRICKET": Match (cricket match), Ash (The Ashes), Game (cricket is a game), Cup (Cricket World Cup) = 4 BLUE words. Club is RED but "cricket club" is a stretch compared to the direct connections.
+
+{"clue": "CRICKET", "number": 4, "reasoning": "Connects Match (cricket match), Ash (The Ashes series), Game (cricket is a game), and Cup (Cricket World Cup). Club (RED) is a minor risk but the direct connections to these 4 BLUE words are stronger."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRICKET' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Axe
+  Lion
+  Ash
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Match
+  Lava
+  Rose
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about what connects to "CRICKET" with 4 words.
+
+Cricket associations:
+- **Match** - A cricket match (game of cricket) — strong connection
+- **Bat** - Not on the list
+- **Club** - Cricket club — strong connection
+- **Ash/Ashes** - "The Ashes" is the famous cricket series between England and Australia — strong connection
+- **Game** - Cricket is a game — decent connection
+- **Date** - Less obvious connection
+- **Cup** - Cricket World Cup — decent connection
+- **Rose** - The Rose Bowl is a cricket ground; also Yorkshire Rose in county cricket
+- **Lead** - Less obvious
+- **Vest** - Cricket vest/sweater? Weak
+- **Deep** - "Deep" is a fielding position in cricket (deep midwicket, deep square leg, etc.) — decent connection
+
+Let me rank the top 4:
+1. **Match** - Very strong (cricket match)
+2. **Ash** - Very strong (The Ashes)
+3. **Club** - Strong (cricket club)
+4. **Game** - Decent (cricket is a game)
+
+But wait - could **Bat** relate? Not on the list. What about **Deep**? In cricket, "deep" is a fielding position. And **Cup** (Cricket World Cup)?
+
+I think the 4 intended words are most likely: Match, Ash, Club, and then either Game, Cup, or Deep.
+
+Let me start with the most confident guess.
+
+{"guess": "MATCH", "reasoning": "A cricket match is one of the most natural associations with cricket. Very strong connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRICKET' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lion
+  Ash
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "BAT", "reasoning": "Cricket uses a bat... wait, BAT is not in the valid guesses list. Let me reconsider.
+
+Cricket connections: BAT (not available), BALL (not available), WICKET (not available), MATCH (already guessed correctly), CLUB (cricket club), GAME (cricket is a game), ASH (The Ashes - famous cricket series), PITCH (not available).
+
+Let me go with ASH - The Ashes is one of the most famous cricket competitions between England and Australia."}
+
+Wait, let me reformat:
+
+{"guess": "ASH", "reasoning": "The Ashes is one of the most famous cricket series (England vs Australia). Strong cricket connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRICKET' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lion
+  Ash
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "BAT", "reasoning": "Cricket uses a bat... wait, BAT is not in the valid guesses list. Let me reconsider.
+
+Cricket connections: BAT (not available), BALL (not available), WICKET (not available), MATCH (already guessed correctly), CLUB (cricket club), GAME (cricket is a game), ASH (The Ashes - famous cricket series), PITCH (not available).
+
+Let me go with ASH - The Ashes is one of the most famous cricket competitions between England and Australia."}
+
+Wait, let me reformat:
+
+{"guess": "ASH", "reasoning": "The Ashes is one of the most famous cricket series (England vs Australia). Strong cricket connection."}
+
+[USER]
+Invalid response: Invalid control character at: line 1 column 116 (char 115). Try again.
+
+[RESPONSE]
+{"guess": "ASH", "reasoning": "The Ashes is one of the most famous cricket series between England and Australia. Strong cricket connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRICKET' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lion
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "BAT", "reasoning": "Wait, BAT is not in the valid guesses list. Let me reconsider.
+
+Cricket relates to: bat, ball, match (already guessed), ash (already guessed), club, game, wicket, pitch, test, etc.
+
+CLUB - cricket club is a very common term.
+GAME - cricket is a game.
+
+Let me go with CLUB as it's strongly associated with cricket (cricket club)."}
+
+Wait, let me reformat properly.
+
+{"guess": "CLUB", "reasoning": "Cricket club is a very common phrase - clubs play cricket. This is a strong association with the clue CRICKET."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CRICKET' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lion
+  Lead
+  Vest
+  Crest
+  Bruise
+  Club
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "BAT", "reasoning": "Wait, BAT is not in the valid guesses list. Let me reconsider.
+
+Cricket relates to: bat, ball, match (already guessed), ash (already guessed), club, game, wicket, pitch, test, etc.
+
+CLUB - cricket club is a very common term.
+GAME - cricket is a game.
+
+Let me go with CLUB as it's strongly associated with cricket (cricket club)."}
+
+Wait, let me reformat properly.
+
+{"guess": "CLUB", "reasoning": "Cricket club is a very common phrase - clubs play cricket. This is a strong association with the clue CRICKET."}
+
+[USER]
+Invalid response: Invalid control character at: line 1 column 94 (char 93). Try again.
+
+[RESPONSE]
+{"guess": "CLUB", "reasoning": "Cricket club is a very common phrase. Clubs play cricket, so this is a strong association with the clue CRICKET."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Axe                  BLUE       
+  Lion                 RED        
+  Ash                  BLUE       [revealed]
+  Lead                 ASSASSIN   
+  Vest                 BLUE       
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        [revealed]
+  Club                 RED        [revealed]
+  Lily                 RED        
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       
+  Dark                 NEUTRAL    
+  Telescope            RED        
+  Game                 BLUE       
+  Cup                  BLUE       
+  Moscow               RED        [revealed]
+  State                RED        
+  Deep                 NEUTRAL    
+  France               NEUTRAL    [revealed]
+  Match                BLUE       [revealed]
+  Lava                 NEUTRAL    
+  Rose                 RED        
+  Model                RED        
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Constellation", "number": 2, "reasoning": "Links Lion (the constellation Leo) and Telescope (used to observe constellations)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONSTELLATION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Axe
+  Lion
+  Lead
+  Vest
+  Crest
+  Bruise
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lion", "reasoning": "Leo = Lion is a clear constellation match for 'CONSTELLATION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONSTELLATION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Telescope
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Telescope", "reasoning": "Directly associated with observing constellations — strong, clear link to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONSTELLATION' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Game
+  Cup
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Cup","reasoning":"Crater (Latin for 'cup') is a named constellation — strong match for CONSTELLATION after Lion and Telescope."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Axe                  BLUE       
+  Lion                 RED        [revealed]
+  Ash                  BLUE       [revealed]
+  Lead                 ASSASSIN   
+  Vest                 BLUE       
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        [revealed]
+  Club                 RED        [revealed]
+  Lily                 RED        
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       
+  Dark                 NEUTRAL    
+  Telescope            RED        [revealed]
+  Game                 BLUE       
+  Cup                  BLUE       [revealed]
+  Moscow               RED        [revealed]
+  State                RED        
+  Deep                 NEUTRAL    
+  France               NEUTRAL    [revealed]
+  Match                BLUE       [revealed]
+  Lava                 NEUTRAL    
+  Rose                 RED        
+  Model                RED        
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining BLUE words as possible: **Axe, Vest, Crest, Bush, Game**.
+
+Let me think about connections:
+
+- **Crest** and **Bush** could relate to "coat of arms" / heraldry
+- **Vest** is clothing/armor
+- **Game** could relate to hunting
+- **Axe** is a weapon/tool
+
+Let me think about "HUNT": Game (game hunting), Bush (hunting in the bush), Axe (hunting tool)... maybe not Vest or Crest.
+
+What about "COAT"? Coat of arms → Crest, Coat → Vest (both outerwear/clothing), Bush → coat? Not strong.
+
+"SHIELD": Crest (on a shield), Vest (protective like a shield), Axe (weapon/shield combo)... but could point to State or other words.
+
+"EMBLEM": Crest (emblem), Axe (on emblems), Bush (family emblem)... 
+
+"FAMILY": Crest (family crest), Bush (Bush family), Game (family game), Axe (family?)... but Bush family is proper noun territory. Still, "family crest," "family game," "Bush family" - these are strong associations. Vest and Axe less so.
+
+Risk check: "FAMILY" → Rose (family name) is RED, Lily (family name) is RED. That's dangerous.
+
+"CHOP": Axe (chop with an axe), Bush (chop a bush), Game (chop game meat)... but weak.
+
+"ARMOR": Vest (body armor), Crest (armor crest), Axe (battle axe)... 3 words. Risk: Lead could be armor-related? Not strongly. 
+
+"KNIGHT": Crest (knight's crest), Vest (knight's vest/armor), Axe (knight's weapon), Game (knight's game like chess)... Risk: Model knight? Rose? Not strong connections to red/assassin words.
+
+"HERALDIC": Too obscure. 
+
+"BATTLE": Axe (battle axe), Vest (bullet-proof vest), Crest (battle crest), Game (war game)... Risk: Lead? State? Not too strong.
+
+{"clue": "KNIGHT", "number": 4, "reasoning": "Connecting Crest (knight's crest), Vest (knight's armor/vest), Axe (knight's battle axe), Game (knight in chess game, or knightly games/tournaments). Bush is missed but 4 is strong. Low risk for assassin (Lead) and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'KNIGHT' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Lily
+  Date
+  Fossil
+  Bush
+  Dark
+  Game
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about what words connect to "KNIGHT" with 4 words indicated.
+
+Let me consider associations with KNIGHT:
+
+1. **Dark** - "Dark Knight" (Batman) - very strong connection
+2. **Crest** - Knights have crests on their helmets/shields - strong connection
+3. **Axe** - Knights used axes as weapons - reasonable connection
+4. **Rose** - "Knight and Rose" is less direct, but there's the concept of a knight giving a rose, or "Rose Knight" - moderate connection
+5. **Vest** - Knights wore armor/vests - possible but weaker
+6. **Date** - Knights went on dates? Weak connection
+7. **Lead** - Knights could "lead" armies - moderate
+8. **Game** - "Knight" is a chess piece, chess is a game - decent connection
+9. **Lily** - Less obvious connection
+10. **Bush** - George H.W. Bush was knighted... weak
+
+Let me think more carefully:
+- **Dark** Knight → very strong
+- **Crest** → heraldic crest, very knightly
+- **Axe** → battle axe, knight's weapon
+- **Game** → chess piece (knight), or "knight game"
+- **Rose** → "War of the Roses" involved knights, or a knight's rose/emblem
+- **Model** → model knight? Weak
+
+I think the four most likely are: Dark (Dark Knight), Crest (heraldic), Axe (weapon), and then either Rose or Game.
+
+Let me start with the strongest connection.
+
+{"guess": "DARK", "reasoning": "Dark Knight is an extremely strong compound word/phrase (Batman's Dark Knight, or the concept of a dark knight in medieval lore). This is the strongest association with KNIGHT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Axe                  BLUE       
+  Lion                 RED        [revealed]
+  Ash                  BLUE       [revealed]
+  Lead                 ASSASSIN   
+  Vest                 BLUE       
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        [revealed]
+  Club                 RED        [revealed]
+  Lily                 RED        
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       
+  Dark                 NEUTRAL    [revealed]
+  Telescope            RED        [revealed]
+  Game                 BLUE       
+  Cup                  BLUE       [revealed]
+  Moscow               RED        [revealed]
+  State                RED        
+  Deep                 NEUTRAL    
+  France               NEUTRAL    [revealed]
+  Match                BLUE       [revealed]
+  Lava                 NEUTRAL    
+  Rose                 RED        
+  Model                RED        
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Flower","number":2,"reasoning":"Points to Lily and Rose (both types of flowers)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Lily
+  Date
+  Fossil
+  Bush
+  Game
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Lily","reasoning":"Lily is directly a flower and matches the clue FLOWER (one of the two intended answers)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Date
+  Fossil
+  Bush
+  Game
+  State
+  Deep
+  Lava
+  Rose
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Rose","reasoning":"Direct match to the clue FLOWER — Rose is a flower and likely the intended second flower (Lily was already found)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FLOWER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Date
+  Fossil
+  Bush
+  Game
+  State
+  Deep
+  Lava
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bush", "reasoning": "A bush commonly has flowers (e.g., rose bush); strongest match to the clue FLOWER among remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Axe                  BLUE       
+  Lion                 RED        [revealed]
+  Ash                  BLUE       [revealed]
+  Lead                 ASSASSIN   
+  Vest                 BLUE       
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        [revealed]
+  Club                 RED        [revealed]
+  Lily                 RED        [revealed]
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       [revealed]
+  Dark                 NEUTRAL    [revealed]
+  Telescope            RED        [revealed]
+  Game                 BLUE       
+  Cup                  BLUE       [revealed]
+  Moscow               RED        [revealed]
+  State                RED        
+  Deep                 NEUTRAL    
+  France               NEUTRAL    [revealed]
+  Match                BLUE       [revealed]
+  Lava                 NEUTRAL    
+  Rose                 RED        [revealed]
+  Model                RED        
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of BLUE's remaining words as possible: **Axe, Vest, Crest, Game**.
+
+I need to avoid pointing toward: State (RED), Model (RED), Lead (ASSASSIN), and neutrals (Bruise, Date, Fossil, Deep, Lava).
+
+Let me think about connections:
+
+- **Coat**: "Coat of arms" → Crest, "Coat" → Vest (a vest is a type of coat/garment), "Battle axe" on a coat of arms → Axe (stretch). Hmm, not strong enough for Axe/Game.
+
+- **Body**: Body armor → Vest, body → Axe (body spray brand), body game... not great.
+
+- **Armor**: Vest (bulletproof vest), Crest (on armor/heraldry), Axe (weapon associated with armor/knights), Game (armor in games). But could this point to State or Model? Not strongly.
+
+- **Knight**: Already used as a clue. Let me think differently.
+
+- **Shield**: Crest (shield crest), Vest (protective like a shield), Axe (medieval weapon paired with shield)... but only 2-3.
+
+- **Heraldry**: Crest (heraldic crest), Axe (heraldic symbol)... only 2.
+
+- **Battle**: Battle axe, battle vest (punk/metal vest), battle game... Crest is a stretch. But "Battle" connects Axe, Vest, Game = 3. Could "battle" point to State (battle state)? Slightly. Lead? Not really.
+
+- **War**: War axe, war vest, war game, war crest... all 4! "Wargame" is a thing, "war crest" works, "war axe" is classic, "war vest" (tactical vest). Does it point to State (war state - possible but not strong), Model (war model - slight), Lead (not really). This seems good!
+
+- **Board**: Board game, board crest? No.
+
+Let me go with **WAR** for 4: war axe, war game, war crest (heraldic/military crest), bulletproof vest (war vest/tactical vest).
+
+{"clue": "WAR", "number": 4, "reasoning": "War axe (Axe), war game (Game), war crest/military crest (Crest), tactical/bulletproof vest (Vest). Avoids assassin (Lead) and opponent words (State, Model). All four blue words connect to warfare/military themes."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WAR' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Date
+  Fossil
+  Game
+  State
+  Deep
+  Lava
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find 4 words related to "WAR" from the valid guesses.
+
+Let me think through each word's connection to WAR:
+
+- **Axe** - War axe (a weapon of war) ✓
+- **Lead** - Lead can relate to war (bullets are lead, "lead" troops into battle) ✓
+- **Vest** - Bulletproof vest (war gear) ✓
+- **Crest** - Family crest, coat of arms (heraldic/military connection) - possible
+- **Bruise** - Injury, but not strongly war-related
+- **Date** - Not strongly war-related
+- **Fossil** - Not war-related
+- **Game** - War game ✓
+- **State** - State of war, war state ✓
+- **Deep** - Not strongly war-related
+- **Lava** - Not war-related
+- **Model** - Not strongly war-related
+
+The strongest connections to WAR:
+1. **Game** - "War game" is a very common compound phrase
+2. **Axe** - "War axe" is a classic weapon
+3. **State** - "War state" or "state of war" is a common phrase
+4. **Vest** - "War vest" or bulletproof vest... less direct
+5. **Crest** - War crest, family crest associated with warfare
+6. **Lead** - Leading troops, or lead bullets
+
+I think the top 4 are likely: **Axe** (war axe), **Game** (war game), **State** (state of war), and either **Crest** (war crest) or **Lead** (war lead).
+
+Let me start with the most confident one:
+
+{"guess": "GAME", "reasoning": "War game is an extremely common compound word/phrase - this seems like one of the strongest connections to WAR."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WAR' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Axe
+  Lead
+  Vest
+  Crest
+  Bruise
+  Date
+  Fossil
+  State
+  Deep
+  Lava
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+  [BLUE] WAR 4  #1: Game → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Axe", "reasoning": "WAR clue with 4 words. 'Axe' is a weapon of war, making it a strong connection. With 'Game' already guessed correctly, I need to find 3 more war-related words. Battle axe is a classic war weapon."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WAR' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lead
+  Vest
+  Crest
+  Bruise
+  Date
+  Fossil
+  State
+  Deep
+  Lava
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+  [BLUE] WAR 4  #1: Game → blue
+  [BLUE] WAR 4  #2: Axe → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Vest", "reasoning": "With the clue 'WAR' and 4 words, I've already correctly guessed 'Game' and 'Axe'. A 'Vest' connects to war through 'bulletproof vest' - a piece of military/combat equipment. This seems like a strong connection. With only 2 blue cards remaining and 2 red cards remaining, I need to be careful but also need to find my remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WAR' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Lead
+  Crest
+  Bruise
+  Date
+  Fossil
+  State
+  Deep
+  Lava
+  Model
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+  [BLUE] WAR 4  #1: Game → blue
+  [BLUE] WAR 4  #2: Axe → blue
+  [BLUE] WAR 4  #3: Vest → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find the last BLUE word. We only need 1 more blue card to win. The clue is "WAR" with 4 words. We've already guessed 3 correctly (Game, Axe, Vest).
+
+Let me think about which remaining word connects to "WAR":
+
+- **Lead** - "War lead" or "lead" as in taking the lead in war, or lead bullets used in war
+- **Crest** - family crest, coat of arms, somewhat related to war
+- **Bruise** - injury, but not strongly war-related
+- **Date** - war date? Not strong
+- **Fossil** - no connection
+- **State** - "state of war," "war state" - decent connection
+- **Deep** - not strong
+- **Lava** - no connection
+- **Model** - no connection
+
+"State" connects well with "state of war." "Lead" connects as in leading troops or lead ammunition. 
+
+But considering the Spymaster chose "WAR" as a clue for 4 words, and we got Game (war game), Axe (battle axe/war axe), Vest (bulletproof vest)... The fourth could be **State** (state of war) or **Lead** (lead as in bullets/ammunition).
+
+Given that Red only has 2 remaining and we need just 1, I should be somewhat careful but we need to guess. I think **State** is the strongest connection - "state of war" is a very common phrase.
+
+{"guess": "STATE", "reasoning": "State of war is a very common phrase/concept, making it a strong connection to the clue WAR. We only need 1 more blue card to win."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Axe                  BLUE       [revealed]
+  Lion                 RED        [revealed]
+  Ash                  BLUE       [revealed]
+  Lead                 ASSASSIN   
+  Vest                 BLUE       [revealed]
+  Crest                BLUE       
+  Bruise               NEUTRAL    
+  London               RED        [revealed]
+  Club                 RED        [revealed]
+  Lily                 RED        [revealed]
+  Date                 NEUTRAL    
+  Fossil               NEUTRAL    
+  Bush                 BLUE       [revealed]
+  Dark                 NEUTRAL    [revealed]
+  Telescope            RED        [revealed]
+  Game                 BLUE       [revealed]
+  Cup                  BLUE       [revealed]
+  Moscow               RED        [revealed]
+  State                RED        [revealed]
+  Deep                 NEUTRAL    
+  France               NEUTRAL    [revealed]
+  Match                BLUE       [revealed]
+  Lava                 NEUTRAL    
+  Rose                 RED        [revealed]
+  Model                RED        
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+  [BLUE] WAR 4  #1: Game → blue
+  [BLUE] WAR 4  #2: Axe → blue
+  [BLUE] WAR 4  #3: Vest → blue
+  [BLUE] WAR 4  #4: State → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ASH, AXE, BRUISE, BUSH, CLUB, CREST, CUP, DARK, DATE, DEEP, FOSSIL, FRANCE, GAME, LAVA, LEAD, LILY, LION, LONDON, MATCH, MODEL, MOSCOW, ROSE, STATE, TELESCOPE, VEST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"FASHION","number":1,"reasoning":"points to a fashion model (connects to Model)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FASHION' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Lead
+  Crest
+  Bruise
+  Date
+  Fossil
+  Deep
+  Lava
+  Model
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CAPITAL 3  #1: London → red
+  [RED] CAPITAL 3  #2: Moscow → red
+  [RED] CAPITAL 3  #3: France → neutral
+  [BLUE] CRICKET 4  #1: Match → blue
+  [BLUE] CRICKET 4  #2: Ash → blue
+  [BLUE] CRICKET 4  #3: Club → red
+  [RED] CONSTELLATION 2  #1: Lion → red
+  [RED] CONSTELLATION 2  #2: Telescope → red
+  [RED] CONSTELLATION 2  #3: Cup → blue
+  [BLUE] KNIGHT 4  #1: Dark → neutral
+  [RED] FLOWER 2  #1: Lily → red
+  [RED] FLOWER 2  #2: Rose → red
+  [RED] FLOWER 2  #3: Bush → blue
+  [BLUE] WAR 4  #1: Game → blue
+  [BLUE] WAR 4  #2: Axe → blue
+  [BLUE] WAR 4  #3: Vest → blue
+  [BLUE] WAR 4  #4: State → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Model","reasoning":"A fashion model is directly connected to FASHION — best and safest match for the one red word remaining."}
+============================================================

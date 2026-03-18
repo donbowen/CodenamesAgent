@@ -1,0 +1,2190 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Force                RED        
+  Flash                RED        
+  Copper               RED        
+  Note                 BLUE       
+  Fence                NEUTRAL    
+  Fork                 RED        
+  Yard                 RED        
+  Lantern              NEUTRAL    
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        
+  Freeze               NEUTRAL    
+  Fountain             BLUE       
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       
+  Farm                 BLUE       
+  Jack                 NEUTRAL    
+  Kelp                 BLUE       
+  Egypt                RED        
+  Trick                RED        
+  Lure                 BLUE       
+  Lab                  BLUE       
+  Slug                 BLUE       
+  Roller               RED        
+  Dune                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Force, Flash, Copper, Fork, Yard, Fuse, Egypt, Trick, Roller
+
+Let me think about connections:
+
+- **Flash, Force, Fuse** - these could relate to electricity/power
+- **Copper, Flash, Fuse** - electrical terms (copper wire, flash, fuse)
+- **Fork, Trick** - magic tricks? fork bending?
+- **Roller, Yard** - measurement? 
+- **Egypt, Roller** - ancient Egypt had rollers for pyramids?
+
+Let me think about "electrical":
+- Fuse (electrical), Copper (conductor), Flash (electrical flash), Force (electromotive force) - that's 4 RED words
+- But Flash could lead to Flash (camera)...
+
+**"Coaster"** - roller coaster... only one.
+
+**"Hat trick"**, **"Trick"** - magic...
+
+Let me think about **"wire"**:
+- Copper wire, Fuse wire, Fence (wire fence - NEUTRAL), Force... hmm
+
+**"Magic"**: Trick (magic trick), Flash (magic flash), Force (force a card - magic), Fuse... 
+
+**"Card"**: Trick (card trick), Force (card force in magic), Flash (flash cards?)... 
+
+**"Electrical"**: Fuse, Copper, Flash, Force (EMF) - 4 RED words, but need to avoid GLASS (assassin) and neutral words.
+
+**"Conductor"**: Copper (conductor), Fuse, Force... Roller (steam roller)...
+
+**"Hat"**: Hat trick... only one.
+
+**"Ancient"**: Egypt... 
+
+**"Pyramid"**: Egypt, Force... 
+
+Let me try **"wire"**: Copper wire, Fuse wire, Fence wire (NEUTRAL - bad), Barbed wire...
+
+**"Blow"**: Fuse (blow a fuse), Flash (blow flash?), Trick...
+
+**"Short"**: Fuse (short fuse), Flash (short flash), Fork (short fork?)...
+
+**"Short circuit"**: Fuse, Copper, Flash... 
+
+**"Electrical"** connecting Fuse, Copper, Flash, Force - 4 RED words with minimal risk.
+
+Actually **"blowout"** - Fuse blowout, Flash blowout...
+
+Let me try **"coil"**: Copper coil, Fuse coil, Force coil... 
+
+**"Stamp"**: Roller (steam roller), Yard (Scotland Yard)...
+
+**"Scotland"**: Yard (Scotland Yard)... only one really.
+
+**"Pharaoh"**: Egypt... 
+
+**"Pitchfork"**: Fork... 
+
+**"Lightning"**: Flash, Force, Fuse, Copper (lightning rod/copper)... 4 RED words, and avoids assassin GLASS.
+
+{"clue": "LIGHTNING", "number": 4, "reasoning": "Lightning connects Flash (lightning flash), Fuse (lightning can blow fuses), Copper (copper lightning rods), and Force (lightning force/electromagnetic force). All are RED words and avoids the GLASS assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHTNING' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Force
+  Flash
+  Copper
+  Note
+  Fence
+  Fork
+  Yard
+  Lantern
+  Glass
+  Steam
+  Fuse
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Kelp
+  Egypt
+  Trick
+  Lure
+  Lab
+  Slug
+  Roller
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I'll analyze which words connect to 'LIGHTNING' (4 words).
+
+Lightning associations:
+- **Flash** - lightning flash (very direct)
+- **Fork** - forked lightning (very direct)
+- **Rod** - lightning rod (not on list)
+- **Strike** - lightning strike (not on list)
+- **Bolt** - lightning bolt (not on list)
+- **Fuse** - lightning can blow fuses; also "fuse" as in explosive fuse connected to lightning/spark
+- **Force** - "force of lightning", also Star Wars Force lightning
+- **Trick** - "lightning trick"? weak
+- **Jack** - "Cracker Jack"? no... "flapjack"? Lightning Jack (movie)?
+- **Roller** - "lightning roller"? no
+- **Freeze** - opposite of lightning? no
+- **Copper** - copper conducts electricity/lightning
+- **Slug** - slug (electrical unit)? weak
+
+Most confident:
+1. **Flash** - lightning flash
+2. **Fork** - forked lightning
+3. **Fuse** - lightning/electricity blows fuses; lightning fuse
+4. **Rod** - not available; maybe **Force** (force lightning from Star Wars)
+
+Starting with the most obvious:
+
+{"guess": "Flash", "reasoning": "Lightning flash is a very direct and common association - lightning produces a flash of light."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHTNING' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Force
+  Copper
+  Note
+  Fence
+  Fork
+  Yard
+  Lantern
+  Glass
+  Steam
+  Fuse
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Kelp
+  Egypt
+  Trick
+  Lure
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find words associated with LIGHTNING.
+
+Already guessed: Flash (correct, red)
+
+Thinking about LIGHTNING connections:
+- **Rod** - lightning rod (not available)
+- **Bolt** - lightning bolt (not available)
+- **Fork** - forked lightning! Lightning forks/branches
+- **Bug** - lightning bug (not available)
+- **Strike** - lightning strike (not available)
+- **Conductor** - lightning conductor (not available)
+- **Fuse** - lightning can blow a fuse; also fuses are related to electrical discharge
+- **Trick** - trick... not obvious
+- **Roller** - lightning roller? No...
+- **Jack** - Cracker Jack? No... 
+- **Copper** - copper is a conductor of electricity/lightning
+- **Rod** - not available
+- **Lure** - no
+- **Lantern** - no direct connection
+- **Slug** - slug... no
+- **Steam** - no
+- **Glass** - glass rod... no
+- **Fence** - lightning fence? Electric fence!
+
+Wait, let me reconsider:
+- **Fork** - forked lightning (very strong)
+- **Fuse** - electrical fuse, lightning blows fuses
+- **Copper** - electrical conductor
+- **Rod** - not available
+- **Bolt** - not available
+
+The spymaster gave 4 words. Flash was one. Other lightning-related things:
+- **Fork** - forked lightning ✓✓
+- **Fuse** - lightning/electrical ✓
+- **Copper** - conductor ✓
+- **Trick** - lightning trick? No...
+- **Bug** - lightning bug (not available)
+
+Let me go with **Fork** (forked lightning is very common phrase).
+
+{"guess": "Fork", "reasoning": "Forked lightning is a very common term - lightning that branches/forks. Strong connection to LIGHTNING."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHTNING' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Fuse
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Kelp
+  Egypt
+  Trick
+  Lure
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'LIGHTNING' with 4 words, I've already correctly guessed "Flash" and "Fork" (both associated with lightning). I need to find 2 more words connected to lightning.
+
+Let me think about lightning associations:
+- **Rod** - lightning rod (not available)
+- **Strike** - lightning strike (not available)
+- **Bug** - lightning bug (not available)
+- **Bolt** - lightning bolt (not available)
+- **Storm** - (not available)
+
+From the available words:
+- **Jack** - "Cracker Jack"? No... "Flapjack"? Hmm. Actually, "Jumping Jack" - no. Wait, could this be related to lightning? Not strongly.
+- **Fuse** - A fuse can be blown by lightning/electricity, and "fuse" relates to electrical systems. Also "lightning fuse" isn't a phrase, but fuses are part of electrical protection against lightning surges.
+- **Rod** - not available
+- **Roller** - "Thunder roller"? No...
+- **Trick** - "hat trick"? No lightning connection obvious.
+- **Lure** - No.
+- **Lab** - Lightning lab? Weak.
+- **Slug** - No.
+
+Actually, **Jack** - "Cracker Jack"... wait, could "Jack" relate to lightning? "Flapjack"? No. 
+
+**Fuse** - Lightning can blow a fuse, and fuses protect against electrical surges. This seems like a reasonable connection to lightning (electrical).
+
+**Rod** isn't available, but **Fuse** fits the electrical/lightning theme well.
+
+{"guess": "Fuse", "reasoning": "A fuse is an electrical safety device that protects against power surges, closely associated with lightning and electricity. Lightning can blow fuses, and both relate to electrical systems."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LIGHTNING' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Kelp
+  Egypt
+  Trick
+  Lure
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'LIGHTNING' and what's been guessed so far (Flash, Fork, Fuse - all red), I need to find one more word related to LIGHTNING.
+
+Words related to lightning:
+- **Rod** - lightning rod (not available)
+- **Bolt** - lightning bolt (not available)
+- **Bug** - lightning bug (not available)
+- **Strike** - lightning strike (not available)
+- **Conductor** - lightning conductor... **Copper** is a conductor of electricity/lightning
+- **Jack** - could be related (Cracker Jack? no...)
+- **Slug** - a slug of electricity?
+- **Roller** - roller... no
+- **Trick** - trick... no
+- **Lure** - no
+- **Rod** - not available
+
+Wait - **Roller** could be "Thunder Roller"? No...
+
+**Bug** - lightning bug, but not available.
+
+**Copper** - copper is a conductor, related to lightning/electricity. But this feels like a stretch.
+
+**Jack** - "Crackerjack"? No... "Flapjack"? Lightning Jack (movie)?
+
+Actually, thinking about "lightning" compound words or phrases:
+- Lightning **Rod** - not available
+- Lightning **Bug** - not available  
+- **Slug** - a slug can mean a slow creature (opposite of lightning fast?)
+
+I've already guessed 3 correctly. With 6 red remaining and 8 blue, I should be cautious. Let me PASS to avoid a wrong guess.
+
+{"guess": "PASS", "reasoning": "Already guessed 3 correctly for the LIGHTNING clue (Flash, Fork, Fuse). The 4th word isn't obvious enough from remaining options to risk guessing wrong - could hit a blue card or assassin. Passing is the safe play."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Force                RED        
+  Flash                RED        [revealed]
+  Copper               RED        
+  Note                 BLUE       
+  Fence                NEUTRAL    
+  Fork                 RED        [revealed]
+  Yard                 RED        
+  Lantern              NEUTRAL    
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        [revealed]
+  Freeze               NEUTRAL    
+  Fountain             BLUE       
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       
+  Farm                 BLUE       
+  Jack                 NEUTRAL    
+  Kelp                 BLUE       
+  Egypt                RED        
+  Trick                RED        
+  Lure                 BLUE       
+  Lab                  BLUE       
+  Slug                 BLUE       
+  Roller               RED        
+  Dune                 NEUTRAL    
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Ocean", "number": 3, "reasoning": "Kelp, Slug, and Lure are related to the ocean or sea life"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Kelp
+  Egypt
+  Trick
+  Lure
+  Lab
+  Slug
+  Roller
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Kelp", "reasoning": "'Kelp' is directly related to the ocean as it is a type of seaweed found in ocean waters."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lure
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lure", "reasoning": "Lure relates to ocean as it can be used in fishing or attracting sea creatures, fitting the clue 'OCEAN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Freeze
+  Fountain
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fountain", "reasoning": "Fountain is related to water and fits the ocean clue well, making it a strong candidate for the third ocean-related word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Freeze
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Freeze", "reasoning": "Freeze relates to ocean water turning to ice, fitting the ocean clue and likely a blue word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Force                RED        
+  Flash                RED        [revealed]
+  Copper               RED        
+  Note                 BLUE       
+  Fence                NEUTRAL    
+  Fork                 RED        [revealed]
+  Yard                 RED        
+  Lantern              NEUTRAL    
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fountain             BLUE       [revealed]
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       
+  Farm                 BLUE       
+  Jack                 NEUTRAL    
+  Kelp                 BLUE       [revealed]
+  Egypt                RED        
+  Trick                RED        
+  Lure                 BLUE       [revealed]
+  Lab                  BLUE       
+  Slug                 BLUE       
+  Roller               RED        
+  Dune                 NEUTRAL    
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Force, Copper, Yard, Egypt, Trick, Roller.
+
+Let me think about connections:
+
+**Force, Copper, Yard, Egypt, Trick, Roller**
+
+- "Trick or treat" - Trick
+- Scotland Yard - Yard (police)
+- Copper (police slang)
+- Force (police force)
+- These three (Yard, Copper, Force) all relate to police/law enforcement!
+
+- Egypt - ancient, pharaoh, pyramid
+- Roller - steam roller, roller coaster, high roller
+- Trick - magic trick, trick or treat
+
+Let me think about "police" connections:
+- Scotland Yard = police headquarters
+- Copper = slang for police officer
+- Force = police force
+- Roller = Rolls Royce? Or... in British slang, "roller" can mean police car!
+
+So Yard, Copper, Force, Roller could all be police-related (British slang especially).
+
+That's 4 words! Let me verify:
+- Copper = cop/police officer ✓
+- Force = police force ✓
+- Yard = Scotland Yard ✓
+- Roller = British slang for police car ✓
+
+Risk check: 
+- Bond (blue) - James Bond? No police connection really
+- Slug (blue) - no
+- Glass (assassin) - no police connection
+
+This seems safe!
+
+{"clue": "POLICE", "number": 4, "reasoning": "Copper (slang for cop), Force (police force), Yard (Scotland Yard), and Roller (British slang for police car) all relate to police. This avoids the assassin Glass and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POLICE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Force
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Roller
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to POLICE (4 words).
+
+Let me think about police-related words:
+
+- **Force**: Police Force ✓ (very common phrase)
+- **Copper**: Slang for police officer ✓
+- **Yard**: Scotland Yard (famous police headquarters) ✓
+- **Jack**: Flapjack? No... "Jack" can mean detective/police in some slang ✓
+- **Roller**: Slang for police (British slang) ✓
+- **Fence**: A fence receives stolen goods - related to crime but not police directly
+- **Slug**: A bullet, not really police
+- **Lab**: Police lab? Possible but weak
+- **Steam**: Steam roller? 
+- **Note**: Police note? Weak
+
+The strongest connections:
+1. **Force** - Police Force (very strong)
+2. **Copper** - slang for police (very strong)
+3. **Yard** - Scotland Yard (strong)
+4. **Roller** - British slang for police (moderate)
+5. **Jack** - could be Flapjack or Cracker Jack... or "Jack" as detective slang
+
+I'm most confident about Force, Copper, and Yard. Roller is possible British slang. Jack is less certain for police specifically.
+
+Starting with the most confident:
+
+{"guess": "Force", "reasoning": "Police Force is a very common and direct phrase - high confidence this is a red card."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POLICE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Copper
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'POLICE' with 4 words, and we've already correctly guessed "Force" (police force).
+
+Let me think about other police-related words:
+- **Copper** - slang for a police officer ✓
+- **Yard** - Scotland Yard, famous police headquarters ✓
+- **Roller** - slang for police (British slang) ✓
+- **Jack** - slang for police/detective ✓
+- **Fence** - could relate to crime (receiving stolen goods) but not directly police
+- **Slug** - bullet, not directly police
+- **Steam** - not obvious police connection
+- **Note** - not obvious police connection
+- **Bond** - James Bond? Not police exactly
+
+The strongest connections to POLICE:
+1. **Copper** - very common slang for police officer
+2. **Yard** - Scotland Yard
+3. **Roller** - British slang for police
+4. **Jack** - slang for detective/police
+
+Let me go with **Copper** as it's the most universally recognized police slang.
+
+{"guess": "Copper", "reasoning": "Copper is a very common slang term for a police officer, strongly connecting to the POLICE clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POLICE' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Note
+  Fence
+  Yard
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'POLICE' with 4 words, and we've already correctly guessed Force and Copper (both police-related terms).
+
+Let me think about what other words relate to POLICE:
+
+- **Beat** - a police beat (not on list)
+- **Yard** - Scotland Yard (famous police headquarters in London) ✓
+- **Note** - not strongly police-related
+- **Fence** - police deal with fences (receivers of stolen goods), but this is a stretch
+- **Lab** - police lab/forensics ✓
+- **Slug** - a slug is a bullet, police use bullets... weak
+- **Jack** - Flapjack? Cracker Jack? "Jack" can mean detective/police in slang ✓
+- **Roller** - "roller" is British slang for police ✓
+- **Steam** - not police-related
+
+Top candidates:
+- **Yard** - Scotland Yard is very strongly police-related
+- **Roller** - British slang for police
+- **Jack** - slang for detective/police
+
+**Yard** seems most clearly police-related (Scotland Yard = Metropolitan Police). We're tied 4 red vs 5 blue, so we need to be aggressive but careful.
+
+{"guess": "Yard", "reasoning": "Scotland Yard is the famous headquarters of the Metropolitan Police in London - very strongly associated with POLICE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POLICE' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Note
+  Fence
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Roller
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'POLICE' with 4 words, I've already correctly guessed Force, Copper, and Yard (3/4). I need one more police-related word.
+
+Thinking about police connections:
+- **Beat** - a police beat (not available)
+- **Slug** - a slug can be slang for a bullet, but also police slang?
+- **Jack** - "Flapjack"? No... but "Jack" can mean police/detective in some slang
+- **Note** - a police note?
+- **Roller** - "Roller" is British slang for police officer!
+- **Fence** - a fence receives stolen goods (criminal, not police)
+- **Lab** - police lab/forensics lab
+
+"Roller" is indeed British slang for a police officer. That seems like the strongest connection to POLICE.
+
+{"guess": "Roller", "reasoning": "Roller is British slang for a police officer, fitting the POLICE clue theme alongside Force, Copper, and Yard."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POLICE' — 4 word(s).
+Guesses used this turn: 4 / 5.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Note
+  Fence
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Slug
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the situation:
+- Red remaining: 2, Blue remaining: 5
+- We've already guessed 4 words for the POLICE clue (Force, Copper, Yard, Roller) - all correct!
+- We have 1 more guess available (clue_number + 1 = 5 total)
+
+We need 2 more red cards to win. The POLICE clue was for 4 words, and we've used all 4. The remaining valid guesses need to be evaluated carefully.
+
+POLICE-related words still on the board:
+- **Slug** - a slug is a bullet, used by police; also "slug" can refer to a police term
+- **Fence** - a fence is someone who deals in stolen goods (criminal/police context)
+- **Note** - police note? Less obvious
+- **Jack** - "Jack" can mean police (slang in some regions), or a detective
+
+"Slug" as in a bullet has police connections. "Fence" relates to criminal/police context. "Jack" - in British slang, "jack" can mean detective/police.
+
+However, we're on our 5th guess (bonus guess). We need 2 red cards to win. If we guess wrong here, we risk giving blue an advantage or hitting the assassin.
+
+Given we've already hit all 4 POLICE words, this 5th guess is risky. The remaining words are less clearly connected. I should PASS to be safe - we only need 2 more and can get them next turn.
+
+Wait - if we get 2 more red cards, we WIN. But we only have 1 guess left this turn. Let me think about the safest red card...
+
+**Slug** - police use slugs (bullets). This seems plausible as a red card.
+
+{"guess": "SLUG", "reasoning": "A slug is a bullet, closely associated with police/law enforcement. With 2 red cards remaining and needing to win, this seems like the most police-related word still available."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Force                RED        [revealed]
+  Flash                RED        [revealed]
+  Copper               RED        [revealed]
+  Note                 BLUE       
+  Fence                NEUTRAL    
+  Fork                 RED        [revealed]
+  Yard                 RED        [revealed]
+  Lantern              NEUTRAL    
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fountain             BLUE       [revealed]
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       
+  Farm                 BLUE       
+  Jack                 NEUTRAL    
+  Kelp                 BLUE       [revealed]
+  Egypt                RED        
+  Trick                RED        
+  Lure                 BLUE       [revealed]
+  Lab                  BLUE       
+  Slug                 BLUE       [revealed]
+  Roller               RED        [revealed]
+  Dune                 NEUTRAL    
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "connection", "number": 2, "reasoning": "Bond and Note both relate to connection: Bond as a link and Note as a communication."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONNECTION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Note
+  Fence
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Bond
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bond", "reasoning": "Bond strongly relates to CONNECTION as it implies a link or tie between things."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CONNECTION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Note
+  Fence
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Farm
+  Jack
+  Egypt
+  Trick
+  Lab
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Jack", "reasoning": "Jack can relate to 'connection' as in a jack plug or connector, fitting the clue well."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Force                RED        [revealed]
+  Flash                RED        [revealed]
+  Copper               RED        [revealed]
+  Note                 BLUE       
+  Fence                NEUTRAL    
+  Fork                 RED        [revealed]
+  Yard                 RED        [revealed]
+  Lantern              NEUTRAL    
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fountain             BLUE       [revealed]
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       [revealed]
+  Farm                 BLUE       
+  Jack                 NEUTRAL    [revealed]
+  Kelp                 BLUE       [revealed]
+  Egypt                RED        
+  Trick                RED        
+  Lure                 BLUE       [revealed]
+  Lab                  BLUE       
+  Slug                 BLUE       [revealed]
+  Roller               RED        [revealed]
+  Dune                 NEUTRAL    
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words: EGYPT and TRICK.
+
+Let me think about what connects these two:
+- EGYPT: ancient civilization, pyramids, pharaohs, hieroglyphics, Nile, sphinx, mummies
+- TRICK: magic trick, hat trick, trick or treat, con trick, card trick
+
+What connects them?
+- "Hat" - hat trick (hockey/soccer), and... Egypt? Not strong.
+- "Magic" - magic trick, and Egypt is associated with ancient magic/mysticism
+- "Card" - card trick, and... Egypt? Not strong.
+- "Pyramid" - pyramid scheme is a trick/scam? Stretch.
+- "Ancient" - ancient trick, ancient Egypt? 
+- "Mummy" - mummy's trick? No.
+- "Sphinx" - no.
+- "Pharaoh" - no.
+
+"Magic" works well: magic trick is a direct compound, and Egypt is strongly associated with ancient magic, mysticism, and sorcery (biblical plagues, Egyptian magic).
+
+Risk check: 
+- GLASS (assassin) - not associated with magic
+- FARM, NOTE, LAB (blue) - not strongly associated with magic
+- LANTERN, STEAM, EXHAUST (neutral) - not strongly magic
+
+{"clue": "MAGIC", "number": 2, "reasoning": "TRICK connects directly as 'magic trick', and EGYPT is strongly associated with ancient magic and mysticism. Low risk of hitting GLASS (assassin) or blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAGIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Note
+  Fence
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Farm
+  Egypt
+  Trick
+  Lab
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the valid guesses and the clue 'MAGIC' with 2 words:
+
+- **TRICK**: Magic trick is a very direct association
+- **GLASS**: Magic glass / looking glass has some connection, but less direct
+- **LANTERN**: Magic lantern is a classic term for an early projector/illusion device
+- **WAND**: Not on the list
+- **Egypt**: Less direct
+
+"Magic trick" is the most obvious connection. "Magic lantern" is also a well-known phrase. These two seem most likely to be the red cards.
+
+We only need 2 more red cards to win, and blue needs 3. We should be aggressive but careful.
+
+{"guess": "TRICK", "reasoning": "Magic trick is the most direct and obvious association with MAGIC."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MAGIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Note
+  Fence
+  Lantern
+  Glass
+  Steam
+  Exhaust
+  Farm
+  Egypt
+  Lab
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+  [RED] MAGIC 2  #1: Trick → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'MAGIC' with 2 words, I've already guessed "Trick" correctly. I need one more guess.
+
+Red has only 1 card remaining, and Blue has 3. I need to find the last red card.
+
+Thinking about "MAGIC" connections:
+- Magic **Wand** - not on board
+- Magic **Show** - not on board
+- Magic **Glass** - a magic mirror/glass could work (like a crystal ball or magic mirror)
+- Magic **Lantern** - a "magic lantern" is literally a historical term for an early image projector!
+- Magic **Farm** - no
+- Magic **Lab** - no
+
+"Magic Lantern" is a real compound word - it's a historical optical device used to project images, like an early slide projector. This seems very strong.
+
+"Magic Glass" could also work (crystal ball, looking glass in Alice in Wonderland context), but "Magic Lantern" is a more direct compound phrase.
+
+Given that we only need 1 more red card and I'm very confident about "Lantern," I'll go with it.
+
+{"guess": "Lantern", "reasoning": "A 'magic lantern' is a historical optical projector - it's a well-known compound phrase that fits the MAGIC clue perfectly. This should be the last red card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Force                RED        [revealed]
+  Flash                RED        [revealed]
+  Copper               RED        [revealed]
+  Note                 BLUE       
+  Fence                NEUTRAL    
+  Fork                 RED        [revealed]
+  Yard                 RED        [revealed]
+  Lantern              NEUTRAL    [revealed]
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fountain             BLUE       [revealed]
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       [revealed]
+  Farm                 BLUE       
+  Jack                 NEUTRAL    [revealed]
+  Kelp                 BLUE       [revealed]
+  Egypt                RED        
+  Trick                RED        [revealed]
+  Lure                 BLUE       [revealed]
+  Lab                  BLUE       
+  Slug                 BLUE       [revealed]
+  Roller               RED        [revealed]
+  Dune                 NEUTRAL    
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+  [RED] MAGIC 2  #1: Trick → red
+  [RED] MAGIC 2  #2: Lantern → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Agriculture", "number": 2, "reasoning": "The clue relates to 'Farm' and 'Lab' as farms are agricultural and labs can be related to agricultural research, connecting two unrevealed blue words while avoiding red, neutral, and assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'AGRICULTURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Note
+  Fence
+  Glass
+  Steam
+  Exhaust
+  Farm
+  Egypt
+  Lab
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+  [RED] MAGIC 2  #1: Trick → red
+  [RED] MAGIC 2  #2: Lantern → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Farm", "reasoning": "Farm is directly related to agriculture, making it the strongest candidate for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'AGRICULTURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Note
+  Fence
+  Glass
+  Steam
+  Exhaust
+  Egypt
+  Lab
+  Dune
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+  [RED] MAGIC 2  #1: Trick → red
+  [RED] MAGIC 2  #2: Lantern → neutral
+  [BLUE] AGRICULTURE 2  #1: Farm → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fence", "reasoning": "Fences are commonly associated with agriculture, used to enclose fields and farms."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Force                RED        [revealed]
+  Flash                RED        [revealed]
+  Copper               RED        [revealed]
+  Note                 BLUE       
+  Fence                NEUTRAL    [revealed]
+  Fork                 RED        [revealed]
+  Yard                 RED        [revealed]
+  Lantern              NEUTRAL    [revealed]
+  Glass                ASSASSIN   
+  Steam                NEUTRAL    
+  Fuse                 RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fountain             BLUE       [revealed]
+  Exhaust              NEUTRAL    
+  Bond                 BLUE       [revealed]
+  Farm                 BLUE       [revealed]
+  Jack                 NEUTRAL    [revealed]
+  Kelp                 BLUE       [revealed]
+  Egypt                RED        
+  Trick                RED        [revealed]
+  Lure                 BLUE       [revealed]
+  Lab                  BLUE       
+  Slug                 BLUE       [revealed]
+  Roller               RED        [revealed]
+  Dune                 NEUTRAL    
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+  [RED] MAGIC 2  #1: Trick → red
+  [RED] MAGIC 2  #2: Lantern → neutral
+  [BLUE] AGRICULTURE 2  #1: Farm → blue
+  [BLUE] AGRICULTURE 2  #2: Fence → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOND, COPPER, DUNE, EGYPT, EXHAUST, FARM, FENCE, FLASH, FORCE, FORK, FOUNTAIN, FREEZE, FUSE, GLASS, JACK, KELP, LAB, LANTERN, LURE, NOTE, ROLLER, SLUG, STEAM, TRICK, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the board, I need to find a clue for the one remaining RED word: **EGYPT**.
+
+Blue remaining words: NOTE, LAB
+Assassin: GLASS
+
+I need a clue that points to EGYPT without accidentally pointing to NOTE, LAB, or GLASS.
+
+EGYPT associations:
+- Ancient civilization, pyramids, pharaohs, Nile, desert, Cairo, hieroglyphics, mummies, sphinx
+
+Let me think about what connects to EGYPT:
+- "PYRAMID" - strongly associated with Egypt
+- "PHARAOH" - Egyptian ruler
+- "NILE" - river in Egypt
+- "ANCIENT" - could point elsewhere
+- "CAIRO" - capital of Egypt
+- "MUMMY" - Egyptian mummies
+
+Does "PYRAMID" point to anything dangerous? NOTE (musical note, not pyramid), LAB (laboratory, not pyramid), GLASS (glass pyramid at the Louvre... hmm, that's a risk). 
+
+PHARAOH - very specific to Egypt, unlikely to point to LAB, NOTE, or GLASS.
+
+NILE - strongly associated with Egypt, river. Could it point to NOTE? No. LAB? No. GLASS? No.
+
+CAIRO - the capital, very specific to Egypt.
+
+I'll go with PYRAMID - it's strongly associated with Egypt and unlikely to mislead toward LAB, NOTE, or GLASS.
+
+{"clue": "PYRAMID", "number": 1, "reasoning": "EGYPT is famous for its pyramids. This clue strongly and specifically points to EGYPT without any connection to the blue words NOTE or LAB, or the assassin GLASS."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PYRAMID' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Note
+  Glass
+  Steam
+  Exhaust
+  Egypt
+  Lab
+  Dune
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] LIGHTNING 4  #1: Flash → red
+  [RED] LIGHTNING 4  #2: Fork → red
+  [RED] LIGHTNING 4  #3: Fuse → red
+  [RED] LIGHTNING 4  #4: PASS
+  [BLUE] OCEAN 3  #1: Kelp → blue
+  [BLUE] OCEAN 3  #2: Lure → blue
+  [BLUE] OCEAN 3  #3: Fountain → blue
+  [BLUE] OCEAN 3  #4: Freeze → neutral
+  [RED] POLICE 4  #1: Force → red
+  [RED] POLICE 4  #2: Copper → red
+  [RED] POLICE 4  #3: Yard → red
+  [RED] POLICE 4  #4: Roller → red
+  [RED] POLICE 4  #5: Slug → blue
+  [BLUE] CONNECTION 2  #1: Bond → blue
+  [BLUE] CONNECTION 2  #2: Jack → neutral
+  [RED] MAGIC 2  #1: Trick → red
+  [RED] MAGIC 2  #2: Lantern → neutral
+  [BLUE] AGRICULTURE 2  #1: Farm → blue
+  [BLUE] AGRICULTURE 2  #2: Fence → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Egypt", "reasoning": "PYRAMID is most directly associated with Egypt - the pyramids of Giza are iconic Egyptian structures. We need just 1 more red card to win, and Egypt is the strongest match for PYRAMID among the valid options."}
+============================================================

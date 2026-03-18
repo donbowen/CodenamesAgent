@@ -1,0 +1,2446 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Roller               RED        
+  Haze                 RED        
+  Hotel                BLUE       
+  Beam                 BLUE       
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        
+  Cube                 BLUE       
+  Book                 RED        
+  Champion             NEUTRAL    
+  Rose                 BLUE       
+  Light                RED        
+  Class                BLUE       
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        
+  Chime                RED        
+  Mirror               BLUE       
+  Dog                  RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (Yard).
+
+RED words remaining:
+- Roller
+- Haze
+- Front
+- Book
+- Light
+- Alien
+- Cargo
+- Chime
+- Dog
+
+Let me look for connections:
+
+1. **Dog, Wolf (NEUTRAL)** - Animal connection, but Wolf is neutral
+2. **Light, Beam (BLUE)** - Both about illumination, but Beam is blue
+3. **Book, Front** - Could relate to "cover" but risky
+4. **Cargo, Alien** - Space/sci-fi theme
+5. **Roller, Front** - Could relate to "war" (roller in steamroller, front line)
+6. **Chime, Bell** - Sound connection
+
+Let me consider "SOUND" for Chime, but that's only 1 word.
+
+Looking at **Roller, Haze, Light** - these could connect to "PAINT" (paint roller, hazy effect, light colors).
+
+Or **Dog, Chime** - "BELL" (bell chime, dog collar bell, doorbell).
+
+Actually, **Cargo, Alien, Light** could connect to "SPACE" - cargo ship/spacecraft, alien from space, speed of light. But "space" might also connect to Yard (space/yard as measurements).
+
+Let me try **"PAINT"** for Roller (paint roller), Light (light colors), and possibly Haze (hazy paint effect). That's 3 words, relatively safe.
+
+Wait - **"BELL"** for Dog (bell collar), Chime (bell chime) = 2 words, very safe.
+
+I'll go with **"PAINT"** as it connects 3 words safely.
+
+{"clue": "PAINT", "number": 3, "reasoning": "Connects ROLLER (paint roller), LIGHT (light colors/paint), and HAZE (hazy paint effects). Avoids assassin and opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAINT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Roller
+  Haze
+  Hotel
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Front
+  Cube
+  Book
+  Champion
+  Rose
+  Light
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Chime
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Roller",
+  "reasoning": "ROLLER is the strongest connection to PAINT - a paint roller is a common tool used for painting walls and surfaces. This is a very direct and confident first guess."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PAINT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Hotel
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Front
+  Cube
+  Book
+  Champion
+  Rose
+  Light
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Chime
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Rose",
+  "reasoning": "PAINT connects strongly to Rose - you can paint roses, rose is a common paint color (rose pink, rose red), and roses are frequent subjects in paintings. This is a confident second guess after Roller was correct."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       
+  Beam                 BLUE       
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        
+  Cube                 BLUE       
+  Book                 RED        
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        
+  Class                BLUE       
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        
+  Chime                RED        
+  Mirror               BLUE       
+  Dog                  RED        
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED, NEUTRAL, and especially the ASSASSIN (YARD).
+
+Let me look at my remaining BLUE words: Hotel, Beam, Cube, Class, Vacuum, Bank, Mirror
+
+Let me think about possible connections:
+
+- **ROOM**: Hotel (hotel room), Class (classroom), Vacuum (vacuum room?), Bank (bank room?)... not great.
+- **SPACE**: Vacuum (space is a vacuum), Cube (space/geometry), Beam (space beam)... but ALIEN could be associated with space.
+- **REFLECTION**: Mirror (reflects), Beam (light reflects), Glass... 
+- **GLASS**: Mirror (glass mirror), Cube (glass cube), Hotel (glass hotel), Beam (glass beam?)... but LIGHT could also relate.
+- **CLEAN**: Vacuum (vacuum cleaner), Mirror (clean mirror), Hotel (clean hotel), Class (clean)... but this is weak.
+- **CLEANER**: Vacuum (vacuum cleaner), Mirror (mirror cleaner)... only 2.
+- **SUITE**: Hotel (hotel suite), Class (suite/class)... only 2.
+- **ICE**: Cube (ice cube), Hotel (ice hotel), Bank (ice bank?)... risky.
+- **SCHOOL**: Class (school class), Bank (school bank?)... 
+- **GEOMETRY**: Cube (geometric shape), Beam (geometric), Mirror (reflection geometry)...
+- **SAVINGS**: Bank (savings bank), Vacuum (?)...
+- **PRISM**: Beam (light beam through prism), Cube (prism shape), Mirror (reflection)... but LIGHT is RED.
+- **UPPER**: Class (upper class), Bank (upper bank?)... weak.
+- **FIRST**: Class (first class), Hotel (first hotel?)... 
+- **LOBBY**: Hotel (hotel lobby), Bank (bank lobby), Mirror (lobby mirror) - 3 words! Let me check risks: FRONT (red) - front lobby? Slightly risky but lobby more strongly connects to Hotel and Bank. YARD - no connection. 
+
+LOBBY connects well: Hotel lobby, Bank lobby, Mirror (lobbies have mirrors). No strong connection to RED words or ASSASSIN.
+
+{"clue": "LOBBY", "number": 3, "reasoning": "LOBBY connects Hotel (hotel lobby), Bank (bank lobby), and Mirror (lobbies typically have mirrors). Low risk of pointing to RED words or the ASSASSIN (YARD)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LOBBY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Hotel
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Front
+  Cube
+  Book
+  Champion
+  Light
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Chime
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hotel", "reasoning": "A lobby is most commonly associated with a hotel - the hotel lobby is one of the most direct connections to the clue word 'LOBBY'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'LOBBY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Front
+  Cube
+  Book
+  Champion
+  Light
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Chime
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Front", "reasoning": "A lobby is the front area of a building - 'front' connects strongly to 'lobby' as in a front desk in a lobby, or the front entrance/lobby area."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       
+  Book                 RED        
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        
+  Class                BLUE       
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        
+  Chime                RED        
+  Mirror               BLUE       
+  Dog                  RED        
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words and find a clue that connects multiple words while avoiding the ASSASSIN (Yard) and BLUE words.
+
+Remaining RED words:
+- Haze
+- Book
+- Light
+- Alien
+- Cargo
+- Chime
+- Dog
+
+Let me look for connections:
+
+1. **Light + Haze + Beam (BLUE)**: Light-related, but Beam is BLUE - risky
+2. **Dog + Wolf (NEUTRAL)**: Animals, but Wolf is neutral
+3. **Book + Light**: Could relate to reading
+4. **Cargo + Alien**: Space/sci-fi theme
+5. **Chime + Light**: Sound and light don't connect well
+
+Let me think about "SOUND" or "BELL" for Chime:
+- Chime relates to bells/sound
+- Dog barks (sound)
+- Book could be audiobook
+- But this is weak
+
+Let me consider **"SPACE"** or **"SHIP"**:
+- Alien (extraterrestrial/space)
+- Cargo (cargo ship/spacecraft)
+- Light (light years/starlight)
+- This could work but risky with multiple meanings
+
+Let me try **"CANINE"** or **"PET"**:
+- Dog (obvious)
+- Wolf is NEUTRAL - would mislead
+
+Let me think about **"FREIGHT"** or **"TRANSPORT"**:
+- Cargo (freight/transport)
+- Dog (sled dogs transport)
+- Light (lightweight cargo)
+- Book (shipping books)
+- This is stretching it
+
+**"BELL"** for Chime:
+- Chime (bell sound)
+- Dog (bell on collar)
+- Book (bell hooks - but that's a name)
+- Light (bell tower light)
+- Weak connections
+
+Let me reconsider **"FOG"**:
+- Haze (fog/mist)
+- Light (fog lights)
+- Dog (foggy dog walk? weak)
+
+Actually, **"READING"** or **"STUDY"**:
+- Book (reading)
+- Light (reading light)
+- Class is BLUE - risky
+
+**"RING"**:
+- Chime (bells ring)
+- Dog (dog collar ring)
+- Light (ring light)
+- Book (phone rings to remind about book? weak)
+
+Let me try **"SOUND"**:
+- Chime (makes sound)
+- Dog (barks)
+- Book (audiobook)
+- Light (speed of sound vs light? weak)
+
+Best option seems to be **"RING"** connecting Chime, Dog, and Light (3 words).
+
+{"clue": "RING", "number": 3, "reasoning": "Chime makes a ringing sound, dogs wear collar rings/tags that ring, and ring light is a photography term"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RING' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Light
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Chime
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "RING" from the valid guesses list.
+
+Let me think about what connects to "RING":
+- **Chime** - bells/chimes ring, this is a strong connection
+- **Light** - ring light (photography equipment)
+- **Book** - could relate to "Lord of the Rings" books
+- **Champion** - championship ring (sports)
+- **Dog** - dog collar has a ring
+- **Fork** - tuning fork rings
+
+The strongest connection is **Chime** because chimes literally ring - it's a direct, clear association. This seems like the most obvious match for the clue "RING."
+
+**Champion** is also strong (championship ring), and **Book** could work (Lord of the Rings), but Chime feels most direct.
+
+{"guess": "Chime", "reasoning": "Chimes ring - this is the most direct connection to the clue RING. Bells and chimes produce ringing sounds."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RING' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Light
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Light",
+  "reasoning": "RING relates to Light in multiple ways: ring light (photography equipment), light can form rings/halos, and 'ring of light' is a common phrase. This seems like a strong connection for the second guess on this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RING' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words for the clue RING 3 (Chime and Light). The clue number was 3, and I've already matched it with 2 correct guesses. Looking at the remaining words, none strongly connect to RING - while Dog could weakly relate (dog collar ring), it's risky. With Red at 5 remaining vs Blue at 6, we're close but not desperate. Passing now preserves our lead and avoids hitting a blue card or the assassin."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       
+  Book                 RED        
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        [revealed]
+  Class                BLUE       
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        
+  Chime                RED        [revealed]
+  Mirror               BLUE       
+  Dog                  RED        
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining BLUE words as possible: Beam, Cube, Class, Vacuum, Bank, Mirror.
+
+Let me think about connections:
+
+- **Beam, Mirror** → both relate to light/reflection
+- **Vacuum, Class** → both can follow "room" (vacuum room is a stretch)
+- **Bank, Cube** → ice cube, ice bank? Not great.
+
+Let me think about "REFLECTION":
+- Mirror → reflects light, reflection
+- Beam → light beam, reflection
+- Bank → bank reflection? Not strong.
+
+What about "SPACE"?
+- Vacuum → space is a vacuum
+- Cube → space cube? Weak.
+- Beam → space beam? Weak.
+
+What about "ROOM"?
+- Class → classroom
+- Vacuum → vacuum room? Not great.
+- Bank → bank room? No.
+- Mirror → mirror room? Weak.
+
+What about "CLEAN"?
+- Vacuum → cleaning tool
+- Mirror → you clean a mirror
+- Bank → clean the bank? No.
+
+What about "GLASS"?
+- Mirror → glass mirror
+- Cube → glass cube
+- Beam → glass beam? Weak.
+- Bank → glass bank? No.
+
+What about "ICE"?
+- Cube → ice cube
+- Bank → ice bank (snowbank)
+- Mirror → ice mirror? Weak.
+
+What about "SQUARE"?
+- Cube → made of squares
+- Bank → town square has a bank? Weak.
+- Class → class square? No.
+
+What about "UPPER"?
+- Class → upper class
+- Beam → upper beam
+- Bank → upper bank? Weak.
+
+What about "FIRST"?
+- Class → first class
+- Bank → first bank
+- Beam → first beam? Weak.
+
+"FIRST" connects Class (first class) and Bank (First Bank). But only 2.
+
+What about "HIGH"?
+- Class → high class
+- Beam → high beam
+- Bank → high bank? Weak but possible.
+
+High beam and high class are strong. Let me check dangers: "high" → Haze? No. Dog? No. Alien? No. Book? No. Yard? HIGH YARD? No strong connection to assassin.
+
+{"clue": "HIGH", "number": 2, "reasoning": "HIGH connects to BEAM (high beam - car headlights) and CLASS (high class). Both are strong compound words. Low risk of pointing to assassin (YARD) or opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HIGH' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Class
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about which words connect to "HIGH" from the valid guesses.
+
+Let me consider each word with "HIGH":
+
+- **Class** → "High class" is a very common phrase
+- **Beam** → "High beam" (headlights) is a common phrase
+- **Torch** → Not strongly connected to "high"
+- **Haze** → Could relate to being "high" but not a strong compound
+- **Book** → Not strongly connected
+- **Champion** → Not strongly connected
+- **Yard** → Not strongly connected
+- **Bank** → Not strongly connected
+- **Film** → Not strongly connected
+- **Fork** → "High fork"? No.
+- **Cube** → No
+- **Alien** → No
+- **Wolf** → No
+- **Dog** → No
+- **Vacuum** → No
+- **Cargo** → No
+- **Lemon** → No
+- **Blossom** → No
+- **Mirror** → No
+
+The two strongest connections are:
+1. **Class** → "High class" — very natural compound phrase
+2. **Beam** → "High beam" — very natural compound phrase
+
+I'm quite confident in both of these. Let me start with the one I'm most confident about.
+
+{"guess": "CLASS", "reasoning": "'High class' is a very common compound phrase, making this one of the two most likely intended words for the clue 'HIGH 2'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HIGH' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Beam
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Beam", "reasoning": "HIGH BEAM is a very common compound word/phrase (as in car headlights). This fits perfectly with the clue 'HIGH' for 2 words. The other strong candidate could be 'Yard' but 'high yard' isn't a common phrase. 'High beam' is extremely natural."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HIGH' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 2 words correctly for the 'HIGH 2' clue (Class and Beam). While I could try for a third guess, looking at the remaining words, none of them strongly connect to 'HIGH'. 'Torch' could loosely relate, 'Bank' maybe (high bank?), but these are all uncertain. With 4 blue remaining vs 5 red remaining, I don't want to risk hitting a red card or the assassin. Better to pass and wait for the next clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       
+  Book                 RED        
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        [revealed]
+  Class                BLUE       [revealed]
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        
+  Chime                RED        [revealed]
+  Mirror               BLUE       
+  Dog                  RED        
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining RED words and find a clue that connects them while avoiding the ASSASSIN (Yard) and BLUE words.
+
+Remaining RED words:
+- Haze
+- Book
+- Alien
+- Cargo
+- Dog
+
+Let me consider potential clues:
+
+1. **"Haze" + "Book"**: Could use "reading" or "fog" but these don't connect well
+2. **"Alien" + "Dog"**: Could use "space" (Space Dog - Laika), "creature", "pet"
+3. **"Cargo" + "Book"**: Could use "ship" (cargo ship, book ship)
+4. **"Dog" + "Haze"**: Could use "purple" (Purple Haze song, but also dog breeds)
+
+Let me think about safer multi-word clues:
+- **"SPACE"** connects to: Alien (extraterrestrial), Cargo (space cargo), Dog (space dog Laika) - but might risk Vacuum (space vacuum)
+- **"SHIP"** connects to: Cargo (cargo ship), Book (bookship/shipping books), Alien (spaceship, alien ship)
+- **"PURPLE"** connects to: Haze (Purple Haze), Dog (purple dog cartoon), Book (The Color Purple book)
+
+"SHIP" seems strong for Cargo and could work for Alien (spaceship). Book is weaker but "shipping books" is a thing.
+
+However, I should be careful about BLUE words like Bank (riverbank/ship bank) and Mirror (ship mirror).
+
+Let me try **"FREIGHT"**: connects strongly to Cargo, and could work for Book (freight books), but weak for others.
+
+Actually, **"EXTRATERRESTRIAL"** or **"SPACE"** for Alien is obvious, and Cargo works (space cargo), Dog works (space dogs). But Vacuum is BLUE and relates to space.
+
+Safer option: **"STORY"** - Book (obvious), Alien (alien story), Dog (dog story), Haze (less clear)
+
+Best option: **"CANINE"** for Dog alone is safe, or **"FICTION"** for Book + Alien.
+
+I'll go with **"FICTION"** connecting Book and Alien (science fiction).
+
+{"clue": "FICTION", "number": 2, "reasoning": "Connects BOOK (fiction books) and ALIEN (science fiction). Safe from assassin YARD and avoids blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Alien
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Alien",
+  "reasoning": "FICTION strongly relates to science fiction, and 'Alien' is a classic sci-fi concept. 'Book' and 'Film' could also relate to fiction as mediums, but 'Alien' is more directly connected to the fiction genre itself, particularly sci-fi."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Book
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Book",
+  "reasoning": "FICTION strongly relates to Book - books contain fiction stories. This is a very safe second guess. Since I've already guessed once correctly (Alien was a science fiction reference), I have one more guess within the clue number of 2, and Book is a clear fiction-related word."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FICTION' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 2 words correctly (Alien and Book) which matches the clue number of 2. The clue FICTION has been fully used. Continuing to guess would be risky as I could hit a blue card, neutral, or worse - the assassin. With Red at 3 remaining and Blue at 4, we're close but not desperate enough to take unnecessary risks."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       
+  Book                 RED        [revealed]
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        [revealed]
+  Class                BLUE       [revealed]
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        [revealed]
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        
+  Chime                RED        [revealed]
+  Mirror               BLUE       
+  Dog                  RED        
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining blue words as possible: **Cube**, **Vacuum**, **Bank**, **Mirror**.
+
+Let me think about connections:
+
+- **Space**: Vacuum (space vacuum), Cube (space cube? weak), Mirror (space mirror? weak), Bank (no)
+- **Reflection**: Mirror (reflects), Bank (river bank reflects?), Cube (no), Vacuum (no)
+- **Glass**: Mirror (glass mirror), Cube (glass cube), Vacuum (vacuum flask/glass), Bank (glass bank? no)
+- **Ice**: Cube (ice cube), Bank (ice bank? weak), Mirror (ice mirror? weak), Vacuum (no)
+- **Cleaner**: Vacuum (vacuum cleaner), Bank (cleaner at bank? no), Mirror (clean a mirror), Cube (no)
+- **Safe**: Bank (bank safe), Vacuum (vacuum sealed), Mirror (no), Cube (no)
+- **Deposit**: Bank (deposit), Cube (no), Vacuum (no)
+- **Box**: Cube (box-shaped), Bank (bank box/safe deposit box), Vacuum (vacuum box? weak), Mirror (mirror box)
+
+Wait - **Box** could work: Cube is a box shape, Bank has safe deposit box/box at bank, Mirror box is a thing, Vacuum box is less clear.
+
+Let me check against dangerous words:
+- YARD (assassin): box yard? No, that's more "boxcar." Actually "boxyard" isn't a thing. Safe.
+- DOG (red): boxer dog? That's "boxer" not "box." Could be risky.
+- CARGO (red): cargo box? Slightly concerning but not strong.
+- HAZE (red): no connection.
+
+Let me try **Ice**: Ice cube (strong), ice bank (not great), mirror ice (no).
+
+**Sealed**: Vacuum sealed (strong), Bank sealed (vault), Cube sealed? Mirror sealed? Weak.
+
+I think **Box** connecting Cube, Bank, and Mirror (mirror box) is decent for 3, but Dog concern exists.
+
+Let me go with **Squared**: Cube (squared), Mirror (squared away?), Bank... no.
+
+I'll go with **Box** for 2 (Cube and Bank) to be safe.
+
+{"clue": "BOX", "number": 2, "reasoning": "Cube is box-shaped (a cube is essentially a box), and Bank connects via safe deposit box/box at the bank. Avoiding the assassin YARD and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOX' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Cube
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "CUBE", "reasoning": "A cube is a type of box (3D box shape). This is a very strong connection to the clue 'BOX'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOX' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Cargo
+  Mirror
+  Dog
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cargo", "reasoning": "CARGO box is a very common compound word/phrase. With the clue 'BOX 2' and having already gotten one correct (Cube), Cargo seems like a strong match."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       [revealed]
+  Book                 RED        [revealed]
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        [revealed]
+  Class                BLUE       [revealed]
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        [revealed]
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        [revealed]
+  Chime                RED        [revealed]
+  Mirror               BLUE       
+  Dog                  RED        
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: **Haze** and **Dog**.
+
+Let me analyze:
+- **Haze**: A misty/foggy atmospheric condition
+- **Dog**: A common pet/animal
+
+I need to avoid:
+- ASSASSIN: Yard
+- BLUE words: Vacuum, Bank, Mirror
+- NEUTRAL words: Torch, Lemon, Fork, Blossom, Champion, Wolf, Film
+
+Let me think of connections:
+1. For "Haze" and "Dog": 
+   - "Fog" could work for Haze, but doesn't connect to Dog
+   - "Purple" connects to Haze (Purple Haze song) but not Dog
+   - "Smoke" could relate to Haze but not Dog strongly
+
+2. Animal-related for Dog:
+   - "Pet" - but this might also suggest Wolf (neutral)
+   - "Canine" - specific to Dog
+   
+3. Weather/atmosphere for Haze:
+   - "Mist", "Fog", "Smog"
+
+Since I have only 2 words left and they're quite different, I should focus on getting at least one safely. "Dog" is clearer and safer.
+
+For **Dog** specifically:
+- "Canine" - very specific, safe
+- "Puppy" - relates to Dog
+- "Bark" - relates to Dog
+
+"CANINE" is the safest choice as it specifically points to Dog without risk of hitting other words.
+
+{"clue": "CANINE", "number": 1, "reasoning": "Directly relates to Dog. Haze is too different to connect safely, so focusing on securing one word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CANINE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Mirror
+  Dog
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Dog",
+  "reasoning": "CANINE directly relates to dogs - it's a synonym/scientific term for dog. This is an extremely strong connection and almost certainly the intended word for this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CANINE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Mirror
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+  [RED] CANINE 1  #1: Dog → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've already guessed 'Dog' which was correct for the CANINE clue. With only 1 red card remaining versus 3 blue cards, and having successfully used the clue, it's strategically sound to pass rather than risk hitting a blue card, neutral, or the assassin. The remaining words don't have strong canine connections."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       [revealed]
+  Book                 RED        [revealed]
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        [revealed]
+  Class                BLUE       [revealed]
+  Vacuum               BLUE       
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        [revealed]
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        [revealed]
+  Chime                RED        [revealed]
+  Mirror               BLUE       
+  Dog                  RED        [revealed]
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+  [RED] CANINE 1  #1: Dog → red
+  [RED] CANINE 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting VACUUM, BANK, and MIRROR (my 3 remaining blue words).
+
+Let me think about possible connections:
+
+- VACUUM: space vacuum, vacuum cleaner, vacuum tube
+- BANK: money bank, river bank, bank vault
+- MIRROR: reflection, glass, mirror image
+
+Let me think about "CLEAN" - vacuum cleaner, clean mirror, clean bank (not great).
+
+"SPACE" - vacuum of space, space mirror (telescopes), space bank? Not great.
+
+"GLASS" - mirror is glass, vacuum flask (glass), bank glass? Weak.
+
+"REFLECTION" - mirror reflects, bank reflection... not great.
+
+"SUCK" - vacuum sucks, bank sucks money... too weak.
+
+"TUBE" - vacuum tube, tube mirror? No.
+
+"DUST" - vacuum dust, dust a mirror, dust bank? Weak.
+
+"POLISH" - you polish a mirror, you vacuum to polish floors, bank polish? Not great.
+
+"VAULT" - bank vault, vault (like a vacuum chamber), mirror vault? Hmm, bank vault is strong, vacuum vault is weak.
+
+"EMPTY" - vacuum is empty, empty bank, empty mirror? Decent for 2.
+
+"CLEANER" - vacuum cleaner, mirror cleaner, cleaner at a bank? This connects well but let me check against dangerous words. YARD (assassin) - no connection. HAZE (red) - no.
+
+"SWEEP" - vacuum sweeps, bank sweep, mirror sweep? Not great.
+
+"ROOM" - vacuum a room, bank room, mirror room? Weak.
+
+"CLEANER" seems solid for VACUUM and MIRROR, and somewhat for BANK (money laundering/cleaning).
+
+Let me reconsider: "RIVERBANK" no, two words.
+
+"POOL" - mirror pool (reflecting pool), pool vacuum, bank pool? Decent for 2.
+
+"REFLECTING" - reflecting mirror, reflecting pool... not great for bank/vacuum.
+
+Let me try "DUST" for 2 (VACUUM and MIRROR) - you dust a mirror, you vacuum dust. BANK is less connected.
+
+"CLEANER" for 3: vacuum cleaner, mirror cleaner, money cleaner (bank). Let me check assassin: YARD - no. Red remaining: HAZE - no connection.
+
+{"clue": "CLEANER", "number": 3, "reasoning": "VACUUM cleaner (strong), MIRROR cleaner (you clean mirrors), BANK cleaner (money cleaning/laundering or cleaning a bank). The assassin YARD and remaining red word HAZE have no connection to CLEANER."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLEANER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Champion
+  Vacuum
+  Yard
+  Wolf
+  Film
+  Bank
+  Mirror
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+  [RED] CANINE 1  #1: Dog → red
+  [RED] CANINE 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find 3 words related to "CLEANER" from the valid guesses.
+
+Let me think through each word:
+
+- **Vacuum** — A vacuum cleaner is a very direct connection to "CLEANER." This is almost certainly one of the words.
+- **Lemon** — Lemon is commonly used as a cleaning agent (lemon-scented cleaners, lemon juice for cleaning). Strong connection.
+- **Mirror** — You clean a mirror; "mirror cleaner" is a thing. Possible but less strong.
+- **Haze** — A cleaner could remove haze. Somewhat tenuous.
+- **Torch** — Not obviously related to cleaner.
+- **Fork** — Not related.
+- **Blossom** — Not related.
+- **Champion** — Not related.
+- **Yard** — Not obviously related to cleaner.
+- **Wolf** — Not related.
+- **Film** — Film could be something you clean off surfaces. Weak connection.
+- **Bank** — "Bank cleaner" could refer to a heist/robbery metaphor, but that's a stretch.
+
+The situation: Red has only 1 card left, so if I accidentally guess their last card, they win. I need to be careful. Blue needs 3 cards, and the clue is for 3 words.
+
+I'm most confident in **Vacuum** — it's the strongest, most direct connection to "CLEANER."
+
+{"guess": "VACUUM", "reasoning": "A vacuum cleaner is the most direct and obvious connection to the clue 'CLEANER.' This is almost certainly one of the three intended words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CLEANER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Haze
+  Torch
+  Lemon
+  Fork
+  Blossom
+  Champion
+  Yard
+  Wolf
+  Film
+  Bank
+  Mirror
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+  [RED] CANINE 1  #1: Dog → red
+  [RED] CANINE 1  #2: PASS
+  [BLUE] CLEANER 3  #1: Vacuum → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find 2 more blue words related to "CLEANER" (3 words clue, 1 already guessed correctly with "Vacuum").
+
+Let me think about what connects to "CLEANER":
+
+- **Lemon** - Lemon is commonly used as a cleaning agent, "lemon cleaner," "lemon-fresh" cleaning products. Strong connection.
+- **Mirror** - You clean/polish a mirror. "Mirror cleaner" is a thing (like glass cleaner). Decent connection.
+- **Torch** - Not strongly related to cleaner.
+- **Haze** - Not directly related, though clearing haze could be tangentially connected.
+- **Yard** - Not strongly related to cleaner.
+- **Film** - Film can be something you clean off surfaces. Weak connection.
+- **Blossom** - Not related.
+- **Fork** - Not related.
+- **Bank** - Not related.
+- **Wolf** - Not related.
+- **Champion** - Not related.
+
+The situation: Red has only 1 card left, so they could win on their next turn. Blue has 2 remaining (including this turn's guesses). I need to be aggressive but careful to avoid the assassin.
+
+"Lemon" feels like the strongest connection to "CLEANER" - lemon cleaner is a very common product/scent.
+
+{"guess": "Lemon", "reasoning": "Lemon cleaner is a very common cleaning product/scent. Strong connection to CLEANER. With Red having only 1 card left, I need to be aggressive."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Roller               RED        [revealed]
+  Haze                 RED        
+  Hotel                BLUE       [revealed]
+  Beam                 BLUE       [revealed]
+  Torch                NEUTRAL    
+  Lemon                NEUTRAL    [revealed]
+  Fork                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Front                RED        [revealed]
+  Cube                 BLUE       [revealed]
+  Book                 RED        [revealed]
+  Champion             NEUTRAL    
+  Rose                 BLUE       [revealed]
+  Light                RED        [revealed]
+  Class                BLUE       [revealed]
+  Vacuum               BLUE       [revealed]
+  Yard                 ASSASSIN   
+  Wolf                 NEUTRAL    
+  Alien                RED        [revealed]
+  Film                 NEUTRAL    
+  Bank                 BLUE       
+  Cargo                RED        [revealed]
+  Chime                RED        [revealed]
+  Mirror               BLUE       
+  Dog                  RED        [revealed]
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+  [RED] CANINE 1  #1: Dog → red
+  [RED] CANINE 1  #2: PASS
+  [BLUE] CLEANER 3  #1: Vacuum → blue
+  [BLUE] CLEANER 3  #2: Lemon → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BANK, BEAM, BLOSSOM, BOOK, CARGO, CHAMPION, CHIME, CLASS, CUBE, DOG, FILM, FORK, FRONT, HAZE, HOTEL, LEMON, LIGHT, MIRROR, ROLLER, ROSE, TORCH, VACUUM, WOLF, YARD
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the current board state:
+
+**Red remaining (unrevealed):** Haze
+
+**Blue remaining (unrevealed):** Bank, Mirror
+
+**Neutral (unrevealed):** Torch, Fork, Blossom, Champion, Wolf, Film
+
+**Assassin:** Yard
+
+I need to give a clue for "Haze" - my only remaining red word.
+
+Let me think of good clues for "Haze":
+- "Fog" - relates to haze as a weather/visibility condition
+- "Mist" - similar atmospheric condition
+- "Smoke" - can create haze
+- "Purple" - Purple Haze (but might be too obscure)
+- "Smog" - urban haze
+
+I need to make sure my clue:
+1. Points clearly to "Haze"
+2. Doesn't point to Blue words (Bank, Mirror)
+3. Doesn't point to the Assassin (Yard)
+4. Doesn't point to neutrals
+
+"Fog" seems like the strongest connection to Haze - both are atmospheric conditions that reduce visibility. It's unlikely to connect to Bank, Mirror, or Yard.
+
+Let me verify "Fog" isn't on the forbidden list... it's not.
+
+{"clue": "Fog", "number": 1, "reasoning": "Fog is closely related to Haze as both are atmospheric conditions that reduce visibility. This should clearly point to our last remaining word without risk of hitting the assassin (Yard) or blue words (Bank, Mirror)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOG' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Haze
+  Torch
+  Fork
+  Blossom
+  Champion
+  Yard
+  Wolf
+  Film
+  Bank
+  Mirror
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PAINT 3  #1: Roller → red
+  [RED] PAINT 3  #2: Rose → blue
+  [BLUE] LOBBY 3  #1: Hotel → blue
+  [BLUE] LOBBY 3  #2: Front → red
+  [RED] RING 3  #1: Chime → red
+  [RED] RING 3  #2: Light → red
+  [RED] RING 3  #3: PASS
+  [BLUE] HIGH 2  #1: Class → blue
+  [BLUE] HIGH 2  #2: Beam → blue
+  [BLUE] HIGH 2  #3: PASS
+  [RED] FICTION 2  #1: Alien → red
+  [RED] FICTION 2  #2: Book → red
+  [RED] FICTION 2  #3: PASS
+  [BLUE] BOX 2  #1: Cube → blue
+  [BLUE] BOX 2  #2: Cargo → red
+  [RED] CANINE 1  #1: Dog → red
+  [RED] CANINE 1  #2: PASS
+  [BLUE] CLEANER 3  #1: Vacuum → blue
+  [BLUE] CLEANER 3  #2: Lemon → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{"guess": "Haze", "reasoning": "FOG and HAZE are nearly synonymous - both refer to atmospheric conditions that reduce visibility. This is a very strong connection. With only 1 red card remaining and 2 blue cards, I need to be confident, and this is the clearest match to the clue."}
+```
+============================================================

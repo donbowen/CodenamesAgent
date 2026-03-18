@@ -1,0 +1,2511 @@
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        
+  Disk                 RED        
+  Bubble               BLUE       
+  Deep                 BLUE       
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        
+  Cloud                NEUTRAL    
+  Box                  BLUE       
+  Gold                 RED        
+  Lily                 NEUTRAL    
+  Change               BLUE       
+  Hand                 BLUE       
+  Block                NEUTRAL    
+  Couch                RED        
+  Bank                 BLUE       
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        
+  Canyon               NEUTRAL    
+  Angel                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "metal", "number": 2, "reasoning": "Copper and gold are both metals, linking these two red words safely."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Copper
+  Disk
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Wall
+  Cloud
+  Box
+  Gold
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Bank
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+  Angel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Copper", "reasoning": "Copper is a metal, fitting the clue 'METAL' perfectly and likely to be a red team word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Disk
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Wall
+  Cloud
+  Box
+  Gold
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Bank
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+  Angel
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gold", "reasoning": "Gold is a metal and fits the clue 'METAL' well, aligning with the previous guess Copper."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'METAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Disk
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Wall
+  Cloud
+  Box
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Bank
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+  Angel
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Disk", "reasoning": "Disk is commonly made of metal and fits well with the clue METAL."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        
+  Cloud                NEUTRAL    
+  Box                  BLUE       
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       
+  Hand                 BLUE       
+  Block                NEUTRAL    
+  Couch                RED        
+  Bank                 BLUE       
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        
+  Canyon               NEUTRAL    
+  Angel                RED        
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words: Bubble, Deep, Knot, Box, Change, Hand, Bank, Code.
+
+Let me think about connections:
+
+**BLUE words**: Bubble, Deep, Knot, Box, Change, Hand, Bank, Code
+
+Let me think about "POCKET":
+- Pocket change ✓
+- Pocket book... no
+- Pocket knot... no
+
+**"LOOSE"**: loose change, loose knot... 
+
+**"SAFE"**: Safe box? Safebank? 
+
+Let me think about "___ bath":
+- Bubble bath ✓
+- Deep... no
+
+**"ZIP"**: Zip code ✓, zip knot? no...
+
+**"AREA"**: area code ✓, area bank? no...
+
+**"MORSE"**: Morse code ✓... only one
+
+**"CRACK"**: crack knot? no...
+
+**"TIE"**: Tie knot? 
+
+**"OCEAN"**: Ocean deep ✓, ocean bank ✓ (ocean bank = continental shelf)... 
+
+**"RIVER"**: River bank ✓, river deep? no...
+
+**"PIGGY"**: Piggy bank ✓, piggy...
+
+**"DRESS"**: Dress code ✓, dress box? 
+
+**"SOURCE"**: Source code ✓, source...
+
+Let me think about compound words or phrases with these:
+
+**"MUSIC"**: Music box ✓, music... 
+
+**"SAND"**: Sandbox ✓, sandbank ✓, sandknot? no...
+
+**"HAND"** is blue - what about "SECOND":
+- Second hand ✓ (secondhand)
+- Second change? no
+- Second code? no
+
+**"LOOSE"**: loose change ✓, loose knot ✓, loose box? loose hand?
+
+**"SMALL"**: small change ✓, small box? smallbox (smallpox)...
+
+**"SPARE"**: spare change ✓, spare hand ✓ (spare hand = extra worker), spare... 
+
+**"FREE"**: freehand ✓, free change? 
+
+**"OVER"**: overhand ✓ (overhand knot!), overhand... 
+
+**"OVER"**: overhand knot ✓, overhand... 
+
+Let me think about **"SLIP"**: slip knot ✓, slip... 
+
+**"GRANNY"**: granny knot ✓, granny...
+
+**"DAVY"**: Davy Jones... 
+
+**"REEF"**: reef knot ✓, reef bank? 
+
+**"SQUARE"**: square knot ✓, square box? square dance... square change? square hand?
+
+**"SAND"**: sandbank ✓, sandbox ✓, sand bubble? sand knot? - only 2
+
+**"MUSIC"**: music box ✓, music... only 1 strong
+
+**"CHATTER"**: chatterbox ✓, 
+
+**"JACK"**: Jackbox? Jack change? Blackjack...
+
+**"DEEP"** is blue - sea connections: deep, bubble, bank (river/sea), 
+
+**"SEA"**: sea change ✓ (famous phrase), sea bank? seabank? deep sea ✓, sea bubble ✓ (South Sea Bubble!), sea knot (knot = nautical speed)...
+
+Sea change ✓, Sea bubble ✓, Deep sea... but "deep" would be the word itself...
+
+**"SOUTH SEA"** - no, two words
+
+**"FINANCIAL"**: financial bubble ✓, financial bank? financial code? financial change? - maybe bubble, bank, change = 3?
+
+**"BUBBLE"**: already on board
+
+Let me try **"ECONOMY"**: economy... 
+
+**"DRESS"**: dress code ✓, dress box? dress change? dress hand?
+
+**"MORSE"** - only code
+
+**"CRACK"**: crackdown... 
+
+**"JACK"**: Cracker jack, flapjack...
+
+I'll go with **"FINANCIAL"** connecting bubble (financial bubble), bank, change - 3 words, all blue, safe from assassin.
+
+{"clue": "FINANCIAL", "number": 3, "reasoning": "Financial bubble (economic bubble), financial bank, and financial change are all strongly connected. These are all BLUE words and this avoids the assassin (Pole) and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FINANCIAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Wall
+  Cloud
+  Box
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Bank
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+  Angel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'FINANCIAL' with 3 words, I need to find words related to finance/money/economics.
+
+- **BANK**: Directly financial - a bank is a financial institution
+- **WALL**: Wall Street - the financial district/center of finance
+- **CHANGE**: Financial change, or "change" as in money/currency
+- **BUBBLE**: Financial bubble (economic bubble like the dot-com bubble)
+- **BLOCK**: Less obvious financial connection
+- **HAND**: Less obvious
+
+Strong candidates:
+- **BANK**: Most directly financial
+- **WALL**: Wall Street = finance
+- **BUBBLE**: Financial bubble is a well-known economic term
+
+I'll start with the most confident one.
+
+{"guess": "BANK", "reasoning": "Bank is directly related to FINANCIAL - banks are financial institutions. This is the most obvious connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FINANCIAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Wall
+  Cloud
+  Box
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+  Angel
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'FINANCIAL' with 3 words, and we've already guessed "Bank" correctly.
+
+Financial-related words I need to find:
+- "Wall" → Wall Street (financial district)
+- "Change" → Stock Exchange / change (financial transactions)
+- "Bubble" → financial bubble (economic bubble)
+- "Block" → writer's block? not financial
+- "Cloud" → not obviously financial
+
+"Wall Street" is a very strong financial connection. "Exchange" relates to financial markets but "Change" could work as stock exchange. "Bubble" = financial/economic bubble is a well-known term.
+
+Wall Street is the strongest connection. Then Bubble (financial bubble). Then perhaps "Change" (exchange).
+
+Let me go with "Wall" first as it's the strongest.
+
+{"guess": "Wall", "reasoning": "Wall Street is the iconic financial district and symbol of finance/stock markets - very strong connection to 'FINANCIAL'"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    
+  Box                  BLUE       
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       
+  Hand                 BLUE       
+  Block                NEUTRAL    
+  Couch                RED        
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        
+  Canyon               NEUTRAL    
+  Angel                RED        
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Heavenly", "number": 2, "reasoning": "Angel and Isle can be associated with heavenly or celestial themes, linking them together without touching opponent or assassin words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HEAVENLY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Cloud
+  Box
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+  Angel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Angel", "reasoning": "Angel is directly associated with the clue 'HEAVENLY' as angels are typically considered heavenly beings."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HEAVENLY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Cloud
+  Box
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cloud", "reasoning": "Cloud is strongly associated with the clue 'HEAVENLY' as clouds are found in the sky and often linked to heaven or the heavens."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    [revealed]
+  Box                  BLUE       
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       
+  Hand                 BLUE       
+  Block                NEUTRAL    
+  Couch                RED        
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        
+  Canyon               NEUTRAL    
+  Angel                RED        [revealed]
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects as many BLUE words as possible while avoiding RED words (Steam, Couch, March, Isle) and the ASSASSIN (Pole).
+
+Blue words remaining: Bubble, Deep, Knot, Box, Change, Hand, Code
+
+Let me think about connections:
+
+- **Box**: music box, box code, sandbox
+- **Code**: secret code, code change, zip code
+- **Change**: change of hand, loose change
+- **Hand**: handshake, hand knot
+- **Knot**: knot tying, slip knot
+- **Bubble**: bubble wrap, soap bubble
+- **Deep**: deep sea, deep end
+
+Let me think about "TIE":
+- Knot (tie a knot) ✓
+- Hand (tie by hand?) weak
+- Code (tie code?) weak
+
+"MUSIC":
+- Box (music box) ✓
+- Deep (deep music?) weak
+- Bubble (bubble?) weak
+
+"SECRET":
+- Code (secret code) ✓
+- Hand (secret handshake) ✓
+- Knot (?) weak
+
+"LOOSE":
+- Change (loose change) ✓
+- Knot (loose knot) ✓
+- Bubble? weak
+
+"CLIMATE":
+- Change (climate change) ✓
+- Deep? weak
+
+"SECOND":
+- Hand (secondhand) ✓
+- Change (second change?) weak
+- Code (second code?) weak
+
+"GIFT":
+- Box (gift box) ✓
+- Change (gift change?) weak
+- Wrap? 
+
+"MUSIC BOX, SANDBOX, BOX CODE..."
+
+Let me think about "PANDORA":
+- Box (Pandora's box) ✓
+- Code? weak
+
+"SPARE":
+- Change (spare change) ✓
+- Hand (spare hand) ✓
+- Knot? weak
+
+"SLIP":
+- Knot (slip knot) ✓
+- Code? weak
+- Hand? weak
+
+"SOCIAL":
+- Change (social change) ✓
+- Hand (social hand?) weak
+- Code (social code) ✓
+- Bubble (social bubble) ✓ - people talk about "social bubble"
+
+"CLIMATE":
+- Change ✓
+- Deep (deep climate?) weak
+
+"SEA":
+- Deep (deep sea) ✓
+- Bubble (sea bubble?) weak
+- Knot (nautical knot) - sea knots!
+- Isle (sea isle) - RED, avoid
+
+"NAUTICAL":
+- Knot ✓
+- Deep ✓
+- Bubble? weak
+
+"SQUARE":
+- Knot (square knot) ✓
+- Box (square box?) ✓
+- Change (square change?) weak
+- Deep (deep square?) weak
+
+"GORDIAN":
+- Knot ✓ only
+
+"ZIP":
+- Code (zip code) ✓
+- Change (zip change?) weak
+- Bubble? weak
+
+"REFORM":
+- Change ✓
+- Code ✓
+- Hand? weak
+
+"MORAL":
+- Code (moral code) ✓
+- Hand? weak
+- Change (moral change?) weak
+
+Let me try "MUSIC":
+- Box (music box) ✓
+- Code (music code?) weak
+- Bubble? weak
+- Deep? weak
+
+"LOOT":
+- Box (loot box) ✓
+- Change? weak
+
+"SAND":
+- Box (sandbox) ✓
+- Castle? 
+- Bubble? weak
+- Deep? weak
+
+Let me try connecting: Bubble, Deep, Knot - these could be "STOMACH" related? No.
+
+"STOMACH":
+- Knot (stomach in a knot) ✓
+- Bubble (stomach bubble) ✓
+- Deep? weak
+
+"TIED":
+- Knot ✓
+- Hand (tied hands) ✓
+- Change (tied to change?) weak
+
+"OVERHAND":
+- Knot ✓ only
+
+"REEF":
+- Knot (reef knot) ✓
+- Deep? weak
+
+"BUBBLE, DEEP, BOX, CHANGE, HAND, CODE, KNOT"
+
+"EXCHANGE":
+- Change ✓
+- Hand (exchange hands) ✓
+- Code (exchange code?) weak
+
+{"clue": "EXCHANGE", "number": 2, "reasoning": "Change (exchange = change) and Hand (exchange hands) are both BLUE words. Safe from RED words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EXCHANGE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Box
+  Lily
+  Change
+  Hand
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'EXCHANGE' with 2 words:
+
+- **CHANGE** - "exchange" contains "change" and they're synonyms (to exchange = to change/swap)
+- **HAND** - "exchange" can relate to "hand" as in exchanging hands, or "handshake" in exchanges, or stock exchange trading floor
+
+Also considering:
+- **BOX** - a "box" exchange? Not strong.
+- **STOCK** - not on the list
+- **TRADE** - not on the list
+
+"CHANGE" is very strong - exchange and change are near synonyms (you exchange/change money, etc.).
+
+"HAND" - "exchange hands" is a common phrase meaning to be transferred.
+
+These two seem like the best fits for EXCHANGE.
+
+{"guess": "CHANGE", "reasoning": "EXCHANGE and CHANGE are near synonyms - you exchange/change money, and 'change' is directly embedded in the word 'exchange'. This is the strongest connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EXCHANGE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Box
+  Lily
+  Hand
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'EXCHANGE' and thinking about what other word could relate to exchange...
+
+- "Stock Exchange" → STOCK isn't on the board
+- "Exchange Rate" → RATE isn't available
+- "Hand" → could relate to exchange (changing hands, hand exchange)
+- "Box" → "Box" doesn't strongly connect to exchange
+- "Couch" → no
+- "Isle" → no
+- "Spike" → no
+
+"HAND" - things can "change hands" which relates to exchange. Also "handshake" relates to exchange/trade.
+
+"BLOCK" - "block" doesn't strongly relate to exchange.
+
+Wait - "STOCK" exchange... but STOCK isn't on the board. 
+
+"TRADE" - not on the board either.
+
+"KNOT" - no clear connection to exchange.
+
+"ISLE" - no.
+
+"STEAM" - no.
+
+"POLE" - "Polish Exchange"? No.
+
+"BOX" - "exchange" in boxing? Like trading blows?
+
+"HAND" seems the best fit - "changing hands" = exchange, and a handshake seals an exchange/deal.
+
+{"guess": "HAND", "reasoning": "Things 'change hands' in an exchange, and a handshake is associated with completing a trade/exchange deal."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EXCHANGE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Box
+  Lily
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'EXCHANGE' with 2 words already guessed correctly (Change and Hand), I've used my 2 guesses. I could try a bonus guess, but I need to be careful.
+
+"Stock Exchange" - could BLOCK relate? No.
+"Exchange" words... "Isle" - no. "Box" - no.
+
+Actually, I've already gotten both words for the clue (Change and Hand = 2 words). I should pass rather than risk guessing wrong and helping red or hitting the assassin.
+
+{"guess": "PASS", "reasoning": "I've already successfully guessed both words for the EXCHANGE clue (Change and Hand). Taking a bonus guess is risky with Red only needing 4 more cards. Better to pass and let the Spymaster give another clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    [revealed]
+  Box                  BLUE       
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Block                NEUTRAL    
+  Couch                RED        
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        
+  Canyon               NEUTRAL    
+  Angel                RED        [revealed]
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Furniture", "number": 1, "reasoning": "Couch is the only remaining red word that fits the clue Furniture."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FURNITURE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Box
+  Lily
+  Block
+  Couch
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Couch", "reasoning": "Couch is a type of furniture, matching the clue 'FURNITURE' closely."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FURNITURE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Box
+  Lily
+  Block
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Box", "reasoning": "A box can be considered a piece of furniture or storage furniture, fitting the clue 'FURNITURE' better than other options."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    [revealed]
+  Box                  BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Block                NEUTRAL    
+  Couch                RED        [revealed]
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        
+  Canyon               NEUTRAL    
+  Angel                RED        [revealed]
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the 4 remaining BLUE words: Bubble, Deep, Knot, Code.
+
+Let me think about connections:
+
+- **Bubble**: soap bubble, bubble wrap, bubble code?
+- **Deep**: deep sea, deep code, deep knot?
+- **Knot**: nautical knot, knot tying, slip knot
+- **Code**: secret code, code knot?, Morse code
+
+Let me think of words that connect multiple of these:
+
+- **Sea**: deep sea, sea bubble? knot (nautical speed)... not great
+- **Secret**: secret code, secret bubble? no
+- **Gordian**: Gordian knot... no
+- **Tie**: tie a knot, tie... not connecting others
+- **Slip**: slip knot, slip... 
+- **Morse**: Morse code... only one
+- **Zip**: zip code, zip... 
+- **Area**: area code, deep... no
+- **Speed**: knot (speed unit), deep... no
+
+Let me think about "BUBBLE, DEEP, KNOT, CODE":
+- **Reef**: reef knot, reef (deep ocean)... bubble reef? 
+- **Source**: source code, deep source? no
+- **Hair**: hair knot? no
+
+What about connecting 3?
+- **CRACK**: crack the code, crack... no
+- **CIPHER**: cipher code... only one
+
+What about "DEEP, BUBBLE, KNOT"?
+- **Stomach**: stomach knot, stomach bubble? deep stomach? no
+- **GUT**: gut feeling (deep), gut knot?, gut bubble? 
+
+What about "CODE, KNOT, BUBBLE"?
+- **WRAP**: bubble wrap, knot... rap/wrap code? 
+
+What about **DECODE** - no, that contains CODE...
+
+Let me try connecting just 3 safely:
+- **BATH**: bubble bath, deep bath?, bath knot? no
+- **LOOSE**: loose knot, loose... 
+
+What about **SQUARE**: square knot, square... deep square? bubble square? no
+
+**SLIP**: slip knot... only one really
+
+What about **DEEP, CODE, BUBBLE**: 
+- **DIVE**: deep dive, dive bubble?, dive code? 
+
+What about **KNOT, BUBBLE, DEEP** via "underwater/ocean":
+- **OCEAN**: ocean deep, ocean bubble, ocean knot (nautical)... Code? no
+
+What about **PINE**: pine knot, pine deep? no
+
+**CELTIC**: Celtic knot, Celtic code? Deep Celtic? 
+
+Let me try **UNTANGLE**: untangle a knot... only one
+
+**SOURCE**: source code, deep source... only 2 maybe
+
+What about **BUBBLE, DEEP, CODE** → **SPACE**: deep space, space bubble, space code? Knot... space knot? no
+
+**BUBBLE, KNOT**: both can relate to hair... 
+
+**HAIR**: hair knot, hair bubble (scrunchie/bubble hair tie!)... hair deep? hair code? 
+
+What about just going for **CODE** + others with a strong clue for 2-3?
+
+**AREA**: area code, deep... area knot? no - but AREA CODE and DEEP are both common phrases. Bubble area? 
+
+**ZIP**: zip code, zip... only one
+
+**CRACK**: crack a code, deep crack, crack bubble? 
+
+I think **OCEAN** could work for Deep, Bubble, Knot (nautical) - avoiding CODE and the assassin POLE.
+
+{"clue": "OCEAN", "number": 3, "reasoning": "Deep (ocean deep), Bubble (ocean bubbles), Knot (nautical unit of speed used at sea) - all connect to ocean/sea themes. Code doesn't fit as well, but this avoids the ASSASSIN (Pole) and RED words (March, Isle, Steam)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Deep
+  Knot
+  Steam
+  Piano
+  Hymn
+  Lily
+  Block
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'OCEAN' with 3 words, I need to find words that relate to ocean/sea.
+
+Let me analyze the valid guesses:
+- **Deep**: The deep = the ocean, "deep sea" is a common phrase
+- **Isle**: An island surrounded by ocean
+- **Knot**: Nautical unit of speed, used at sea
+- **Bubble**: Could relate to ocean bubbles, but less direct
+- **Pole**: North/South Pole, not really ocean
+- **Steam**: Steamship travels the ocean
+- **Canyon**: Underwater canyons exist (submarine canyons)
+- **March**: Not ocean-related
+- **Lily**: Water lily, but not ocean specifically
+
+Top candidates:
+1. **Deep** - "The deep" is literally another word for the ocean
+2. **Isle** - Islands are in the ocean
+3. **Knot** - Nautical measurement
+
+I'm most confident about "Deep" as it directly refers to the ocean. "Isle" is also very strong. "Knot" is nautical.
+
+Starting with the most confident:
+
+{"guess": "Deep", "reasoning": "'The deep' is a direct synonym for the ocean, and 'deep sea' is a very common phrase associated with the ocean."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OCEAN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Knot
+  Steam
+  Piano
+  Hymn
+  Lily
+  Block
+  Code
+  Spike
+  March
+  Isle
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining valid guesses and the clue "OCEAN 3":
+
+- **Isle**: An island in the ocean - strong connection
+- **Lily**: Water lily - possible ocean/water connection, but more freshwater
+- **Knot**: Nautical unit of speed (knots are used for ocean navigation) - strong connection
+- **Pole**: North/South Pole, polar seas - possible but weaker
+- **Bubble**: Bubbles in water/ocean - weak
+- **March**: No obvious ocean connection
+
+We already got "Deep" (ocean deep). Now thinking about:
+- **Isle** - surrounded by ocean water, very strong
+- **Knot** - nautical knot, very strong ocean connection
+
+We have 3 blue cards remaining and red has 3. This is critical - we need to be careful but also aggressive since it's tied.
+
+Isle and Knot both seem very strong for OCEAN. Let me go with **Isle** first as it's the most directly ocean-related (islands are in the ocean).
+
+{"guess": "Isle", "reasoning": "An isle is an island surrounded by ocean water - very strong connection to OCEAN clue"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       [revealed]
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    [revealed]
+  Box                  BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Block                NEUTRAL    
+  Couch                RED        [revealed]
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        
+  Isle                 RED        [revealed]
+  Canyon               NEUTRAL    
+  Angel                RED        [revealed]
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Marching", "number": 2, "reasoning": "The clue relates to 'March' and 'Steam' as in 'Marching steam' or 'steam march' indicating movement and progress, guiding towards these two red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MARCHING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Knot
+  Steam
+  Piano
+  Hymn
+  Lily
+  Block
+  Code
+  Spike
+  March
+  Canyon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "March", "reasoning": "The clue 'MARCHING' directly relates to 'March' as the root word, making it a very strong association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MARCHING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Knot
+  Steam
+  Piano
+  Hymn
+  Lily
+  Block
+  Code
+  Spike
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hymn", "reasoning": "Marching bands often play hymns or patriotic songs during parades, so Hymn is related to Marching."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       [revealed]
+  Knot                 BLUE       
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    [revealed]
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    [revealed]
+  Box                  BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Block                NEUTRAL    
+  Couch                RED        [revealed]
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       
+  Spike                NEUTRAL    
+  March                RED        [revealed]
+  Isle                 RED        [revealed]
+  Canyon               NEUTRAL    
+  Angel                RED        [revealed]
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+  [RED] MARCHING 2  #2: Hymn → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words:
+- **Bubble** (BLUE)
+- **Knot** (BLUE)
+- **Code** (BLUE)
+
+I need a clue that connects all three without touching the ASSASSIN (Pole) or the remaining RED word (Steam).
+
+Let me think:
+- **Bubble**: soap bubble, bubble wrap, speech bubble...
+- **Knot**: tied knot, nautical knot, knot in wood...
+- **Code**: secret code, morse code, zip code...
+
+"Secret" - secret code ✓, but secret knot? secret bubble? Not great.
+
+"Morse" - Morse code ✓, but Morse knot? Morse bubble? No.
+
+"Zip" - Zip code ✓, Zip... not helpful for others.
+
+"Speech" - Speech bubble ✓, Speech code? No.
+
+"Wrap" - Bubble wrap ✓... not helpful.
+
+Let me think about what connects bubble, knot, and code:
+- **Crack** - crack the code ✓, crack... 
+- **Crack**: crack the code ✓, bubble... no
+- **Tie**: tie the knot ✓, tie code? tie bubble? No.
+
+"Untangle" - untangle a knot... 
+
+**"Sailor"** - sailor's knot ✓, sailor code (code of conduct)... sailor bubble? No.
+
+**"Boy"** - Boy Scout knot, Boy Scout code... bubble? No.
+
+**"Gordian"** - Gordian knot... only one word.
+
+**"Secret"** - secret code ✓, secret... 
+
+**"Burst"** - burst bubble ✓, burst... knot? No.
+
+**"Square"** - square knot ✓, square code? No.
+
+Hmm, let me try: **"Decode"** - no, that's not on the board but only relates to Code.
+
+**"Wrap"** - bubble wrap... 
+
+What about **"Bath"** - bubble bath ✓, bath... knot? No.
+
+**"Slip"** - slip knot ✓, slip... bubble? slip code? No.
+
+**"Cipher"** - cipher = code ✓... 
+
+What about connecting just two and hoping they guess the third? But I want all 3.
+
+**"Crack"** - crack the code ✓, crack a knot (loosen)... crack a bubble? Hmm.
+
+**"Tie"** - tie the knot ✓, tie code? tie bubble? No.
+
+**"Overhand"** - overhand knot... only one.
+
+Let me try **"SOURCE"** - source code ✓, source... bubble? knot? No.
+
+**"SCOUT"** - Scout code ✓, Scout knot ✓, Scout bubble? Hmm, only 2.
+
+**"DECODE"** - not a board word, relates to Code... 
+
+I'll go with **"SCOUT"** for knot and code (2), avoiding Steam/Pole risk.
+
+Actually - **"BUBBLE, KNOT, CODE"** - what if "LOOP"? loop knot ✓, loop code? loop bubble? No.
+
+**"SOAP"** - soap bubble ✓, soap opera... knot? code? No.
+
+I'll try **"SCOUT"** for 2 (knot + code), safe play.
+
+{"clue": "SCOUT", "number": 2, "reasoning": "Scout knot (knot-tying is a key Scout skill) and Scout code (honor code/morse code in scouting). Avoids Pole (ASSASSIN) and Steam (RED)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCOUT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Knot
+  Steam
+  Piano
+  Lily
+  Block
+  Code
+  Spike
+  Canyon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+  [RED] MARCHING 2  #2: Hymn → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'SCOUT' with 2 words, and we have 3 blue cards remaining while red only has 1.
+
+Let me think about what words relate to SCOUT:
+- Boy Scout associations: merit badge, knot (scouts learn to tie knots!), canyon (scouts hike), pole (scouts use poles?)
+- Scout as in reconnaissance: spy, code?
+- KNOT - Boy Scouts famously learn to tie knots - strong connection
+- CANYON - scouts might explore canyons, but less direct
+- SPIKE - not obvious
+- BUBBLE - not obvious
+- CODE - scouts use codes? Morse code? Less direct than knot
+
+KNOT seems very strongly associated with Boy Scouts. 
+
+CANYON could also work - scouts explore canyons, and there's also "Grand Canyon" which scouts might visit.
+
+SPIKE - volleyball spike? Not scout related.
+POLE - pole vaulting? North Pole? Less scout-related.
+
+I'm most confident about KNOT (Boy Scouts tie knots). For the second word, CANYON (scouts hike/explore) seems plausible.
+
+Since red only has 1 card left and we need 3 blue cards, I need to be careful. Let me go with KNOT first as it's the strongest connection.
+
+{"guess": "KNOT", "reasoning": "Boy Scouts are famously known for learning to tie knots - this is one of the strongest associations with SCOUT."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCOUT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Steam
+  Piano
+  Lily
+  Block
+  Code
+  Spike
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+  [RED] MARCHING 2  #2: Hymn → neutral
+  [BLUE] SCOUT 2  #1: Knot → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SCOUT' and the valid guesses remaining, I need to find words that connect to scouting.
+
+SCOUT connections:
+- Boy Scouts use "knot" (already guessed correctly)
+- "Canyon" - scouts explore canyons/terrain
+- "Spike" - could relate to scouting/camping
+- "Pole" - tent poles in camping/scouting
+- "Code" - scouts use codes/morse code
+- "Block" - city block scouting?
+
+The clue number is 2, so the spymaster intended 2 words. I've already gotten one (Knot). I need to find the second scout-related word.
+
+"Canyon" - scouts explore canyons, but not a strong direct connection.
+"Code" - Morse code is very associated with scouts/scouting.
+"Spike" - less clear connection.
+
+Actually, "Code" seems strong - Boy Scouts learn Morse code and secret codes as part of their activities. But wait, "Code" could also be the assassin or red.
+
+Red has only 1 card left. I need to be careful. Blue has 2 cards left (including this turn's correct guess).
+
+"Code" - scout code, morse code... reasonable connection.
+"Canyon" - Grand Canyon, scouts hike...
+
+I'll go with "Canyon" - scouts often go on hikes/expeditions through canyons. Actually "Code" feels more specifically scout-related.
+
+{"guess": "Code", "reasoning": "Scouts learn Morse code and use codes as part of their activities. This seems like the second word the spymaster intended with the SCOUT clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCOUT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Pole
+  Bubble
+  Steam
+  Piano
+  Lily
+  Block
+  Spike
+  Canyon
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+  [RED] MARCHING 2  #2: Hymn → neutral
+  [BLUE] SCOUT 2  #1: Knot → blue
+  [BLUE] SCOUT 2  #2: Code → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the situation:
+- Red remaining: 1, Blue remaining: 1
+- I've already used 2 guesses this turn (Knot → blue, Code → blue)
+- I have 1 more guess available (clue_number + 1 = 3 total)
+
+The clue was 'SCOUT' 2, and I've already correctly guessed 2 words. I should be careful about using the bonus guess.
+
+Looking at the remaining valid words and thinking about 'SCOUT':
+- Canyon Scout? Not obvious
+- Spike? Not obvious
+- Block? Not obvious
+
+But more importantly - Red only has 1 card left. If I guess wrong and hit a red card, they win. The assassin is also a risk.
+
+I've already fulfilled the clue (2 correct guesses). The bonus guess is risky when red is at 1. I should PASS to secure the win on the next turn rather than risk hitting the red card.
+
+{"guess": "PASS", "reasoning": "I've already correctly guessed both words for the SCOUT clue (Knot and Code). Using the bonus guess is too risky - Red only has 1 card left, and if I accidentally hit it, they win. I'll pass to keep our lead and win on the next turn."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Pole                 ASSASSIN   
+  Copper               RED        [revealed]
+  Disk                 RED        [revealed]
+  Bubble               BLUE       
+  Deep                 BLUE       [revealed]
+  Knot                 BLUE       [revealed]
+  Steam                RED        
+  Piano                NEUTRAL    
+  Hymn                 NEUTRAL    [revealed]
+  Wall                 RED        [revealed]
+  Cloud                NEUTRAL    [revealed]
+  Box                  BLUE       [revealed]
+  Gold                 RED        [revealed]
+  Lily                 NEUTRAL    
+  Change               BLUE       [revealed]
+  Hand                 BLUE       [revealed]
+  Block                NEUTRAL    
+  Couch                RED        [revealed]
+  Bank                 BLUE       [revealed]
+  Code                 BLUE       [revealed]
+  Spike                NEUTRAL    
+  March                RED        [revealed]
+  Isle                 RED        [revealed]
+  Canyon               NEUTRAL    
+  Angel                RED        [revealed]
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+  [RED] MARCHING 2  #2: Hymn → neutral
+  [BLUE] SCOUT 2  #1: Knot → blue
+  [BLUE] SCOUT 2  #2: Code → blue
+  [BLUE] SCOUT 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BANK, BLOCK, BOX, BUBBLE, CANYON, CHANGE, CLOUD, CODE, COPPER, COUCH, DEEP, DISK, GOLD, HAND, HYMN, ISLE, KNOT, LILY, MARCH, PIANO, POLE, SPIKE, STEAM, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Vapor", "number": 1, "reasoning": "Steam is the only unrevealed red word and is closely associated with vapor, which helps avoid confusion with blue or neutral words and the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'VAPOR' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Pole
+  Bubble
+  Steam
+  Piano
+  Lily
+  Block
+  Spike
+  Canyon
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] METAL 2  #1: Copper → red
+  [RED] METAL 2  #2: Gold → red
+  [RED] METAL 2  #3: Disk → red
+  [BLUE] FINANCIAL 3  #1: Bank → blue
+  [BLUE] FINANCIAL 3  #2: Wall → red
+  [RED] HEAVENLY 2  #1: Angel → red
+  [RED] HEAVENLY 2  #2: Cloud → neutral
+  [BLUE] EXCHANGE 2  #1: Change → blue
+  [BLUE] EXCHANGE 2  #2: Hand → blue
+  [BLUE] EXCHANGE 2  #3: PASS
+  [RED] FURNITURE 1  #1: Couch → red
+  [RED] FURNITURE 1  #2: Box → blue
+  [BLUE] OCEAN 3  #1: Deep → blue
+  [BLUE] OCEAN 3  #2: Isle → red
+  [RED] MARCHING 2  #1: March → red
+  [RED] MARCHING 2  #2: Hymn → neutral
+  [BLUE] SCOUT 2  #1: Knot → blue
+  [BLUE] SCOUT 2  #2: Code → blue
+  [BLUE] SCOUT 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Steam", "reasoning": "Steam is directly related to vapor, making it the most likely red word for the clue 'VAPOR'."}
+============================================================

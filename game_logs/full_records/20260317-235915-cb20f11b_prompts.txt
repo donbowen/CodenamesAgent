@@ -1,0 +1,801 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Eagle                BLUE       
+  Face                 BLUE       
+  Trip                 NEUTRAL    
+  Column               RED        
+  Fly                  BLUE       
+  Diamond              NEUTRAL    
+  Cap                  RED        
+  Brooch               BLUE       
+  Table                ASSASSIN   
+  Alps                 RED        
+  Cord                 NEUTRAL    
+  Chain                RED        
+  India                NEUTRAL    
+  Fountain             BLUE       
+  Fossil               RED        
+  Dove                 RED        
+  Gate                 RED        
+  Jar                  BLUE       
+  Lava                 NEUTRAL    
+  Game                 BLUE       
+  France               RED        
+  Avalanche            BLUE       
+  Well                 NEUTRAL    
+  Row                  RED        
+  Gust                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, AVALANCHE, BROOCH, CAP, CHAIN, COLUMN, CORD, DIAMOND, DOVE, EAGLE, FACE, FLY, FOSSIL, FOUNTAIN, FRANCE, GAME, GATE, GUST, INDIA, JAR, LAVA, ROW, TABLE, TRIP, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "BERET", "number": 2, "reasoning": "Associates with Cap and France (French hat)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BERET' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Eagle
+  Face
+  Trip
+  Column
+  Fly
+  Diamond
+  Cap
+  Brooch
+  Table
+  Alps
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Game
+  France
+  Avalanche
+  Well
+  Row
+  Gust
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cap", "reasoning": "A beret is a type of cap; strong direct association (fits the clue 'BERET')."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BERET' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eagle
+  Face
+  Trip
+  Column
+  Fly
+  Diamond
+  Brooch
+  Table
+  Alps
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Game
+  France
+  Avalanche
+  Well
+  Row
+  Gust
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"France","reasoning":"Beret is strongly associated with France (French beret), likely the intended second target after 'Cap'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BERET' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eagle
+  Face
+  Trip
+  Column
+  Fly
+  Diamond
+  Brooch
+  Table
+  Alps
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Game
+  Avalanche
+  Well
+  Row
+  Gust
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Alps", "reasoning": "Berets evoke French/mountain regions — Alps fits with France and cap associations from this clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Eagle                BLUE       
+  Face                 BLUE       
+  Trip                 NEUTRAL    
+  Column               RED        
+  Fly                  BLUE       
+  Diamond              NEUTRAL    
+  Cap                  RED        [revealed]
+  Brooch               BLUE       
+  Table                ASSASSIN   
+  Alps                 RED        [revealed]
+  Cord                 NEUTRAL    
+  Chain                RED        
+  India                NEUTRAL    
+  Fountain             BLUE       
+  Fossil               RED        
+  Dove                 RED        
+  Gate                 RED        
+  Jar                  BLUE       
+  Lava                 NEUTRAL    
+  Game                 BLUE       
+  France               RED        [revealed]
+  Avalanche            BLUE       
+  Well                 NEUTRAL    
+  Row                  RED        
+  Gust                 NEUTRAL    
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, AVALANCHE, BROOCH, CAP, CHAIN, COLUMN, CORD, DIAMOND, DOVE, EAGLE, FACE, FLY, FOSSIL, FOUNTAIN, FRANCE, GAME, GATE, GUST, INDIA, JAR, LAVA, ROW, TABLE, TRIP, WELL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words: Eagle, Face, Fly, Brooch, Fountain, Jar, Game, Avalanche.
+
+Let me think about groupings:
+
+**Eagle, Fly, Avalanche** - things that soar/move through air? 
+- Eagle flies, avalanche... not really
+
+**Face, Fountain, Jar** - could relate to beauty/cosmetics?
+
+**Brooch, Eagle** - jewelry/emblems
+
+**Fly, Eagle, Avalanche** - speed? power?
+
+**Face, Jar, Fountain** - "cream" - face cream, jar of cream, cream fountain? Hmm.
+
+**Eagle, Fly, Fountain, Avalanche** - "pen" - fountain pen! Eagle... no.
+
+**Jar, Fountain, Face** - "wash" - face wash, fountain (washing), jar... 
+
+**Fly, Eagle, Brooch, Game** - "bird"? Eagle is a bird, fly (fishing fly), brooch (bird brooch?), game (game bird!)... Eagle = bird, Fly = mayfly/fishing, Game = game bird, Dove (RED - avoid!)
+
+**Fly, Eagle, Game** - "bird" connects these but Dove is RED.
+
+**Avalanche, Fountain, Jar** - "spring"? Spring avalanche, spring fountain, spring jar? 
+
+**Face, Jar, Fountain, Brooch** - "pin"? Brooch is a pin, face pin?, fountain pin? No.
+
+**Eagle, Brooch, Fly** - "pin" - eagle pin (lapel), brooch is a pin, fly pin? 
+
+**Eagle, Brooch, Game** - "board"? Game board... no.
+
+**Fountain, Jar, Face** - "wash" - face wash, jar (mason jar)... 
+
+**Avalanche, Fountain, Fly** - "rush"? Gold rush, avalanche rush, fly rush?
+
+**Eagle, Face, Fly, Brooch** - "jewelry"? Brooch is jewelry, eagle (jewelry), face jewelry?
+
+**Avalanche, Fountain, Fly, Eagle** - "soar"? 
+
+**Face, Jar, Fountain, Game** - "fair"? Game fair, fountain fair, face fair, jar fair? No.
+
+**Eagle, Fly, Game, Avalanche** - "SPORT"? Eagle (golf), fly (fishing), game (sport), avalanche (sports team)! This is strong!
+
+- Eagle: golf term
+- Fly: fly fishing
+- Game: sport/game
+- Avalanche: Colorado Avalanche (sports team)
+
+But "sport" might also connect to Fossil (fossil sport watch?) or other red words. Let me check red words: Column, Chain, Fossil, Dove, Gate, Row. "Sport" doesn't strongly connect to these.
+
+Actually "SPORT" for Eagle, Fly, Game, Avalanche seems good! 4 blue words.
+
+{"clue": "SPORT", "number": 4, "reasoning": "Eagle (golf term/birdie), Fly (fly fishing is a sport), Game (sport/game), Avalanche (Colorado Avalanche hockey team). These all connect to sports without pointing to red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPORT' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Eagle
+  Face
+  Trip
+  Column
+  Fly
+  Diamond
+  Brooch
+  Table
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Game
+  Avalanche
+  Well
+  Row
+  Gust
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to SPORT (4 words).
+
+Let me think about sports connections:
+
+- **GAME** - directly related to sport/games
+- **DIAMOND** - baseball diamond (sport)
+- **FLY** - fly fishing (sport), or fly in cricket/sports
+- **ROW** - rowing (sport)
+- **EAGLE** - golf term (sport)
+- **TABLE** - table tennis (sport)
+- **TRIP** - not obviously a sport
+- **FOUNTAIN** - not obviously a sport
+- **FACE** - not obviously a sport
+
+Strong candidates:
+- **GAME** - very directly related to sport
+- **DIAMOND** - baseball diamond
+- **ROW** - rowing is a sport
+- **EAGLE** - golf term
+- **TABLE** - table tennis
+- **FLY** - fly fishing
+
+The clue is SPORT 4, so I need to find 4. Let me rank:
+1. GAME - most direct
+2. DIAMOND - baseball
+3. ROW - rowing
+4. EAGLE - golf
+5. TABLE - table tennis
+6. FLY - fly fishing
+
+I'll start with the most confident: GAME
+
+{"guess": "GAME", "reasoning": "GAME is directly related to SPORT - games and sports are closely synonymous"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPORT' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eagle
+  Face
+  Trip
+  Column
+  Fly
+  Diamond
+  Brooch
+  Table
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Avalanche
+  Well
+  Row
+  Gust
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+  [BLUE] SPORT 4  #1: Game → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SPORT' with 4 words, and we've already guessed "Game" correctly.
+
+Sports-related words from the remaining list:
+- **Diamond** - baseball diamond (sport)
+- **Row** - rowing (sport)
+- **Fly** - fly fishing (sport), or fly in sports context
+- **Table** - table tennis (sport)
+- **Eagle** - golf term (eagle = 2 under par)
+- **Avalanche** - Colorado Avalanche (hockey team)
+- **Dove** - less obvious sports connection
+- **Fountain** - less obvious
+
+Strong candidates:
+- **Diamond** - baseball diamond is very strongly sports-related
+- **Row** - rowing is an Olympic sport
+- **Eagle** - golf term
+- **Table** - table tennis
+
+I'll go with **Diamond** first as it's very strongly associated with baseball (a sport).
+
+{"guess": "Diamond", "reasoning": "A baseball diamond is a core sports term - baseball field is called a diamond."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Eagle                BLUE       
+  Face                 BLUE       
+  Trip                 NEUTRAL    
+  Column               RED        
+  Fly                  BLUE       
+  Diamond              NEUTRAL    [revealed]
+  Cap                  RED        [revealed]
+  Brooch               BLUE       
+  Table                ASSASSIN   
+  Alps                 RED        [revealed]
+  Cord                 NEUTRAL    
+  Chain                RED        
+  India                NEUTRAL    
+  Fountain             BLUE       
+  Fossil               RED        
+  Dove                 RED        
+  Gate                 RED        
+  Jar                  BLUE       
+  Lava                 NEUTRAL    
+  Game                 BLUE       [revealed]
+  France               RED        [revealed]
+  Avalanche            BLUE       
+  Well                 NEUTRAL    
+  Row                  RED        
+  Gust                 NEUTRAL    
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+  [BLUE] SPORT 4  #1: Game → blue
+  [BLUE] SPORT 4  #2: Diamond → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, AVALANCHE, BROOCH, CAP, CHAIN, COLUMN, CORD, DIAMOND, DOVE, EAGLE, FACE, FLY, FOSSIL, FOUNTAIN, FRANCE, GAME, GATE, GUST, INDIA, JAR, LAVA, ROW, TABLE, TRIP, WELL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"matrix","number":2,"reasoning":"Row and Column are components of a matrix (mathematical)." }
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MATRIX' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Eagle
+  Face
+  Trip
+  Column
+  Fly
+  Brooch
+  Table
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Avalanche
+  Well
+  Row
+  Gust
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+  [BLUE] SPORT 4  #1: Game → blue
+  [BLUE] SPORT 4  #2: Diamond → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Column", "reasoning": "A matrix is made up of columns (strong direct match to 'matrix'); likely a Red card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MATRIX' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eagle
+  Face
+  Trip
+  Fly
+  Brooch
+  Table
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Avalanche
+  Well
+  Row
+  Gust
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+  [BLUE] SPORT 4  #1: Game → blue
+  [BLUE] SPORT 4  #2: Diamond → neutral
+  [RED] MATRIX 2  #1: Column → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Row", "reasoning": "Matrix = rows and columns; we already got Column, so Row is the other clear match to the clue MATRIX."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MATRIX' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Eagle
+  Face
+  Trip
+  Fly
+  Brooch
+  Table
+  Cord
+  Chain
+  India
+  Fountain
+  Fossil
+  Dove
+  Gate
+  Jar
+  Lava
+  Avalanche
+  Well
+  Gust
+
+Game history:
+  [RED] BERET 2  #1: Cap → red
+  [RED] BERET 2  #2: France → red
+  [RED] BERET 2  #3: Alps → red
+  [BLUE] SPORT 4  #1: Game → blue
+  [BLUE] SPORT 4  #2: Diamond → neutral
+  [RED] MATRIX 2  #1: Column → red
+  [RED] MATRIX 2  #2: Row → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Table","reasoning":"Matrix is a table of rows and columns — Table fits with the already-correct Column and Row guesses."}
+============================================================

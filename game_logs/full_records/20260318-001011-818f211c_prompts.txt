@@ -1,0 +1,2949 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       
+  Cone                 NEUTRAL    
+  Cape                 BLUE       
+  America              BLUE       
+  Fog                  BLUE       
+  Lure                 RED        
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        
+  Bone                 RED        
+  Pumpkin              BLUE       
+  Orange               RED        
+  Pole                 RED        
+  Coal                 BLUE       
+  Battery              RED        
+  Field                BLUE       
+  Clay                 RED        
+  Nut                  RED        
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Lure, Shot, Fan, Bone, Orange, Pole, Battery, Clay, Nut.
+
+Let me think about groupings:
+
+**Orange, Pumpkin** - both orange colored, but Pumpkin is BLUE.
+
+**Clay, Pole, Pit** - pottery? No, Pit is neutral.
+
+**Fan, Shot, Lure** - fishing related? A lure is fishing, a shot could be a cast... 
+
+**Bone, Nut, Orange** - things you can find? 
+
+**Battery, Shot, Pole** - electrical? Battery and Pole (positive/negative poles)...
+
+**Orange, Nut, Cone** - ice cream flavors? Cone is neutral.
+
+**Clay, Pole** - could relate to sports (pole vault, clay shooting)
+
+**Shot, Clay** - clay pigeon shooting! 
+
+**Fan, Pole, Battery** - powered things?
+
+**Nut, Bolt** - but Bolt isn't on the board.
+
+**Orange, Lure** - fishing lure can be orange...
+
+**Shot, Fan, Lure** - action words?
+
+**Clay, Nut, Bone** - things that are natural/earth materials?
+
+**Pole, Battery, Shot** - energetic?
+
+Let me think about **PIGEON**: Clay pigeon, stool pigeon... no.
+
+**FISHING**: Lure (fishing lure), Pole (fishing pole), Shot (split shot weights), Fan (fan casting)... that's 4 RED words! And avoids BLUE/ASSASSIN words.
+
+- Lure = fishing lure ✓
+- Pole = fishing pole ✓  
+- Shot = split shot (fishing weight) ✓
+- Fan = fan cast ✓
+
+Risk check: Root (BLUE) - not fishing. Field (BLUE) - not fishing. Pit (NEUTRAL) - not fishing. Good!
+
+{"clue": "FISHING", "number": 4, "reasoning": "Lure (fishing lure), Pole (fishing pole), Shot (split shot sinker weights used in fishing), Fan (fan casting technique) are all RED words connected to fishing."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Lure
+  Ambulance
+  Shot
+  Fan
+  Bone
+  Pumpkin
+  Orange
+  Pole
+  Coal
+  Battery
+  Field
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to FISHING (4 words).
+
+Let me think about fishing-related words:
+- **Lure** - absolutely a fishing term (fishing lure)
+- **Pole** - fishing pole
+- **Pit** - fishing pit? Less direct
+- **Rod** - not on the list
+- **Line** - not on the list
+- **Net** - not on the list
+- **Hook** - not on the list
+- **Reel** - not on the list
+- **Fly** - not on the list
+- **Bait** - not on the list
+- **Cape** - Cape Cod is famous for fishing, but that's a stretch
+- **Bone** - bonefish (fishing term)? Or "bone dry"?
+- **Fan** - fan casting in fly fishing?
+- **Root** - not obvious
+- **Cabin** - fishing cabin?
+- **Back** - "backcasting" in fly fishing?
+
+The clearest fishing connections:
+1. **Lure** - fishing lure (most obvious)
+2. **Pole** - fishing pole (very clear)
+3. **Fly** - fly fishing (not on list)
+4. **Reel** - not on list
+5. **Bone** - bonefish is a type of game fish, or "bone" fishing
+6. **Cape** - Cape Cod fishing? Stretch
+7. **Pin** - not obvious
+8. **Pit** - fishing pit (a fishing pond/pit is common in UK)
+
+Starting with the most confident:
+
+{"guess": "LURE", "reasoning": "A fishing lure is one of the most direct fishing-related words - used to attract fish."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Bone
+  Pumpkin
+  Orange
+  Pole
+  Coal
+  Battery
+  Field
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'FISHING' with 4 words, and we already got 'Lure' correctly.
+
+Remaining fishing-related words to consider:
+- **Pole** - fishing pole is very direct
+- **Rod** - not on the list
+- **Net** - not on the list
+- **Fly** - not on the list
+- **Pit** - not obviously fishing
+- **Pin** - fishing pin? not obvious
+- **Bone** - fishbone! yes
+- **Cabin** - fishing cabin? stretch
+- **Cape** - Cape Cod fishing area? stretch
+
+Strong fishing connections:
+- **Pole** - fishing pole (very strong)
+- **Bone** - fishbone (strong)
+- **Back** - "catch and release" / "setback"? No... actually not fishing
+- **Fan** - fan cast in fishing? weak
+- **Fly** - not on list
+- **Rod** - not on list
+
+Most confident: **Pole** (fishing pole), **Bone** (fishbone)
+
+Let me also think about **Cape** - Cape Cod is famous for fishing, but that's a stretch.
+
+**Root** - no fishing connection
+**Pit** - no
+
+Going with **Pole** as the most obvious fishing connection.
+
+{"guess": "Pole", "reasoning": "Fishing pole is one of the most direct associations with fishing - a primary piece of fishing equipment."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Bone
+  Pumpkin
+  Orange
+  Coal
+  Battery
+  Field
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'FISHING' with 4 words, I've already correctly guessed LURE and POLE. I need to find 2 more fishing-related words.
+
+Thinking about fishing connections:
+- **LINE** - not on the list
+- **ROD** - not on the list
+- **FLY** - not on the list
+- **HOOK** - not on the list
+- **NET** - not on the list
+- **REEL** - not on the list
+- **BOBBER** - not on the list
+- **TACKLE** - not on the list
+- **BAIT** - not on the list
+- **PIT** - not obviously fishing
+- **FAN** - not obviously fishing
+- **BONE** - fish have bones... "bone fishing" is a type of fishing!
+- **CAPE** - Cape Cod is famous for fishing... but that's a stretch
+- **FLY** fishing... not on list
+- **PIN** - not fishing
+- **ROOT** - not fishing
+- **COAL** - not fishing
+- **CABIN** - fishing cabin? stretch
+
+Wait - **BONE** fishing (bonefishing) is definitely a real type of fishing! And **FLY** isn't available...
+
+**BONE** - bonefishing is a real sport fishing activity.
+
+What about **BACK** - "backcasting" in fly fishing?
+
+**BONE** seems most confident for fishing.
+
+{"guess": "BONE", "reasoning": "Bonefishing is a legitimate type of sport fishing, making BONE a strong connection to the FISHING clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Pumpkin
+  Orange
+  Coal
+  Battery
+  Field
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'FISHING' with 4 words, I've already correctly guessed Lure, Pole, and Bone. I need one more fishing-related word.
+
+Fishing-related words from the remaining list:
+- **Rod** - not available
+- **Net** - not available
+- **Hook** - not available
+- **Line** - not available
+- **Reel** - not available
+- **Fly** - not available
+
+Let me think more creatively:
+- **Pit** - not fishing related
+- **Pin** - fishing pin? not really
+- **Fan** - not fishing
+- **Cape** - Cape Cod is famous for fishing!
+- **Cabin** - fishing cabin? possible
+- **Root** - not fishing
+- **Back** - not fishing
+
+Cape Cod is one of the most famous fishing locations in America. "Cape" could relate to fishing through Cape Cod. But it could also be neutral or blue.
+
+Actually, thinking about it more - "FLY fishing" isn't available, but what about "CONE"? No...
+
+"BACK" - backcasting in fly fishing? Stretch.
+
+I've already gotten 3 correct guesses for a clue of 4. The 4th might be risky. Let me consider PASSING since I'm not confident and we're ahead in remaining cards.
+
+Wait - Red has 6 remaining, Blue has 8. We're behind! I should try.
+
+"CABIN" - fishing cabin is a thing, but weak connection.
+
+I'll PASS to be safe with our lead in guesses this turn.
+
+{"guess": "PASS", "reasoning": "I've successfully guessed 3 of 4 fishing words (Lure, Pole, Bone). I can't confidently identify the 4th fishing word from the remaining options without risking a blue card or the assassin. The remaining words don't have strong fishing connections, so I'll pass to preserve our advantage."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       
+  Cone                 NEUTRAL    
+  Cape                 BLUE       
+  America              BLUE       
+  Fog                  BLUE       
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       
+  Orange               RED        
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        
+  Field                BLUE       
+  Clay                 RED        
+  Nut                  RED        
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for BLUE words. Let me identify the unrevealed BLUE words:
+- Back
+- Cape
+- America
+- Fog
+- Pumpkin
+- Coal
+- Field
+- Root
+
+Let me think about connections:
+
+1. **Back, Cape, Field** - These could relate to geography or clothing
+2. **America** - Country/continent
+3. **Fog, Coal** - Weather/substances
+4. **Pumpkin** - Vegetable/Halloween
+5. **Root** - Plant part/math
+
+Let me consider strong groupings:
+
+**Geography/Land**: Back (back country), Cape (geographic feature), Field (land), America (continent)
+- "LAND" could work but might be too vague
+
+**Clothing**: Back (of shirt), Cape (garment)
+- "WEAR" or "GARMENT" - but only 2 words
+
+**Autumn/Fall**: Pumpkin, Fog, Field (harvest field)
+- "HARVEST" or "AUTUMN" - 3 words potentially
+
+**Plant-related**: Pumpkin, Root, Field, Coal (organic matter)
+- "GROUND" could connect Root, Field, Coal
+
+**Sports/Activities**: Back (position), Field (playing field), Cape (Cape Cod sports?)
+
+Let me try **"HARVEST"** for Pumpkin, Field, and potentially Coal (coal was harvested historically):
+- Pumpkin - harvest season
+- Field - harvest fields
+- Coal - mined/harvested
+This seems risky for Coal.
+
+Let me try **"GROUND"**:
+- Field (playing ground)
+- Root (grows in ground)
+- Coal (comes from ground)
+- Back (background?)
+This could work for 3 words safely.
+
+Or **"SUPER"**:
+- Cape (Superman's cape)
+- Back (Superback? No...)
+- America (Captain America)
+This is weak.
+
+I'll go with **"HARVEST"** for 2 safe words (Pumpkin, Field):
+
+{"clue": "HARVEST", "number": 2, "reasoning": "Connects PUMPKIN (harvest season crop) and FIELD (harvest field). Avoids assassin JAR and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HARVEST' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Pumpkin
+  Orange
+  Coal
+  Battery
+  Field
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Pumpkin", "reasoning": "HARVEST strongly connects to Pumpkin - pumpkins are harvested in fall and are a classic harvest symbol. This is a very confident first guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HARVEST' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Orange
+  Coal
+  Battery
+  Field
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Field",
+  "reasoning": "HARVEST strongly connects to Field (harvest field, field of crops). This is a very common agricultural association. Since I correctly got Pumpkin (1/2), Field is the most logical second word for a harvest theme. I'm confident enough to continue rather than pass."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'HARVEST' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Orange
+  Coal
+  Battery
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words matching HARVEST (Pumpkin and Field), which was the clue number. The remaining words don't have strong connections to harvest - while 'Nut' could potentially relate to fall harvest, it's a weak connection and risky. With both teams at 6 cards remaining, it's better to pass now and avoid hitting a neutral, red card, or the assassin."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       
+  Cone                 NEUTRAL    
+  Cape                 BLUE       
+  America              BLUE       
+  Fog                  BLUE       
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       [revealed]
+  Orange               RED        
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        
+  Field                BLUE       [revealed]
+  Clay                 RED        
+  Nut                  RED        
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Shot, Fan, Orange, Battery, Clay, Nut.
+
+Let me think about connections:
+
+- **Shot, Fan, Orange, Battery, Clay**: 
+  - Shot: gunshot, shot glass, basketball shot
+  - Fan: electric fan, sports fan, fan blade
+  - Orange: color, fruit, Orange is the New Black
+  - Battery: electric battery, assault and battery
+  - Clay: Muhammad Ali (Cassius Clay), clay court, clay pigeon
+  - Nut: nut bolt, nutcase, chestnut
+
+Let me think about "CLAY":
+- Clay pigeon shooting → Shot, Clay
+- Clay court tennis
+
+Think about colors: Orange is a color/fruit.
+
+**ELECTRIC**: Battery (electric), Fan (electric fan), Shot? No...
+
+**POWER**: Battery (power source), Fan (power fan)... not enough.
+
+**SPORT**: Shot (shot put), Fan (sports fan), Clay (clay court)... 
+
+**PIGEON**: Clay (clay pigeon), Stool pigeon... not great.
+
+**VITAMIN C**: Orange... 
+
+**FRUIT**: Orange (fruit), Nut (fruit/nut)... only 2.
+
+**ALKALINE**: Battery... 
+
+**CHARGE**: Battery (charge), Shot (charge/shot)... 
+
+Let me think about **GUNSHOT, BUCKSHOT**... 
+
+**PELLET**: Shot (pellets), Clay (clay pigeon)... 
+
+**GUN**: Shot (gunshot), Fan? No... 
+
+**CLAY**: Muhammad Ali = Cassius Clay. Shot (boxing shot), Fan (boxing fan)...
+
+**BOXING**: Shot (boxing), Clay (Cassius Clay), Fan (boxing fan)... risky with neutral/blue words.
+
+**CERAMIC**: Clay... only 1.
+
+**COURT**: Clay (clay court), Fan (fan at court), Shot (court shot in basketball/tennis), Orange? No...
+
+**TENNIS**: Clay (clay court), Shot (tennis shot), Fan (tennis fan)... but does it point to blue words? Back (backhand)? Cape? 
+
+**ALKALINE**: Battery... 
+
+**DEAD**: Battery (dead battery), Shot (dead shot), Nut (dead nut?)... 
+
+**OVERCHARGED**: No...
+
+**JUMPER**: Battery (jumper cables), Shot? No...
+
+**VOLT**: Battery... 
+
+**CITRUS**: Orange, Nut (nutmeg?)... only 1-2.
+
+**COLOR**: Orange... 
+
+**BRAZIL**: Nut (Brazil nut), Orange? 
+
+**CASHEW**: Nut type... only 1.
+
+**PECAN**: Nut... 
+
+**ACID**: Battery (acid battery), Shot (acid shot?)... 
+
+**MACADAMIA**: Nut... 
+
+Let me try **RECHARGE**: Battery, Shot (recharge)...
+
+**WICKER**: Man... 
+
+**POTTER**: Clay (pottery), Shot? Fan? 
+
+**WHEEL**: Clay (potter's wheel), Fan? 
+
+**SCULPTOR**: Clay...
+
+**MODELING**: Clay...
+
+**SNAP**: Shot (snapshot), Fan? 
+
+**PHOTO**: Shot (photo shot), Fan (photo fan?)... 
+
+**CAMERA**: Shot (camera shot)... 
+
+**SNAPSHOT**: Not a single word on board.
+
+**JUMPER**: Battery jumper cables... 
+
+**MOLD**: Clay (mold with clay), Shot (mold/bullet mold), Nut (mold?)... 
+
+**PIGEON**: Clay pigeon, Shot (shot at pigeon)... risky.
+
+**JUICE**: Orange juice, Battery (juiced/battery)... 
+
+**SQUEEZING**: Orange...
+
+**BLOSSOM**: Orange blossom... 
+
+**REVOLVE**: Fan (revolving fan)... 
+
+**SPIN**: Fan (spinning fan), Shot (spin shot)... 
+
+**BLOWER**: Fan... 
+
+**CEILING**: Fan (ceiling fan)... 
+
+**OVERHEAD**: Fan (overhead fan), Shot (overhead shot)...
+
+**WINDMILL**: Fan...
+
+Let me go with **ELECTRIC**: Battery, Fan, Shot (electric chair/electric shot?)... uncertain.
+
+**OVERHEAD** for Fan + Shot (overhead shot in tennis) + ... 
+
+I'll go with a solid 3-word clue: **CHARGE** for Battery, Shot (charged shot), Fan (charged up fan)?
+
+{"clue": "ELECTRIC", "number": 3, "reasoning": "Battery (electric battery), Fan (electric fan), Orange (electric orange/neon orange is a stretch). Actually: Battery and Fan are clearly electric. Shot could be electric shock/shot. This targets 2-3 red words while avoiding assassin (Jar) and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ELECTRIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Orange
+  Coal
+  Battery
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that connect to "ELECTRIC" with 3 matches.
+
+Let me think about "ELECTRIC" connections:
+- Electric **EEL** - not on board
+- Electric **FAN** - fans can be electric
+- Electric **CHAIR** - not on board
+- Electric **BATTERY** - yes! Electric battery is a thing (battery is an electric storage device)
+- Electric **SLIDE** - not on board
+- Electric **COAL** - not directly
+- Electric **ORANGE** - "A Clockwork Orange" but not electric... wait, "Electric Orange" is a color/thing
+- Electric **PIN** - not really
+- Electric **SHOCK/SHOT** - electric shock... "shot" could relate
+- Electric **PILOT** - not really
+- Electric **EEL** - not on board
+- Electric **ARC** - not on board
+
+Let me reconsider:
+- **BATTERY** - stores electric energy, very strong connection
+- **FAN** - electric fan, common appliance
+- **SHOT** - electric shock... "shot" is a stretch
+- **COAL** - coal generates electricity (coal power plant)
+- **ORANGE** - Electric Orange is a color, or "Electric" by Katy Perry... hmm
+- **CABIN** - electric cabin? No.
+- **PILOT** - electric pilot light? No.
+
+Strong connections:
+1. **BATTERY** - electric battery (strongest)
+2. **FAN** - electric fan (strong)
+3. **EEL** - not available
+4. **CHAIR** - not available
+5. **COAL** - coal-fired electricity... weaker
+6. **ORANGE** - Electric Orange... possible
+
+Actually "Electric Slide" - no. "Electric Eel" - no. 
+
+What about **PIN** - electric pin? No.
+**CONE** - traffic cone... no.
+
+I'll go with BATTERY first (most confident), then FAN, then consider COAL or ORANGE.
+
+{"guess": "BATTERY", "reasoning": "Electric battery is a direct and strong connection - batteries store and provide electrical energy."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ELECTRIC' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Fan
+  Orange
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'ELECTRIC' with 3 words, and we've already correctly guessed "Battery."
+
+Now I need to find more words that relate to "ELECTRIC":
+
+- **Fan** - electric fan ✓
+- **Eel** - electric eel (not on board)
+- **Chair** - electric chair (not on board)
+- **Shock** - electric shock (not on board)
+- **Slide** - electric slide (not on board)
+- **Coal** - coal is used for electricity generation, but not directly "electric"
+- **Ambulance** - not electric
+- **Pin** - not electric
+- **Pilot** - pilot light? not electric specifically
+- **Fog** - not electric
+- **Cape** - Cape Fear? not electric
+- **Eel** - not on board
+- **Orange** - not electric
+- **Shot** - not electric
+- **Jar** - electric jar? Leyden jar is an early capacitor/electric device! ✓
+- **Cabin** - not electric
+- **Cone** - not electric
+- **Root** - not electric
+
+**Fan** - electric fan is very common
+**Jar** - Leyden jar (early electrical device) - less obvious
+
+Electric Fan is a very direct association. Let me go with Fan first.
+
+{"guess": "Fan", "reasoning": "Electric fan is a very common compound/phrase - a fan powered by electricity."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ELECTRIC' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Orange
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'ELECTRIC' with 3 words, I've already correctly guessed Battery and Fan. I need one more word related to ELECTRIC.
+
+Let me think about what's left:
+- Electric **Eel** - not on board
+- Electric **Chair** - not on board
+- Electric **Slide** - not on board
+- Electric **Shock** - SHOT could relate to "shock/shot"... not quite
+- Electric **Slide** - no
+- Electric **Coal** - no
+- Electric **Pin** - no
+- Electric **Pit** - no
+- Electric **Fog** - no
+- Electric **Eel** - no
+- Electric **Cape** - no
+- Electric **Orange** - no... wait, "A Clockwork Orange" has the electric shock scene
+- Electric **Cabin** - no
+- Electric **Pilot** - no... wait, "auto-pilot"?
+- Electric **Slide** - no
+- Electric **Cone** - no
+
+Wait - **PIN** as in PIN number? No...
+
+**COAL** - coal is related to electricity generation (coal-powered electric plants)?
+
+**PILOT** - pilot light? No...
+
+**SHOT** - electric shock → shot? That's a stretch.
+
+Actually, thinking more carefully: Electric **EEL**, Electric **Chair**, Electric **Slide**... 
+
+**ORANGE** - "The Electric Kool-Aid Acid Test"? No...
+
+Hmm, I'm not very confident. Given we're ahead (4 red vs 6 blue), I should be cautious. I'll PASS to protect our lead.
+
+{"guess": "PASS", "reasoning": "I've successfully guessed Battery and Fan for ELECTRIC. I'm not confident enough in any remaining word to risk hitting a blue card or the assassin, especially since we're ahead with only 4 red cards remaining vs 6 blue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       
+  Cone                 NEUTRAL    
+  Cape                 BLUE       
+  America              BLUE       
+  Fog                  BLUE       
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        [revealed]
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       [revealed]
+  Orange               RED        
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        [revealed]
+  Field                BLUE       [revealed]
+  Clay                 RED        
+  Nut                  RED        
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to analyze the remaining BLUE words and find a clue that connects them while avoiding the ASSASSIN (Jar) and RED words.
+
+Remaining BLUE words:
+- Back
+- Cape
+- America
+- Fog
+- Coal
+- Root
+
+Let me consider potential connections:
+
+1. **Cape + America**: Geographic connection (Cape Cod, Cape Canaveral in America)
+2. **Back + Root**: Body/anatomy connection (backbone, root canal)
+3. **Coal + Fog**: Both associated with pollution/smog
+4. **Fog + Cape**: Weather/maritime connection (foggy capes)
+
+Let me think about strong clues:
+
+- "SUPERHERO" could connect Cape (superhero cape) and America (Captain America), but might risk nothing else
+- "GEOGRAPHY" or "MAP" could work for Cape and America
+- "MIST" connects to Fog, but only 1 word
+- "SMOKE" could connect Coal and Fog
+- "PLANT" could connect Root, but risky with other words
+
+Looking at Cape + America + Coal:
+- "MINING" - Coal mining, Cape (mining areas), but weak for America
+- "BLACK" - Coal is black, but risky (could point to other words)
+
+Strong option: **CONTINENT** 
+- America is a continent (North/South America)
+- Cape (Cape of Good Hope, Cape Horn - geographic features on continents)
+- This is safer, connects 2 words clearly
+
+Another option: **GEOGRAPHY** or **STATES**
+- America (country)
+- Cape (geographic feature)
+- Coal (West Virginia, mining states)
+
+Best option: **STATES** (3 words)
+- America (United States)
+- Cape (Cape Cod is in Massachusetts, a state)
+- Coal (coal mining states like West Virginia)
+
+This avoids the assassin Jar and the remaining RED words (Shot, Orange, Clay, Nut).
+
+{"clue": "STATES", "number": 3, "reasoning": "Connects America (United States), Cape (US geographic features like Cape Cod), and Coal (coal mining states). Avoids assassin and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STATES' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Back
+  Cone
+  Cape
+  America
+  Fog
+  Ambulance
+  Shot
+  Orange
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "America",
+  "reasoning": "The clue 'STATES' most directly connects to 'America' (United States of America). This is a strong, clear connection. Other possibilities like 'Moscow' (Russian states/oblasts) or geographic terms are weaker. Starting with the most obvious match."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STATES' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Cape
+  Fog
+  Ambulance
+  Shot
+  Orange
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "CAPE", "reasoning": "After guessing AMERICA for STATES, CAPE is a strong second guess. Cape Cod is in Massachusetts, and there are many geographic capes named after US states or within states. This fits the STATES clue well. With 5 blue cards remaining vs 4 red, I should continue guessing confidently when I have good matches."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'STATES' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Fog
+  Ambulance
+  Shot
+  Orange
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words for the clue 'STATES 3' (America and Cape). Since I've matched the clue number, continuing would be risky. Looking at the remaining words, none have a strong connection to 'STATES' - Moscow could relate to a state capital but it's actually Russia's capital, not a US state connection. With both teams at 4 cards remaining, it's strategically sound to pass now rather than risk hitting a red card, neutral, or worse, the assassin."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       
+  Cone                 NEUTRAL    
+  Cape                 BLUE       [revealed]
+  America              BLUE       [revealed]
+  Fog                  BLUE       
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        [revealed]
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       [revealed]
+  Orange               RED        
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        [revealed]
+  Field                BLUE       [revealed]
+  Clay                 RED        
+  Nut                  RED        
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Shot, Orange, Clay, Nut.
+
+Let me think about connections:
+
+- Shot, Orange, Clay: "Clay pigeon shooting" - Clay and Shot connect through shooting/skeet shooting
+- Orange: color, fruit
+- Nut: food, hardware
+- Clay: material, Cassius Clay (Muhammad Ali)
+
+Let me think about "color" - Orange is a color, but that's too loose.
+
+**Fruit connections**: Orange (fruit), Nut (tree nut/fruit), ... Shot? Clay? Not great.
+
+**Pigeon**: Clay pigeon, ... not enough.
+
+**Pottery**: Clay... 
+
+**Muhammad Ali**: Cassius Clay... 
+
+**Gunshot**: Shot, ... 
+
+Let me think about "B-B" or "gun":
+- Shot (gunshot)
+- Clay (clay pigeon)
+- Orange (orange... no)
+
+**Cashew, Walnut**: Nut...
+
+**Earthy/natural colors**: Orange, Clay (clay color)...
+
+**Vitamins**: Orange (vitamin C)...
+
+**Sculptor**: Clay, ...
+
+**Modeling**: Clay...
+
+**Cracker**: Nut cracker, ...
+
+**Squirrel**: Nut, ...
+
+**Jugular**: Shot...
+
+**Deadeye**: Shot...
+
+**Citrus**: Orange...
+
+**Terracotta**: Clay, Orange (color)...
+
+Let me think about "Mold": Clay...
+
+**Sling**: Shot (slingshot), ... 
+
+**Pot**: Shot (potshot), Clay (pottery)... 
+
+**Cashew**: Nut...
+
+**Walnut**: Nut, but also a color (walnut brown)...
+
+**Tequila**: Shot, Orange (tequila sunrise)...
+
+**Drink**: Shot (of liquor), Orange (juice)... 
+
+**Juice**: Orange juice... 
+
+**Cocktail**: Shot, Orange... only 2.
+
+**Tough**: Nut (tough nut), Shot (long shot)...
+
+**Pellet**: Shot (shotgun pellets), Clay (clay pigeon)... 
+
+**Skeet**: Clay, Shot - both relate to skeet shooting! And... Orange (orange clay targets are orange!), and Nut... hmm.
+
+**Target**: Shot, Clay (clay pigeon target)... 
+
+**Pigeon**: Clay pigeon... 
+
+**Terracotta**: Clay, Orange (terracotta is orange-ish)...
+
+**Gunpowder**: Shot, ...
+
+**Mug**: Shot (mug shot), ... 
+
+**Crockery**: Clay, ...
+
+**Wheel**: Clay (pottery wheel), ...
+
+**Cashew**: Nut, ...
+
+**Almond**: Nut, Orange (almond orange?)...
+
+**Harvest**: Already used by blue.
+
+**Sniper**: Shot, ...
+
+**Syringe**: Shot, ...
+
+**Injection**: Shot, ...
+
+**Vitamin**: Shot, Orange... 
+
+**Boost**: Shot, Orange... only 2.
+
+**Earthy**: Clay, Orange... 
+
+**Warm colors**: Orange, Clay... 
+
+**Modeling**: Clay, ...
+
+**Sculptor**: Clay, ...
+
+**Hazel**: Nut (hazelnut), ...
+
+**Walnut**: too close to Nut on board.
+
+**Pecan**: Nut...
+
+**Acorn**: Nut, Oak...
+
+**Chestnut**: Nut, Orange (chestnut is brownish-orange)... Shot (chestnut = horse)?
+
+**Buckeye**: Nut, Ohio (orange?)... 
+
+**Butternut**: Nut, Orange (squash?)...
+
+**Squash**: Nut (butternut squash), Orange (squash is orange)... Clay (squash court)! Shot (squash shot)! All four!
+
+{"clue": "SQUASH", "number": 4, "reasoning": "Squash connects all four RED words: Shot (a squash shot/stroke), Clay (squash courts are often clay-colored or clay courts), Orange (squash the drink is orange, butternut squash is orange), Nut (butternut squash). Also squash as a sport has shots played on courts."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SQUASH' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Back
+  Cone
+  Fog
+  Ambulance
+  Shot
+  Orange
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about what words match "SQUASH" with 4 connections.
+
+SQUASH can mean:
+1. The sport (racquet sport)
+2. The vegetable (like butternut squash, acorn squash)
+3. To squash/crush/flatten something
+4. A drink (orange squash)
+
+Let me think about each valid word:
+
+- **Orange**: Orange squash (the drink) ✓, also orange is a squash flavor
+- **Nut**: Butternut squash - "nut" is part of butternut squash ✓
+- **Back**: Squash is played on a squash court, "back" court? Or "back" squash? Hmm...
+- **Cone**: Acorn squash - cone/acorn shape? Not directly "cone"
+- **Root**: Root... not obviously squash related
+- **Pit**: Pit... squash seeds have pits? Weak
+- **Shot**: Shot... squash shot? In the sport you play shots ✓
+- **Cabin**: Cabin... log cabin? No squash connection
+- **Coal**: No
+- **Fog**: No
+- **Jar**: Jar... you can jar/preserve squash? Weak
+- **Pin**: Pin... bowling pin squash? No
+- **Clay**: Clay court... but squash is played on hard courts typically
+- **Moscow**: Moscow... no
+- **Pilot**: No
+- **Ambulance**: No
+- **Back**: Backhand in squash ✓, or "back" as in squash back?
+
+Strong candidates: **Orange** (orange squash drink), **Nut** (butternut squash), **Shot** (squash shot in the sport), **Back** (back court in squash, or backhand)
+
+Let me start with the most confident: **Orange** (orange squash is a very common drink term).
+
+{"guess": "Orange", "reasoning": "Orange squash is a very common British drink. This is likely one of the 4 words connected to SQUASH."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SQUASH' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Fog
+  Ambulance
+  Shot
+  Coal
+  Clay
+  Nut
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SQUASH' with 4 words, and we've already guessed Orange (the fruit/vegetable squash connection).
+
+Squash can mean:
+1. The sport of squash
+2. The vegetable/fruit (orange squash, butternut squash, etc.)
+3. To squash/crush something
+4. A drink (squash = concentrated fruit drink)
+
+Remaining valid guesses to consider:
+- **Nut**: Butternut squash! This is a strong connection.
+- **Root**: Root vegetables... squash is a vegetable, but not typically a root vegetable.
+- **Pit**: To squash/pit? Less clear.
+- **Back**: Squash court has a back wall? Or "squash back"?
+- **Racket**: Not on the list.
+- **Court**: Not on the list.
+- **Cabin**: Less clear.
+
+"Butternut" squash is very strong. Also "acorn" squash - but Acorn isn't on the list. 
+
+- **Nut**: Butternut squash ✓
+- **Back**: Squash back? Or back squash? Less convincing.
+- **Pin**: Pin squash? No.
+- **Pit**: Pit... squash pit? No.
+
+I'm most confident about **Nut** (butternut squash).
+
+{"guess": "Nut", "reasoning": "Butternut squash is a very well-known variety of squash, making 'Nut' a strong connection to the SQUASH clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SQUASH' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Back
+  Cone
+  Fog
+  Ambulance
+  Shot
+  Coal
+  Clay
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining valid guesses and the clue 'SQUASH' (4 words), I've already correctly guessed Orange and Nut (types of squash / things you can squash).
+
+SQUASH connections:
+- **Racquet sport** (squash the sport): Court, Racquet...
+- **To crush/flatten**: things you can squash
+- **Squash the vegetable**: types include butternut, acorn...
+- **Racquetball court**: Back wall, Back court...
+
+Let me think about the remaining words:
+- **Root**: root vegetables... squash is a vegetable. Also "root" could relate to squash plants.
+- **Pit**: a pit could be in a squash/gourd? Or "pit" as in crushing/squashing?
+- **Back**: "back" in squash (the sport) - back wall, back court. Also "back" as in backing up/squashing.
+- **Shot**: a shot in squash (the sport) - drop shot, etc.
+- **Clay**: clay court... but that's tennis. 
+- **Cabin**: not obvious.
+- **Cone**: traffic cone you could squash?
+
+Actually in squash the sport: **Back** (back court, back wall) seems very relevant. **Shot** is also used in squash. 
+
+I'm most confident about **Back** - "back court" is a key area in squash.
+
+{"guess": "Back", "reasoning": "In squash (the sport), 'back' is a key term - back court, back wall. This fits the SQUASH clue well."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       [revealed]
+  Cone                 NEUTRAL    
+  Cape                 BLUE       [revealed]
+  America              BLUE       [revealed]
+  Fog                  BLUE       
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        [revealed]
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       [revealed]
+  Orange               RED        [revealed]
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        [revealed]
+  Field                BLUE       [revealed]
+  Clay                 RED        
+  Nut                  RED        [revealed]
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to help BLUE find their remaining 3 words: Fog, Coal, and Root.
+
+Let me analyze each:
+- **Fog**: A weather phenomenon, mist, haze
+- **Coal**: A black fossil fuel, used for heating/energy
+- **Root**: Part of a plant, can also mean origin/source
+
+I need to avoid:
+- The ASSASSIN (Jar)
+- RED's remaining words: Shot, Clay
+- NEUTRAL words: Cone, Ambulance, Moscow, Cabin, Pilot, Pit, Pin
+
+Let me consider possible clues:
+
+1. **MINE** - Could connect to Coal (coal mine) and Root (mining for roots). Number: 2
+   - Risk: "Mine" could suggest Pit (mine pit) which is neutral
+   
+2. **PLANT** - Could connect to Root (plant root) and Coal (plant as in power plant). Number: 2
+   - Risk: Somewhat weak connection to Coal
+
+3. **BLACK** - Could connect to Coal (black coal) and Fog (can be described as black fog). Number: 2
+   - Risk: Might not strongly suggest these words
+
+4. **MIST** - Connects strongly to Fog. Number: 1
+   - Safe, clear connection
+
+5. **UNDERGROUND** - Could connect to Root (underground) and Coal (mined underground). Number: 2
+   - Risk: Long word, might be hard to parse
+
+6. **DARK** - Could connect to Fog, Coal. Number: 2
+   - Risk: Could suggest Shot (dark shot in photography)
+
+Given the risks, I'll go with a safe, strong clue for just one word to secure progress:
+
+**MIST** for Fog - very clear connection, minimal risk of hitting assassin or opponent words.
+
+{"clue": "MIST", "number": 1, "reasoning": "Clear connection to Fog (mist and fog are very similar weather phenomena). Safe clue avoiding assassin Jar and opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MIST' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Cone
+  Fog
+  Ambulance
+  Shot
+  Coal
+  Clay
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Fog",
+  "reasoning": "MIST is a direct synonym for FOG - both refer to water droplets suspended in air creating low visibility. This is a very strong, clear connection and almost certainly the intended word for this clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MIST' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Cone
+  Ambulance
+  Shot
+  Coal
+  Clay
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've successfully guessed 'Fog' which matches the clue 'MIST' perfectly. With both teams at 2 cards remaining, this is a critical moment. Looking at the remaining words, none have a strong connection to 'mist' - they're mostly unrelated concrete objects. Since I've already gotten the 1 word the clue indicated, guessing again risks hitting a neutral (ending turn), opponent card (giving them advantage), or worse, the assassin. The safe play is to PASS and maintain our tied position."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       [revealed]
+  Cone                 NEUTRAL    
+  Cape                 BLUE       [revealed]
+  America              BLUE       [revealed]
+  Fog                  BLUE       [revealed]
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        [revealed]
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       [revealed]
+  Orange               RED        [revealed]
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        [revealed]
+  Field                BLUE       [revealed]
+  Clay                 RED        
+  Nut                  RED        [revealed]
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+  [BLUE] MIST 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words: **Shot** and **Clay**
+
+I need a clue that connects both "Shot" and "Clay" without pointing to the ASSASSIN (Jar) or the remaining BLUE words (Coal, Root).
+
+Let me think:
+- **Clay**: clay pigeon shooting, clay court, pottery clay
+- **Shot**: gunshot, shot put, basketball shot, clay pigeon shot
+
+"Clay pigeon" connects both - clay pigeon **shooting**. But "shooting" might not cleanly connect both.
+
+- **Pottery**: Clay is used in pottery... Shot? Not really.
+- **Pigeon**: Clay pigeon (shooting sport) - both clay and shot relate to clay pigeon shooting!
+- **Court**: clay court (tennis), but shot is also a tennis term... but "court" might lead to Coal? No.
+- **Sculpt**: Clay sculpting... Shot? No.
+- **Trap**: Clay trap shooting - "trap" connects to both Shot (trap shooting) and Clay (clay target). But does "trap" point to Jar? Jar isn't a trap really.
+- **Skeet**: Skeet shooting involves clay pigeons and shots - but "skeet" might be too obscure.
+- **Pigeon**: Clay pigeon, and you take a "shot" at a pigeon. This works well!
+
+Coal and Root don't relate to "pigeon." Jar (assassin) doesn't relate to pigeon.
+
+{"clue": "PIGEON", "number": 2, "reasoning": "Clay pigeon is a shooting target, and 'shot' is what you take at a clay pigeon. Both Shot and Clay connect to clay pigeon shooting. Coal and Root don't relate, and Jar (assassin) doesn't connect."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PIGEON' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Cone
+  Ambulance
+  Shot
+  Coal
+  Clay
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+  [BLUE] MIST 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to "PIGEON" (2 words).
+
+Pigeon associations:
+- Clay pigeon (shooting target)
+- Carrier pigeon
+- Pigeon hole
+- Stool pigeon
+- Pigeon-toed
+- Moscow has famous pigeons? No...
+- Pigeon Pit? No
+- Pigeon shot? Clay pigeon shooting uses "shot"
+- Clay pigeon - very strong connection
+- Stool pigeon - "stool" not on board
+- Carrier pigeon - "carrier" not on board
+
+The two most obvious "PIGEON" connections from the valid words:
+1. **CLAY** - clay pigeon (shooting target)
+2. **SHOT** - clay pigeon shooting, or "pigeon shot"? Actually "shot" goes with clay pigeon shooting
+
+Wait, let me think more carefully:
+- CLAY pigeon - direct compound word
+- MOSCOW - Moscow is famous for pigeons? There's a carrier pigeon route? Or "Moscow mule"... hmm
+- PILOT - carrier pigeon as a pilot? No...
+- STOOL pigeon - no stool
+- PIN - pigeon? No
+- CONE - no
+- CABIN - no
+
+Actually "SHOT" could relate to clay pigeon shooting, but the direct compound is CLAY pigeon.
+
+Also: CARRIER pigeon - not on board. But PILOT? A pigeon can be a pilot? No.
+
+I'm most confident about CLAY (clay pigeon). For the second word, SHOT (as in clay pigeon shooting - you shoot clay pigeons).
+
+Starting with CLAY as it's the most direct compound word.
+
+{"guess": "Clay", "reasoning": "Clay pigeon is a direct compound word - clay pigeons are the disc targets used in shooting sports."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PIGEON' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Cone
+  Ambulance
+  Shot
+  Coal
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+  [BLUE] MIST 1  #2: PASS
+  [RED] PIGEON 2  #1: Clay → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining valid guesses and the clue 'PIGEON' (2 words), I've already used one guess (Clay → red, for clay pigeon).
+
+Now I need to think about what else relates to PIGEON:
+- **Moscow** - The Moscow pigeon? No... but "carrier pigeon" - hmm. Actually, there's a famous pigeon associated with Moscow? Not strongly.
+- **Stool** - not on the list
+- **Hole** - not on the list
+- **Pit** - "pigeon pit"? Not common
+- **Cabin** - no
+- **Cone** - no
+- **Shot** - "pigeon shot"? No
+- **Root** - no
+- **Pin** - "pigeon-pin"? No
+- **Pilot** - no
+
+Wait - "CARRIER pigeon" - Carrier isn't on the list. "HOMING pigeon" - Homing isn't on the list. 
+
+"STOOL pigeon" - Stool isn't on the list.
+
+"PIGEON hole" - Hole isn't on the list.
+
+"PIGEON toed" - no.
+
+"ROCK pigeon" - Rock isn't on the list... but wait, what about **Pit**? "Pit pigeon"? No.
+
+Hmm, Red only needs 1 more card. I should be careful. With Blue needing 2 cards, I need to be confident. 
+
+**Moscow** - Moscow is known for pigeons in its squares, but that's a stretch. Actually, there's no strong "Moscow pigeon" connection.
+
+I'll PASS since I've already guessed the clue number (2) correctly with Clay, and I don't want to risk hitting a blue card.
+
+{"guess": "PASS", "reasoning": "I've already guessed Clay → red (clay pigeon), completing the 2 clue words. I don't have a confident second pigeon connection from the remaining words, and with only 1 red card left vs 2 blue, I don't want to risk hitting a blue card."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Jar                  ASSASSIN   
+  Back                 BLUE       [revealed]
+  Cone                 NEUTRAL    
+  Cape                 BLUE       [revealed]
+  America              BLUE       [revealed]
+  Fog                  BLUE       [revealed]
+  Lure                 RED        [revealed]
+  Ambulance            NEUTRAL    
+  Shot                 RED        
+  Fan                  RED        [revealed]
+  Bone                 RED        [revealed]
+  Pumpkin              BLUE       [revealed]
+  Orange               RED        [revealed]
+  Pole                 RED        [revealed]
+  Coal                 BLUE       
+  Battery              RED        [revealed]
+  Field                BLUE       [revealed]
+  Clay                 RED        [revealed]
+  Nut                  RED        [revealed]
+  Moscow               NEUTRAL    
+  Cabin                NEUTRAL    
+  Pilot                NEUTRAL    
+  Root                 BLUE       
+  Pit                  NEUTRAL    
+  Pin                  NEUTRAL    
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+  [BLUE] MIST 1  #2: PASS
+  [RED] PIGEON 2  #1: Clay → red
+  [RED] PIGEON 2  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMBULANCE, AMERICA, BACK, BATTERY, BONE, CABIN, CAPE, CLAY, COAL, CONE, FAN, FIELD, FOG, JAR, LURE, MOSCOW, NUT, ORANGE, PILOT, PIN, PIT, POLE, PUMPKIN, ROOT, SHOT
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to help BLUE identify their remaining 2 unrevealed words: **Coal** and **Root**.
+
+Let me analyze potential clues:
+
+**For Coal:**
+- Mining, fuel, carbon, black, mineral, ember, fire
+
+**For Root:**
+- Tree, plant, vegetable, square, cause, origin
+
+**For Root + Coal:**
+- Both can relate to "mine" (coal mine, root vegetables)
+- Both relate to underground/earth concepts
+- Both can be fuel sources (coal burns, root vegetables for energy)
+
+Let me check the risks:
+
+**Neutral words:** Jar (ASSASSIN!), Cone, Ambulance, Moscow, Cabin, Pilot, Pit, Pin
+**Red word remaining:** Shot
+
+Testing "MINE":
+- Coal: coal mine ✓
+- Root: less strong, but root vegetables can be "mined" from earth
+- Shot: could relate (mine shot?) - risky
+- Jar: no connection
+- Risk level: moderate
+
+Testing "UNDERGROUND":
+- Coal: found underground ✓
+- Root: grows underground ✓
+- Shot: no strong connection
+- Jar: no connection
+- This seems safer!
+
+Testing "VEGETABLE":
+- Root: root vegetable ✓
+- Coal: no connection
+- Only works for 1
+
+Testing "CARBON":
+- Coal: made of carbon ✓
+- Root: organic matter contains carbon, but weak
+- Only strong for 1
+
+**Best choice: UNDERGROUND** connects both Coal (mined underground) and Root (grows underground) without pointing to the assassin or red words.
+
+{"clue": "UNDERGROUND", "number": 2, "reasoning": "Coal is mined underground and roots grow underground, avoiding assassin Jar and remaining red word Shot"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'UNDERGROUND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jar
+  Cone
+  Ambulance
+  Shot
+  Coal
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+  [BLUE] MIST 1  #2: PASS
+  [RED] PIGEON 2  #1: Clay → red
+  [RED] PIGEON 2  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Coal",
+  "reasoning": "UNDERGROUND strongly connects to Coal, which is mined underground. This is a very confident first guess. With only 2 blue cards remaining and 1 red card, I need to be careful but Coal seems like the safest and most direct connection to the clue."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'UNDERGROUND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jar
+  Cone
+  Ambulance
+  Shot
+  Moscow
+  Cabin
+  Pilot
+  Root
+  Pit
+  Pin
+
+Game history:
+  [RED] FISHING 4  #1: Lure → red
+  [RED] FISHING 4  #2: Pole → red
+  [RED] FISHING 4  #3: Bone → red
+  [RED] FISHING 4  #4: PASS
+  [BLUE] HARVEST 2  #1: Pumpkin → blue
+  [BLUE] HARVEST 2  #2: Field → blue
+  [BLUE] HARVEST 2  #3: PASS
+  [RED] ELECTRIC 3  #1: Battery → red
+  [RED] ELECTRIC 3  #2: Fan → red
+  [RED] ELECTRIC 3  #3: PASS
+  [BLUE] STATES 3  #1: America → blue
+  [BLUE] STATES 3  #2: Cape → blue
+  [BLUE] STATES 3  #3: PASS
+  [RED] SQUASH 4  #1: Orange → red
+  [RED] SQUASH 4  #2: Nut → red
+  [RED] SQUASH 4  #3: Back → blue
+  [BLUE] MIST 1  #1: Fog → blue
+  [BLUE] MIST 1  #2: PASS
+  [RED] PIGEON 2  #1: Clay → red
+  [RED] PIGEON 2  #2: PASS
+  [BLUE] UNDERGROUND 2  #1: Coal → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "UNDERGROUND" with 2 words, I've already successfully guessed "Coal" (which makes perfect sense - coal mines are underground).
+
+For the second guess, let me analyze the remaining words:
+- **Root**: Roots grow underground - this is a very strong connection
+- **Pit**: Could be a pit underground (mine pit, etc.)
+- **Moscow**: Moscow has a famous underground metro system
+- **Cabin**: Not particularly underground
+- **Jar/Cone/Ambulance/Shot/Pilot/Pin**: No strong underground connections
+
+Since both teams have only 1 card remaining (Red: 1, Blue: 1), this is a critical moment. If I guess wrong and hit the red card, red wins. If I guess the assassin, we lose instantly.
+
+"Root" has the strongest connection to underground - roots literally grow underground as part of their natural function. This seems like the most likely intended word for this clue.
+
+However, given that we're tied 1-1 and a wrong guess could cost us the game, I should consider passing. But the clue was for 2 words, I've guessed 1 correctly, and "Root" is a very strong match. The risk of not guessing and letting Red potentially win on their turn is also high.
+
+I'll go with Root - it's the most logical underground-related word remaining.
+
+{"guess": "Root", "reasoning": "Roots grow underground naturally, making this the strongest connection to UNDERGROUND among remaining words. With score tied 1-1, need to complete the clue."}
+============================================================

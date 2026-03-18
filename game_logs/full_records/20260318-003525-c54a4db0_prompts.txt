@@ -1,0 +1,2415 @@
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Chain                RED        
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        
+  Code                 RED        
+  Burst                RED        
+  Face                 NEUTRAL    
+  Cave                 RED        
+  Ground               BLUE       
+  Buddy                BLUE       
+  Dragon               RED        
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    
+  Leaf                 NEUTRAL    
+  Toast                BLUE       
+  Zeus                 BLUE       
+  Hero                 BLUE       
+  Buck                 NEUTRAL    
+  Feather              BLUE       
+  Beam                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (COOK).
+
+Let me analyze my RED words: Chain, Delta, Gem, Code, Burst, Cave, Dragon, Board, Beam
+
+Let me think about groupings:
+
+**"LIGHT" connection:** Beam (light beam), Burst (light burst), Gem (sparkles/light), maybe Dragon (fire/light) - but could also point to neutral words.
+
+**"FIRE" connection:** Dragon (breathes fire), Burst (fire burst), Beam (fire beam) - only 3, and could point elsewhere.
+
+**"DIAMOND" connection:** Gem (diamond is a gem), Chain (diamond chain), Cave (diamonds found in caves), Code (Da Vinci Code/diamond heist?) - stretch.
+
+**"JEWEL/JEWELRY" connection:** Gem (jewel), Chain (jewelry chain), maybe Cave (treasure cave) - limited.
+
+**"SURFING/SKATEBOARD" connection:** Board (surfboard/skateboard), Burst, Wave... not great.
+
+**"RIVER" connection:** Delta (river delta), Bed, Cave (river cave), Chain... limited.
+
+**"DUNGEON" connection:** Dragon (Dungeons & Dragons), Cave (dungeon cave), Chain (dungeon chains), Gem (dungeon treasure), Board (board game) - this is strong! 5 words potentially. Let me check against dangerous words: COOK (assassin) - no connection. BLUE words: Jaw, Ground, Buddy, Terminal, Toast, Zeus, Hero, Feather - "Dungeon" doesn't strongly point to any of these.
+
+**"TREASURE" connection:** Gem (treasure), Cave (treasure cave), Chain (treasure), Dragon (guards treasure), Chest/Board (treasure board?) - maybe 4.
+
+Let me go with DUNGEON - it connects:
+- Dragon (Dungeons & Dragons)
+- Chain (dungeon chains)
+- Cave (dungeon = underground cave)
+- Gem (dungeon loot)
+- Board (board game - D&D)
+- Beam (wooden beam in dungeon)
+
+This avoids the assassin COOK and doesn't point to BLUE words.
+
+{"clue": "DUNGEON", "number": 5, "reasoning": "Connects Dragon (Dungeons & Dragons), Chain (dungeon chains/shackles), Cave (dungeons are underground caves), Gem (dungeon treasure/loot), and Board (board game like D&D). Avoids assassin COOK and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DUNGEON' — 5 word(s).
+Guesses used this turn: 0 / 6.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chain
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Cave
+  Ground
+  Buddy
+  Dragon
+  Blank
+  Cook
+  Board
+  Table
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Hero
+  Buck
+  Feather
+  Beam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "DRAGON", "reasoning": "Dungeons and Dragons is the most iconic association with 'dungeon'. Dragon is very strongly connected to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DUNGEON' — 5 word(s).
+Guesses used this turn: 1 / 6.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chain
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Cave
+  Ground
+  Buddy
+  Blank
+  Cook
+  Board
+  Table
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Hero
+  Buck
+  Feather
+  Beam
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chain", "reasoning": "Dungeons are strongly associated with chains - prisoners are chained up in dungeons. This is a very strong connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DUNGEON' — 5 word(s).
+Guesses used this turn: 2 / 6.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Cave
+  Ground
+  Buddy
+  Blank
+  Cook
+  Board
+  Table
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Hero
+  Buck
+  Feather
+  Beam
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Cave", "reasoning": "A dungeon is essentially an underground cave or chamber. Cave strongly relates to the dungeon theme as dungeons are often found in caves or are cave-like underground spaces."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DUNGEON' — 5 word(s).
+Guesses used this turn: 3 / 6.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Ground
+  Buddy
+  Blank
+  Cook
+  Board
+  Table
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Hero
+  Buck
+  Feather
+  Beam
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hero", "reasoning": "Dungeons are strongly associated with heroes - heroes explore dungeons, fight monsters in dungeons, and rescue people from dungeons. This is a classic D&D/fantasy connection."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        
+  Code                 RED        
+  Burst                RED        
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       
+  Buddy                BLUE       
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    
+  Leaf                 NEUTRAL    
+  Toast                BLUE       
+  Zeus                 BLUE       
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    
+  Feather              BLUE       
+  Beam                 RED        
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "friend", "number": 2, "reasoning": "Points strongly to BUDDY and TOAST (as in a celebratory toast with friends), while avoiding strong connections to red words or the assassin COOK."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FRIEND' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Ground
+  Buddy
+  Blank
+  Cook
+  Board
+  Table
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+  Beam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Buddy", "reasoning": "Buddy is a direct synonym for friend, making it the strongest match for the clue FRIENd."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FRIEND' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Table
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+  Beam
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Table", "reasoning": "Common phrase 'friends around the table' and social gathering at a table; among remaining words, Table best fits FRIEND."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        
+  Code                 RED        
+  Burst                RED        
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    
+  Leaf                 NEUTRAL    
+  Toast                BLUE       
+  Zeus                 BLUE       
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    
+  Feather              BLUE       
+  Beam                 RED        
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining RED words as possible: Delta, Gem, Code, Burst, Board, Beam.
+
+Let me think about groupings:
+
+- **Delta, Code, Beam** - these could relate to computing/science
+- **Gem, Burst** - "starburst" or "gemstone"
+- **Board, Beam** - construction/wood materials
+
+Let me think about "LIGHT": Beam (light beam) ✓, Burst (light burst) ✓, Gem (gems sparkle/light) - maybe, Code (light code?) - weak, Delta (no).
+
+What about "SUNSHINE" or "RAY": Beam ✓, Burst ✓, Delta (delta rays?) - stretch.
+
+Let me think about "DIAMOND": Gem ✓, Board (diamond board?) - weak, Code (diamond code?) - weak. Not great.
+
+What about "LASER": Beam (laser beam) ✓, Burst (laser burst) ✓, Code (laser code/barcode) ✓, maybe Delta (delta in optics)? But this could point to "Terminal" (laser terminal) - risky.
+
+What about "SURFBOARD" → no, two words. "LUMBER": Board ✓, Beam ✓ - only 2.
+
+"CIPHER": Code ✓, Gem (?) - weak.
+
+"SUNBEAM", "STARBURST" - compound words with board words, not allowed.
+
+Let me reconsider "LIGHT": Beam (light beam) ✓, Burst (burst of light) ✓, Code (light code/morse code uses light) - moderate, Gem (gems refract light) - moderate. Risks: none of the blue/assassin words strongly connect.
+
+What about "RIVER": Delta (river delta) ✓, Bed? Board? No. Only 1.
+
+"WOODEN": Board ✓, Beam ✓ - only 2 but safe.
+
+"PARTICLE": Beam (particle beam) ✓, Burst (particle burst) ✓, Delta (particle physics) ✓, Code (particle code?) - weak. Risks: minimal.
+
+"RAY": Beam ✓, Burst ✓, Delta (delta rays) ✓, Gem (?) - 3 solid. Risks: Zeus (lightning?) could be a concern but "ray" isn't strongly Zeus.
+
+{"clue": "RAY", "number": 3, "reasoning": "Beam (ray of light = beam), Burst (ray burst, like gamma-ray burst), Delta (delta rays in physics). Avoids assassin (Cook) and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+  Beam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Beam", "reasoning": "A ray and a beam are very closely related - both refer to a shaft of light. 'Ray of light' and 'beam of light' are nearly synonymous. This seems like the strongest connection to RAY."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Burst
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Burst", "reasoning": "RAY can connect to BURST - as in a burst of rays/light, or 'ray burst' as in gamma-ray burst."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blank", "reasoning": "Thinking about 'RAY' connections: 'Blank' could relate to 'ray' as in 'blank stare' - no, that's weak. Let me think more carefully. 'Delta' could connect - a ray/delta in mathematics or river delta. 'Space' - space rays/cosmic rays. 'Buck' - Buck Rogers ray guns? 'Zeus' - Zeus shoots lightning bolts/rays. Let me reconsider. A 'ray' in geometry connects to 'Delta' (math). 'Manta ray' - no direct connection. 'Ray' as in sunray - 'Space' (cosmic rays). 'Gun' isn't available. Actually, 'Blank' could be 'blank point' - no. 'Sugar Ray' - no. 'Ray Charles' - no. 'Roller' - no. 'Cook' - Rachel Ray? That's Rachael Ray the cook! That seems like a strong connection. But wait, I already got 2 correct for this clue. The spymaster said 3 words. Let me think about what the third word could be. 'Cook' connects to Rachael Ray. 'Space' connects to cosmic rays. 'Delta' connects to math/ray. I think 'Space' (cosmic rays, space rays, ray guns in space) is decent but 'Cook' via Rachael Ray is quite specific. Let me go with 'Space' as in cosmic rays or X-rays in space."}
+
+Wait, let me reconsider. Actually, I think the strongest remaining connection is:
+
+{"guess": "Space", "reasoning": "Cosmic rays travel through space, and 'ray' is strongly associated with space (cosmic rays, gamma rays, X-rays from space, ray guns in sci-fi space settings). This seems like the most natural third connection after 'Beam' and 'Burst' which were both correct."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RAY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Space
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Blank", "reasoning": "Thinking about 'RAY' connections: 'Blank' could relate to 'ray' as in 'blank stare' - no, that's weak. Let me think more carefully. 'Delta' could connect - a ray/delta in mathematics or river delta. 'Space' - space rays/cosmic rays. 'Buck' - Buck Rogers ray guns? 'Zeus' - Zeus shoots lightning bolts/rays. Let me reconsider. A 'ray' in geometry connects to 'Delta' (math). 'Manta ray' - no direct connection. 'Ray' as in sunray - 'Space' (cosmic rays). 'Gun' isn't available. Actually, 'Blank' could be 'blank point' - no. 'Sugar Ray' - no. 'Ray Charles' - no. 'Roller' - no. 'Cook' - Rachel Ray? That's Rachael Ray the cook! That seems like a strong connection. But wait, I already got 2 correct for this clue. The spymaster said 3 words. Let me think about what the third word could be. 'Cook' connects to Rachael Ray. 'Space' connects to cosmic rays. 'Delta' connects to math/ray. I think 'Space' (cosmic rays, space rays, ray guns in space) is decent but 'Cook' via Rachael Ray is quite specific. Let me go with 'Space' as in cosmic rays or X-rays in space."}
+
+Wait, let me reconsider. Actually, I think the strongest remaining connection is:
+
+{"guess": "Space", "reasoning": "Cosmic rays travel through space, and 'ray' is strongly associated with space (cosmic rays, gamma rays, X-rays from space, ray guns in sci-fi space settings). This seems like the most natural third connection after 'Beam' and 'Burst' which were both correct."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 1099). Try again.
+
+[RESPONSE]
+{"guess": "Space", "reasoning": "Cosmic rays travel through space, and 'ray' is strongly associated with space (cosmic rays, gamma rays, X-rays from space, ray guns in sci-fi space settings). This seems like the most natural third connection after 'Beam' and 'Burst' which were both correct."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        
+  Code                 RED        
+  Burst                RED        [revealed]
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    [revealed]
+  Leaf                 NEUTRAL    
+  Toast                BLUE       
+  Zeus                 BLUE       
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    
+  Feather              BLUE       
+  Beam                 RED        [revealed]
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Olympus", "number": 2, "reasoning": "Connects ZEUS and HERO via Greek mythology and Mount Olympus, with minimal ties to remaining red or neutral words and safely away from the assassin COOK."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OLYMPUS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Delta
+  Jaw
+  Gem
+  Code
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Zeus
+  Buck
+  Feather
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Zeus", "reasoning": "Mount Olympus is the home of the Greek gods, and Zeus is the chief Olympian god, making this the strongest and most direct connection to the clue 'OLYMPUS'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OLYMPUS' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Face
+  Ground
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ground", "reasoning": "Mount Olympus is a mountain; ‘ground’ connects via land/earth, and no other remaining word clearly relates to Olympus or Greek mythology."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'OLYMPUS' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Gem
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We’ve already found 2 words for OLYMPUS (Zeus, Ground). Any further guess would be a stretch connection to Olympus and risks hitting red or the assassin, so it’s safer to end the turn."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        
+  Code                 RED        
+  Burst                RED        [revealed]
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       [revealed]
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    [revealed]
+  Leaf                 NEUTRAL    
+  Toast                BLUE       
+  Zeus                 BLUE       [revealed]
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    
+  Feather              BLUE       
+  Beam                 RED        [revealed]
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to connect as many of my remaining RED words as possible: **Delta**, **Gem**, **Code**, **Board**.
+
+Let me think about connections:
+
+- **Delta** and **Code** could connect through "morse" (Morse code, delta is a letter in NATO alphabet/Greek alphabet)
+- **Gem** and **Board** are harder to connect with those two
+- **Board** and **Code** could connect through "cipher" or "key" (keyboard, keycode)
+- **Board** and **Gem** could connect through "game" (board game, gem game)
+
+Let me think about "DIAMOND":
+- **Gem** → diamond is a gem ✓
+- **Delta** → diamond shape is similar to delta? Not strong
+- **Board** → diamond board? Not great
+- **Code** → Da Vinci Code? Stretch
+
+What about "CIPHER"?
+- **Code** → cipher is a code ✓
+- **Delta** → delta can relate to cipher/cryptography? Weak
+
+What about "JEWEL"?
+- **Gem** → jewel ✓
+- Only one word
+
+What about "PRECIOUS"?
+- **Gem** → precious gem ✓
+- **Code** → precious? No
+
+What about "CHESS"?
+- **Board** → chessboard ✓
+- **Code** → chess code? Weak
+
+What about "RIVER"?
+- **Delta** → river delta ✓
+- **Board** → not strong
+- **Gem** → no
+
+What about "SKATEBOARD"? No, two words.
+
+What about "ENCRYPTION"?
+- **Code** → encryption ✓
+- **Delta** → not really
+
+Let me try "TREASURE":
+- **Gem** → treasure contains gems ✓
+- **Code** → treasure code / treasure hunt code ✓
+- **Board** → treasure board game? Weak
+- Risk: Could point to FEATHER? No. COOK? No. Seems safe.
+
+What about "SECRET"?
+- **Code** → secret code ✓
+- **Gem** → secret gem? Weak
+
+Let me try "ROUGH":
+- **Gem** → rough diamond/gem ✓
+- **Board** → rough board ✓
+- **Delta** → rough delta? No
+
+"STONE":
+- **Gem** → gemstone ✓
+- **Code** → Rosetta Stone / code stone? Weak
+
+I'll go with connecting **Gem** and **Code** via "TREASURE" as a safe 2-clue:
+
+{"clue": "TREASURE", "number": 2, "reasoning": "Gem connects as treasure/gemstone, Code connects as treasure code/treasure hunt requiring codes. Avoids assassin COOK and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREASURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Delta
+  Jaw
+  Gem
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Buck
+  Feather
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Gem", "reasoning": "A gem is a classic treasure - jewels and gems are found in treasure chests. This is a very strong connection to 'TREASURE'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREASURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chest", "reasoning": "Wait, 'Chest' is not in the valid guesses list. Let me reconsider. TREASURE 2 - I already got 'Gem'. Treasure could relate to 'Buck' (treasure = money/bucks), or 'Board' (treasure board, like a treasure map on a board), or 'Code' (treasure code). Let me think more carefully. 'Treasure chest' - no chest available. 'Treasure map' - no map. 'Treasure hunt' - no hunt. 'Treasure island' - no island. 'Buck' as in money/treasure. 'Gold' isn't available. I think 'Buck' connects to treasure through money/wealth."}
+
+Wait, let me re-do this properly.
+
+{"guess": "Buck", "reasoning": "TREASURE 2 - already got 'Gem'. Treasure relates to wealth/money, and 'Buck' means money/dollar, which connects to treasure. This seems like the strongest connection among the remaining valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREASURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Buck
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Chest", "reasoning": "Wait, 'Chest' is not in the valid guesses list. Let me reconsider. TREASURE 2 - I already got 'Gem'. Treasure could relate to 'Buck' (treasure = money/bucks), or 'Board' (treasure board, like a treasure map on a board), or 'Code' (treasure code). Let me think more carefully. 'Treasure chest' - no chest available. 'Treasure map' - no map. 'Treasure hunt' - no hunt. 'Treasure island' - no island. 'Buck' as in money/treasure. 'Gold' isn't available. I think 'Buck' connects to treasure through money/wealth."}
+
+Wait, let me re-do this properly.
+
+{"guess": "Buck", "reasoning": "TREASURE 2 - already got 'Gem'. Treasure relates to wealth/money, and 'Buck' means money/dollar, which connects to treasure. This seems like the strongest connection among the remaining valid guesses."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 545). Try again.
+
+[RESPONSE]
+{"guess": "Buck", "reasoning": "TREASURE 2 - already got Gem. Treasure relates to wealth and money, and Buck means money/dollar, connecting to treasure. This seems like the strongest connection among the remaining valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        [revealed]
+  Code                 RED        
+  Burst                RED        [revealed]
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       [revealed]
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    [revealed]
+  Leaf                 NEUTRAL    
+  Toast                BLUE       
+  Zeus                 BLUE       [revealed]
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    [revealed]
+  Feather              BLUE       
+  Beam                 RED        [revealed]
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "bread", "number": 1, "reasoning": "Points strongly to TOAST, the only bread-related word; other unrevealed words don’t fit, minimizing risk."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BREAD' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Delta
+  Jaw
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Toast
+  Feather
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Toast", "reasoning": "Toast is directly related to bread, as bread is toasted to make toast."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BREAD' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Delta
+  Jaw
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the intended BREAD word (Toast). Any further guess would likely rely on a stretch (e.g., Cook, Board) and risks hitting red or the assassin when the score is close, so ending the turn is safer."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        
+  Jaw                  BLUE       
+  Gem                  RED        [revealed]
+  Code                 RED        
+  Burst                RED        [revealed]
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       [revealed]
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    [revealed]
+  Leaf                 NEUTRAL    
+  Toast                BLUE       [revealed]
+  Zeus                 BLUE       [revealed]
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    [revealed]
+  Feather              BLUE       
+  Beam                 RED        [revealed]
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting DELTA, CODE, and BOARD (my 3 remaining red words).
+
+Let me think about connections:
+- DELTA: river delta, delta force, Greek letter, change/difference
+- CODE: programming code, secret code, code of conduct, zip code
+- BOARD: board game, skateboard, bulletin board, circuit board
+
+Let me think about "CIRCUIT" - circuit board, circuit code (not great), delta (circuit delta configuration in electronics). That's decent for BOARD and DELTA but weak for CODE.
+
+"MORSE" - Morse code (strong), but could it connect to others? Not really to DELTA or BOARD.
+
+"SURF" - surfboard, surf the delta... not great for CODE.
+
+"KEY" - keyboard (board), key code, key delta... weak.
+
+"SWITCH" - switchboard, switch code... delta switch? Somewhat electrical.
+
+"CIPHER" - connects to CODE strongly, but not the others.
+
+"SKATE" - skateboard, but not others.
+
+"RIVER" - river delta, river board (not great), river code (no).
+
+"CHANGE" - delta means change, code change, board change... weak.
+
+"GREEK" - Greek letter (delta), Greek code... not great.
+
+"CARDBOARD" - no, that's two words.
+
+"CHESS" - chessboard, chess code... delta? No.
+
+"ELECTRIC" - electric board (not great), electric code, electric delta... hmm.
+
+"ZIP" - zip code (strong), zip board? zip delta? No.
+
+"PASS" - passcode, passboard? delta pass? Weak.
+
+"SOURCE" - source code, source of delta (river source), source board? Hmm.
+
+"BINARY" - binary code, but not others well.
+
+"QR" - not a word.
+
+Let me try "DART" - dartboard (strong), dart code? delta dart? No.
+
+"BULLETIN" - bulletin board, bulletin code? No.
+
+"CHANNEL" - delta channel (river channels), channel board, channel code... somewhat.
+
+"MOUTH" - river mouth (delta), mouthboard? No.
+
+"FORMATION" - delta formation, code formation, board formation... weak but possible for 2.
+
+Let me focus on getting 2 safely. BOARD + CODE: "CIRCUIT" - circuit board, circuit code? Not standard. "PASS" - passcode, pass board? 
+
+"SKATE" - skateboard + ... no.
+
+"CARDIGAN" - no.
+
+Let me try connecting DELTA + CODE: "CRACK" - crack the code, crack delta? No. 
+
+"PHONETIC" - phonetic code, phonetic alphabet (delta is NATO phonetic). BOARD doesn't fit. But 2 is good enough.
+
+{"clue": "PHONETIC", "number": 2, "reasoning": "DELTA is a NATO phonetic alphabet letter, and CODE connects through phonetic code/coding systems. This avoids the assassin (COOK) and opponent words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PHONETIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Delta
+  Jaw
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Feather
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Delta", "reasoning": "In the NATO phonetic alphabet, 'Delta' represents the letter D. This is a strong connection to the clue 'PHONETIC'. Delta is one of the most well-known phonetic alphabet words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PHONETIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jaw
+  Code
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "The phonetic alphabet is used in communication systems, and 'Code' relates to phonetic coding/decoding. Also, 'phonetic code' is a common phrase. Additionally, the NATO phonetic alphabet is essentially a code system. With 'Delta' already correctly guessed as one phonetic alphabet word, 'Code' connects well as the second word related to 'PHONETIC'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PHONETIC' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jaw
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+  [RED] PHONETIC 2  #2: Code → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 2 words correctly this turn (Delta and Code), matching the clue number of 2. With only 1 red card remaining, I need to be very careful. None of the remaining words (Jaw, Face, Blank, Cook, Board, Terminal, Roller, Leaf, Feather) strongly connect to 'PHONETIC' in an obvious way. The NATO phonetic alphabet includes 'Foxtrot' (not Face), 'Tango' (not Terminal), etc. The risk of hitting the assassin or a blue card is too high. I should pass and wait for a more specific clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        [revealed]
+  Jaw                  BLUE       
+  Gem                  RED        [revealed]
+  Code                 RED        [revealed]
+  Burst                RED        [revealed]
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       [revealed]
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       
+  Roller               NEUTRAL    
+  Space                NEUTRAL    [revealed]
+  Leaf                 NEUTRAL    
+  Toast                BLUE       [revealed]
+  Zeus                 BLUE       [revealed]
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    [revealed]
+  Feather              BLUE       
+  Beam                 RED        [revealed]
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+  [RED] PHONETIC 2  #2: Code → red
+  [RED] PHONETIC 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Airport", "number": 1, "reasoning": "Points strongly to TERMINAL (airport terminal) while avoiding strong connections to JAW, FEATHER, or the assassin COOK."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'AIRPORT' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jaw
+  Face
+  Blank
+  Cook
+  Board
+  Terminal
+  Roller
+  Leaf
+  Feather
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+  [RED] PHONETIC 2  #2: Code → red
+  [RED] PHONETIC 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Terminal", "reasoning": "An airport has a terminal building; this is the clearest and most direct association with the clue AIRPORT."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'AIRPORT' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Jaw
+  Face
+  Blank
+  Cook
+  Board
+  Roller
+  Leaf
+  Feather
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+  [RED] PHONETIC 2  #2: Code → red
+  [RED] PHONETIC 2  #3: PASS
+  [BLUE] AIRPORT 1  #1: Terminal → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already got the intended AIRPORT word (Terminal). With only one red card left and two blue remaining, making an extra guess risks hitting the assassin or the last red card for no gain."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Chain                RED        [revealed]
+  Delta                RED        [revealed]
+  Jaw                  BLUE       
+  Gem                  RED        [revealed]
+  Code                 RED        [revealed]
+  Burst                RED        [revealed]
+  Face                 NEUTRAL    
+  Cave                 RED        [revealed]
+  Ground               BLUE       [revealed]
+  Buddy                BLUE       [revealed]
+  Dragon               RED        [revealed]
+  Blank                NEUTRAL    
+  Cook                 ASSASSIN   
+  Board                RED        
+  Table                NEUTRAL    [revealed]
+  Terminal             BLUE       [revealed]
+  Roller               NEUTRAL    
+  Space                NEUTRAL    [revealed]
+  Leaf                 NEUTRAL    
+  Toast                BLUE       [revealed]
+  Zeus                 BLUE       [revealed]
+  Hero                 BLUE       [revealed]
+  Buck                 NEUTRAL    [revealed]
+  Feather              BLUE       
+  Beam                 RED        [revealed]
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+  [RED] PHONETIC 2  #2: Code → red
+  [RED] PHONETIC 2  #3: PASS
+  [BLUE] AIRPORT 1  #1: Terminal → blue
+  [BLUE] AIRPORT 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAM, BLANK, BOARD, BUCK, BUDDY, BURST, CAVE, CHAIN, CODE, COOK, DELTA, DRAGON, FACE, FEATHER, GEM, GROUND, HERO, JAW, LEAF, ROLLER, SPACE, TABLE, TERMINAL, TOAST, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SKATEBOARD", "number": 1, "reasoning": "The only remaining red word is BOARD. SKATEBOARD directly contains and relates to BOARD. It shouldn't point to any blue words (JAW, FEATHER) or the assassin (COOK)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SKATEBOARD' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Jaw
+  Face
+  Blank
+  Cook
+  Board
+  Roller
+  Leaf
+  Feather
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] DUNGEON 5  #1: Dragon → red
+  [RED] DUNGEON 5  #2: Chain → red
+  [RED] DUNGEON 5  #3: Cave → red
+  [RED] DUNGEON 5  #4: Hero → blue
+  [BLUE] FRIEND 2  #1: Buddy → blue
+  [BLUE] FRIEND 2  #2: Table → neutral
+  [RED] RAY 3  #1: Beam → red
+  [RED] RAY 3  #2: Burst → red
+  [RED] RAY 3  #3: Space → neutral
+  [BLUE] OLYMPUS 2  #1: Zeus → blue
+  [BLUE] OLYMPUS 2  #2: Ground → blue
+  [BLUE] OLYMPUS 2  #3: PASS
+  [RED] TREASURE 2  #1: Gem → red
+  [RED] TREASURE 2  #2: Buck → neutral
+  [BLUE] BREAD 1  #1: Toast → blue
+  [BLUE] BREAD 1  #2: PASS
+  [RED] PHONETIC 2  #1: Delta → red
+  [RED] PHONETIC 2  #2: Code → red
+  [RED] PHONETIC 2  #3: PASS
+  [BLUE] AIRPORT 1  #1: Terminal → blue
+  [BLUE] AIRPORT 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Board", "reasoning": "SKATEBOARD directly contains the word BOARD. This is the most obvious connection to the clue. With only 1 red card remaining, this seems like the clear intended match."}
+============================================================

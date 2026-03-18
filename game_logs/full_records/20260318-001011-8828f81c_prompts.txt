@@ -1,0 +1,1319 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Knight               RED        
+  Engine               BLUE       
+  Zombie               BLUE       
+  Bark                 NEUTRAL    
+  Leaf                 RED        
+  Screen               BLUE       
+  Oil                  NEUTRAL    
+  Keel                 BLUE       
+  Flag                 NEUTRAL    
+  Gem                  NEUTRAL    
+  Moscow               RED        
+  Star                 RED        
+  Axe                  RED        
+  Lime                 BLUE       
+  Lever                NEUTRAL    
+  Block                ASSASSIN   
+  Crown                NEUTRAL    
+  Dune                 RED        
+  Tick                 BLUE       
+  Cook                 BLUE       
+  Mercury              RED        
+  Jaw                  BLUE       
+  Freeze               RED        
+  Capsule              RED        
+  Arch                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, AXE, BARK, BLOCK, CAPSULE, COOK, CROWN, DUNE, ENGINE, FLAG, FREEZE, GEM, JAW, KEEL, KNIGHT, LEAF, LEVER, LIME, MERCURY, MOSCOW, OIL, SCREEN, STAR, TICK, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SPACE", "number": 4, "reasoning": "Connects red words related to space: Mercury, Capsule, Star, Moscow."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Knight
+  Engine
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Moscow
+  Star
+  Axe
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Mercury
+  Jaw
+  Freeze
+  Capsule
+  Arch
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Star", "reasoning": "Strong space-related term; clearly fits the SPACE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Knight
+  Engine
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Moscow
+  Axe
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Mercury
+  Jaw
+  Freeze
+  Capsule
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Mercury", "reasoning": "Space-related planet; strong fit to SPACE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Knight
+  Engine
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Moscow
+  Axe
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Capsule
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Capsule", "reasoning": "Strong, direct space association (space capsule)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Knight
+  Engine
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Moscow
+  Axe
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Engine", "reasoning": "Strong space connection (rocket engine); fits the 4-space clue alongside Star, Mercury, Capsule."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Knight               RED        
+  Engine               BLUE       [revealed]
+  Zombie               BLUE       
+  Bark                 NEUTRAL    
+  Leaf                 RED        
+  Screen               BLUE       
+  Oil                  NEUTRAL    
+  Keel                 BLUE       
+  Flag                 NEUTRAL    
+  Gem                  NEUTRAL    
+  Moscow               RED        
+  Star                 RED        [revealed]
+  Axe                  RED        
+  Lime                 BLUE       
+  Lever                NEUTRAL    
+  Block                ASSASSIN   
+  Crown                NEUTRAL    
+  Dune                 RED        
+  Tick                 BLUE       
+  Cook                 BLUE       
+  Mercury              RED        [revealed]
+  Jaw                  BLUE       
+  Freeze               RED        
+  Capsule              RED        [revealed]
+  Arch                 NEUTRAL    
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, AXE, BARK, BLOCK, CAPSULE, COOK, CROWN, DUNE, ENGINE, FLAG, FREEZE, GEM, JAW, KEEL, KNIGHT, LEAF, LEVER, LIME, MERCURY, MOSCOW, OIL, SCREEN, STAR, TICK, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find clues for the remaining BLUE words: Zombie, Screen, Keel, Lime, Tick, Cook, Jaw.
+
+Let me think about groupings:
+
+**Jaw, Keel, Tick** - these are all things that can "drop" (jaw drops, keel... no). 
+
+**Tick, Jaw** - could relate to body/face movements
+
+**Cook, Lime, Jaw** - cooking ingredients? Lime is used in cooking, Cook is obvious, Jaw... no.
+
+**Screen, Keel** - nautical? No, screen isn't nautical. Keel is a boat part.
+
+**Zombie, Jaw** - horror movies? Jaws (shark movie), Zombie movies...
+
+**Cook, Lime, Tick** - these could all follow "time": Tick (time ticks), Cook (cooking time)... weak.
+
+**Keel, Jaw, Zombie** - all can precede or follow something?
+
+**Screen, Tick, Jaw** - medical? Tick (Lyme disease), Jaw (dental), Screen (medical screening)... Lime/Lyme disease connection is risky since Lime is on board.
+
+**Cook, Keel, Jaw** - Captain Hook related? Hook (Peter Pan): Captain Hook, Tick-Tock (crocodile with tick), Jaw... 
+
+**Tick, Keel, Jaw, Zombie** - Let me think about "DEAD": Dead Jaw? Deadpool? Dead... Zombie (undead), Dead Keel (even keel)...
+
+**Screen, Zombie, Jaw** - HORROR movies: Zombie (horror), Jaw (Jaws - horror), Scream/Screen... Screen isn't a horror movie.
+
+**Cook, Lime, Tick** - all can precede or follow "key"? Monkey? Turkey? 
+
+**Lime, Zombie, Cook** - cocktails? Zombie cocktail, Lime in cocktails, Cook... weak.
+
+**Jaw, Tick, Keel** - all can follow "even"? Even keel, even... no.
+
+**Keel, Jaw, Screen** - all have "drop": Jaw drop, Screen drop? Keel... 
+
+Let me try **BONE**: Jawbone, Keel bone (yes, in birds), Zombie (bones), Tick (bone marrow)? Lime (calcium/bone)? 
+
+**BONE**: Jaw(bone), Keel(bone in birds), Zombie(bones), Lime(calcium for bones)... that's risky with too many.
+
+**DROP**: Jaw drop, Keel (keelhaul?), Screen drop? 
+
+**CLOCK**: Tick (clock ticks), Jaw... no.
+
+**COCKTAIL**: Zombie (cocktail), Lime (cocktail ingredient), Keel (keel over - drunk?), Screen... 
+
+**DRINK**: Zombie (drink), Lime (drink ingredient), Keel (keel over)... but Keel might not be recognized. Tick? Cook?
+
+**CHEF**: Cook is chef... 
+
+Let me try **CITRUS**: Lime (citrus), Jaw (citrus = jaw-dropping sourness?)... weak.
+
+**UNDEAD**: Zombie... only one.
+
+**SCREEN, TICK, JAW** - "check": Tick (checkmark), Jaw (check = jaw?), Screen (screening/check)... 
+
+**CLOCKWORK**: Tick... 
+
+**COOK, JAW, KEEL** - Captain? Captain Cook, Captain Jaw? Captain Keel?
+
+**CAPTAIN**: Captain Cook (explorer), Captain Keel? No... 
+
+**COOK**: Already on board.
+
+**SOUR**: Lime (sour), Jaw (jawbreaker/sour candy), Tick... 
+
+{"clue": "COCKTAIL", "number": 3, "reasoning": "Zombie (famous cocktail), Lime (key cocktail ingredient), Keel (keel over = getting drunk from cocktails) - avoiding assassin BLOCK and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COCKTAIL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Knight
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Moscow
+  Axe
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to COCKTAIL (3 words).
+
+Let me think about cocktails:
+- **Moscow** Mule - a classic cocktail
+- **Zombie** - a classic cocktail (rum-based)
+- **Lime** - common cocktail ingredient
+- **Screwdriver** - cocktail (not on list)
+- **Axe** - not obvious cocktail connection
+- **Freeze** - frozen cocktails?
+- **Crown** - Crown Royal whiskey?
+- **Jaw** - Jawbreaker cocktail?
+
+Most confident connections:
+1. **Moscow** Mule - definitely a cocktail
+2. **Zombie** - definitely a cocktail
+3. **Lime** - key cocktail ingredient (margarita, mojito, etc.)
+
+Let me also consider:
+- **Tick** - no obvious cocktail link
+- **Screen** - no
+- **Keel** - "on an even keel"? No cocktail connection
+- **Oil** - no
+- **Bark** - no
+
+I'm most confident about Moscow, Zombie, and Lime.
+
+Starting with the most obvious:
+
+{"guess": "MOSCOW", "reasoning": "Moscow Mule is a classic cocktail - very direct connection to COCKTAIL clue"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Knight               RED        
+  Engine               BLUE       [revealed]
+  Zombie               BLUE       
+  Bark                 NEUTRAL    
+  Leaf                 RED        
+  Screen               BLUE       
+  Oil                  NEUTRAL    
+  Keel                 BLUE       
+  Flag                 NEUTRAL    
+  Gem                  NEUTRAL    
+  Moscow               RED        [revealed]
+  Star                 RED        [revealed]
+  Axe                  RED        
+  Lime                 BLUE       
+  Lever                NEUTRAL    
+  Block                ASSASSIN   
+  Crown                NEUTRAL    
+  Dune                 RED        
+  Tick                 BLUE       
+  Cook                 BLUE       
+  Mercury              RED        [revealed]
+  Jaw                  BLUE       
+  Freeze               RED        
+  Capsule              RED        [revealed]
+  Arch                 NEUTRAL    
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, AXE, BARK, BLOCK, CAPSULE, COOK, CROWN, DUNE, ENGINE, FLAG, FREEZE, GEM, JAW, KEEL, KNIGHT, LEAF, LEVER, LIME, MERCURY, MOSCOW, OIL, SCREEN, STAR, TICK, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "blade", "number": 3, "reasoning": "Points to Knight (sword blade), Leaf (leaf blade), and Axe (blade)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Knight
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Axe
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Axe", "reasoning": "Directly tied to blade; an axe is a bladed tool, a strong link to the clue 'BLADE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Knight
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Knight","reasoning":"Blade-themed: a knight wields a sword, fitting the clue 'BLADE'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Zombie
+  Bark
+  Leaf
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Blade as in the blade of a leaf; fits the BLADE clue with Axe and Knight already guessed."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLADE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 2  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Zombie
+  Bark
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+  [RED] BLADE 3  #3: Leaf → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "All blade-related red words (Axe, Knight, Leaf) have been found for clue BLADE 3. No other blade-related words likely remain; passing to avoid risk."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Knight               RED        [revealed]
+  Engine               BLUE       [revealed]
+  Zombie               BLUE       
+  Bark                 NEUTRAL    
+  Leaf                 RED        [revealed]
+  Screen               BLUE       
+  Oil                  NEUTRAL    
+  Keel                 BLUE       
+  Flag                 NEUTRAL    
+  Gem                  NEUTRAL    
+  Moscow               RED        [revealed]
+  Star                 RED        [revealed]
+  Axe                  RED        [revealed]
+  Lime                 BLUE       
+  Lever                NEUTRAL    
+  Block                ASSASSIN   
+  Crown                NEUTRAL    
+  Dune                 RED        
+  Tick                 BLUE       
+  Cook                 BLUE       
+  Mercury              RED        [revealed]
+  Jaw                  BLUE       
+  Freeze               RED        
+  Capsule              RED        [revealed]
+  Arch                 NEUTRAL    
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+  [RED] BLADE 3  #3: Leaf → red
+  [RED] BLADE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, AXE, BARK, BLOCK, CAPSULE, COOK, CROWN, DUNE, ENGINE, FLAG, FREEZE, GEM, JAW, KEEL, KNIGHT, LEAF, LEVER, LIME, MERCURY, MOSCOW, OIL, SCREEN, STAR, TICK, ZOMBIE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects as many blue words as possible: Zombie, Screen, Keel, Lime, Tick, Cook, Jaw.
+
+Let me analyze these words:
+
+- **Zombie**: undead, walking dead, movie monster
+- **Screen**: display, movie screen, window screen, sunscreen
+- **Keel**: bottom of a boat, keel over
+- **Lime**: citrus fruit, green color, limestone
+- **Tick**: clock sound, insect, checkmark, tick-tock
+- **Cook**: chef, to cook food, Captain Cook
+- **Jaw**: mouth part, Jaws (movie), jawbone
+
+Let me think about connections:
+
+**"Green"**: Lime (green), Zombie (green skin), Screen (green screen)... that's 3.
+
+**"Bone"**: Jaw (jawbone), Keel (keel bone in birds), Zombie (bones)... maybe 3.
+
+**"Drop"**: Jaw (jaw drop), Keel (keel over)... 
+
+**"Boat"**: Keel (boat part), Screen... no.
+
+**"Clock"**: Tick... 
+
+**"Lime"**: Limerick, limelight, limestone...
+
+**"Sunscreen, Silkscreen"**: Screen...
+
+Let me think about "CLOCK": Tick (clock ticks), Cook (Captain Cook? No...), Jaw...
+
+**"DEAD"**: Zombie (walking dead), Keel (keel over = die), Dead Screen (dead screen)... 
+
+**"MOVIE"**: Zombie (zombie movies), Screen (movie screen), Jaw (Jaws)... that's 3 good ones, and maybe Cook (cooking shows)?
+
+**"FILM"**: Screen (film screen), Zombie (zombie film), Jaw (Jaws film)... 3 solid ones.
+
+**"HORROR"**: Zombie, Jaw (Jaws), Freeze (freeze in horror)... but Freeze is RED. Careful.
+
+**"CITRUS"**: Lime only.
+
+**"SHIP"**: Keel (ship part), Screen... 
+
+**"OVER"**: Keel over, Tick over, Jaw drop... hmm.
+
+**"SAVER"**: Screen (screensaver), Jaw... 
+
+Let me try **"SPLITTER"**: no...
+
+**"TICK"** connections: Tick-tock, blood-sucking...
+
+**"COOK"**: Chef Cook, Captain Cook, Tim Cook...
+
+What about **"CHEF"**? Cook (chef), Jaw (jaw dropping food), Lime (ingredient)... 
+
+**"INGREDIENT"**: Lime, Cook... 
+
+**"COCKTAIL"**: Lime (lime in cocktails), Screen... wait, that was a previous clue.
+
+**"SQUEEZE"**: Lime (squeeze lime), Jaw (jaw squeeze)... 
+
+**"UNDEAD"**: Zombie, Keel (keel over/dead)...
+
+**"TOCK"**: Tick (tick-tock)... only 1.
+
+Let me try **"SCREEN"** connections: Sunscreen, Silkscreen, Widescreen, Touchscreen...
+
+**"TOUCH"**: Screen (touchscreen), Jaw (jaw touching)...
+
+**"JAWBONE"**: Jaw...
+
+What about connecting Zombie, Screen, Jaw with **"BONE"**? Jawbone, Trombone... Zombie has bones... Screen... no.
+
+**"MOVIE"** for Zombie + Screen + Jaw (Jaws) = 3 solid blue words, avoiding Freeze (RED) and Dune (RED).
+
+{"clue": "MOVIE", "number": 3, "reasoning": "Zombie (zombie movies), Screen (movie screen), Jaw (Jaws - famous movie). These three blue words connect clearly to movies without pointing to red words Freeze or Dune."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 2  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Zombie
+  Bark
+  Screen
+  Oil
+  Keel
+  Flag
+  Gem
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+  [RED] BLADE 3  #3: Leaf → red
+  [RED] BLADE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to 'MOVIE' with 3 words.
+
+Let me think about movies or movie-related terms:
+
+- **Dune** - famous movie (and book)
+- **Jaw** - "Jaws" is a famous movie
+- **Screen** - movie screen, silver screen
+- **Zombie** - zombie movies are a genre
+- **Crown** - could be a movie
+- **Freeze** - "Deep Freeze"? 
+- **Block** - "writer's block"? or city block?
+- **Gem** - ?
+
+Let me think more carefully:
+
+- **Screen** - directly related to movies (movie screen, big screen)
+- **Dune** - famous sci-fi movie
+- **Jaw** - "Jaws" the movie
+- **Zombie** - movie genre
+- **Freeze** - "Deep Freeze"? 
+- **Block** - "Block" as in blockbuster?
+
+The most direct movie connections:
+1. **Screen** - movie screen (very direct)
+2. **Dune** - famous movie title
+3. **Jaw** - "Jaws" movie
+
+These three seem like the strongest candidates. Let me start with the most confident one.
+
+**Screen** is the most directly related to MOVIE (movie screen, silver screen, big screen).
+
+{"guess": "SCREEN", "reasoning": "Screen is directly related to MOVIE - movie screen, silver screen, big screen. This is the most direct connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MOVIE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 2  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Zombie
+  Bark
+  Oil
+  Keel
+  Flag
+  Gem
+  Lime
+  Lever
+  Block
+  Crown
+  Dune
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+  [RED] BLADE 3  #3: Leaf → red
+  [RED] BLADE 3  #4: PASS
+  [BLUE] MOVIE 3  #1: Screen → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'MOVIE' with 3 words, and we've already correctly guessed "Screen" (as in movie screen).
+
+Now I need to think about other words that connect to MOVIE:
+
+- **Dune** - Famous movie (1984/2021 sci-fi film)
+- **Jaw** - "Jaws" is a famous movie by Spielberg
+- **Zombie** - Zombie movies are a major genre
+- **Crown** - The Crown (TV show, not exactly movie)
+- **Freeze** - Could relate to "freeze frame" in movies
+- **Block** - "Blockbuster" (movie rental), or "block" as in city block
+- **Gem** - not obvious
+- **Tick** - not obvious
+- **Arch** - not obvious
+
+The most famous movie connections:
+- **Dune** - directly a movie title
+- **Jaw** - "Jaws" is iconic Spielberg movie
+- **Zombie** - zombie movies genre
+
+"Dune" is literally a movie title. "Jaws" → JAW (singular). These seem very strong.
+
+Let me go with **Dune** first as it's literally a movie title.
+
+{"guess": "Dune", "reasoning": "Dune is a famous movie title (1984 and 2021), directly connecting to the MOVIE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Knight               RED        [revealed]
+  Engine               BLUE       [revealed]
+  Zombie               BLUE       
+  Bark                 NEUTRAL    
+  Leaf                 RED        [revealed]
+  Screen               BLUE       [revealed]
+  Oil                  NEUTRAL    
+  Keel                 BLUE       
+  Flag                 NEUTRAL    
+  Gem                  NEUTRAL    
+  Moscow               RED        [revealed]
+  Star                 RED        [revealed]
+  Axe                  RED        [revealed]
+  Lime                 BLUE       
+  Lever                NEUTRAL    
+  Block                ASSASSIN   
+  Crown                NEUTRAL    
+  Dune                 RED        [revealed]
+  Tick                 BLUE       
+  Cook                 BLUE       
+  Mercury              RED        [revealed]
+  Jaw                  BLUE       
+  Freeze               RED        
+  Capsule              RED        [revealed]
+  Arch                 NEUTRAL    
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+  [RED] BLADE 3  #3: Leaf → red
+  [RED] BLADE 3  #4: PASS
+  [BLUE] MOVIE 3  #1: Screen → blue
+  [BLUE] MOVIE 3  #2: Dune → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARCH, AXE, BARK, BLOCK, CAPSULE, COOK, CROWN, DUNE, ENGINE, FLAG, FREEZE, GEM, JAW, KEEL, KNIGHT, LEAF, LEVER, LIME, MERCURY, MOSCOW, OIL, SCREEN, STAR, TICK, ZOMBIE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "COLD", "number": 1, "reasoning": "Only remaining red word is Freeze; Cold directly relates to Freeze."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COLD' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Zombie
+  Bark
+  Oil
+  Keel
+  Flag
+  Gem
+  Lime
+  Lever
+  Block
+  Crown
+  Tick
+  Cook
+  Jaw
+  Freeze
+  Arch
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SPACE 4  #1: Star → red
+  [RED] SPACE 4  #2: Mercury → red
+  [RED] SPACE 4  #3: Capsule → red
+  [RED] SPACE 4  #4: Engine → blue
+  [BLUE] COCKTAIL 3  #1: Moscow → red
+  [RED] BLADE 3  #1: Axe → red
+  [RED] BLADE 3  #2: Knight → red
+  [RED] BLADE 3  #3: Leaf → red
+  [RED] BLADE 3  #4: PASS
+  [BLUE] MOVIE 3  #1: Screen → blue
+  [BLUE] MOVIE 3  #2: Dune → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Freeze", "reasoning": "Direct association: freeze = cold."}
+============================================================

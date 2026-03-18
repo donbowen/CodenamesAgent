@@ -1,0 +1,2028 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       
+  Fly                  RED        
+  Knot                 RED        
+  Pumpkin              BLUE       
+  Steam                BLUE       
+  Capsule              RED        
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        
+  Australia            BLUE       
+  Arrow                RED        
+  Mine                 NEUTRAL    
+  Time                 RED        
+  Force                RED        
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    
+  Lab                  RED        
+  Brooch               BLUE       
+  Crest                NEUTRAL    
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Fly, Knot, Capsule, Ink, Arrow, Time, Force, Lab, Hospital.
+
+Let me think about groupings:
+
+**Fly, Knot, Time** - these can all follow "square" (square knot, square fly?... no)
+
+**Ink, Capsule, Lab** - could relate to science/chemistry
+
+**Arrow, Fly, Force** - could relate to physics or action
+
+**Time, Capsule** - "time capsule" is a compound word
+
+**Fly, Arrow** - both projectile-related?
+
+**Knot, Fly** - fishing terms (fly fishing, knot tying)
+
+**Force, Arrow** - physics vectors?
+
+**Lab, Hospital, Capsule** - medical/science setting
+
+**Ink, Knot** - "not" homophones? No...
+
+**Time, Force, Arrow** - "Star Wars: The Force"... 
+
+**Fly, Knot, Row** - but Row is neutral
+
+**Speed**: Knot (speed unit), Fly (move fast), Arrow (fast)... 
+
+**"black"**: Ink (black ink), Lab (black lab - dog breed), Fly (black fly), Knot (black knot - tree disease)... 
+
+**"black"**: Black Lab, Black Ink, Black Fly, Black Arrow - that's 4 RED words! Does Black Hospital work? No. Black Capsule? No. Black Knot is a fungal disease. Black Arrow was a UK rocket!
+
+This seems strong: Lab (black lab), Ink (black ink), Fly (blackfly), Knot (black knot) - but I need to avoid Blue words. Is there a "Black" + Blue word? Black Burst? Black Steam? Not obviously.
+
+Let me verify: BLACK LAB ✓, BLACK INK ✓, BLACKFLY ✓, BLACK ARROW ✓ (historic UK rocket/TV show)
+
+That's 4 RED words connected by "black" without hitting obvious blue words.
+
+{"clue": "BLACK", "number": 4, "reasoning": "Black Lab (dog breed), Black Ink (common phrase), Blackfly (insect pest), Black Arrow (UK rocket program) - all RED words connected by 'black'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLACK' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Unicorn
+  Fly
+  Knot
+  Pumpkin
+  Steam
+  Capsule
+  Burst
+  Row
+  Ink
+  Australia
+  Arrow
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Lab
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that go with "BLACK" to form compound words or common phrases.
+
+Let me think through the valid guesses:
+
+- BLACK + Bottle = Blackbottle? No
+- BLACK + Depot = No
+- BLACK + Unicorn = No
+- BLACK + Fly = Blackfly ✓ (a type of aphid/pest)
+- BLACK + Knot = Blackknot? No... but BLACK KNOT is a tree disease
+- BLACK + Pumpkin = No
+- BLACK + Steam = No
+- BLACK + Capsule = No
+- BLACK + Burst = No
+- BLACK + Row = Blackrow? No... but BLACK ROW?
+- BLACK + Ink = Black ink ✓ (common phrase)
+- BLACK + Australia = No
+- BLACK + Arrow = Black Arrow ✓ (historical rocket, or just common phrase)
+- BLACK + Mine = No... MINE + BLACK? Blackmine? No
+- BLACK + Time = No
+- BLACK + Force = No
+- BLACK + Crane = No
+- BLACK + Laser = No
+- BLACK + Lab = Black Lab ✓ (Labrador Retriever)
+- BLACK + Brooch = No
+- BLACK + Crest = Blackcrest? No
+- BLACK + Hospital = No
+- BLACK + Film = No
+- BLACK + Exile = No
+- BLACK + Drop = Blackdrop? No... BLACK DROP effect
+
+Also: BLACKBIRD? No. 
+- Ink = Black ink (very common)
+- Fly = Blackfly ✓
+- Lab = Black Lab ✓
+- Arrow = Black Arrow ✓
+- Film = Black film? No... but FILM NOIR is "black film" in French... maybe
+- Knot = Blackknot? 
+- Drop = Black Drop?
+- Burst = Blackburst? No
+- Crest = Blackcrest? No
+
+Strong ones: INK, FLY, LAB, ARROW
+
+Starting with the most confident:
+
+{"guess": "INK", "reasoning": "BLACK INK is a very common compound phrase/combination"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLACK' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Fly
+  Knot
+  Pumpkin
+  Steam
+  Capsule
+  Burst
+  Row
+  Australia
+  Arrow
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Lab
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'BLACK' with 4 words, I need to find words that can follow or precede "BLACK" to make compound words or common phrases.
+
+Let me think through the valid guesses:
+- BLACK + Knot = Blackknot? No... but "Black Knot" is a tree disease
+- BLACK + Bird = no bird here
+- BLACK + Fly = Blackfly (a pest/aphid)
+- BLACK + Mine = Black mine? No...
+- BLACK + Hole = no hole here
+- BLACK + Film = Black film? 
+- BLACK + Drop = Blackdrop? 
+- BLACK + Burst = Blackburst? No
+- BLACK + Arrow = Black Arrow (rocket/TV show)
+- BLACK + Crane = Black Crane?
+- BLACK + Crest = Blackcrest?
+- BLACK + Row = Blackrow? No... but "Black Row"?
+- BLACK + Lab = Black Lab (Labrador dog!)
+- BLACK + Pumpkin = no
+- BLACK + Capsule = no
+- BLACK + Bottle = Blackbottle? No... "Black Bottle"?
+- BLACK + Force = Blackforce?
+- BLACK + Depot = Black Depot?
+- BLACK + Steam = Blacksteam? No
+
+Strong ones:
+- **Fly** = Blackfly ✓
+- **Lab** = Black Lab (dog breed) ✓
+- **Arrow** = Black Arrow ✓
+- **Knot** = Blackknot? or "black knot"
+
+INK was already guessed correctly. Now let me go with **Fly** (Blackfly is very common).
+
+{"guess": "Fly", "reasoning": "Blackfly is a common compound word (an aphid pest), making 'Fly' a strong match for the BLACK clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLACK' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Steam
+  Capsule
+  Burst
+  Row
+  Australia
+  Arrow
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Lab
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'BLACK' and the remaining valid guesses, I need to find words that can follow or precede "BLACK":
+
+- **Blackbird** - no
+- **Blackout** - no
+- **Blackberry** - no
+- **Black market** - no
+- **Blacksmith** - no
+- **Black hole** - no
+- **Blackmail** - no
+- **Black drop** - hmm
+- **Blackcurrant** - no
+- **Black film** - "film noir" (noir = black in French)... 
+- **Black mine** - "mine" could be a black mine
+- **Blackbird** - no
+- **Black lab** - yes! A black Labrador (dog breed)
+- **Black crane** - cranes can be black
+- **Black arrow** - "The Black Arrow" is a novel
+- **Blackcap** - no
+- **Black capsule** - hmm
+- **Blackberry** - no
+- **Black steam** - steam can be associated with black (black steam engine)
+- **Black row** - Death Row? 
+- **Black knot** - a tree disease called "black knot"
+- **Blackbird** - no
+
+Strong candidates: **Lab** (Black Lab - Labrador), **Arrow** (Black Arrow), **Mine** (Black mine/coal mine), **Film** (film noir/black film)
+
+I already got Ink and Fly (blackfly, black ink). Lab seems very strong - "Black Lab" is extremely common.
+
+{"guess": "Lab", "reasoning": "Black Lab (Labrador Retriever) is a very common compound - 'black lab' is one of the most recognizable dog breeds."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLACK' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Steam
+  Capsule
+  Burst
+  Row
+  Australia
+  Arrow
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'BLACK' and what's been guessed so far (Ink, Fly, Lab - all red), I need to find one more word that goes with BLACK.
+
+Let me think about BLACK + word combinations:
+- BLACK Hole → not on list
+- BLACK Bird → not on list
+- BLACK Knot → hmm, not common
+- BLACK Forest → not on list
+- BLACK Market → not on list
+- BLACK Mine → not common
+- BLACK Drop → "black drop effect" (astronomy)... maybe
+- BLACK Film → not common
+- BLACK Crane → not common
+- BLACK Arrow → Black Arrow is a British rocket/TV show
+- BLACK Capsule → not common
+- BLACK Burst → not common
+- BLACK Row → not common
+- BLACK Crest → not common
+- BLACK Pumpkin → not common
+- BLACK Depot → not common
+- BLACK Steam → Blacksteam? No... but "Black Steam" (steam trains?)
+- BLACK Brooch → not common
+- BLACK Exile → not common
+- BLACK Force → not common
+- BLACK Unicorn → there's "The Black Unicorn" (book)
+- BLACK Mine → not common
+- BLACK Time → not common
+
+"Blackcurrant" - no. "Black Knot" is a tree disease. "Blacksmith" - no.
+
+Wait - BLACK CRANE? No. BLACK ARROW - yes, this is a thing (British launch vehicle, TV show).
+
+I'll go with ARROW (Black Arrow).
+
+{"guess": "Arrow", "reasoning": "BLACK ARROW is a British rocket program and also a TV show, making 'Arrow' a strong match for the BLACK clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BLACK' — 4 word(s).
+Guesses used this turn: 4 / 5.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Steam
+  Capsule
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'BLACK' and what's been guessed so far (Ink, Fly, Lab, Arrow - all red), I need to find another word that pairs with BLACK.
+
+Let me think about BLACK + word combinations:
+- Black Bottle? Not common
+- Black Depot? No
+- Black Unicorn? No
+- Black Knot? No
+- Black Pumpkin? No
+- Black Steam? No
+- Black Capsule? No
+- Black Burst? No
+- Black Row? No
+- Black Australia? No
+- Black Mine? No
+- Black Time? No
+- Black Force? No
+- Black Crane? No
+- Black Laser? No
+- Black Brooch? No
+- Black Crest? No
+- Black Hospital? No
+- Black Film? No (well, film noir is French for black...)
+- Black Exile? No
+- Black Drop? Blackdrop? No... wait, "Black Drop" effect is a thing in astronomy
+
+Hmm, or word + BLACK:
+- Knot → Blackknot? No... but "Black Knot" is a tree disease
+- Film → Blackfilm? No
+- Mine → Black Mine? Coal mine is a black mine...
+
+Actually "FILM NOIR" = black film... but that's a stretch.
+
+Wait - what about things that can be BLACK as a compound: Blackbird, Blackboard, Blackout, Blacksmith, Blackmail...
+
+FILM - "Black film" or film noir... seems risky. I'll PASS since I've already gotten 4 correct guesses matching the clue number.
+
+{"guess": "PASS", "reasoning": "Already guessed 4 words correctly matching the clue number of 4 (Ink, Fly, Lab, Arrow). Passing to avoid risking a wrong guess that could help the opponent or hit the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       
+  Fly                  RED        [revealed]
+  Knot                 RED        
+  Pumpkin              BLUE       
+  Steam                BLUE       
+  Capsule              RED        
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        [revealed]
+  Australia            BLUE       
+  Arrow                RED        [revealed]
+  Mine                 NEUTRAL    
+  Time                 RED        
+  Force                RED        
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    
+  Lab                  RED        [revealed]
+  Brooch               BLUE       
+  Crest                NEUTRAL    
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Evaporation","number":2,"reasoning":"Links most strongly to STEAM and DROP. It avoids the assassin BOTTLE and has limited pull toward other board words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EVAPORATION' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Steam
+  Capsule
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Steam","reasoning":"Evaporation most directly produces steam; this is the strongest match on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EVAPORATION' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Capsule
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+  Drop
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Drop","reasoning":"Evaporation strongly relates to water; after Steam, Drop is the best remaining match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'EVAPORATION' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Capsule
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Already found both likely EVAPORATION words (Steam, Drop). Extra guesses from remaining words are too risky."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       
+  Fly                  RED        [revealed]
+  Knot                 RED        
+  Pumpkin              BLUE       
+  Steam                BLUE       [revealed]
+  Capsule              RED        
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        [revealed]
+  Australia            BLUE       
+  Arrow                RED        [revealed]
+  Mine                 NEUTRAL    
+  Time                 RED        
+  Force                RED        
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    
+  Lab                  RED        [revealed]
+  Brooch               BLUE       
+  Crest                NEUTRAL    
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       [revealed]
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects the remaining RED words: KNOT, CAPSULE, TIME, FORCE, HOSPITAL.
+
+Let me think about connections:
+
+- KNOT, TIME, CAPSULE, FORCE... 
+- TIME CAPSULE - these two go together
+- TIME FORCE - Power Rangers Time Force
+- KNOT - nautical speed unit
+- HOSPITAL - medical facility
+
+Let me think about "SPACE":
+- SPACE CAPSULE ✓
+- SPACE FORCE ✓ (US Space Force)
+- SPACE TIME ✓ (spacetime)
+- SPACE KNOT? No
+- SPACE HOSPITAL? No
+
+"SPACE" connects CAPSULE, FORCE, TIME strongly (3 words).
+
+What about HOSPITAL and KNOT?
+- KNOT could relate to surgery/hospital (surgical knots)
+- But that's a stretch
+
+Let me think about connecting all 5:
+- TIME, FORCE, CAPSULE, KNOT, HOSPITAL
+
+"FIELD":
+- FORCE FIELD ✓
+- HOSPITAL... field hospital ✓
+- TIME FIELD? weak
+- KNOT FIELD? no
+
+"SURGICAL":
+- SURGICAL KNOT ✓
+- SURGICAL CAPSULE? weak
+- SURGICAL HOSPITAL? redundant
+
+Let me go with SPACE for 3 (CAPSULE, FORCE, TIME) - very strong connections, and avoid risking blue words.
+
+Check blue words: BURST (space burst? no), AUSTRALIA (no), UNICORN (no), PUMPKIN (no) - looks safe.
+Check assassin: BOTTLE - no connection to SPACE.
+
+{"clue": "SPACE", "number": 3, "reasoning": "SPACE CAPSULE, SPACE FORCE, and SPACETIME are all strong associations with the RED words CAPSULE, FORCE, and TIME. These don't point to any blue words or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Capsule
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to 'SPACE' (3 words).
+
+Let me think about what connects to SPACE:
+
+- **Capsule**: Space capsule - very direct connection
+- **Time**: Space-time (physics concept), also "time and space"
+- **Force**: Space Force (US military branch), also "force" in physics/space context
+- **Laser**: Used in space, but less direct
+- **Depot**: Space depot? Less common
+- **Crane**: Less likely
+- **Mine**: Space mine? Less likely
+- **Film**: Less likely
+- **Row**: Less likely
+- **Burst**: Less likely
+
+Top candidates:
+1. **Capsule** - "space capsule" is a very common compound word
+2. **Force** - "Space Force" is a well-known term
+3. **Time** - "space-time" is a fundamental physics concept
+
+These three seem like the strongest connections to SPACE. Let me start with the most obvious one.
+
+{"guess": "CAPSULE", "reasoning": "Space capsule is a direct and common compound word - astronauts travel in space capsules."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Force
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SPACE' with 3 words, and we've already correctly guessed 'Capsule' (space capsule). 
+
+Now I need to think about what other words relate to SPACE:
+- **Force** → "Space Force" (military branch, also Star Wars "The Force")
+- **Station** → not on the list
+- **Time** → "Space-Time" (physics concept)
+- **Laser** → space weapons, sci-fi
+- **Exile** → not obvious space connection
+- **Mine** → space mining?
+- **Depot** → not obvious
+- **Burst** → not obvious
+
+"Space Force" is a very strong connection - it's a real thing (US Space Force) and a Netflix show.
+"Space-Time" is also a very strong scientific concept.
+
+Let me think about "Laser" - lasers are used in space but it's not a compound word with space.
+
+I'll go with **Force** next as "Space Force" is very direct.
+
+{"guess": "Force", "reasoning": "Space Force is a direct compound - both the US military branch and a well-known concept. Very strong connection to SPACE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Time
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SPACE' with 3 words, I've already correctly guessed "Capsule" and "Force" (both space-related). I need one more guess.
+
+Remaining valid words to consider for SPACE:
+- **Time** - "Space-Time" is a fundamental physics concept
+- **Laser** - lasers are used in space technology
+- **Mine** - space mines exist in sci-fi
+- **Depot** - space depot is possible
+- **Crane** - less obvious
+- **Burst** - space burst?
+- **Exile** - less obvious
+
+"Time" is the strongest connection - "Space-Time" is an extremely well-known compound/concept in physics and astronomy. This seems like the intended third word.
+
+{"guess": "Time", "reasoning": "Space-Time is a fundamental physics/astronomy concept, making this a strong third guess for the SPACE clue after Capsule and Force were correct."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SPACE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 2  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the situation:
+- Clue is 'SPACE' with 3 words
+- I've already guessed 3 correctly (Capsule, Force, Time) - all related to SPACE
+- Red remaining: 2, Blue remaining: 6
+- I have 1 more guess available (clue_number + 1 = 4 total)
+
+I've used my 3 clue guesses successfully. Now I'm considering a 4th bonus guess. 
+
+Looking at remaining valid words for SPACE connections:
+- "Station" would be obvious (Space Station) but it's not on the list
+- "Laser" - used in space/sci-fi contexts
+- "Crane" - not strongly space-related
+- "Mine" - space mining?
+- "Burst" - not strongly space-related
+
+The risk here: Red has 2 cards left, Blue has 6. I need to be careful not to hit a Blue card or the assassin. 
+
+"Laser" has some space connection (laser weapons in space, laser communication). But I'm not confident enough - it could easily be something else. With only 2 red cards left vs 6 blue cards, the probability of hitting a blue card is high.
+
+I should PASS to protect the 2 correct guesses I need and avoid risking a blue card hit.
+
+{"guess": "PASS", "reasoning": "I've successfully guessed 3 words matching SPACE (Capsule, Force, Time). The 4th bonus guess is risky - with 2 red cards vs 6 blue cards remaining, the odds of hitting blue are high. Better to pass and let the Spymaster give a more targeted clue next turn."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       
+  Fly                  RED        [revealed]
+  Knot                 RED        
+  Pumpkin              BLUE       
+  Steam                BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        [revealed]
+  Australia            BLUE       
+  Arrow                RED        [revealed]
+  Mine                 NEUTRAL    
+  Time                 RED        [revealed]
+  Force                RED        [revealed]
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    
+  Lab                  RED        [revealed]
+  Brooch               BLUE       
+  Crest                NEUTRAL    
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       [revealed]
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"mythic","number":2,"reasoning":"Connects strongly to Unicorn and Exile via fantasy/myth themes, while avoiding strong links to the assassin Bottle or most remaining red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYTHIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Unicorn
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Unicorn","reasoning":"Strongest match for MYTHIC; a unicorn is a classic mythical creature."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYTHIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Laser
+  Brooch
+  Crest
+  Hospital
+  Film
+  Exile
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Crest","reasoning":"'Mythic' strongly suggests heraldry/legendary creatures; a crest often features mythic beasts and fits better than the other remaining words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       [revealed]
+  Fly                  RED        [revealed]
+  Knot                 RED        
+  Pumpkin              BLUE       
+  Steam                BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        [revealed]
+  Australia            BLUE       
+  Arrow                RED        [revealed]
+  Mine                 NEUTRAL    
+  Time                 RED        [revealed]
+  Force                RED        [revealed]
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    
+  Lab                  RED        [revealed]
+  Brooch               BLUE       
+  Crest                NEUTRAL    [revealed]
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       [revealed]
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining red words: KNOT and HOSPITAL.
+
+Let me think about connections:
+- KNOT: tied knot, sailor's knot, knot (speed unit), knot in wood
+- HOSPITAL: medical facility, emergency, ward
+
+What connects KNOT and HOSPITAL?
+- SURGEON: surgeons work in hospitals and tie surgical knots
+- SLIP: slip knot, slip... doesn't connect to hospital well
+- GORDIAN: Gordian knot... no
+- TYING: tying knots, tying... 
+- BOWLINE: type of knot, no hospital connection
+- WARD: hospital ward, no knot connection
+- SURGICAL: surgical knot (used in sutures), surgical hospital... "surgical" connects both!
+- Actually, surgeons tie knots in sutures at hospitals
+
+Wait - could "WARD" work? Hospital ward... knot ward? No.
+
+What about "TIED"? Tied knot, tied... no hospital connection.
+
+SURGEON connects: surgeons tie knots (sutures) AND work in hospitals. But "surgeon" might be too indirect for knot.
+
+What about EMERGENCY? Emergency knot? No.
+
+BOWEL? Bowel knot (intestinal obstruction)... bowel surgery happens in hospital. Too obscure.
+
+SURGICAL feels best - surgical knot is a real thing, and surgical relates to hospital.
+
+{"clue": "SURGICAL", "number": 2, "reasoning": "SURGICAL connects to both KNOT (a surgical knot is used in sutures/medical procedures) and HOSPITAL (surgical ward/surgical procedures happen in hospitals)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SURGICAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Laser
+  Brooch
+  Hospital
+  Film
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "LASER", "reasoning": "SURGICAL LASER is a very common medical/surgical term - lasers are used extensively in surgical procedures. This is a strong connection to 'SURGICAL'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       [revealed]
+  Fly                  RED        [revealed]
+  Knot                 RED        
+  Pumpkin              BLUE       
+  Steam                BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        [revealed]
+  Australia            BLUE       
+  Arrow                RED        [revealed]
+  Mine                 NEUTRAL    
+  Time                 RED        [revealed]
+  Force                RED        [revealed]
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    [revealed]
+  Lab                  RED        [revealed]
+  Brooch               BLUE       
+  Crest                NEUTRAL    [revealed]
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       [revealed]
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+  [RED] SURGICAL 2  #1: Laser → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Jewelry","number":2,"reasoning":"Links BLUE words Brooch and Pumpkin (as in pumpkin-shaped jewelry/ornament) less strongly than ideal, but most importantly it strongly targets Brooch while avoiding the assassin Bottle and remaining red words. A safer 1-clue would be even better conceptually, but this gives a plausible path without obvious pull to dangerous words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JEWELRY' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Brooch
+  Hospital
+  Film
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+  [RED] SURGICAL 2  #1: Laser → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Brooch","reasoning":"Brooch is a clear type of jewelry and the strongest match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JEWELRY' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Bottle
+  Depot
+  Knot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Hospital
+  Film
+  Exile
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+  [RED] SURGICAL 2  #1: Laser → neutral
+  [BLUE] JEWELRY 2  #1: Brooch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Knot","reasoning":"Knot is the strongest jewelry-related option left, as in a knot design or tied necklace/bracelet. The other words fit the clue much less directly."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Bottle               ASSASSIN   
+  Depot                NEUTRAL    
+  Unicorn              BLUE       [revealed]
+  Fly                  RED        [revealed]
+  Knot                 RED        [revealed]
+  Pumpkin              BLUE       
+  Steam                BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Burst                BLUE       
+  Row                  NEUTRAL    
+  Ink                  RED        [revealed]
+  Australia            BLUE       
+  Arrow                RED        [revealed]
+  Mine                 NEUTRAL    
+  Time                 RED        [revealed]
+  Force                RED        [revealed]
+  Crane                NEUTRAL    
+  Laser                NEUTRAL    [revealed]
+  Lab                  RED        [revealed]
+  Brooch               BLUE       [revealed]
+  Crest                NEUTRAL    [revealed]
+  Hospital             RED        
+  Film                 NEUTRAL    
+  Exile                BLUE       
+  Drop                 BLUE       [revealed]
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+  [RED] SURGICAL 2  #1: Laser → neutral
+  [BLUE] JEWELRY 2  #1: Brooch → blue
+  [BLUE] JEWELRY 2  #2: Knot → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ARROW, AUSTRALIA, BOTTLE, BROOCH, BURST, CAPSULE, CRANE, CREST, DEPOT, DROP, EXILE, FILM, FLY, FORCE, HOSPITAL, INK, KNOT, LAB, LASER, MINE, PUMPKIN, ROW, STEAM, TIME, UNICORN
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "MEDICAL", "number": 1, "reasoning": "The only remaining RED word is HOSPITAL. MEDICAL clearly points to HOSPITAL without risking the ASSASSIN (BOTTLE) or any BLUE words (PUMPKIN, BURST, AUSTRALIA, EXILE)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MEDICAL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Bottle
+  Depot
+  Pumpkin
+  Burst
+  Row
+  Australia
+  Mine
+  Crane
+  Hospital
+  Film
+  Exile
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BLACK 4  #1: Ink → red
+  [RED] BLACK 4  #2: Fly → red
+  [RED] BLACK 4  #3: Lab → red
+  [RED] BLACK 4  #4: Arrow → red
+  [RED] BLACK 4  #5: PASS
+  [BLUE] EVAPORATION 2  #1: Steam → blue
+  [BLUE] EVAPORATION 2  #2: Drop → blue
+  [BLUE] EVAPORATION 2  #3: PASS
+  [RED] SPACE 3  #1: Capsule → red
+  [RED] SPACE 3  #2: Force → red
+  [RED] SPACE 3  #3: Time → red
+  [RED] SPACE 3  #4: PASS
+  [BLUE] MYTHIC 2  #1: Unicorn → blue
+  [BLUE] MYTHIC 2  #2: Crest → neutral
+  [RED] SURGICAL 2  #1: Laser → neutral
+  [BLUE] JEWELRY 2  #1: Brooch → blue
+  [BLUE] JEWELRY 2  #2: Knot → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hospital", "reasoning": "MEDICAL clearly points to Hospital - it's the most direct association with 'medical' on the board. We only have 1 red card remaining, so this should be it."}
+============================================================

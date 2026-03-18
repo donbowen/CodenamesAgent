@@ -1,0 +1,1174 @@
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Horse                NEUTRAL    
+  Farm                 NEUTRAL    
+  Slug                 NEUTRAL    
+  Circle               RED        
+  Canyon               BLUE       
+  Flash                BLUE       
+  Head                 BLUE       
+  Ice                  NEUTRAL    
+  Trip                 BLUE       
+  Drum                 RED        
+  Echo                 BLUE       
+  Marble               NEUTRAL    
+  Chain                RED        
+  Fold                 RED        
+  Crane                RED        
+  Isle                 ASSASSIN   
+  Glove                NEUTRAL    
+  Gate                 RED        
+  Kelp                 BLUE       
+  Draft                NEUTRAL    
+  Nut                  BLUE       
+  Plane                BLUE       
+  Engine               RED        
+  Reel                 RED        
+  Bear                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, CANYON, CHAIN, CIRCLE, CRANE, DRAFT, DRUM, ECHO, ENGINE, FARM, FLASH, FOLD, GATE, GLOVE, HEAD, HORSE, ICE, ISLE, KELP, MARBLE, NUT, PLANE, REEL, SLUG, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (ISLE).
+
+Let me look at my RED words: Circle, Drum, Chain, Fold, Crane, Gate, Engine, Reel, Bear
+
+Let me think about groupings:
+
+**STEEL**: Chain (steel chain), Drum (steel drum), Gate (steel gate), Crane (steel crane), Reel (steel reel), Bear (steel bear? no), Engine (steel engine? weak)
+- Steel drum ✓, Steel chain ✓, Steel gate ✓, Steel crane ✓, Steel reel ✓
+- Risk check: Steel horse? (neutral), Steel head? (BLUE - not great but "steelhead" is a thing!)
+
+Steelhead is a concern since HEAD is blue. Let me reconsider.
+
+**FISHING**: Reel (fishing reel) ✓, Bear (bears fish) ✓, Crane (bird that fishes) ✓... but Kelp (BLUE) is ocean-related.
+
+**LINK**: Chain (chain link) ✓, Gate (link to gate? weak)
+
+Let me reconsider **STEEL**: 
+- Steel drum ✓, Steel chain ✓, Steel gate ✓, Steel crane ✓, Steel reel ✓
+- Steelhead (BLUE) is a risk, but it's a compound word that's less obvious
+- Steel horse (NEUTRAL) - motorcycle metaphor, some risk
+- No connection to ASSASSIN (Isle)
+
+That's potentially 5 RED words. The steelhead risk concerns me but "head" by itself isn't as directly "steel" as the others.
+
+**DRUM** is already on the board, so I can't use it.
+
+Let me try **IRON**: Iron gate ✓, Iron chain ✓, Iron crane? (less direct), Iron reel? (no), Iron bear? (no)
+
+Back to STEEL - 5 strong connections is very powerful. The steelhead risk exists but my team would likely pick the stronger associations first.
+
+{"clue": "STEEL", "number": 5, "reasoning": "Steel connects to Drum (steel drum), Chain (steel chain), Gate (steel gate), Crane (steel crane), and Reel (steel reel). Minor risk with 'steelhead' (BLUE) but the five RED connections are much stronger and more direct."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STEEL' — 5 word(s).
+Guesses used this turn: 0 / 6.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Horse
+  Farm
+  Slug
+  Circle
+  Canyon
+  Flash
+  Head
+  Ice
+  Trip
+  Drum
+  Echo
+  Marble
+  Chain
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Kelp
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about which words connect to "STEEL" with 5 words indicated.
+
+Let me consider each word's connection to "STEEL":
+
+- **Drum** - Steel drum (musical instrument)
+- **Horse** - Steel horse (motorcycle/locomotive metaphor)
+- **Chain** - Steel chain (chains are made of steel)
+- **Gate** - Steel gate (gates are made of steel)
+- **Crane** - Steel crane (construction cranes are steel, also used in steel mills)
+- **Glove** - Steel glove (gauntlet, or "steel-toed" isn't glove... but chain mail gloves exist)
+- **Reel** - Steel reel (fishing reels can be steel)
+- **Head** - Steelhead (a type of trout!)
+- **Nut** - Steel nut (nuts and bolts are steel)
+- **Engine** - Steel engine
+- **Plane** - Steel plane (a tool for shaping metal)
+- **Flash** - Steel flash? Not obvious
+- **Bear** - Steel Bear? "Grin and bear it" → nerves of steel? Weak connection
+- **Fold** - Steel fold? Not strong
+
+My strongest connections:
+1. **Drum** - Steel drum ✓✓✓
+2. **Head** - Steelhead (fish) ✓✓✓
+3. **Chain** - Steel chain ✓✓
+4. **Crane** - Steel crane ✓✓
+5. **Nut** - Steel nut ✓✓
+6. **Gate** - Steel gate ✓✓
+
+I'll start with my most confident guess:
+
+{"guess": "DRUM", "reasoning": "Steel drum is a very well-known compound word - a Caribbean musical instrument made from steel oil barrels. This is one of the strongest associations with STEEL."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'STEEL' — 5 word(s).
+Guesses used this turn: 1 / 6.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Horse
+  Farm
+  Slug
+  Circle
+  Canyon
+  Flash
+  Head
+  Ice
+  Trip
+  Echo
+  Marble
+  Chain
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Kelp
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Horse", "reasoning": "Steel horse is a common metaphor for a motorcycle or locomotive. This seems like a reasonable connection to STEEL."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Horse                NEUTRAL    [revealed]
+  Farm                 NEUTRAL    
+  Slug                 NEUTRAL    
+  Circle               RED        
+  Canyon               BLUE       
+  Flash                BLUE       
+  Head                 BLUE       
+  Ice                  NEUTRAL    
+  Trip                 BLUE       
+  Drum                 RED        [revealed]
+  Echo                 BLUE       
+  Marble               NEUTRAL    
+  Chain                RED        
+  Fold                 RED        
+  Crane                RED        
+  Isle                 ASSASSIN   
+  Glove                NEUTRAL    
+  Gate                 RED        
+  Kelp                 BLUE       
+  Draft                NEUTRAL    
+  Nut                  BLUE       
+  Plane                BLUE       
+  Engine               RED        
+  Reel                 RED        
+  Bear                 RED        
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, CANYON, CHAIN, CIRCLE, CRANE, DRAFT, DRUM, ECHO, ENGINE, FARM, FLASH, FOLD, GATE, GLOVE, HEAD, HORSE, ICE, ISLE, KELP, MARBLE, NUT, PLANE, REEL, SLUG, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Water", "number": 3, "reasoning": "Kelp, Canyon, and Plane can all be associated with water."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Farm
+  Slug
+  Circle
+  Canyon
+  Flash
+  Head
+  Ice
+  Trip
+  Echo
+  Marble
+  Chain
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Kelp
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Canyon", "reasoning": "Canyons are often formed by the erosion of water, making it a related concept to water."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Ice
+  Trip
+  Echo
+  Marble
+  Chain
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Kelp
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Kelp", "reasoning": "Kelp is a type of seaweed that grows in water, making it a strong association with the clue 'WATER'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Ice
+  Trip
+  Echo
+  Marble
+  Chain
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ice", "reasoning": "Ice is directly related to water and fits the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Horse                NEUTRAL    [revealed]
+  Farm                 NEUTRAL    
+  Slug                 NEUTRAL    
+  Circle               RED        
+  Canyon               BLUE       [revealed]
+  Flash                BLUE       
+  Head                 BLUE       
+  Ice                  NEUTRAL    [revealed]
+  Trip                 BLUE       
+  Drum                 RED        [revealed]
+  Echo                 BLUE       
+  Marble               NEUTRAL    
+  Chain                RED        
+  Fold                 RED        
+  Crane                RED        
+  Isle                 ASSASSIN   
+  Glove                NEUTRAL    
+  Gate                 RED        
+  Kelp                 BLUE       [revealed]
+  Draft                NEUTRAL    
+  Nut                  BLUE       
+  Plane                BLUE       
+  Engine               RED        
+  Reel                 RED        
+  Bear                 RED        
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, CANYON, CHAIN, CIRCLE, CRANE, DRAFT, DRUM, ECHO, ENGINE, FARM, FLASH, FOLD, GATE, GLOVE, HEAD, HORSE, ICE, ISLE, KELP, MARBLE, NUT, PLANE, REEL, SLUG, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to connect as many of my remaining RED words as possible: Circle, Chain, Fold, Crane, Gate, Engine, Reel, Bear.
+
+Let me think about groupings:
+
+**IRON** could connect:
+- Chain (iron chain)
+- Gate (iron gate)
+- Crane (iron crane - construction equipment made of iron)
+- Engine (iron engine)
+- Bear (iron bear? weak)
+- Fold (iron fold? no)
+- Reel (iron reel? somewhat - fishing reels can be iron)
+
+But let me check for danger: Iron -> Isle? No. Iron -> Flash? No. Iron -> Head? Ironhead is a stretch. Iron -> Trip? No. Iron -> Plane? Iron plane... that could be a risk (plane as in tool).
+
+**WROUGHT** could work for Chain, Gate, Iron-related...
+
+**FISHING** - Reel (fishing reel), Bear (fishing for bear/bears fish), Chain? No. Too few.
+
+**LINK** - Chain (chain link), but Link is only 1.
+
+**METAL** - Chain, Gate, Crane, Engine, Reel - all metal things. But also Plane could be metal. Let me assess risk: Plane (metal plane - risk), Flash (metal flash? no), Head (metalhead - risk!), Nut (metal nut - RISK!). Too many blue dangers.
+
+**IRON** revisited:
+- Chain (iron chain) ✓
+- Gate (iron gate) ✓
+- Crane (iron crane) ✓
+- Engine (iron engine) ✓
+- Reel (iron reel) - possible
+- Fold (iron fold? no)
+
+Risks: Nut (iron nut - some risk), Head (ironhead - some risk), Plane (iron plane - risk). But "iron gate" and "iron chain" are very strong phrases. "Iron crane" is decent. "Iron engine" is decent.
+
+Let me try for 4 strong ones: Chain, Gate, Crane, Engine.
+
+{"clue": "IRON", "number": 4, "reasoning": "Iron connects strongly to Chain (iron chain), Gate (iron gate), Crane (iron crane - heavy machinery/metal), and Engine (iron engine). These are all strong associations. Risk to blue words is moderate - Head (ironhead) and Nut (iron nut) are possible but weaker associations than the red targets."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Chain
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about words that connect to "IRON" in various ways.
+
+IRON can relate to:
+- **Iron** as a metal/material: Chain (iron chain), Gate (iron gate), Glove (iron glove - like a gauntlet)
+- **Iron** as in pressing clothes: Fold (folding clothes), Crease/pressing
+- **Iron** compounds: Iron ore, Iron Maiden, Iron Curtain
+- **Ironing** or **Iron + word**: Iron Horse (already used), Iron Maiden, Iron Curtain, Iron Fist
+- **Cast iron**, **wrought iron**: Gate (wrought iron gate), Chain (iron chain)
+- **Iron Man**: Slug? Flash?
+- **Iron Curtain**: relates to the Cold War
+- **Flat iron**: Plane (flat), 
+- **Iron fist/iron glove**: Glove (iron glove/gauntlet)
+- **Iron maiden**: Maiden
+- **Iron ore**: 
+- **Iron horse**: Horse already guessed
+- **Pressing/iron**: Fold, Crease
+- **Golf iron**: Club, Drive, Draft?
+- **Curling iron**: Reel? Curl?
+- **Branding iron**: Farm, Brand
+- **Iron chain**: Chain
+- **Iron gate**: Gate
+- **Iron crane**: Crane (construction crane is made of iron/steel)
+
+My strongest associations:
+1. **Chain** - iron chain is very common phrase
+2. **Gate** - iron gate is very common phrase
+3. **Glove** - iron glove (gauntlet, "iron fist in a velvet glove")
+4. **Crane** - iron/steel crane
+5. **Fold** - ironing and folding clothes
+
+Let me start with the most confident one.
+
+{"guess": "CHAIN", "reasoning": "Iron chain is an extremely common compound/phrase - chains are classically made of iron."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "CURTAIN", "reasoning": "Let me reconsider - CURTAIN is not on the valid list. Let me think about IRON connections from the valid list.\n\nIRON connections:\n- GATE: Iron gate is a very common compound word\n- FOLD: Iron + fold? Not obvious\n- CRANE: Iron crane? Not a strong connection\n- GLOVE: Iron glove (gauntlet)\n- SLUG: Iron slug? \n- BEAR: Iron Bear?\n- PLANE: Iron plane (a woodworking tool)\n- DRAFT: Iron Draft?\n- FLASH: Flash iron?\n- HEAD: Ironhead?\n- ORE: not available\n- MAIDEN: not available\n\nLet me reconsider. IRON GATE is very strong. IRON CURTAIN - no CURTAIN. IRON HORSE was already guessed. IRON FIST - no. IRON MAIDEN - no. IRON ORE - no.\n\nWait - thinking about this more carefully:\n- GATE: Iron Gate (famous gorge, also iron gates are common)\n- GLOVE: Iron glove = gauntlet\n- FOLD: Ironing fold? Pressing/folding clothes?\n- CRANE: Construction equipment, made of iron/steel\n- SLUG: Iron slug (a metal slug)\n- HEAD: Flathead iron? Ironhead?\n- PLANE: Smoothing plane (iron tool)\n\nGATE seems strongest."}
+
+Wait, let me reformat properly.
+
+{"guess": "GATE", "reasoning": "Iron Gate is a very common compound - iron gates are ubiquitous, and the Iron Gate/Iron Gates is a famous gorge on the Danube. This is one of the strongest IRON connections on the board."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Fold
+  Crane
+  Isle
+  Glove
+  Gate
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "CURTAIN", "reasoning": "Let me reconsider - CURTAIN is not on the valid list. Let me think about IRON connections from the valid list.\n\nIRON connections:\n- GATE: Iron gate is a very common compound word\n- FOLD: Iron + fold? Not obvious\n- CRANE: Iron crane? Not a strong connection\n- GLOVE: Iron glove (gauntlet)\n- SLUG: Iron slug? \n- BEAR: Iron Bear?\n- PLANE: Iron plane (a woodworking tool)\n- DRAFT: Iron Draft?\n- FLASH: Flash iron?\n- HEAD: Ironhead?\n- ORE: not available\n- MAIDEN: not available\n\nLet me reconsider. IRON GATE is very strong. IRON CURTAIN - no CURTAIN. IRON HORSE was already guessed. IRON FIST - no. IRON MAIDEN - no. IRON ORE - no.\n\nWait - thinking about this more carefully:\n- GATE: Iron Gate (famous gorge, also iron gates are common)\n- GLOVE: Iron glove = gauntlet\n- FOLD: Ironing fold? Pressing/folding clothes?\n- CRANE: Construction equipment, made of iron/steel\n- SLUG: Iron slug (a metal slug)\n- HEAD: Flathead iron? Ironhead?\n- PLANE: Smoothing plane (iron tool)\n\nGATE seems strongest."}
+
+Wait, let me reformat properly.
+
+{"guess": "GATE", "reasoning": "Iron Gate is a very common compound - iron gates are ubiquitous, and the Iron Gate/Iron Gates is a famous gorge on the Danube. This is one of the strongest IRON connections on the board."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 1054). Try again.
+
+[RESPONSE]
+{"guess": "GATE", "reasoning": "Iron Gate is a very common compound - iron gates are ubiquitous, and the Iron Gates is a famous gorge on the Danube. This is one of the strongest IRON connections on the board."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Fold
+  Crane
+  Isle
+  Glove
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+  [RED] IRON 4  #2: Gate → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "FOLD", "reasoning": "IRON + FOLD: 'Iron fold' isn't a common phrase, but thinking about ironing clothes, you fold clothes after ironing them. However, let me reconsider. 'Iron ore' no... Looking at the options more carefully: CRANE - iron crane (construction crane is made of iron/steel), SLUG - iron slug (a slug of iron), GLOVE - iron glove (like an iron gauntlet), PLANE - iron plane (a smoothing plane tool). Actually, 'GLOVE' fits well - 'iron glove' or 'iron fist in a velvet glove' is a well-known phrase. But let me think about what fits best with IRON as a clue for 4 words. We got CHAIN and GATE already. PRESS could work but isn't available. CURTAIN would work (Iron Curtain) but isn't available. ORE would work but isn't available. Let me reconsider: MAIDEN - not available. FIST - not available. Actually 'iron horse' was a term for locomotive, and ENGINE could relate - 'iron horse' = train engine. CRANE is made of iron/steel. GLOVE = iron glove. Let me go with CRANE as iron cranes are iconic iron/steel structures."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Crane
+  Isle
+  Glove
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+  [RED] IRON 4  #2: Gate → red
+  [RED] IRON 4  #3: Fold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "CURTAIN", "reasoning": "Let me reconsider - CURTAIN is not on the valid list. Let me think about IRON compounds from the valid list. Iron MAIDEN, Iron FIST, Iron HORSE (already used). PRESS could work (iron as pressing clothes). Looking at the list: FLAT could work (flat iron) but it's not there. GLOVE - iron fist/iron glove is a thing. CRANE - iron crane? Not strong. SLUG - iron slug? Not really. Let me go with GLOVE as 'iron glove' is a known phrase (mailed fist/iron glove)."}
+
+I need to provide a valid guess. Let me reconsider.
+
+{"guess": "GLOVE", "reasoning": "Iron glove (or iron fist in a velvet glove) is a well-known phrase. This could be the 4th word connected to IRON. Other options like CRANE, SLUG, or CURTAIN don't have as strong a connection to IRON."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Crane
+  Isle
+  Glove
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+  [RED] IRON 4  #2: Gate → red
+  [RED] IRON 4  #3: Fold → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "CURTAIN", "reasoning": "Let me reconsider - CURTAIN is not on the valid list. Let me think about IRON compounds from the valid list. Iron MAIDEN, Iron FIST, Iron HORSE (already used). PRESS could work (iron as pressing clothes). Looking at the list: FLAT could work (flat iron) but it's not there. GLOVE - iron fist/iron glove is a thing. CRANE - iron crane? Not strong. SLUG - iron slug? Not really. Let me go with GLOVE as 'iron glove' is a known phrase (mailed fist/iron glove)."}
+
+I need to provide a valid guess. Let me reconsider.
+
+{"guess": "GLOVE", "reasoning": "Iron glove (or iron fist in a velvet glove) is a well-known phrase. This could be the 4th word connected to IRON. Other options like CRANE, SLUG, or CURTAIN don't have as strong a connection to IRON."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 496). Try again.
+
+[RESPONSE]
+{"guess": "GLOVE", "reasoning": "Iron glove is a known phrase (iron fist in a velvet glove). This could be the 4th word connected to IRON clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Horse                NEUTRAL    [revealed]
+  Farm                 NEUTRAL    
+  Slug                 NEUTRAL    
+  Circle               RED        
+  Canyon               BLUE       [revealed]
+  Flash                BLUE       
+  Head                 BLUE       
+  Ice                  NEUTRAL    [revealed]
+  Trip                 BLUE       
+  Drum                 RED        [revealed]
+  Echo                 BLUE       
+  Marble               NEUTRAL    
+  Chain                RED        [revealed]
+  Fold                 RED        [revealed]
+  Crane                RED        
+  Isle                 ASSASSIN   
+  Glove                NEUTRAL    [revealed]
+  Gate                 RED        [revealed]
+  Kelp                 BLUE       [revealed]
+  Draft                NEUTRAL    
+  Nut                  BLUE       
+  Plane                BLUE       
+  Engine               RED        
+  Reel                 RED        
+  Bear                 RED        
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+  [RED] IRON 4  #2: Gate → red
+  [RED] IRON 4  #3: Fold → red
+  [RED] IRON 4  #4: Glove → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEAR, CANYON, CHAIN, CIRCLE, CRANE, DRAFT, DRUM, ECHO, ENGINE, FARM, FLASH, FOLD, GATE, GLOVE, HEAD, HORSE, ICE, ISLE, KELP, MARBLE, NUT, PLANE, REEL, SLUG, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Water", "number": 4, "reasoning": "All of the words relate to water: Kelp, Canyon, and Ice are all associated with it, and Nut can be found in water-based environments."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Farm
+  Slug
+  Circle
+  Flash
+  Head
+  Trip
+  Echo
+  Marble
+  Crane
+  Isle
+  Draft
+  Nut
+  Plane
+  Engine
+  Reel
+  Bear
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] STEEL 5  #1: Drum → red
+  [RED] STEEL 5  #2: Horse → neutral
+  [BLUE] WATER 3  #1: Canyon → blue
+  [BLUE] WATER 3  #2: Kelp → blue
+  [BLUE] WATER 3  #3: Ice → neutral
+  [RED] IRON 4  #1: Chain → red
+  [RED] IRON 4  #2: Gate → red
+  [RED] IRON 4  #3: Fold → red
+  [RED] IRON 4  #4: Glove → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Isle", "reasoning": "Islands are surrounded by water, making 'Isle' a strong association with the clue 'WATER'."}
+============================================================

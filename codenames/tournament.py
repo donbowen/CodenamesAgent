@@ -189,11 +189,9 @@ def _run_one(
     """Play one game and return a result dict. No shared mutable state used here."""
     game_id = _make_game_id()
     Path("game_logs/full_records").mkdir(parents=True, exist_ok=True)
-    log_path = Path(f"game_logs/full_records/{game_id}.txt")
-    prompts_path = log_path.with_stem(log_path.stem + "_prompts")
+    prompts_path = Path(f"game_logs/full_records/{game_id}_prompts.txt")
 
-    with open(log_path, "w", encoding="utf-8") as f_log, \
-         open(prompts_path, "w", encoding="utf-8") as f_prompts:
+    with open(prompts_path, "w", encoding="utf-8") as f_prompts:
 
         red_team = Team(name=red[0], model=red[1], prompt_log=f_prompts)
         blue_team = Team(name=blue[0], model=blue[1], prompt_log=f_prompts)
@@ -204,13 +202,6 @@ def _run_one(
             verbose=verbose,
         )
         result = runner.run()
-
-        if verbose:
-            summary = (
-                f"  → {result.winning_team_name} wins "
-                f"({result.total_turns} turns)"
-            )
-            f_log.write(summary + "\n")
 
     return {
         "game_id": game_id,

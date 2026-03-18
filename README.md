@@ -11,15 +11,17 @@ ELO leaderboard.
 <table>
 <thead><tr><th>Rank</th><th>Name</th><th>Model</th><th>ELO</th><th>W</th><th>L</th><th>Games</th><th>Win%</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>GPT5Mini</td><td>gpt-5-mini</td><td>1172.7</td><td>25</td><td>3</td><td>28</td><td>89.3%</td></tr>
-<tr><td>2</td><td>ClaudeSonnet45</td><td>claude-sonnet-4-5-20250929</td><td>1089.6</td><td>14</td><td>6</td><td>20</td><td>70.0%</td></tr>
-<tr><td>3</td><td>GPT5Nano</td><td>gpt-5-nano</td><td>1051.9</td><td>16</td><td>12</td><td>28</td><td>57.1%</td></tr>
-<tr><td>4</td><td>GPT54</td><td>gpt-5.4</td><td>1037.3</td><td>17</td><td>15</td><td>32</td><td>53.1%</td></tr>
-<tr><td>5</td><td>GPT51</td><td>gpt-5.1</td><td>998.9</td><td>15</td><td>17</td><td>32</td><td>46.9%</td></tr>
-<tr><td>6</td><td>GPT41</td><td>gpt-4.1</td><td>963.2</td><td>13</td><td>15</td><td>28</td><td>46.4%</td></tr>
-<tr><td>7</td><td>GPT41Mini</td><td>gpt-4.1-mini</td><td>949.3</td><td>12</td><td>16</td><td>28</td><td>42.9%</td></tr>
-<tr><td>8</td><td>ClaudeSonnet4</td><td>claude-sonnet-4-20250514</td><td>942.2</td><td>7</td><td>13</td><td>20</td><td>35.0%</td></tr>
-<tr><td>9</td><td>GPT4oMini</td><td>gpt-4o-mini</td><td>794.9</td><td>3</td><td>25</td><td>28</td><td>10.7%</td></tr>
+<tr><td>1</td><td>GPT5Mini</td><td>gpt-5-mini</td><td>1173.1</td><td>29</td><td>5</td><td>34</td><td>85.3%</td></tr>
+<tr><td>2</td><td>ClaudeSonnet45</td><td>claude-sonnet-4-5-20250929</td><td>1117.9</td><td>17</td><td>7</td><td>24</td><td>70.8%</td></tr>
+<tr><td>3</td><td>ClaudeOpus46</td><td>claude-opus-4-6</td><td>1073.1</td><td>11</td><td>5</td><td>16</td><td>68.8%</td></tr>
+<tr><td>4</td><td>ClaudeSonnet46</td><td>claude-sonnet-4-6</td><td>1037.0</td><td>10</td><td>6</td><td>16</td><td>62.5%</td></tr>
+<tr><td>5</td><td>GPT5Nano</td><td>gpt-5-nano</td><td>1019.3</td><td>18</td><td>16</td><td>34</td><td>52.9%</td></tr>
+<tr><td>6</td><td>GPT54</td><td>gpt-5.4</td><td>1010.3</td><td>18</td><td>18</td><td>36</td><td>50.0%</td></tr>
+<tr><td>7</td><td>GPT51</td><td>gpt-5.1</td><td>972.2</td><td>15</td><td>19</td><td>34</td><td>44.1%</td></tr>
+<tr><td>8</td><td>GPT41Mini</td><td>gpt-4.1-mini</td><td>960.8</td><td>13</td><td>17</td><td>30</td><td>43.3%</td></tr>
+<tr><td>9</td><td>GPT41</td><td>gpt-4.1</td><td>939.6</td><td>13</td><td>17</td><td>30</td><td>43.3%</td></tr>
+<tr><td>10</td><td>ClaudeSonnet4</td><td>claude-sonnet-4-20250514</td><td>922.7</td><td>7</td><td>15</td><td>22</td><td>31.8%</td></tr>
+<tr><td>11</td><td>GPT4oMini</td><td>gpt-4o-mini</td><td>774.0</td><td>3</td><td>29</td><td>32</td><td>9.4%</td></tr>
 </tbody>
 </table>
 
@@ -33,9 +35,10 @@ ELO leaderboard.
   python -m codenames.tournament --rounds 1
   ```
 
-2. Add new models to the leaderboard. The new model(s) will play 1 round of red/blue against ~10 models to determine its place on the leaderboard.
+2. Add a new model to the leaderboard. It plays 16 adaptive games: 12 against 6 opponents spread across the ELO spectrum (Phase 1), then 4 more against the 2 closest-rated opponents once its initial ELO is known (Phase 2). Then add the model to `MODELS` in `codenames/tournament.py` for future round-robin tournaments.
   ```bash
-  todo
+  conda activate codenames
+  python -m codenames.addnewmodel --name ClaudeSonnet46 --model claude-sonnet-4-6
   ```
 
 ---

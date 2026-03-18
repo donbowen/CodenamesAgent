@@ -1,0 +1,1754 @@
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Copper               RED        
+  Wake                 BLUE       
+  Fountain             NEUTRAL    
+  Giant                RED        
+  Glove                NEUTRAL    
+  Alps                 BLUE       
+  Change               RED        
+  Fold                 BLUE       
+  Dig                  RED        
+  Trick                RED        
+  Square               BLUE       
+  Capsule              RED        
+  Block                NEUTRAL    
+  Button               NEUTRAL    
+  Vacuum               NEUTRAL    
+  Bark                 RED        
+  Exile                NEUTRAL    
+  Gorge                ASSASSIN   
+  Hospital             BLUE       
+  Era                  BLUE       
+  Mexico               NEUTRAL    
+  Grace                RED        
+  Jar                  RED        
+  Code                 BLUE       
+  Mouse                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BARK, BLOCK, BUTTON, CAPSULE, CHANGE, CODE, COPPER, DIG, ERA, EXILE, FOLD, FOUNTAIN, GIANT, GLOVE, GORGE, GRACE, HOSPITAL, JAR, MEXICO, MOUSE, SQUARE, TRICK, VACUUM, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Coin","number":3,"reasoning":"Points to coins/currency — Copper (pennies), Change, and a jar for spare coins."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Copper
+  Wake
+  Fountain
+  Giant
+  Glove
+  Alps
+  Change
+  Fold
+  Dig
+  Trick
+  Square
+  Capsule
+  Block
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Hospital
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Copper", "reasoning": "Copper is a metal commonly used in coins — strong direct association with 'COIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Fountain
+  Giant
+  Glove
+  Alps
+  Change
+  Fold
+  Dig
+  Trick
+  Square
+  Capsule
+  Block
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Hospital
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Change","reasoning":"Directly relates to coins (change from transactions) — strong match to 'COIN'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COIN' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Fountain
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Square
+  Capsule
+  Block
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Hospital
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fountain", "reasoning": "People commonly throw coins into a fountain (wishing fountain) — strong coin association."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Copper               RED        [revealed]
+  Wake                 BLUE       
+  Fountain             NEUTRAL    [revealed]
+  Giant                RED        
+  Glove                NEUTRAL    
+  Alps                 BLUE       
+  Change               RED        [revealed]
+  Fold                 BLUE       
+  Dig                  RED        
+  Trick                RED        
+  Square               BLUE       
+  Capsule              RED        
+  Block                NEUTRAL    
+  Button               NEUTRAL    
+  Vacuum               NEUTRAL    
+  Bark                 RED        
+  Exile                NEUTRAL    
+  Gorge                ASSASSIN   
+  Hospital             BLUE       
+  Era                  BLUE       
+  Mexico               NEUTRAL    
+  Grace                RED        
+  Jar                  RED        
+  Code                 BLUE       
+  Mouse                BLUE       
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BARK, BLOCK, BUTTON, CAPSULE, CHANGE, CODE, COPPER, DIG, ERA, EXILE, FOLD, FOUNTAIN, GIANT, GLOVE, GORGE, GRACE, HOSPITAL, JAR, MEXICO, MOUSE, SQUARE, TRICK, VACUUM, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words: Wake, Alps, Fold, Square, Hospital, Era, Code, Mouse.
+
+Let me think through possible connections:
+
+**CREASE** - Fold (a crease is a fold), Wake (wake could relate to creasing sheets?)... not great.
+
+**TRAP** - Mouse (mousetrap), Code (trap code?)... weak.
+
+**COMPUTER** - Mouse (computer mouse), Code (computer code)... only 2 but solid.
+
+**CIPHER** - Code (directly related), Enigma... not many others.
+
+**CLICK** - Mouse (click a mouse), Code (click code?)... weak.
+
+**CHEESE** - Mouse (mice love cheese), Alps (Swiss cheese/Alps)... only 2.
+
+**SWISS** - Alps (Swiss Alps), Fold (Swiss fold?), Code (Swiss bank code?)... risky.
+
+**TIME** - Era (time period), Wake (wake-up time), Square (Time Square), Hospital (time in hospital?)... but "Time Square" is really "Times Square." Still, Square connects well.
+
+**PERIOD** - Era (a period of time), Code (period in morse code?), Hospital (hospital period?)... weak.
+
+**TOWN** - Square (town square), Hospital (town hospital), Wake (town wake?)... 
+
+**DANCE** - Square (square dance), Fold (dance fold?)... limited.
+
+**PUBLIC** - Square (public square), Hospital (public hospital), Wake (public wake), Code (public code?)... that's potentially 4! Let me check against red/assassin: Giant - no, Dig - no, Trick - no, Capsule - no, Bark - no, Grace - no, Jar - no. Gorge (assassin) - no. This seems safe.
+
+**VILLAGE** - Square (village square), Wake (village wake)... only 2.
+
+**FUNERAL** - Wake (funeral wake), Hospital (related to death/hospital)... risky.
+
+Let me reconsider **PUBLIC**: Wake (public wake/viewing), Square (public square), Hospital (public hospital), Code (public code/zip code/area code). That's 4 solid connections.
+
+{"clue": "PUBLIC", "number": 4, "reasoning": "PUBLIC connects to: Square (public square), Hospital (public hospital), Wake (public wake/viewing), Code (public code/zip code). None of the red words or assassin (GORGE) strongly associate with PUBLIC."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PUBLIC' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Wake
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Square
+  Capsule
+  Block
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Hospital
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about which words connect to "PUBLIC" with 4 words.
+
+Let me consider compound words or phrases with "PUBLIC":
+- **Square** → "Public square" (a town square, public gathering place) ✓
+- **Hospital** → "Public hospital" ✓
+- **Code** → "Public code" (less common, but there's "public code" in cryptography - public key code) - maybe
+- **Exile** → "Public exile" - not a strong connection
+- **Block** → "Public block" - not really
+- **Grace** → "Public grace" - not strong
+- **Mexico** → "Public" + Mexico? Not obvious
+- **Era** → "Public era" - not really
+- **Wake** → "Public wake" - possible but weak
+- **Bark** → No
+- **Giant** → No
+- **Fold** → No
+- **Button** → No
+- **Vacuum** → No
+- **Capsule** → No
+- **Alps** → No
+- **Gorge** → No
+- **Jar** → No
+- **Mouse** → No
+- **Dig** → No
+- **Trick** → No
+- **Glove** → No
+
+Strong matches:
+1. **Square** - "public square" is very common
+2. **Hospital** - "public hospital" is very common
+3. **Code** - "public code" (or "public key code")
+4. **Exile** - "public exile"? Hmm...
+
+Wait - let me reconsider:
+- **Enemy** → "public enemy" - not on the list
+- **Figure** → not on the list
+- **Block** → "public block"? No
+- **Grace** → "fall from grace" is public... but "public grace" isn't a phrase
+
+Actually, maybe:
+- **Wake** → A wake can be a public event
+- **Bark** → No
+
+I think the strongest connection is **Square** — "public square" is an extremely well-known phrase.
+
+{"guess": "SQUARE", "reasoning": "Public square is a very well-known compound phrase - a public gathering place in a town or city. This seems like one of the strongest connections to the clue 'PUBLIC'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PUBLIC' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Capsule
+  Block
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Hospital
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hospital", "reasoning": "A hospital is a public institution - 'public hospital' is a very common phrase. This fits well with the clue 'PUBLIC'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PUBLIC' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Capsule
+  Block
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find words that connect to "PUBLIC" from the remaining valid guesses.
+
+So far I've correctly guessed "Square" (public square) and "Hospital" (public hospital). I need to find 2 more words related to "PUBLIC."
+
+Let me think through the remaining words:
+
+- **Wake** - public wake? Not a strong connection.
+- **Giant** - not really public-related.
+- **Glove** - no connection.
+- **Alps** - no connection.
+- **Fold** - no connection.
+- **Dig** - no connection.
+- **Trick** - no connection.
+- **Capsule** - no connection.
+- **Block** - public block? Not strong.
+- **Button** - no connection.
+- **Vacuum** - no connection.
+- **Bark** - no connection.
+- **Exile** - public exile? Weak.
+- **Gorge** - no connection.
+- **Era** - no connection.
+- **Mexico** - no connection.
+- **Grace** - public grace? "Grace" could relate to "fall from grace" which is public, but weak.
+- **Jar** - no connection.
+- **Code** - public code? Not typical.
+- **Mouse** - no connection.
+
+Hmm, this is tough. Let me reconsider:
+- **Block** - "public housing block" or "auction block" (public auction)
+- **Wake** - a wake/funeral can be public
+- **Exile** - public exile is a thing
+- **Code** - public code (like zip code, area code... or "code of conduct" - public code?)
+
+I think **Block** could work as "public housing block" or just "block" in an urban/public context. But I'm not very confident in any of these remaining options.
+
+Let me think harder... **Grace** - "state of grace" is not public. **Era** - "public era"? No.
+
+I'll try **Block** as it seems like the strongest remaining connection (public housing block, or block as in a public city block).
+
+{"guess": "Block", "reasoning": "A 'block' can be a public city block or public housing block. It's the strongest remaining connection to 'PUBLIC' among the valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Copper               RED        [revealed]
+  Wake                 BLUE       
+  Fountain             NEUTRAL    [revealed]
+  Giant                RED        
+  Glove                NEUTRAL    
+  Alps                 BLUE       
+  Change               RED        [revealed]
+  Fold                 BLUE       
+  Dig                  RED        
+  Trick                RED        
+  Square               BLUE       [revealed]
+  Capsule              RED        
+  Block                NEUTRAL    [revealed]
+  Button               NEUTRAL    
+  Vacuum               NEUTRAL    
+  Bark                 RED        
+  Exile                NEUTRAL    
+  Gorge                ASSASSIN   
+  Hospital             BLUE       [revealed]
+  Era                  BLUE       
+  Mexico               NEUTRAL    
+  Grace                RED        
+  Jar                  RED        
+  Code                 BLUE       
+  Mouse                BLUE       
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BARK, BLOCK, BUTTON, CAPSULE, CHANGE, CODE, COPPER, DIG, ERA, EXILE, FOLD, FOUNTAIN, GIANT, GLOVE, GORGE, GRACE, HOSPITAL, JAR, MEXICO, MOUSE, SQUARE, TRICK, VACUUM, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Container", "number": 2, "reasoning": "Capsule and Jar are both types of containers."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONTAINER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Wake
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Capsule
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+  Jar
+  Code
+  Mouse
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Jar","reasoning":"A jar is a direct container matching 'CONTAINER' — the clearest single-word match (Capsule is another candidate, but Jar is more direct)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONTAINER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Capsule
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+  Code
+  Mouse
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Capsule", "reasoning": "A capsule is a container (holds medicine/items); strong match for CONTAINER and likely the second RED container after Jar."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONTAINER' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Glove
+  Alps
+  Fold
+  Dig
+  Trick
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+  Code
+  Mouse
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Glove","reasoning":"A glove is literally a container for a hand and fits the clue CONTAINER."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Copper               RED        [revealed]
+  Wake                 BLUE       
+  Fountain             NEUTRAL    [revealed]
+  Giant                RED        
+  Glove                NEUTRAL    [revealed]
+  Alps                 BLUE       
+  Change               RED        [revealed]
+  Fold                 BLUE       
+  Dig                  RED        
+  Trick                RED        
+  Square               BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Block                NEUTRAL    [revealed]
+  Button               NEUTRAL    
+  Vacuum               NEUTRAL    
+  Bark                 RED        
+  Exile                NEUTRAL    
+  Gorge                ASSASSIN   
+  Hospital             BLUE       [revealed]
+  Era                  BLUE       
+  Mexico               NEUTRAL    
+  Grace                RED        
+  Jar                  RED        [revealed]
+  Code                 BLUE       
+  Mouse                BLUE       
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BARK, BLOCK, BUTTON, CAPSULE, CHANGE, CODE, COPPER, DIG, ERA, EXILE, FOLD, FOUNTAIN, GIANT, GLOVE, GORGE, GRACE, HOSPITAL, JAR, MEXICO, MOUSE, SQUARE, TRICK, VACUUM, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining BLUE words as possible: Wake, Alps, Fold, Era, Code, Mouse.
+
+Let me think about possible connections:
+
+- **MOUNTAIN**: Alps (mountains), Fold (geological fold/mountain formation), Mouse (mountain mouse?)... not great for Mouse.
+- **CREASE**: Fold (crease), Wake (crease in water)... only 2.
+- **COMPUTER**: Mouse (computer mouse), Code (computer code), Fold (folding phone?)... risky, could point to Button.
+- **SECRET**: Code (secret code), Mouse (quiet as a mouse?)... weak.
+- **CIPHER**: Code (cipher), Era (period)... only 1 strong.
+- **TIME**: Era (time period), Wake (wake up/time), Code (code?)... weak.
+- **SWISS**: Alps (Swiss Alps), Fold (Swiss fold?), Code (Swiss code?)... weak.
+- **ORIGAMI**: Fold (folding paper), Crease... only 1.
+- **FUNERAL**: Wake (funeral wake), Fold (hands fold)... only 2.
+- **CHEESE**: Swiss cheese → Alps, Mouse (mice love cheese), Fold (cheese fold?)... risky.
+- **TRAP**: Mouse (mousetrap), Code (trap code?)... weak.
+- **ENCRYPTION**: Code... only 1.
+- **RODENT**: Mouse... only 1.
+- **GEOLOGICAL**: Alps (geological), Fold (geological fold), Era (geological era), Dig (geological - RED!)... Dig is RED, dangerous.
+- **PERIOD**: Era (period), Code (period/dot in code)... weak.
+- **EPOCH**: Era (epoch)... too narrow.
+- **CREASE**: Fold, Wake (water crease)... 2.
+- **SLEEPING**: Wake (sleeping/waking), Mouse (quiet as sleeping mouse?)... weak.
+- **WRINKLE**: Fold (wrinkle), Era (wrinkle in time)... 2, but could point elsewhere.
+- **TIME**: Wake (wake up), Era (time period), Code (Da Vinci Code - time?)... 
+- **SCROLL**: Mouse (scroll wheel), Code (scroll through code), Fold (scroll/fold)... 3! Let me check dangers: Bark (scroll of bark?), Gorge (no), Trick (no), Giant (no), Dig (no), Grace (no). Button could be a slight risk. This seems reasonable.
+
+**SCROLL**: Mouse (scroll wheel), Code (scrolling code), Fold (scroll = fold paper) — 3 connections with minimal risk to assassin or red words.
+
+{"clue": "SCROLL", "number": 3, "reasoning": "SCROLL connects to Mouse (scroll wheel on a computer mouse), Code (scrolling through code), and Fold (a scroll involves folding/rolling paper). Low risk of pointing to assassin (GORGE) or red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCROLL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Wake
+  Giant
+  Alps
+  Fold
+  Dig
+  Trick
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+  Code
+  Mouse
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about what words connect to "SCROLL" with 3 words to find.
+
+A scroll can refer to:
+- A rolled-up document/parchment
+- Scrolling (on a computer/phone)
+- A decorative scroll pattern
+- Dead Sea Scrolls
+
+Let me think about each valid word:
+
+- **Mouse** - You use a mouse to scroll on a computer. Strong connection.
+- **Code** - Scrolling through code? Or ancient scrolls with codes? Moderate connection.
+- **Fold** - You might fold or roll a scroll. Scrolls are rolled, not folded exactly, but there's a paper connection.
+- **Era** - Ancient scrolls relate to a historical era. Possible connection.
+- **Bark** - Some ancient scrolls were made from bark (bark scrolls, birch bark manuscripts). This is a plausible connection.
+- **Button** - Scroll button on a mouse? Possible but weaker.
+- **Wake** - Not obvious connection.
+- **Exile** - Dead Sea Scrolls relate to exile? Stretch.
+- **Grace** - Not obvious.
+- **Dig** - Archaeological dig where scrolls are found? Possible.
+
+The strongest connections seem to be:
+1. **Mouse** - scrolling with a mouse (very strong computer connection)
+2. **Bark** - bark scrolls (material scrolls are made from)
+3. **Code** - scrolls contain ancient codes, or scrolling through code
+
+Let me start with the most confident guess.
+
+{"guess": "MOUSE", "reasoning": "A mouse is used to scroll on a computer - 'scroll' is one of the primary functions of a computer mouse (scroll wheel, scroll button). This is a very strong connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCROLL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Alps
+  Fold
+  Dig
+  Trick
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+  Code
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Code", "reasoning": "A scroll can contain code (like ancient scrolls with coded messages, or scrolling through code on a computer). This seems like a reasonable connection to SCROLL."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCROLL' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Alps
+  Fold
+  Dig
+  Trick
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "FOLD", "reasoning": "A scroll can be folded, and 'fold' relates to paper/parchment which connects to scrolls. With 2 correct guesses already from this clue, this seems like a reasonable third guess. The spymaster indicated 3 words, and scroll could relate to FOLD (folding paper/parchment)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SCROLL' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Alps
+  Dig
+  Trick
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already successfully guessed all 3 words for the SCROLL clue (Mouse, Code, Fold). With 3 blue remaining but having gotten 3 correct this turn, I should not risk guessing a 4th word. The remaining valid guesses don't have a strong connection to SCROLL, and guessing wrong could hit the assassin or help red. Better to pass and let the spymaster give a new clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Copper               RED        [revealed]
+  Wake                 BLUE       
+  Fountain             NEUTRAL    [revealed]
+  Giant                RED        
+  Glove                NEUTRAL    [revealed]
+  Alps                 BLUE       
+  Change               RED        [revealed]
+  Fold                 BLUE       [revealed]
+  Dig                  RED        
+  Trick                RED        
+  Square               BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Block                NEUTRAL    [revealed]
+  Button               NEUTRAL    
+  Vacuum               NEUTRAL    
+  Bark                 RED        
+  Exile                NEUTRAL    
+  Gorge                ASSASSIN   
+  Hospital             BLUE       [revealed]
+  Era                  BLUE       
+  Mexico               NEUTRAL    
+  Grace                RED        
+  Jar                  RED        [revealed]
+  Code                 BLUE       [revealed]
+  Mouse                BLUE       [revealed]
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BARK, BLOCK, BUTTON, CAPSULE, CHANGE, CODE, COPPER, DIG, ERA, EXILE, FOLD, FOUNTAIN, GIANT, GLOVE, GORGE, GRACE, HOSPITAL, JAR, MEXICO, MOUSE, SQUARE, TRICK, VACUUM, WAKE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Dog", "number": 3, "reasoning": "Targets Bark, Trick, and Dig — actions/associations with dogs."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DOG' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Wake
+  Giant
+  Alps
+  Dig
+  Trick
+  Button
+  Vacuum
+  Bark
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bark", "reasoning": "Directly and strongly associated with DOG (dog sound) — highest-confidence match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DOG' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Alps
+  Dig
+  Trick
+  Button
+  Vacuum
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+  [RED] DOG 3  #1: Bark → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Dig","reasoning":"Dogs commonly dig — strong, direct association with the clue DOG."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'DOG' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Wake
+  Giant
+  Alps
+  Trick
+  Button
+  Vacuum
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+  [RED] DOG 3  #1: Bark → red
+  [RED] DOG 3  #2: Dig → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Alps", "reasoning": "St. Bernards are associated with the Alps — strong dog/breed connection for the clue DOG."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Copper               RED        [revealed]
+  Wake                 BLUE       
+  Fountain             NEUTRAL    [revealed]
+  Giant                RED        
+  Glove                NEUTRAL    [revealed]
+  Alps                 BLUE       [revealed]
+  Change               RED        [revealed]
+  Fold                 BLUE       [revealed]
+  Dig                  RED        [revealed]
+  Trick                RED        
+  Square               BLUE       [revealed]
+  Capsule              RED        [revealed]
+  Block                NEUTRAL    [revealed]
+  Button               NEUTRAL    
+  Vacuum               NEUTRAL    
+  Bark                 RED        [revealed]
+  Exile                NEUTRAL    
+  Gorge                ASSASSIN   
+  Hospital             BLUE       [revealed]
+  Era                  BLUE       
+  Mexico               NEUTRAL    
+  Grace                RED        
+  Jar                  RED        [revealed]
+  Code                 BLUE       [revealed]
+  Mouse                BLUE       [revealed]
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+  [RED] DOG 3  #1: Bark → red
+  [RED] DOG 3  #2: Dig → red
+  [RED] DOG 3  #3: Alps → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALPS, BARK, BLOCK, BUTTON, CAPSULE, CHANGE, CODE, COPPER, DIG, ERA, EXILE, FOLD, FOUNTAIN, GIANT, GLOVE, GORGE, GRACE, HOSPITAL, JAR, MEXICO, MOUSE, SQUARE, TRICK, VACUUM, WAKE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to connect WAKE and ERA — my two remaining blue words.
+
+Let me think about what links "Wake" and "Era":
+- Both relate to time/periods: a "wake" can be an aftermath/period after something, and an "era" is a time period.
+- "Dawn" - a wake can be at dawn, and dawn of an era... but let me think more carefully.
+- "Epoch" - synonymous with era, but not with wake.
+- "Period" - era is a period, wake could be a period of watching/vigil.
+- "Funeral" - a wake is a funeral event, but era doesn't connect.
+- "New" - new era, new wake? Weak.
+- "Aftermath" - a wake is an aftermath, aftermath of an era? Not great.
+- "Time" - era is a time period, wake can relate to time (waking time).
+- "Morning" - you wake in the morning, morning of a new era? Decent but weak.
+- "Dawn" - dawn of a new era, wake at dawn. This seems solid.
+
+Let me check "dawn" against dangerous words:
+- GORGE (assassin): no connection
+- RED words (Giant, Trick, Grace): no strong connection
+- Neutral (Button, Vacuum, Exile, Mexico): no strong connection
+
+"Dawn" connects well: "wake" at dawn (you wake at dawn), and "dawn of an era" is a very common phrase.
+
+{"clue": "DAWN", "number": 2, "reasoning": "DAWN connects both remaining blue words: you WAKE at dawn, and 'dawn of an ERA' is a common phrase. No strong connections to assassin (GORGE) or remaining red words (Giant, Trick, Grace)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DAWN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Wake
+  Giant
+  Trick
+  Button
+  Vacuum
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+  [RED] DOG 3  #1: Bark → red
+  [RED] DOG 3  #2: Dig → red
+  [RED] DOG 3  #3: Alps → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Wake", "reasoning": "DAWN strongly connects to 'Wake' - dawn is when you wake up, and a wake can also refer to the dawn/beginning of something. This seems like the strongest connection to the clue DAWN."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'DAWN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Giant
+  Trick
+  Button
+  Vacuum
+  Exile
+  Gorge
+  Era
+  Mexico
+  Grace
+
+Game history:
+  [RED] COIN 3  #1: Copper → red
+  [RED] COIN 3  #2: Change → red
+  [RED] COIN 3  #3: Fountain → neutral
+  [BLUE] PUBLIC 4  #1: Square → blue
+  [BLUE] PUBLIC 4  #2: Hospital → blue
+  [BLUE] PUBLIC 4  #3: Block → neutral
+  [RED] CONTAINER 2  #1: Jar → red
+  [RED] CONTAINER 2  #2: Capsule → red
+  [RED] CONTAINER 2  #3: Glove → neutral
+  [BLUE] SCROLL 3  #1: Mouse → blue
+  [BLUE] SCROLL 3  #2: Code → blue
+  [BLUE] SCROLL 3  #3: Fold → blue
+  [BLUE] SCROLL 3  #4: PASS
+  [RED] DOG 3  #1: Bark → red
+  [RED] DOG 3  #2: Dig → red
+  [RED] DOG 3  #3: Alps → blue
+  [BLUE] DAWN 2  #1: Wake → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Era", "reasoning": "DAWN can relate to 'era' as in 'the dawn of a new era' - this is a very common phrase. With only 1 blue card remaining and 3 red cards left, I need to find the right word. The clue is DAWN for 2 words, and 'Wake' was already correctly guessed. 'Era' fits perfectly with the phrase 'dawn of an era.'"}
+============================================================

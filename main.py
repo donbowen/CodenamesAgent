@@ -28,7 +28,6 @@ Environment variables for API keys are read by litellm automatically, e.g.::
 import argparse
 import json
 import logging
-import sys
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -48,23 +47,6 @@ _LEADERBOARD_FILE = "game_logs/leaderboard.json"
 def _make_game_id() -> str:
     return datetime.now().strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:8]
 
-
-class _Tee:
-    """Mirror a stream to one or more open file objects simultaneously."""
-
-    def __init__(self, original, *files):
-        self._orig = original
-        self._files = files
-
-    def write(self, data):
-        self._orig.write(data)
-        for f in self._files:
-            f.write(data)
-
-    def flush(self):
-        self._orig.flush()
-        for f in self._files:
-            f.flush()
 
 
 def _refresh_readme(leaderboard_file: str) -> None:
@@ -184,17 +166,13 @@ def main(argv=None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
 
-    f_log = f_prompts = None
+    f_prompts = None
     if args.command == "play":
         game_id = _make_game_id()
         args.game_id = game_id
         Path("game_logs/full_records").mkdir(parents=True, exist_ok=True)
-        log_path = Path(f"game_logs/full_records/{game_id}.txt")
-        prompts_path = log_path.with_stem(log_path.stem + "_prompts")
-        f_log = open(log_path, "w", encoding="utf-8")  # noqa: SIM115
+        prompts_path = Path(f"game_logs/full_records/{game_id}_prompts.txt")
         f_prompts = open(prompts_path, "w", encoding="utf-8")  # noqa: SIM115
-        sys.stdout = _Tee(sys.stdout, f_log, f_prompts)  # type: ignore[assignment]
-        sys.stderr = _Tee(sys.stderr, f_log, f_prompts)  # type: ignore[assignment]
         args.prompt_log = f_prompts
     else:
         args.prompt_log = None
@@ -202,10 +180,7 @@ def main(argv=None) -> None:
     try:
         args.func(args)
     finally:
-        if f_log:
-            sys.stdout = sys.stdout._orig  # type: ignore[union-attr]
-            sys.stderr = sys.stderr._orig  # type: ignore[union-attr]
-            f_log.close()
+        if f_prompts:
             f_prompts.close()
 
 

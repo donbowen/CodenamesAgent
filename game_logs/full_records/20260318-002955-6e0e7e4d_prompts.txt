@@ -1,0 +1,1601 @@
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        
+  Chase                BLUE       
+  Comet                BLUE       
+  Beach                RED        
+  Kelp                 NEUTRAL    
+  Film                 RED        
+  Antarctica           RED        
+  Shoe                 RED        
+  Charge               BLUE       
+  Fly                  NEUTRAL    
+  Mirror               RED        
+  Freeze               NEUTRAL    
+  Fleet                BLUE       
+  Bed                  NEUTRAL    
+  Moon                 BLUE       
+  Satellite            RED        
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        
+  Row                  BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (LETTER).
+
+Let me look at my RED words: Time, Core, Beach, Film, Antarctica, Shoe, Mirror, Satellite, Glow
+
+Let me think about groupings:
+
+**Space/sky theme**: Satellite, Glow, Antarctica (southern lights), Core (Earth's core) - but this could pull toward Moon (BLUE) or Comet (BLUE).
+
+**Reflection/light**: Mirror, Glow, Film - "shine" or "reflection"
+- "Shine" could connect: Glow (shines), Mirror (shines), Shoe (shoe shine), Beach (sunshine) — that's 4 RED words! Let me check for dangerous connections:
+  - Burn (BLUE) - sunshine burn? Slight risk
+  - Moon (BLUE) - moonshine? Risk
+  - Comet (BLUE) - comets shine? Some risk
+  - LETTER (ASSASSIN) - no connection to shine
+  
+Actually "moonshine" is a compound, and "sunburn" relates to burn. Let me reconsider.
+
+**"Sole"**: Shoe (sole), Core (soul/sole), Mirror (soul) - too abstract.
+
+**"Sand"**: Beach (sand), Time (hourglass sand), Shoe (sandal/sand shoe), Antarctica (sand?) - weak on last one. Let me check dangers: no strong BLUE or ASSASSIN connections.
+
+**"Clock"**: Time (clock), Satellite (clock), Core (clock) - limited.
+
+**"Polish"**: Shoe (polish), Mirror (polish), Glow (polish gives glow), Film (Polish film?) - 3-4 RED. Dangers: Burn? No. Letter? No. Moon? No. This seems safe.
+
+**"Shine"** with 4 (Shoe, Mirror, Glow, Beach): The moonshine risk concerns me but "shine" most directly connects to shoe shine, mirror shine, glow, and sunshine/beach.
+
+Let me go with **"Polish"** for Shoe (shoe polish), Mirror (polish a mirror), Glow (polished things glow) = 3 safe connections.
+
+{"clue": "SHINE", "number": 4, "reasoning": "Connects Shoe (shoe shine), Mirror (mirrors shine), Glow (shining/glowing), Beach (sunshine at the beach). Avoids assassin LETTER. Some minor risk with Moon (moonshine) but shine most directly points to these RED words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHINE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Comet
+  Beach
+  Kelp
+  Film
+  Antarctica
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Freeze
+  Fleet
+  Bed
+  Moon
+  Satellite
+  Husk
+  Spike
+  Letter
+  Glow
+  Row
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "GLOW", "reasoning": "Glow is directly related to shine - both words describe emitting light. This seems like the most obvious connection to the clue 'SHINE'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHINE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Comet
+  Beach
+  Kelp
+  Film
+  Antarctica
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Freeze
+  Fleet
+  Bed
+  Moon
+  Satellite
+  Husk
+  Spike
+  Letter
+  Row
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Moon", "reasoning": "The moon shines in the night sky - 'moonshine' is also a compound word. Strong connection to SHINE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        
+  Chase                BLUE       
+  Comet                BLUE       
+  Beach                RED        
+  Kelp                 NEUTRAL    
+  Film                 RED        
+  Antarctica           RED        
+  Shoe                 RED        
+  Charge               BLUE       
+  Fly                  NEUTRAL    
+  Mirror               RED        
+  Freeze               NEUTRAL    
+  Fleet                BLUE       
+  Bed                  NEUTRAL    
+  Moon                 BLUE       [revealed]
+  Satellite            RED        
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        [revealed]
+  Row                  BLUE       
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "SPACE", "number": 2, "reasoning": "Moon and Comet are celestial bodies associated with space."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPACE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Comet
+  Beach
+  Kelp
+  Film
+  Antarctica
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Freeze
+  Fleet
+  Bed
+  Satellite
+  Husk
+  Spike
+  Letter
+  Row
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Comet", "reasoning": "Strong space association (celestial object) linked to the clue SPACE; likely blue word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPACE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Beach
+  Kelp
+  Film
+  Antarctica
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Freeze
+  Fleet
+  Bed
+  Satellite
+  Husk
+  Spike
+  Letter
+  Row
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Satellite", "reasoning": "Most direct space-related term left; likely a blue word matching SPACE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        
+  Chase                BLUE       
+  Comet                BLUE       [revealed]
+  Beach                RED        
+  Kelp                 NEUTRAL    
+  Film                 RED        
+  Antarctica           RED        
+  Shoe                 RED        
+  Charge               BLUE       
+  Fly                  NEUTRAL    
+  Mirror               RED        
+  Freeze               NEUTRAL    
+  Fleet                BLUE       
+  Bed                  NEUTRAL    
+  Moon                 BLUE       [revealed]
+  Satellite            RED        [revealed]
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        [revealed]
+  Row                  BLUE       
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining RED words as possible: Time, Core, Beach, Film, Antarctica, Shoe, Mirror.
+
+Let me think about groupings:
+
+**"Sole"** - Shoe (sole of a shoe), but not much else.
+
+**"Sand"** - Beach (sandy beach), Time (hourglass/sand timer), Shoe (sand in shoes)... but could point to Antarctica less clearly.
+
+**"Ice"** - Antarctica (ice), Core (ice core), Mirror (ice mirror)... but could point to Freeze (neutral) or Burn (blue via ice burn).
+
+**"Polar"** - Antarctica (polar region), Core (polar core), Film (Polar - there are films called Polar), Mirror (polar mirror in optics)... but could point to Freeze.
+
+**"Reflection"** - Mirror (reflection), Film (reflection), Time (reflection on time)... weak.
+
+**"Clock"** - Time (clock), Core (clock core), Shoe (clock as in the bottom of a shoe? no)... 
+
+**"Sandy"** - Beach (sandy beach), Time (Sandy is a name, weak), Shoe (sandy shoes)...
+
+**"Screen"** - Film (screen), Mirror (screen/reflective surface), Shoe (screen? no)...
+
+**"Surface"** - Mirror (reflective surface), Beach (surface), Core (Earth's surface vs core - opposite), Film (film surface), Antarctica (ice surface), Shoe (shoe surface/sole). This connects several but the Core connection is weak/opposite.
+
+**"Documentary"** - Film (documentary), Antarctica (many documentaries), Mirror (documentary Mirror)... 
+
+**"Footprint"** - Shoe (footprint), Beach (footprints in sand), Film (carbon footprint?), Antarctica (footprint in snow)... but could be weak.
+
+**"SOLE"** - Shoe (sole), Film (sole as only), Antarctica (sole continent?), Mirror (sole reflection?)... too weak.
+
+**"FROZEN"** - Antarctica (frozen), Time (frozen in time), Core (Frozen Core), Film (Frozen is a film)... but FREEZE is neutral and this is close. Could point to Burn (frostburn) or Freeze.
+
+**"ARCTIC"** - Antarctica directly, Core (Arctic core), Film (Arctic film exists), Mirror (Arctic mirror)... but might point to Freeze.
+
+Let me go with **"FROZEN"**: Antarctica (frozen continent), Time (frozen in time), Film (the movie Frozen), Core (frozen core). That's 4 solid connections. Freeze is neutral, not assassin, so moderate risk.
+
+{"clue": "FROZEN", "number": 4, "reasoning": "Connects Antarctica (frozen continent), Time (frozen in time), Film (Frozen is a famous film), and Core (frozen core). Risk: Freeze is neutral but not assassin. Doesn't strongly point to any blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FROZEN' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Beach
+  Kelp
+  Film
+  Antarctica
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Freeze
+  Fleet
+  Bed
+  Husk
+  Spike
+  Letter
+  Row
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Antarctica", "reasoning": "Antarctica is directly related to 'frozen' - it's the frozen continent, covered in ice. This is the most obvious connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FROZEN' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Beach
+  Kelp
+  Film
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Freeze
+  Fleet
+  Bed
+  Husk
+  Spike
+  Letter
+  Row
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Freeze", "reasoning": "FREEZE is directly related to FROZEN - it's the verb form of the same concept. This seems like the most obvious connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        
+  Chase                BLUE       
+  Comet                BLUE       [revealed]
+  Beach                RED        
+  Kelp                 NEUTRAL    
+  Film                 RED        
+  Antarctica           RED        [revealed]
+  Shoe                 RED        
+  Charge               BLUE       
+  Fly                  NEUTRAL    
+  Mirror               RED        
+  Freeze               NEUTRAL    [revealed]
+  Fleet                BLUE       
+  Bed                  NEUTRAL    
+  Moon                 BLUE       [revealed]
+  Satellite            RED        [revealed]
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        [revealed]
+  Row                  BLUE       
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Boat", "number": 2, "reasoning": "Boat relates to Row (you row a boat) and Fleet (a fleet is ships)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOAT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Beach
+  Kelp
+  Film
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Fleet
+  Bed
+  Husk
+  Spike
+  Letter
+  Row
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fleet", "reasoning": "Direct boat-related term; strongly associated with ships and boats."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOAT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Beach
+  Kelp
+  Film
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Bed
+  Husk
+  Spike
+  Letter
+  Row
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Row", "reasoning": "Direct link to boats (to row a boat); fits the BOAT clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BOAT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Beach
+  Kelp
+  Film
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Bed
+  Husk
+  Spike
+  Letter
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Beach", "reasoning": "Boat-related: ships land on or near a beach; fits the 'BOAT' clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        
+  Chase                BLUE       
+  Comet                BLUE       [revealed]
+  Beach                RED        [revealed]
+  Kelp                 NEUTRAL    
+  Film                 RED        
+  Antarctica           RED        [revealed]
+  Shoe                 RED        
+  Charge               BLUE       
+  Fly                  NEUTRAL    
+  Mirror               RED        
+  Freeze               NEUTRAL    [revealed]
+  Fleet                BLUE       [revealed]
+  Bed                  NEUTRAL    
+  Moon                 BLUE       [revealed]
+  Satellite            RED        [revealed]
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        [revealed]
+  Row                  BLUE       [revealed]
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: **Time, Core, Film, Shoe, Mirror**.
+
+Let me think about connections:
+
+- **Mirror** and **Film** - both relate to reflection/image. "Reflection" could work for both.
+- **Core** - center, heart, apple core
+- **Shoe** - sole, foot, wear
+- **Time** - clock, watch, hour
+
+Let me think about "SOLE":
+- **Shoe** - shoes have soles ✓
+- **Mirror** - "sole" doesn't connect well
+- **Core** - not great
+
+What about "WATCH"?
+- **Time** - you watch the time, or a watch tells time ✓
+- **Film** - you watch a film ✓
+- **Mirror** - you watch yourself in a mirror (weak but possible) ✓
+- **Core** - not strong
+- **Shoe** - not strong
+
+Risk check: "Watch" → Burn? No. Chase? You could watch a chase, but it's a stretch. Charge? No. Spike? No. Letter? No. Seems safe.
+
+What about "GLASS"?
+- **Mirror** - mirrors are made of glass ✓
+- **Shoe** - glass slipper (Cinderella) ✓
+- **Film** - not strong
+- **Time** - hourglass! ✓
+- **Core** - not strong
+
+Risk check: Burn? Burn glass? No. Chase? No. Charge? No. Spike? No. Letter? No. Neutral words? Cage? No. This seems safe and connects 3 well.
+
+What about "SLIPPER"?
+- Only Shoe really.
+
+Let me go with "GLASS" for 3 (Mirror, Shoe, Time):
+
+Actually, let me reconsider "WATCH" for 2 (Time, Film) - very strong and safe.
+
+"GLASS" for 3 is better - hourglass (Time), glass slipper (Shoe), looking glass (Mirror). All strong connections.
+
+{"clue": "GLASS", "number": 3, "reasoning": "Mirror is a looking glass, Shoe connects via glass slipper (Cinderella), Time connects via hourglass. All three are strong associations. No dangerous connections to assassin (Letter) or blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GLASS' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Kelp
+  Film
+  Shoe
+  Charge
+  Fly
+  Mirror
+  Bed
+  Husk
+  Spike
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "MIRROR", "reasoning": "A mirror is made of glass - this is a very strong connection. Mirror is essentially a glass surface with a reflective coating."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GLASS' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Kelp
+  Film
+  Shoe
+  Charge
+  Fly
+  Bed
+  Husk
+  Spike
+  Letter
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Shoe", "reasoning": "Glass slipper is a well-known concept (Cinderella's glass slipper), making SHOE a strong match for the clue GLASS."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GLASS' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Kelp
+  Film
+  Charge
+  Fly
+  Bed
+  Husk
+  Spike
+  Letter
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "FILM", "reasoning": "Glass can refer to a film/movie (e.g., the M. Night Shyamalan movie 'Glass'), and film can relate to glass in terms of glass film/coating. With 3 red remaining and 4 blue remaining, I've already gotten 2 correct this turn (Mirror and Shoe). This is my third guess matching the clue number of 3. Film seems like a reasonable connection - glass can have a film on it, or film as in a glass lens used in filmmaking. However, I'm not highly confident. Let me consider alternatives: 'Spike' could relate to glass (spike of glass), 'Burn' with magnifying glass... 'Film' seems like the best connection as glass film is a common term."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'GLASS' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Kelp
+  Charge
+  Fly
+  Bed
+  Husk
+  Spike
+  Letter
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+  [RED] GLASS 3  #3: Film → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 correct red words this turn (Mirror, Shoe, Film), matching the clue number of 3. With only 2 red cards remaining, I should be cautious. None of the remaining words have an obvious connection to 'GLASS' that I'm confident about. Guessing wrong could hit the assassin or help blue. Better to pass and wait for the next clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        
+  Chase                BLUE       
+  Comet                BLUE       [revealed]
+  Beach                RED        [revealed]
+  Kelp                 NEUTRAL    
+  Film                 RED        [revealed]
+  Antarctica           RED        [revealed]
+  Shoe                 RED        [revealed]
+  Charge               BLUE       
+  Fly                  NEUTRAL    
+  Mirror               RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fleet                BLUE       [revealed]
+  Bed                  NEUTRAL    
+  Moon                 BLUE       [revealed]
+  Satellite            RED        [revealed]
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        [revealed]
+  Row                  BLUE       [revealed]
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+  [RED] GLASS 3  #3: Film → red
+  [RED] GLASS 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "POWER", "number": 2, "reasoning": "Electric power ties to Charge (battery power) and Spike (power spike)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POWER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Kelp
+  Charge
+  Fly
+  Bed
+  Husk
+  Spike
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+  [RED] GLASS 3  #3: Film → red
+  [RED] GLASS 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Charge", "reasoning": "Power -> charge (electric power/charge)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'POWER' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Time
+  Burn
+  Cage
+  Drive
+  Core
+  Chase
+  Kelp
+  Fly
+  Bed
+  Husk
+  Spike
+  Letter
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+  [RED] GLASS 3  #3: Film → red
+  [RED] GLASS 3  #4: PASS
+  [BLUE] POWER 2  #1: Charge → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Core", "reasoning": "Power is closely associated with a power core as a source of energy."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Time                 RED        
+  Burn                 BLUE       
+  Cage                 NEUTRAL    
+  Drive                NEUTRAL    
+  Core                 RED        [revealed]
+  Chase                BLUE       
+  Comet                BLUE       [revealed]
+  Beach                RED        [revealed]
+  Kelp                 NEUTRAL    
+  Film                 RED        [revealed]
+  Antarctica           RED        [revealed]
+  Shoe                 RED        [revealed]
+  Charge               BLUE       [revealed]
+  Fly                  NEUTRAL    
+  Mirror               RED        [revealed]
+  Freeze               NEUTRAL    [revealed]
+  Fleet                BLUE       [revealed]
+  Bed                  NEUTRAL    
+  Moon                 BLUE       [revealed]
+  Satellite            RED        [revealed]
+  Husk                 NEUTRAL    
+  Spike                BLUE       
+  Letter               ASSASSIN   
+  Glow                 RED        [revealed]
+  Row                  BLUE       [revealed]
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+  [RED] GLASS 3  #3: Film → red
+  [RED] GLASS 3  #4: PASS
+  [BLUE] POWER 2  #1: Charge → blue
+  [BLUE] POWER 2  #2: Core → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, BEACH, BED, BURN, CAGE, CHARGE, CHASE, COMET, CORE, DRIVE, FILM, FLEET, FLY, FREEZE, GLOW, HUSK, KELP, LETTER, MIRROR, MOON, ROW, SATELLITE, SHOE, SPIKE, TIME
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "clock", "number": 1, "reasoning": "The only remaining red word is 'Time'. 'Clock' is directly associated with 'Time'. It shouldn't point to any blue words (Burn, Chase, Spike) or the assassin (Letter)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CLOCK' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Time
+  Burn
+  Cage
+  Drive
+  Chase
+  Kelp
+  Fly
+  Bed
+  Husk
+  Spike
+  Letter
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] SHINE 4  #1: Glow → red
+  [RED] SHINE 4  #2: Moon → blue
+  [BLUE] SPACE 2  #1: Comet → blue
+  [BLUE] SPACE 2  #2: Satellite → red
+  [RED] FROZEN 4  #1: Antarctica → red
+  [RED] FROZEN 4  #2: Freeze → neutral
+  [BLUE] BOAT 2  #1: Fleet → blue
+  [BLUE] BOAT 2  #2: Row → blue
+  [BLUE] BOAT 2  #3: Beach → red
+  [RED] GLASS 3  #1: Mirror → red
+  [RED] GLASS 3  #2: Shoe → red
+  [RED] GLASS 3  #3: Film → red
+  [RED] GLASS 3  #4: PASS
+  [BLUE] POWER 2  #1: Charge → blue
+  [BLUE] POWER 2  #2: Core → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Time", "reasoning": "CLOCK directly relates to TIME - a clock tells time, and 'clock time' is a very strong association. With only 1 red card remaining, this seems like the most obvious connection to the clue 'CLOCK'. This would win the game if correct."}
+============================================================

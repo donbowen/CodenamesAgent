@@ -1,0 +1,2053 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        
+  File                 BLUE       
+  Card                 NEUTRAL    
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       
+  Canal                RED        
+  Chip                 BLUE       
+  Face                 NEUTRAL    
+  Fuse                 RED        
+  Board                BLUE       
+  Angel                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: AMAZON, KING, TOWER, BED, ICE, BILL, TRIP, CANAL, FUSE.
+
+Let me think about connections:
+
+**AMAZON, KING, TOWER, BED, CANAL** - these could relate to things in a river context? Amazon (river), Canal (waterway), Bed (river bed)...
+
+**ICE, GLACIER** - cold things, but GLACIER is blue.
+
+**TRIP, FUSE** - could relate to "short" (short trip, short fuse)
+
+**BILL, KING** - royalty? King and... no.
+
+**TOWER, KING, QUEEN** - chess pieces, but QUEEN is neutral.
+
+**SHORT**: Short fuse, short trip, short circuit... FUSE (short fuse), TRIP (short trip)... not many.
+
+**WIRE**: FUSE (wire/fuse), BILL (wire transfer?)... not great.
+
+**POWER**: TOWER (power tower), FUSE (power fuse), CANAL (Panama Canal - power?), ICE... not great.
+
+**EIFFEL**: TOWER (Eiffel Tower)... only one.
+
+**LONDON**: TOWER (Tower of London), BRIDGE (neutral)... 
+
+**ROAD**: TRIP (road trip), BED (road bed?), CANAL... 
+
+**EGYPT**: CANAL (Suez Canal), KING (King Tut), AMAZON... no.
+
+**RIVER**: AMAZON (river), BED (riverbed), CANAL (river/canal), BANK... 
+
+**FLOWER**: BED (flower bed), CANAL? No...
+
+**GARDEN**: BED (garden bed), CANAL? No...
+
+**SHORT**: Short FUSE, short TRIP, short BILL (short bill?)... 
+
+**DOUBLE**: BILL (double bill), BED (double bed), KING (king size)...
+
+**KING SIZE**: BED (king-size bed), KING... 
+
+**WATER**: ICE (water/ice), BED (waterbed), CANAL (water canal), TOWER (water tower), AMAZON (water/river)! That's 5 RED words! And avoids CAKE (assassin). GLACIER is blue (water), LAVA is blue... need to be careful.
+
+WATER: waterbed (BED ✓), water tower (TOWER ✓), water canal (CANAL ✓), Amazon river (AMAZON - stretch), ICE (water→ice ✓), water bill (BILL ✓)... 
+
+GLACIER is blue (water), LAVA is blue (not water), BOLT is blue (not water), BOARD is blue (not water).
+
+This is very strong! BED, TOWER, CANAL, ICE, BILL, AMAZON = 6 red words connected to water!
+
+{"clue": "WATER", "number": 5, "reasoning": "WATERBED (BED), WATER TOWER (TOWER), CANAL (waterway), ICE (frozen water), WATER BILL (BILL) - all clearly connect to water. AMAZON (river) could be a 6th but keeping it conservative to avoid GLACIER (blue, also water)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WATER' — 5 word(s).
+Guesses used this turn: 0 / 6.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  Bridge
+  King
+  Bolt
+  Tower
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Glacier
+  Canal
+  Chip
+  Face
+  Fuse
+  Board
+  Angel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to WATER. Let me think through the connections:
+
+- **Glacier** - made of ice/water, definitely water-related
+- **Canal** - a water channel, directly water-related
+- **Ice** - frozen water, directly water-related
+- **Amazon** - the Amazon River, major water body
+- **Bridge** - often built over water, but also a card game
+- **Bed** - riverbed (water connection)
+- **Fall** - waterfall (not on list)
+- **Tower** - water tower!
+- **Lava** - not water
+- **Bolt** - lightning bolt, not water
+- **Board** - surfboard? waterboard?
+- **Angel** - Angel Falls (waterfall)?
+- **Fan** - not obvious
+- **Chip** - not obvious
+- **Cake** - not obvious
+- **Trick** - not obvious
+- **Bill** - water bill?
+- **Face** - not obvious
+
+Strong water connections:
+1. **Glacier** - frozen water mass
+2. **Canal** - water channel
+3. **Ice** - frozen water
+4. **Amazon** - great river
+5. **Tower** - water tower
+6. **Bed** - riverbed/seabed
+
+The clue is 5 words. Most confident: Glacier, Canal, Ice, Amazon, Tower
+
+Starting with the most obvious:
+
+{"guess": "GLACIER", "reasoning": "Glacier is directly made of water (frozen), very strong connection to WATER"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 9  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        
+  File                 BLUE       
+  Card                 NEUTRAL    
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        
+  Chip                 BLUE       
+  Face                 NEUTRAL    
+  Fuse                 RED        
+  Board                BLUE       
+  Angel                BLUE       
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "cherub", "number": 1, "reasoning": "Directly evokes Angel (blue) and is unlikely to suggest any red words or the assassin (Cake)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CHERUB' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 9  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  Bridge
+  King
+  Bolt
+  Tower
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Chip
+  Face
+  Fuse
+  Board
+  Angel
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Angel","reasoning":"A cherub is a type of angel, so Angel is the direct match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CHERUB' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  Bridge
+  King
+  Bolt
+  Tower
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Chip
+  Face
+  Fuse
+  Board
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Face", "reasoning": "Cherub evokes a cherubic/angelic face — 'Face' is the closest match on the board."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        
+  File                 BLUE       
+  Card                 NEUTRAL    
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        
+  Chip                 BLUE       
+  Face                 NEUTRAL    [revealed]
+  Fuse                 RED        
+  Board                BLUE       
+  Angel                BLUE       [revealed]
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE words, NEUTRAL words, and especially the ASSASSIN (CAKE).
+
+RED words remaining: AMAZON, KING, TOWER, BED, ICE, BILL, TRIP, CANAL, FUSE
+
+Let me think about connections:
+
+- KING, TOWER, BED, CANAL → could relate to "LONDON" (Tower of London, King's Cross, Bed... no)
+- TRIP, FUSE, BILL → could relate to "SHORT" (short trip, short fuse, short bill... hmm)
+- SHORT: short fuse ✓, short trip ✓, short circuit... 
+- FUSE, BILL, TRIP → "SHORT": short fuse ✓, short trip (not common), short bill?
+
+Let me think about EIFFEL: Tower ✓, Canal (near Paris) ✓... weak
+
+- AMAZON, KING, TOWER → "PRIME"? Prime Amazon ✓, King... no
+- BED, ICE, CANAL → could be types with a modifier
+
+- "ELECTRIC": Electric eel (AMAZON), Electric BILL ✓, Electric FUSE ✓, Electric ICE? no, Electric CHAIR... 
+
+- BILL, FUSE, TRIP → "BLOW": blow a fuse ✓, blow a trip? no
+
+- "SHORT": short FUSE ✓, short TRIP ✓, short BILL? (short bill = duck bill?), short CIRCUIT...
+
+- CANAL, AMAZON, KING → rivers? Panama CANAL, AMAZON river ✓, KING river? weak
+
+- KING, TOWER, BED → London landmarks? Tower of London ✓, Buckingham... BED? no
+
+- TRIP, FUSE, BILL → "WIRE": wire trip? no
+
+- BED, ICE, CANAL → "FROZEN": frozen BED? no
+
+- AMAZON, CANAL, TOWER → "PANAMA"? Panama CANAL ✓, Panama... weak
+
+- KING, TOWER, CANAL → "LONDON": Tower ✓, King's Cross ✓, Regent's CANAL ✓, London... 
+
+But BOARD is BLUE (London Board?). Let me check - BOARD is blue, that's fine as long as my clue doesn't point there.
+
+LONDON: Tower (Tower of London) ✓, KING (King's Cross) ✓, CANAL (Regent's Canal) ✓, BED (Bedfordshire? no)... 
+
+Actually "LONDON" - Tower Bridge is in London but BRIDGE is neutral. King's Cross, Tower of London, Regent's Canal - that's 3 red words.
+
+Could also add BED (Bedlam is in London? stretch)
+
+Let me try: LONDON for 3 (TOWER, KING, CANAL) - solid connection without hitting blue words.
+
+{"clue": "LONDON", "number": 3, "reasoning": "Tower (Tower of London), King (King's Cross station), Canal (Regent's Canal) are all iconic London landmarks/features. This avoids BLUE words like BOARD, BOLT, COURT."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LONDON' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  Bridge
+  King
+  Bolt
+  Tower
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Chip
+  Fuse
+  Board
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words associated with LONDON.
+
+London connections:
+- **Tower** - Tower of London, Tower Bridge
+- **Bridge** - Tower Bridge, London Bridge
+- **Queen** - Queen (British royalty, very London)
+- **King** - King's Cross station, King's Road
+- **Court** - Royal Courts, Wimbledon (near London)
+- **Chip** - Fish and chips (British)
+- **Cab** - not on list
+- **Bolt** - Usain Bolt? Not London specific
+- **Bill** - Big Ben / Bill? 
+- **Bed** - not obvious
+- **Canal** - London has canals (Regent's Canal)
+- **Card** - not obvious
+- **Cake** - not obvious
+- **Fan** - not obvious
+
+Most strongly London-associated:
+1. **Tower** - Tower of London is iconic
+2. **Bridge** - London Bridge / Tower Bridge
+3. **Queen** - The Queen, Buckingham Palace
+
+These three seem most strongly connected to LONDON. Let me start with the most confident one.
+
+{"guess": "TOWER", "reasoning": "Tower of London is one of the most iconic London landmarks, and Tower Bridge is another famous London site."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'LONDON' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  Bridge
+  King
+  Bolt
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Chip
+  Fuse
+  Board
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'LONDON' with 3 words, and we've already correctly guessed "Tower" (Tower of London/Tower Bridge).
+
+Other London associations:
+- **Bridge**: London Bridge is a famous landmark
+- **Queen**: The Queen lives in London (Buckingham Palace), also Queen's Guard
+- **King**: King's Cross station, King's Road
+- **Court**: Various courts in London
+- **Canal**: Regent's Canal in London
+- **Bill**: Big Ben (though that's the bell, not "bill")... hmm
+- **Chip**: Fish and chips, very British/London
+- **Card**: Less obvious
+
+"Bridge" is very strong - London Bridge is one of the most famous London landmarks alongside Tower Bridge (already guessed Tower).
+
+"Queen" is also strong - Queen Elizabeth, Buckingham Palace, etc.
+
+{"guess": "BRIDGE", "reasoning": "London Bridge is one of the most iconic London landmarks. With 'Tower' already correctly guessed (Tower Bridge/Tower of London), 'Bridge' fits perfectly as another London association - London Bridge."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    [revealed]
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        [revealed]
+  File                 BLUE       
+  Card                 NEUTRAL    
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        
+  Chip                 BLUE       
+  Face                 NEUTRAL    [revealed]
+  Fuse                 RED        
+  Board                BLUE       
+  Angel                BLUE       [revealed]
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Computer","number":3,"reasoning":"Targets Chip, File, and Board — all computer-related terms."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  King
+  Bolt
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Chip
+  Fuse
+  Board
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chip", "reasoning": "Most directly tied to computers (CPU/memory/semiconductors), fits the COMPUTER clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  King
+  Bolt
+  File
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Fuse
+  Board
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "File", "reasoning": "A strong, direct computer association (computer file); fits the COMPUTER clue and is unlikely to be incidental."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  King
+  Bolt
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Fuse
+  Board
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Board", "reasoning": "Fits COMPUTER (motherboard, circuit board) and completes the trio with Chip and File."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COMPUTER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 8  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  King
+  Bolt
+  Card
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Fuse
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Card", "reasoning": "Computer component association (graphics/sound/network card) — strong match to COMPUTER"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    [revealed]
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        [revealed]
+  File                 BLUE       [revealed]
+  Card                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        
+  Chip                 BLUE       [revealed]
+  Face                 NEUTRAL    [revealed]
+  Fuse                 RED        
+  Board                BLUE       [revealed]
+  Angel                BLUE       [revealed]
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for RED words: Amazon, King, Bed, Ice, Bill, Trip, Canal, Fuse.
+
+Blue remaining words: Lava, Court, Bolt.
+Assassin: Cake.
+
+Let me think about connections:
+
+**Amazon, King, Canal** - these could relate to rivers (Amazon River, King's Canal?, Congo King?). Amazon is definitely a river, Canal involves water, but Canal is already a water-related word...
+
+**Bill, King, Queen** - royalty/money but Queen is neutral.
+
+**Trip, Fuse, Bolt** - Bolt is blue, so I need to avoid that.
+
+**Ice, Bed, Canal** - things that can be "frozen"? 
+
+**King, Amazon, Canal** - large/famous waterways? Amazon (river), Canal (waterway), King (King's Canal?)
+
+**Bed, Canal, Ice** - things associated with rivers? River bed, river canal, river ice...
+
+**RIVER**: River bed (Bed ✓), River Amazon (Amazon ✓), River Canal? (not really), River King? No...
+
+**Bed, Trip, Bill** - could relate to something...
+
+**Amazon, King, Bill** - could these be famous people? Bill King?
+
+**Fuse, Bolt, Trip** - electrical: Bolt is BLUE (danger!). 
+
+**King, Queen, Amazon** - royalty: Queen is neutral, not helpful.
+
+**Bill, Trip, Fuse** - things that can "blow"? Blow a fuse ✓, blow a trip? No...
+
+**ICE, BED, CANAL** - things in a body of water context... 
+
+**ELECTRICAL**: Fuse ✓, Bolt (BLUE - avoid!), ...
+
+**SLEEP**: Bed ✓, Ice (on ice?)...
+
+**Amazon, King, Canal** - Panama Canal, Amazon... **PANAMA**: Panama Canal ✓, Panama Amazon? No...
+
+**King, Bill, Amazon** - dollar bill, King dollar? 
+
+**Trip, Fuse, Ice** - things that can cause a fall? Trip ✓, Ice ✓, Fuse?
+
+**SLIP**: Ice ✓, Trip ✓, Bed? No...
+
+**FALL**: Trip ✓, Ice ✓, Canal? No... Fuse? No...
+
+**WIRE**: Fuse ✓, Trip (wire) ✓, Bed? No...
+
+**DOLLAR**: Bill ✓, Amazon (Amazon sells things?)... 
+
+**KING**: Already on board.
+
+**AMAZON**: Already on board.
+
+Let me try: **WIRE** - Fuse (wire in fuse) ✓, Trip (tripwire) ✓, Bolt? (BLUE - avoid)...
+
+**PAYMENT**: Bill ✓, Amazon (Amazon payment) ✓, Canal (toll?)... 
+
+**SHOPPING**: Amazon ✓, Trip ✓, Bill ✓, Canal? No...
+
+**ONLINE**: Amazon ✓, Trip (TripAdvisor) ✓, ...
+
+**PRIME**: Amazon Prime ✓, King (prime is royal?) ✓, ...
+
+**ROYAL**: King ✓, Canal (Royal Canal?) ✓, Amazon? No...
+
+**MELT**: Ice ✓, Fuse (melt/blow) ✓, ... only 2 safe ones.
+
+**ARCTIC**: Ice ✓, Canal (Arctic canal?) ✓, Bed? No...
+
+Let me try **BLOW**: Fuse (blow a fuse) ✓, Trip? No... 
+
+**CHANNEL**: Canal ✓, Amazon (Amazon channel) ✓, King? No...
+
+**RIVER**: Bed (riverbed) ✓, Amazon (river) ✓, Canal (river/canal) ✓, King? No... That's 3 solid ones without hitting blue.
+
+{"clue": "RIVER", "number": 3, "reasoning": "Riverbed (Bed), Amazon River (Amazon), and Canal all connect to rivers. Avoids blue words Lava, Court, Bolt and assassin Cake."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Lava
+  Court
+  Cake
+  Amazon
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Fuse
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to RIVER.
+
+Let me think about RIVER connections:
+- **Amazon** - The Amazon is a famous river
+- **Bed** - A river bed is the bottom of a river
+- **Canal** - Related to waterways, connected to rivers
+- **Fork** - A river can fork (split into branches)
+- **Bank** - not on the list
+- **Delta** - not on the list
+
+Most confident matches:
+1. **Amazon** - directly a river name
+2. **Bed** - river bed
+3. **Fork** - river fork (where it splits)
+4. **Canal** - water channel, related to rivers
+
+Blue has only 3 cards left and we have 8, so we need to be aggressive but careful. Let me think about risks:
+- Amazon: could be Amazon company, Amazon rainforest - but also definitely a river
+- Bed: could be sleeping bed - risky
+- Canal: water channel, very river-related
+- Fork: fork in a river is common
+
+I'll start with the most confident: Amazon (it IS a river), then Canal (river-adjacent waterway), then Fork (river fork).
+
+{"guess": "Amazon", "reasoning": "The Amazon is one of the world's most famous rivers - very confident this matches the RIVER clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Bed
+  Ice
+  Bill
+  Trip
+  Canal
+  Fuse
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'RIVER' with 3 words, and we've already correctly guessed "Amazon" (a river).
+
+Now I need to find more words related to RIVER from the valid list:
+
+- **Bed** - a river has a riverbed ✓ (strong connection)
+- **Bank** - not on the list
+- **Canal** - a canal is a man-made waterway, related to rivers ✓
+- **Fork** - rivers can fork/branch ✓
+- **Bolt** - not obviously river-related
+- **Ice** - rivers can freeze, but weak connection
+
+Top candidates:
+- **Bed** - "riverbed" is a compound word, very strong
+- **Canal** - related to waterways/rivers
+- **Fork** - rivers fork into tributaries
+
+We're ahead (7 red vs 3 blue remaining), but blue only needs 3 more and we need 7. We need to be aggressive. "Bed" is the strongest river connection - "riverbed" is a direct compound word.
+
+{"guess": "Bed", "reasoning": "Riverbed is a direct compound word - a river has a bed. Very strong connection to RIVER."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Ice
+  Bill
+  Trip
+  Canal
+  Fuse
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'RIVER' with 3 words, I've already correctly guessed Amazon and Bed. I need one more river-related word.
+
+From the valid guesses:
+- **Canal**: A canal is a man-made waterway, closely related to rivers - water channels
+- **Fork**: A river can fork (split into branches)
+- **Bank**: Not on the list
+- **Delta**: Not on the list
+
+Canal is strongly associated with rivers - both are waterways. A canal can be seen as an artificial river.
+
+Fork also works - rivers fork, and "fork in the river" is a common phrase.
+
+However, I need to be careful with Blue having only 3 cards left. Let me think about what could be dangerous.
+
+Canal seems like a solid river connection. Fork could relate to rivers but also to cutlery or road forks.
+
+Given Blue only has 3 cards left and I have 6, I should be somewhat careful but still need to catch up. Canal feels like the safest river connection.
+
+{"guess": "Canal", "reasoning": "A canal is a waterway closely related to rivers - both are water channels used for navigation. 'Canal' strongly connects to the RIVER clue as the third word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'RIVER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Lava
+  Court
+  Cake
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Ice
+  Bill
+  Trip
+  Fuse
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the situation:
+- Clue is 'RIVER' with 3 words
+- I've already used 3 guesses this turn (Amazon → red, Bed → red, Canal → red)
+- I can make one more guess (clue_number + 1 = 4 total)
+- Red remaining: 5, Blue remaining: 3
+
+I've successfully guessed 3 red cards this turn. The clue was for 3 words, and I've gotten all 3. The 4th guess would be a bonus guess beyond the clue number.
+
+Looking at the remaining valid words for RIVER connection:
+- **Fork**: A river can fork (split into branches) - possible
+- **King**: King River? Less direct
+- **Ice**: Ice can relate to frozen rivers, but risky
+- **Bill**: Bill could relate to river (bill = beak, or a bill/waterway?)
+- **Lava**: Lava flows like a river
+
+However, Blue only has 3 cards left and I have 5. This is a critical situation - if I guess wrong and hit a blue card, they could win. I've already secured 3 red cards this turn which is excellent. The risk of guessing a 4th word (beyond the clue) when Blue is only 3 away from winning is very dangerous.
+
+I should PASS to protect our lead and avoid accidentally revealing a blue card.
+
+{"guess": "PASS", "reasoning": "I've successfully guessed all 3 clued words (Amazon, Bed, Canal). Making a 4th bonus guess risks hitting a blue card when they only need 3 more to win. Better to pass and let our spymaster give a new clue next turn."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        [revealed]
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    [revealed]
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        [revealed]
+  File                 BLUE       [revealed]
+  Card                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        [revealed]
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        [revealed]
+  Chip                 BLUE       [revealed]
+  Face                 NEUTRAL    [revealed]
+  Fuse                 RED        
+  Board                BLUE       [revealed]
+  Angel                BLUE       [revealed]
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"MAGMA","number":1,"reasoning":"Directly points to Lava (molten rock)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MAGMA' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Lava
+  Court
+  Cake
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Ice
+  Bill
+  Trip
+  Fuse
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lava", "reasoning": "Magma is molten rock; 'Lava' is the direct match."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MAGMA' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fork
+  Court
+  Cake
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Ice
+  Bill
+  Trip
+  Fuse
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+  [BLUE] MAGMA 1  #1: Lava → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fuse", "reasoning": "Heat from magma melts/fuses materials; 'fuse' relates to melting/joining by heat — best match for MAGMA."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       [revealed]
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        [revealed]
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    [revealed]
+  King                 RED        
+  Bolt                 BLUE       
+  Tower                RED        [revealed]
+  File                 BLUE       [revealed]
+  Card                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        [revealed]
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        [revealed]
+  Chip                 BLUE       [revealed]
+  Face                 NEUTRAL    [revealed]
+  Fuse                 RED        [revealed]
+  Board                BLUE       [revealed]
+  Angel                BLUE       [revealed]
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+  [BLUE] MAGMA 1  #1: Lava → blue
+  [BLUE] MAGMA 1  #2: Fuse → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining RED words: King, Ice, Bill, Trip
+
+Let me think about connections:
+
+- **King**: royalty, chess piece, Martin Luther King, King Kong, Burger King
+- **Ice**: frozen water, ice cream, ice age, vanilla ice
+- **Bill**: money, legislation, Bill Clinton, buffalo bill, bill (beak)
+- **Trip**: journey, stumble, psychedelic experience, road trip
+
+Let me think about "cold":
+- Ice ✓
+- King (cold?) - not great
+- Bill - no
+
+"Money": Bill ✓, King (Burger King?) - not great
+
+"Slip": Trip ✓, Ice ✓ (ice makes you slip) - only 2
+
+"Road": Trip ✓, King (Stephen King's "The Road"?) - weak
+
+"Ego": King, Trip (ego trip!) - only 2
+
+"Power": King ✓, Trip (power trip!) ✓, Bill (bill of rights/power?) - hmm
+
+"EGO": Trip (ego trip), King (ego?) - only 2
+
+"GUILT": Trip (guilt trip) ✓, Bill (bill of guilt?) - no
+
+Let me think about "GUILT TRIP" vs just connections...
+
+"DOLLAR": Bill ✓, King (dollar king?) - weak
+
+What about Court: King (king's court) - but Court is BLUE, dangerous
+
+"ROUND": Trip ✓, King (round table?) - weak
+
+"VANILLA": Ice ✓, Trip (vanilla trip?) - no
+
+"GUILT": Trip ✓... only 1 really
+
+"POWER": Trip (power trip) ✓, Bill (power bill) ✓, King (power) ✓ - but does it risk Court (BLUE - power court?)... Court is BLUE, risky
+
+"FIELD": Trip (field trip) ✓, King (field king?) - weak
+
+"ROAD": Trip ✓, King (road king?) - weak
+
+"COLD": Ice ✓, King (cold as a king?) - weak; Bolt (BLUE) - lightning bolt in cold? No...
+
+"GUILT": Trip ✓, Bill (guilt?) - no
+
+"DOLLAR": Bill ✓ - only 1
+
+Let me try **"FREEZE"**: Ice ✓, King (freeze?) - weak
+
+**"GUILT"** → Trip only
+
+**"FIELD"** → Trip (field trip) ✓, King (field king?) - no
+
+What about **"MARTIN LUTHER"** - no, that's two words
+
+**"BUFFALO"**: Bill ✓, King (Buffalo King?) - no... but Bolt (BLUE - Buffalo bolt?) - no
+
+**"SLIP"**: Trip ✓, Ice ✓ (slip on ice) - 2 words, safe
+
+**"POWER"**: Trip ✓, Bill ✓, King ✓ - 3 words! Risk: Bolt (BLUE - power bolt?), Court (BLUE - power court?) - Court is somewhat risky
+
+I'll go with POWER for 3, as it strongly connects Trip (power trip), Bill (power bill), King (king of power/powerful king). Court is BLUE but "power court" isn't a strong phrase.
+
+{"clue": "POWER", "number": 3, "reasoning": "Power Trip, Power Bill (electric bill/power bill), and King (power/royalty). These three RED words connect well to POWER. The BLUE word Court could be a risk (powerful court?) but the connection is weaker than the three RED words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'POWER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Court
+  Cake
+  Queen
+  King
+  Bolt
+  Fan
+  Trick
+  Ice
+  Bill
+  Trip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+  [BLUE] MAGMA 1  #1: Lava → blue
+  [BLUE] MAGMA 1  #2: Fuse → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'POWER' — 3 words, and we need 4 more red cards.
+
+Let me think about which words connect to POWER:
+
+- **BOLT** - lightning bolt, power surge, very strong connection to electrical power
+- **TRIP** - power trip (a common phrase meaning abuse of power)
+- **KING** - kings have power, but also "King" as in power/royalty
+- **QUEEN** - similar to King
+- **PLANT** - power plant (not on list)
+- **BILL** - Bill could relate to power bill (electricity bill)
+- **FAN** - fan could be powered by electricity, but weak connection
+- **COURT** - court power? weak
+
+Best connections:
+1. **BOLT** - lightning bolt = electrical power, very strong
+2. **TRIP** - power trip, very common phrase
+3. **KING** - power/royalty, or "King" power
+
+I need to be careful about the assassin. Blue has 2 cards left so I need to be aggressive.
+
+BOLT → lightning/electrical power
+TRIP → power trip
+KING → king has power / "King Power"
+
+Let me start with the most confident: BOLT (lightning bolt = power)
+
+{"guess": "BOLT", "reasoning": "BOLT connects strongly to POWER - lightning bolt represents electrical power, and 'bolt' is directly associated with power/electricity."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Fork                 NEUTRAL    
+  Lava                 BLUE       [revealed]
+  Court                BLUE       
+  Cake                 ASSASSIN   
+  Amazon               RED        [revealed]
+  Queen                NEUTRAL    
+  Bridge               NEUTRAL    [revealed]
+  King                 RED        
+  Bolt                 BLUE       [revealed]
+  Tower                RED        [revealed]
+  File                 BLUE       [revealed]
+  Card                 NEUTRAL    [revealed]
+  Fan                  NEUTRAL    
+  Trick                NEUTRAL    
+  Bed                  RED        [revealed]
+  Ice                  RED        
+  Bill                 RED        
+  Trip                 RED        
+  Glacier              BLUE       [revealed]
+  Canal                RED        [revealed]
+  Chip                 BLUE       [revealed]
+  Face                 NEUTRAL    [revealed]
+  Fuse                 RED        [revealed]
+  Board                BLUE       [revealed]
+  Angel                BLUE       [revealed]
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+  [BLUE] MAGMA 1  #1: Lava → blue
+  [BLUE] MAGMA 1  #2: Fuse → red
+  [RED] POWER 3  #1: Bolt → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AMAZON, ANGEL, BED, BILL, BOARD, BOLT, BRIDGE, CAKE, CANAL, CARD, CHIP, COURT, FACE, FAN, FILE, FORK, FUSE, GLACIER, ICE, KING, LAVA, QUEEN, TOWER, TRICK, TRIP
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Tennis","number":1,"reasoning":"Directly cues Court (tennis court); unlikely to suggest King/Queen/Bill or the assassin Cake."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TENNIS' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fork
+  Court
+  Cake
+  Queen
+  King
+  Fan
+  Trick
+  Ice
+  Bill
+  Trip
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] WATER 5  #1: Glacier → blue
+  [BLUE] CHERUB 1  #1: Angel → blue
+  [BLUE] CHERUB 1  #2: Face → neutral
+  [RED] LONDON 3  #1: Tower → red
+  [RED] LONDON 3  #2: Bridge → neutral
+  [BLUE] COMPUTER 3  #1: Chip → blue
+  [BLUE] COMPUTER 3  #2: File → blue
+  [BLUE] COMPUTER 3  #3: Board → blue
+  [BLUE] COMPUTER 3  #4: Card → neutral
+  [RED] RIVER 3  #1: Amazon → red
+  [RED] RIVER 3  #2: Bed → red
+  [RED] RIVER 3  #3: Canal → red
+  [RED] RIVER 3  #4: PASS
+  [BLUE] MAGMA 1  #1: Lava → blue
+  [BLUE] MAGMA 1  #2: Fuse → red
+  [RED] POWER 3  #1: Bolt → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Court", "reasoning": "A tennis match is played on a court — the clearest direct match to the clue."}
+============================================================

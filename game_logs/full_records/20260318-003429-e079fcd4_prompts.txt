@@ -1,0 +1,1951 @@
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    
+  Saturn               RED        
+  Copper               BLUE       
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       
+  Box                  BLUE       
+  Cement               RED        
+  Haze                 RED        
+  Dam                  RED        
+  Lemon                RED        
+  Forge                RED        
+  Etch                 RED        
+  Foam                 BLUE       
+  Post                 NEUTRAL    
+  Blank                BLUE       
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       
+  Teacher              NEUTRAL    
+  Flag                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Construction","number":3,"reasoning":"Links strongly to CEMENT, DAM, and FORGE as industrial/building-related words, while avoiding strong association with the assassin ZEUS."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONSTRUCTION' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Box
+  Cement
+  Haze
+  Dam
+  Lemon
+  Forge
+  Etch
+  Foam
+  Post
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Dune
+  Teacher
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Cement","reasoning":"Strongest direct match to CONSTRUCTION; cement is a core building material."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONSTRUCTION' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Box
+  Haze
+  Dam
+  Lemon
+  Forge
+  Etch
+  Foam
+  Post
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Dune
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"DAM","reasoning":"Dam is a strong construction-related structure/project, fitting the clue well after Cement."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CONSTRUCTION' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Box
+  Haze
+  Lemon
+  Forge
+  Etch
+  Foam
+  Post
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Dune
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"POST","reasoning":"Best remaining fit for CONSTRUCTION after Cement and Dam; a post is a structural building element."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    
+  Saturn               RED        
+  Copper               BLUE       
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       
+  Box                  BLUE       
+  Cement               RED        [revealed]
+  Haze                 RED        
+  Dam                  RED        [revealed]
+  Lemon                RED        
+  Forge                RED        
+  Etch                 RED        
+  Foam                 BLUE       
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       
+  Teacher              NEUTRAL    
+  Flag                 BLUE       
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED words and especially the ASSASSIN (Zeus).
+
+Let me look at my BLUE words: Copper, Clue, Box, Foam, Blank, Jungle, Dune, Flag
+
+Let me think about groupings:
+
+**Sand-related**: Dune, Box (sandbox), Blank (blank/sandy?), Copper (copper colored like sand?)
+
+**"___box"**: Box directly, but that's limited.
+
+**Empty/void**: Blank, Foam (foam is airy/empty), Box (empty box)
+
+**Beach**: Dune (sand dunes), Foam (sea foam), Jungle (tropical), Flag (beach flag), Copper (sun-tanned/copper skin), Blank (?)
+- Risk: Saturn? No. Lemon? Could be beach-related? Not really. Haze? Slightly concerning but not strongly beach.
+
+**Tropical/Beach**: Dune, Foam, Jungle, Copper (copper tan), Flag (beach flags)
+- Let me check RED words: Haze could be tropical-ish, but it's a stretch. Lemon - tropical fruit, that's a risk.
+
+**SAND**: Dune (sand dune), Box (sandbox), Blank (sand is blank), Foam (beach foam)
+- But SAND is too close to DUNE maybe? No, sand ≠ dune, it's fine.
+- Risk: Etch (etch in sand?) - slight. Others seem safe.
+
+**BEACH**: Dune, Foam, Flag, Jungle (tropical beach), Copper (tan)
+- Risk: Lemon? Not really. Haze? Slightly.
+
+**EMPTY**: Blank, Box (empty box), Foam (mostly air)... limited.
+
+Let me go with **SAND**: Dune (sand dunes), Box (sandbox), Foam (beach/sea foam near sand), Blank (blank like sand)
+- Checking assassin Zeus: no connection. 
+- Checking RED: Forge, Etch, Lemon, Fan, Haze, Saturn, Buddy - none strongly sand-related.
+
+Actually, **BEACH** connecting Dune, Foam, Flag (beach flag), Copper (copper tan) = 4
+- Lemon could be a slight risk but not strong. Haze is a minor risk.
+
+I think SAND is safer for 3: Dune, Box (sandbox), Foam.
+
+{"clue": "SAND", "number": 3, "reasoning": "Connecting Dune (sand dunes), Box (sandbox), and Foam (sea foam/beach sand). These are strong associations. Low risk for RED words or assassin Zeus."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SAND' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Box
+  Haze
+  Lemon
+  Forge
+  Etch
+  Foam
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Dune
+  Teacher
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "DUNE", "reasoning": "A dune is literally a sand dune - this is the strongest connection to the clue 'SAND'. Sand dunes are one of the most iconic associations with sand."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SAND' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Box
+  Haze
+  Lemon
+  Forge
+  Etch
+  Foam
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Box", "reasoning": "SANDBOX is a common compound word with SAND. Sand + box = sandbox."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SAND' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Haze
+  Lemon
+  Forge
+  Etch
+  Foam
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find one more word related to "SAND" from the remaining valid guesses.
+
+Let me think about connections to "SAND":
+
+- **Etch** - "Sand etching" or sandblasting is a form of etching. This has a connection.
+- **Blank** - Not strongly related to sand.
+- **Copper** - Not strongly related to sand.
+- **Haze** - Sand haze? Possible but weak.
+- **Lemon** - Not related.
+- **Foam** - Sea foam appears near sandy beaches, but weak.
+- **Day** - Not related.
+- **Crop** - Not related.
+- **Deer** - Sand deer? No.
+- **Fan** - Not related.
+- **Forge** - Sand casting in a forge? Weak.
+- **Saturn** - Saturn's rings have particles... weak.
+- **Beacon** - Beacons on sandy shores? Weak.
+- **Flag** - Sand flag? No.
+- **Blank** - "Blank" could relate to a blank/empty desert of sand? Weak.
+
+Wait - "CASTLE" isn't on the board. Let me reconsider...
+
+"Sand" + "Etch" - sandblasting is used to etch glass. This seems like the strongest connection.
+
+Actually, let me reconsider "Copper" - copper is found in sandy/desert regions? No, that's weak.
+
+"Blank" - drawing a blank in the sand? No.
+
+I think "Etch" is the best remaining connection - sand etching/sandblasting is a well-known technique.
+
+But wait - could "Grain" be... no, it's not on the list.
+
+I'll go with Etch, but I'm not highly confident. Given that we have 6 blue remaining vs 7 red, I should be somewhat aggressive.
+
+{"guess": "ETCH", "reasoning": "Sandblasting is a common method of etching (glass, metal, etc.), creating a connection between 'sand' and 'etch'. This seems like the strongest remaining connection to the clue 'SAND' among the valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    
+  Saturn               RED        
+  Copper               BLUE       
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       
+  Box                  BLUE       [revealed]
+  Cement               RED        [revealed]
+  Haze                 RED        
+  Dam                  RED        [revealed]
+  Lemon                RED        
+  Forge                RED        
+  Etch                 RED        [revealed]
+  Foam                 BLUE       
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       [revealed]
+  Teacher              NEUTRAL    
+  Flag                 BLUE       
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"smog","number":2,"reasoning":"Targets HAZE and likely SATURN via atmospheric associations, while staying away from the assassin ZEUS and avoiding strong pulls to blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SMOG' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Haze
+  Lemon
+  Forge
+  Foam
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"HAZE","reasoning":"Smog is closely associated with haze; this is the strongest direct match on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SMOG' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Lemon
+  Forge
+  Foam
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"FOAM","reasoning":"Best fit remaining for SMOG: polluted air often creates foam/scum in contaminated environments; stronger match than the other unrevealed words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    
+  Saturn               RED        
+  Copper               BLUE       
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       
+  Box                  BLUE       [revealed]
+  Cement               RED        [revealed]
+  Haze                 RED        [revealed]
+  Dam                  RED        [revealed]
+  Lemon                RED        
+  Forge                RED        
+  Etch                 RED        [revealed]
+  Foam                 BLUE       [revealed]
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       [revealed]
+  Teacher              NEUTRAL    
+  Flag                 BLUE       
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining BLUE words as possible: **Copper**, **Clue**, **Blank**, **Jungle**, **Flag**.
+
+Let me think about possible connections:
+
+- **Blank** and **Clue**: Both relate to crossword puzzles or mystery games
+- **Copper** and **Flag**: Both can relate to "penny" (copper penny, flag/pennant)
+- **Jungle** and **Flag**: Not obvious
+- **Copper** and **Blank**: "Blank" could be a blank check...
+
+Let me think about "PENNANT" - Flag (pennant is a flag), Copper (penny/pennant?)... not great.
+
+What about "HINT"? Clue (synonym), Blank (hint vs blank)... only 1 strong.
+
+What about "EMPTY"? Blank (empty), Copper (empty copper?)... weak.
+
+Let me think about "WIRE": Copper (copper wire), Blank (blank wire?), Flag (flag/wire?)... only 1 strong.
+
+"METAL": Copper (metal), Flag (metal flag?)... weak beyond copper.
+
+"RAINFOREST": Jungle (rainforest), Copper (copperhead snakes?)... stretch.
+
+What about connecting **Blank**, **Clue**, and **Flag**?
+- "CROSSWORD": Blank (blank squares), Clue (crossword clues), Flag (flagged?)... but crossword is strong for 2.
+
+What about "MYSTERY"? Clue (mystery clue), Blank (draw a blank), Jungle (mystery jungle?), Copper (copper = British slang for police, mystery/detective)... That connects 3 nicely!
+
+- **Clue** → mystery clue ✓
+- **Copper** → copper = detective/police in British slang ✓
+- **Blank** → drawing a blank in a mystery ✓
+
+Checking against dangerous words: Lemon, Saturn, Buddy, Forge, Fan — none strongly connect to MYSTERY. Zeus (assassin) — no connection.
+
+{"clue": "MYSTERY", "number": 3, "reasoning": "Clue (mystery clue), Copper (British slang for police/detective in mysteries), Blank (drawing a blank, blank mystery). Avoids assassin Zeus and red words like Lemon, Saturn, Buddy, Forge, Fan."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYSTERY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Clue
+  Lemon
+  Forge
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "CLUE", "reasoning": "MYSTERY is strongly associated with CLUE - mysteries involve clues, and 'Clue' is literally a mystery board game. This seems like the most obvious connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYSTERY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Lemon
+  Forge
+  Blank
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Blank", "reasoning": "MYSTERY connects to 'Blank' - as in a blank/mystery, something unknown or unfilled. In mystery contexts, 'drawing a blank' or 'blank' representing the unknown is a strong connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYSTERY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Copper
+  Zeus
+  Buddy
+  Lemon
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find one more word related to "MYSTERY" from the remaining valid guesses. Let me think about this carefully.
+
+Words associated with "MYSTERY":
+- **Brain** - could relate to mystery (brain teasers, using your brain to solve mysteries)
+- **Day** - not strongly related
+- **Saturn** - mysterious planet, but a stretch
+- **Copper** - slang for police/detective, who solve mysteries!
+- **Zeus** - mythological, mysterious but more mythology than mystery
+- **Beacon** - a signal, not strongly mystery
+- **Deer** - "deer" sounds like "dear" as in "Oh dear" but not mystery
+- **Jungle** - could be mysterious
+- **Lemon** - not really
+- **Teacher** - not really
+
+"Copper" as slang for a detective/cop is strongly connected to mystery (mystery novels, detective stories). "Brain" could work too as mysteries require brainpower. 
+
+But I'm at 3 blue remaining and this is my third guess on a 3-word clue. Let me think about which is most likely the Spymaster's intended word.
+
+"Copper" = detective/cop → mystery genre connection is strong.
+
+However, I need to be careful - with Red at 5 remaining and Blue at 3, getting this right is important but hitting the assassin would be catastrophic.
+
+I think "Copper" fits well with MYSTERY (detective/cop solving mysteries).
+
+{"guess": "COPPER", "reasoning": "Copper is slang for a police officer/detective, which is strongly associated with the mystery genre. Mystery novels and shows revolve around detectives (coppers) solving crimes. This seems like a strong connection for the Spymaster's clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MYSTERY' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Zeus
+  Buddy
+  Lemon
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 correct blue words this turn (Clue, Blank, Copper), which matches the clue number of 3. With only 2 blue cards remaining, I should be cautious. None of the remaining words strongly connect to 'MYSTERY', and guessing wrong could help Red or hit the assassin. It's safer to pass and wait for the next clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    
+  Saturn               RED        
+  Copper               BLUE       [revealed]
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       [revealed]
+  Box                  BLUE       [revealed]
+  Cement               RED        [revealed]
+  Haze                 RED        [revealed]
+  Dam                  RED        [revealed]
+  Lemon                RED        
+  Forge                RED        
+  Etch                 RED        [revealed]
+  Foam                 BLUE       [revealed]
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       [revealed]
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       [revealed]
+  Teacher              NEUTRAL    
+  Flag                 BLUE       
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Citrus","number":1,"reasoning":"Targets LEMON cleanly. It avoids the assassin ZEUS and has limited pull toward the remaining blue words JUNGLE and FLAG."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CITRUS' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Day
+  Saturn
+  Zeus
+  Buddy
+  Lemon
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Lemon","reasoning":"CITRUS most directly matches LEMON among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CITRUS' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Zeus
+  Buddy
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"Clue was for 1 and Lemon already fits it; no remaining valid word strongly matches CITRUS, so extra guessing is too risky."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    
+  Saturn               RED        
+  Copper               BLUE       [revealed]
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       [revealed]
+  Box                  BLUE       [revealed]
+  Cement               RED        [revealed]
+  Haze                 RED        [revealed]
+  Dam                  RED        [revealed]
+  Lemon                RED        [revealed]
+  Forge                RED        
+  Etch                 RED        [revealed]
+  Foam                 BLUE       [revealed]
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       [revealed]
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       [revealed]
+  Teacher              NEUTRAL    
+  Flag                 BLUE       
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects my two remaining blue words: **Jungle** and **Flag**.
+
+Let me think about what connects these two:
+- "Jungle" and "Flag" → both can follow "concrete"? No.
+- Flag and Jungle → both relate to countries/nations (national flags, jungles in various countries)
+- "Capture the flag" in a jungle setting?
+- Both can be preceded by "national" → national flag, national jungle (not great)
+- Both relate to warfare/military → flag signals, jungle warfare
+- "Banner" → not strong for jungle
+- "Country" → country flag, country jungle? Decent but could point to other words.
+- "Tropical" → tropical jungle (strong), tropical flag? Not great.
+- "Waving" → waving flag, but jungle doesn't wave.
+- "Pennant" → too specific to flag only.
+- "Safari" → jungle safari, but flag?
+- "Patriot" → flag (patriotic symbol), but jungle?
+- "Camouflage" → jungle camouflage, camouflage flag? Weak.
+- "Semaphore" → flag signaling, but not jungle.
+- "NATION" → national flag, national jungle? Not bad. But could point to Saturn (planet, not nation), or other words.
+- "GYM" → jungle gym, but flag?
+- "RALLY" → rally flag, jungle rally? Weak.
+- "COMBAT" → jungle combat, combat flag? Could work but might point to Forge.
+- "FEVER" → jungle fever, flag fever? Not great.
+- "GYM" → jungle gym... flag? No.
+
+Wait — **"CONFEDERATE"** → Confederate flag, Confederate jungle? No.
+
+What about **"WAVE"** → wave a flag, jungle wave? Not great.
+
+**"BOOK"** → Jungle Book, Flag book? Hmm, Jungle Book is strong but Flag is weak.
+
+**"WARFARE"** → jungle warfare, flag in warfare. But could point to Forge.
+
+**"SIGNAL"** → flag signal, jungle signal? Decent, but not strong.
+
+**"CANOPY"** → jungle canopy, canopy/flag? Weak on flag.
+
+Let me reconsider: **"NATIONAL"** → national flag (very strong), national jungle (like a national park/reserve). Low risk for assassin (Zeus) and red words.
+
+{"clue": "NATIONAL", "number": 2, "reasoning": "National flag (strong connection) and national jungle (as in national park/reserve or national forest). This avoids the assassin Zeus and red words like Saturn, Buddy, Forge, and Fan."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NATIONAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Day
+  Saturn
+  Zeus
+  Buddy
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+  Flag
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Flag", "reasoning": "NATIONAL + Flag = National Flag. This is a very strong compound/association. 'National flag' is a common phrase."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NATIONAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Day
+  Saturn
+  Zeus
+  Buddy
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+  [BLUE] NATIONAL 2  #1: Flag → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "DAY", "reasoning": "National Day is a very common phrase (e.g., National Day of various countries, National Teacher Day, etc.). Since we only need 1 more blue card, this seems like a strong match for 'NATIONAL'. National Day is a well-known compound phrase."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    [revealed]
+  Saturn               RED        
+  Copper               BLUE       [revealed]
+  Zeus                 ASSASSIN   
+  Buddy                RED        
+  Clue                 BLUE       [revealed]
+  Box                  BLUE       [revealed]
+  Cement               RED        [revealed]
+  Haze                 RED        [revealed]
+  Dam                  RED        [revealed]
+  Lemon                RED        [revealed]
+  Forge                RED        
+  Etch                 RED        [revealed]
+  Foam                 BLUE       [revealed]
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       [revealed]
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       [revealed]
+  Teacher              NEUTRAL    
+  Flag                 BLUE       [revealed]
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+  [BLUE] NATIONAL 2  #1: Flag → blue
+  [BLUE] NATIONAL 2  #2: Day → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"companion","number":1,"reasoning":"Targets BUDDY cleanly. The other red words are harder to group safely, and this avoids strong links to the assassin ZEUS or the remaining blue word JUNGLE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COMPANION' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Saturn
+  Zeus
+  Buddy
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+  [BLUE] NATIONAL 2  #1: Flag → blue
+  [BLUE] NATIONAL 2  #2: Day → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Buddy","reasoning":"'Buddy' is a direct synonym of 'companion' and the strongest match on the board."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.4
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'COMPANION' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Brain
+  Saturn
+  Zeus
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+  [BLUE] NATIONAL 2  #1: Flag → blue
+  [BLUE] NATIONAL 2  #2: Day → neutral
+  [RED] COMPANION 1  #1: Buddy → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"PASS","reasoning":"We already found the intended match for COMPANION with Buddy. With only one blue left, risking an extra guess is unnecessary and dangerous."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Brain                NEUTRAL    
+  Day                  NEUTRAL    [revealed]
+  Saturn               RED        
+  Copper               BLUE       [revealed]
+  Zeus                 ASSASSIN   
+  Buddy                RED        [revealed]
+  Clue                 BLUE       [revealed]
+  Box                  BLUE       [revealed]
+  Cement               RED        [revealed]
+  Haze                 RED        [revealed]
+  Dam                  RED        [revealed]
+  Lemon                RED        [revealed]
+  Forge                RED        
+  Etch                 RED        [revealed]
+  Foam                 BLUE       [revealed]
+  Post                 NEUTRAL    [revealed]
+  Blank                BLUE       [revealed]
+  Crop                 NEUTRAL    
+  Fan                  RED        
+  Jungle               BLUE       
+  Deer                 NEUTRAL    
+  Beacon               NEUTRAL    
+  Dune                 BLUE       [revealed]
+  Teacher              NEUTRAL    
+  Flag                 BLUE       [revealed]
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+  [BLUE] NATIONAL 2  #1: Flag → blue
+  [BLUE] NATIONAL 2  #2: Day → neutral
+  [RED] COMPANION 1  #1: Buddy → red
+  [RED] COMPANION 1  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BEACON, BLANK, BOX, BRAIN, BUDDY, CEMENT, CLUE, COPPER, CROP, DAM, DAY, DEER, DUNE, ETCH, FAN, FLAG, FOAM, FORGE, HAZE, JUNGLE, LEMON, POST, SATURN, TEACHER, ZEUS
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "RAINFOREST", "number": 1, "reasoning": "The only remaining blue word is JUNGLE. RAINFOREST is a direct synonym for jungle and shouldn't point to any red words (Saturn, Forge, Fan) or the assassin (Zeus)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'RAINFOREST' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Brain
+  Saturn
+  Zeus
+  Forge
+  Crop
+  Fan
+  Jungle
+  Deer
+  Beacon
+  Teacher
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CONSTRUCTION 3  #1: Cement → red
+  [RED] CONSTRUCTION 3  #2: Dam → red
+  [RED] CONSTRUCTION 3  #3: Post → neutral
+  [BLUE] SAND 3  #1: Dune → blue
+  [BLUE] SAND 3  #2: Box → blue
+  [BLUE] SAND 3  #3: Etch → red
+  [RED] SMOG 2  #1: Haze → red
+  [RED] SMOG 2  #2: Foam → blue
+  [BLUE] MYSTERY 3  #1: Clue → blue
+  [BLUE] MYSTERY 3  #2: Blank → blue
+  [BLUE] MYSTERY 3  #3: Copper → blue
+  [BLUE] MYSTERY 3  #4: PASS
+  [RED] CITRUS 1  #1: Lemon → red
+  [RED] CITRUS 1  #2: PASS
+  [BLUE] NATIONAL 2  #1: Flag → blue
+  [BLUE] NATIONAL 2  #2: Day → neutral
+  [RED] COMPANION 1  #1: Buddy → red
+  [RED] COMPANION 1  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "JUNGLE", "reasoning": "RAINFOREST is very directly synonymous with JUNGLE. A rainforest is essentially a jungle - dense tropical forest. This is a very strong connection and with only 1 blue card remaining, this seems like the clear intended word."}
+============================================================

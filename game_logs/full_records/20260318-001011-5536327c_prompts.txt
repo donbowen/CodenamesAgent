@@ -1,0 +1,1240 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Watch                ASSASSIN   
+  Bark                 RED        
+  Bear                 RED        
+  Point                BLUE       
+  Ink                  NEUTRAL    
+  Africa               BLUE       
+  Head                 RED        
+  Fang                 RED        
+  Light                NEUTRAL    
+  Burst                RED        
+  Fracture             RED        
+  Jar                  NEUTRAL    
+  Deer                 NEUTRAL    
+  Drum                 RED        
+  Paste                BLUE       
+  Chapel               RED        
+  Court                BLUE       
+  Boot                 NEUTRAL    
+  Bubble               BLUE       
+  Screen               RED        
+  Mirror               BLUE       
+  Cup                  BLUE       
+  Chart                NEUTRAL    
+  Nail                 BLUE       
+  Seal                 NEUTRAL    
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, BARK, BEAR, BOOT, BUBBLE, BURST, CHAPEL, CHART, COURT, CUP, DEER, DRUM, FANG, FRACTURE, HEAD, INK, JAR, LIGHT, MIRROR, NAIL, PASTE, POINT, SCREEN, SEAL, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Bark, Bear, Head, Fang, Burst, Fracture, Drum, Chapel, Screen.
+
+Let me think about groupings:
+
+- **Bark, Fang, Bear** → animal/dog related
+- **Head, Drum** → music? Body parts?
+- **Fracture, Burst** → breaking things
+- **Screen, Chapel** → ?
+- **Drum, Screen** → could be "roll" (drum roll, screen roll?)
+
+Let me think about "BONE":
+- Fracture (bone fracture) ✓
+- Fang (bone-like tooth) - maybe
+- Bear (bare bones?) - weak
+
+"SNAP":
+- Fracture ✓, Burst ✓, Bark (snap/bark) ✓
+
+"BREAK":
+- Fracture ✓, Burst ✓, Screen (screen break?) - weak
+
+Let me think about "SILVER":
+- Screen (silver screen) ✓
+- Chapel (Silver chapel?) - weak
+
+"MAJOR":
+- Drum Major ✓
+- Chapel (chapel major?) - weak
+
+"STEEL":
+- Drum ✓, Screen ✓, Fang? - weak
+
+"ROLL":
+- Drum roll ✓, Barrel roll... 
+
+"SNARL":
+- Bark, Fang, Bear... 
+
+Let me think about **"CHAPEL"** connections... Wedding chapel, Sistine Chapel...
+
+"STEEPLE":
+- Chapel ✓... 
+
+"WOLF":
+- Fang ✓, Bark ✓, Bear (wolf bear?) - weak, Head (wolfhead?)
+
+"TOOTH":
+- Fang ✓, Fracture ✓ (tooth fracture), Bark (toothbark?) - weak
+
+"PIPE":
+- Drum (pipe and drum) ✓, Screen (pipe screen/fireplace screen) ✓, Burst (pipe burst) ✓, Fracture (pipe fracture) ✓, Bark (pipe bark?) - weak
+
+"PIPE" is very good! Burst pipe, Fracture pipe, Drum (pipe & drum corps), Screen (pipe screen)... but Watch is the assassin - "watch" doesn't relate to pipe.
+
+Let me check: Burst ✓, Fracture ✓, Drum ✓, Screen ✓ - that's 4 red words connecting to PIPE, and none obviously point to ASSASSIN (Watch) or blue words.
+
+{"clue": "PIPE", "number": 4, "reasoning": "Burst (pipe burst), Fracture (pipe fracture), Drum (pipe and drum), Screen (pipe screen/fireplace screen) - all connect to PIPE without pointing to the ASSASSIN (Watch) or blue words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PIPE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Watch
+  Bark
+  Bear
+  Point
+  Ink
+  Africa
+  Head
+  Fang
+  Light
+  Burst
+  Fracture
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Court
+  Boot
+  Bubble
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that connect to "PIPE."
+
+Let me think about what "PIPE" can mean or connect to:
+- Pipe as in plumbing/pipe
+- Pipe dream
+- Pipe bomb
+- Bagpipe
+- Pipe organ
+- Pipe cleaner
+- Piping (as in piping hot)
+- Pipeline
+
+Let me think about compound words or phrases with PIPE:
+- PIPE + word or word + PIPE
+
+Words that go with PIPE:
+- **DRUM**: Steel drum? No... but "pipe and drum" (pipe band/drum)
+- **BURST**: Pipe burst (a pipe can burst) - "burst pipe" is very common
+- **SEAL**: You seal a pipe
+- **FANG**: Not obvious
+- **BARK**: Bark pipe? No
+- **CHART**: No
+- **SCREEN**: No
+- **BUBBLE**: Bubble pipe (toy)
+- **NAIL**: No
+- **HEAD**: Pipe head? Deadhead? 
+- **LIGHT**: Pipe light? No
+- **BOOT**: No
+- **CUP**: No
+- **BEAR**: No
+- **INK**: No
+
+Let me think differently - things that can follow "PIPE":
+- PIPE + LINE
+- PIPE + DREAM
+- PIPE + BOMB
+- PIPE + FITTER
+- PIPE + CLEANER
+
+Things that precede "PIPE":
+- BAG + PIPE
+- STAND + PIPE
+- WIND + PIPE
+
+Or PIPE as a category - bagpipe, pipe organ, pipe drum...
+
+**DRUM** - pipe and drum corps, also "drum" can relate to music like pipes
+**BURST** - pipes burst
+**SEAL** - seal a pipe
+**BUBBLE** - bubble pipe (toy pipe that blows bubbles)
+
+Actually thinking about "PIPE" meanings more carefully:
+- Bubble pipe (toy)
+- Burst (pipes burst)
+- Drum (pipe and drum band)
+- Seal (sealing pipes)
+
+Let me start with the most confident: BURST (pipes burst is very natural)
+
+{"guess": "BURST", "reasoning": "A pipe can burst - 'burst pipe' is a very common phrase in plumbing contexts."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PIPE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Bark
+  Bear
+  Point
+  Ink
+  Africa
+  Head
+  Fang
+  Light
+  Fracture
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Court
+  Boot
+  Bubble
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find words that relate to PIPE (4 words).
+
+PIPE connections:
+- DREAM (pipe dream) - not on board
+- ORGAN (pipe organ) - not on board
+- BURST (already guessed correctly)
+- BOMB (pipe bomb) - not on board
+- STEM (pipe stem) - not on board
+- CLEANER (pipe cleaner) - not on board
+- DRUM - a drum is a type of container, and there are "drum pipes" or... actually, a barrel/drum shape relates to pipes
+- BUBBLE - bubble pipe? Like a bubble pipe toy!
+- CHART - bar chart? No...
+- SEAL - you seal pipes
+- FANG - hollow like a pipe? Fangs are hollow tubes for venom!
+- SCREEN - pipe screen?
+- HEAD - pipe head? Deadhead?
+- LIGHT - pipe light? 
+- BARK - bark pipe? No...
+- NAIL - nail pipe? No...
+- CUP - cup... no
+- BOOT - boot... no
+- INK - ink... no
+
+Let me think more carefully:
+- BUBBLE pipe (toy for blowing bubbles) - very strong connection
+- DRUM - a drum can be a large cylindrical container like a pipe
+- FANG - hollow tube for venom, functionally like a pipe
+- SEAL - seal a pipe
+
+BUBBLE pipe is very strong. Let me go with that.
+
+{"guess": "BUBBLE", "reasoning": "A bubble pipe is a classic toy - very direct connection to PIPE"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Watch                ASSASSIN   
+  Bark                 RED        
+  Bear                 RED        
+  Point                BLUE       
+  Ink                  NEUTRAL    
+  Africa               BLUE       
+  Head                 RED        
+  Fang                 RED        
+  Light                NEUTRAL    
+  Burst                RED        [revealed]
+  Fracture             RED        
+  Jar                  NEUTRAL    
+  Deer                 NEUTRAL    
+  Drum                 RED        
+  Paste                BLUE       
+  Chapel               RED        
+  Court                BLUE       
+  Boot                 NEUTRAL    
+  Bubble               BLUE       [revealed]
+  Screen               RED        
+  Mirror               BLUE       
+  Cup                  BLUE       
+  Chart                NEUTRAL    
+  Nail                 BLUE       
+  Seal                 NEUTRAL    
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, BARK, BEAR, BOOT, BUBBLE, BURST, CHAPEL, CHART, COURT, CUP, DEER, DRUM, FANG, FRACTURE, HEAD, INK, JAR, LIGHT, MIRROR, NAIL, PASTE, POINT, SCREEN, SEAL, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "TENNIS", "number": 3, "reasoning": "Targets Court, Point, and Cup (tennis terms: tennis court, scoring point, and Davis Cup)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TENNIS' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Watch
+  Bark
+  Bear
+  Point
+  Ink
+  Africa
+  Head
+  Fang
+  Light
+  Fracture
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Court
+  Boot
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Court", "reasoning": "Most direct tennis-related term (tennis court). High likelihood this is one of the blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TENNIS' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Bark
+  Bear
+  Point
+  Ink
+  Africa
+  Head
+  Fang
+  Light
+  Fracture
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Point", "reasoning": "Direct tennis term; strongly matches the TENNIS clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TENNIS' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Bark
+  Bear
+  Ink
+  Africa
+  Head
+  Fang
+  Light
+  Fracture
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Head","reasoning":"Direct tennis connection (Head is a well-known tennis equipment brand)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Watch                ASSASSIN   
+  Bark                 RED        
+  Bear                 RED        
+  Point                BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Africa               BLUE       
+  Head                 RED        [revealed]
+  Fang                 RED        
+  Light                NEUTRAL    
+  Burst                RED        [revealed]
+  Fracture             RED        
+  Jar                  NEUTRAL    
+  Deer                 NEUTRAL    
+  Drum                 RED        
+  Paste                BLUE       
+  Chapel               RED        
+  Court                BLUE       [revealed]
+  Boot                 NEUTRAL    
+  Bubble               BLUE       [revealed]
+  Screen               RED        
+  Mirror               BLUE       
+  Cup                  BLUE       
+  Chart                NEUTRAL    
+  Nail                 BLUE       
+  Seal                 NEUTRAL    
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, BARK, BEAR, BOOT, BUBBLE, BURST, CHAPEL, CHART, COURT, CUP, DEER, DRUM, FANG, FRACTURE, HEAD, INK, JAR, LIGHT, MIRROR, NAIL, PASTE, POINT, SCREEN, SEAL, WATCH
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Bark, Bear, Fang, Fracture, Drum, Chapel, Screen.
+
+Let me think about connections:
+
+**Bark, Bear, Fang** - all related to animals/animal features
+**Fracture** - break/crack
+**Drum** - instrument
+**Chapel** - church
+**Screen** - display/filter
+
+Let me think about "BONE":
+- Fracture (bone fracture) ✓
+- Fang (bone-like tooth) - maybe
+- Bark (no)
+
+**STRESS**:
+- Fracture (stress fracture) ✓
+- Screen (stress test/screen) - maybe
+
+**WOLF**:
+- Fang (wolf fang) ✓
+- Bark (wolf bark) ✓
+- Bear (wolf and bear - both predators)
+
+**ANIMAL**:
+- Bark, Bear, Fang - all animal related
+
+**TREE**:
+- Bark (tree bark) ✓
+- Chapel (chapel in the woods?) - weak
+
+**SILVER**:
+- Screen (silver screen) ✓
+- Fang (silver fang) - weak
+- Chapel (silver chapel?) - no
+
+**STRESS FRACTURE** - one word...
+
+**SILVER SCREEN** - two words
+
+Let me think about **STRESS**:
+- Fracture (stress fracture) ✓
+- Screen (screen for stress) - weak
+
+**SNAP**:
+- Fracture ✓
+- Bark (snap/bark) ✓
+
+**CRACK**:
+- Fracture ✓
+- Screen (cracked screen) ✓
+- Bark (crack like bark?) - weak
+
+**BONE**:
+- Fracture (bone fracture) ✓
+- Fang (bone/tooth) ✓
+- Bear (bear bone?) - weak
+- Drum (drum bone/drumstick) ✓ - drumstick is a bone!
+
+**DRUMSTICK**: drum ✓, chicken bone ✓... but that's compound
+
+**HAIR**:
+- Screen (hairscreen?) no
+- Chapel (hair chapel?) no
+
+**SNARE**:
+- Drum (snare drum) ✓
+- Bear (snare trap for bears) ✓ - weak
+
+**WEDDING**:
+- Chapel (wedding chapel) ✓
+- Drum (wedding drum?) - weak
+- Screen (wedding screen?) - weak
+
+**SMALL**:
+- Chapel (small chapel) - generic
+
+**BASS**:
+- Drum (bass drum) ✓
+- Screen? - no
+
+Let me try **SILVER**:
+- Screen (silver screen) ✓
+- Fang (Silver Fang - anime) - risky
+- Mirror is BLUE (silver mirror) - avoid
+
+**STRESS**:
+- Fracture ✓
+- Screen (stress screen) - weak
+
+**TOUCH**:
+- Screen (touchscreen) ✓
+- Bear (bear touch?) - no
+
+**SPLIT**:
+- Screen (split screen) ✓
+- Fracture ✓
+- Bark (split bark) - possible
+- Drum (split drum?) - weak
+
+**MAJOR**:
+- Drum (drum major) ✓
+- Chapel (major chapel?) - weak
+
+**BONE** connecting Fracture, Fang, Drum (drumstick = bone):
+- Bear (bear bone?) 
+- Bark (bark like a dog, dog bone!) ✓
+
+BONE: Fracture (bone fracture) ✓, Fang (tooth/fang = bone) ✓, Bark (dog barks, dog bone) - indirect, Drum (drumstick) - indirect
+
+Let me try **STRESS** for Fracture + Screen + maybe Bark (stress bark?)
+
+Actually: **CRACK**:
+- Fracture ✓
+- Screen (cracked screen) ✓  
+- Bark (crack/bark of a tree) ✓
+- But Watch is ASSASSIN - "crack" doesn't relate to watch directly... safe
+
+{"clue": "CRACK", "number": 3, "reasoning": "Fracture (a crack/break), Screen (cracked screen), Bark (tree bark can crack) - avoiding Watch (assassin) and blue words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRACK' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Watch
+  Bark
+  Bear
+  Ink
+  Africa
+  Fang
+  Light
+  Fracture
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that match "CRACK" — thinking about meanings of crack:
+- To crack (break/fracture)
+- Crack of dawn (light?)
+- Crack (a joke)
+- Crack (drug)
+- Crackdown
+- Crack the code
+- Crack (sound - like a whip)
+- Compound words: cracker, crackdown
+
+Let me think about each word:
+- **Fracture**: crack/fracture are synonyms - very strong match
+- **Mirror**: a mirror can crack - possible
+- **Bark**: bark can crack, or tree bark has cracks
+- **Nail**: crack a nail? or nail cracking?
+- **Jar**: crack open a jar - possible
+- **Seal**: crack a seal (break a seal) - possible
+- **Screen**: cracked screen - very common phrase
+- **Drum**: crack of a drum? drumcrack?
+- **Light**: crack of dawn = first light - possible
+
+Best matches:
+1. **Fracture** - direct synonym for crack
+2. **Screen** - "cracked screen" is extremely common
+3. **Jar** - crack open a jar / crack a jar
+
+Wait, also:
+- **Seal**: "crack the seal" is a phrase
+- **Light**: crack of dawn
+
+I'm most confident about Fracture (synonym), Screen (cracked screen), and Jar (crack open). 
+
+Starting with Fracture as the most confident.
+
+{"guess": "FRACTURE", "reasoning": "Fracture is a direct synonym of crack - the strongest match."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRACK' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Bark
+  Bear
+  Ink
+  Africa
+  Fang
+  Light
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Screen
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+  [RED] CRACK 3  #1: Fracture → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'CRACK' with 3 words, I need to think about what words relate to "crack":
+
+- **SEAL** - crack a seal (opening something sealed)
+- **NAIL** - crack a nail? or "nail" as in doing something perfectly (like "crack" meaning to succeed)
+- **JAR** - crack open a jar
+- **MIRROR** - cracked mirror
+- **SCREEN** - cracked screen (very common!)
+- **DRUM** - cracked drum?
+- **BARK** - tree bark can crack
+- **LIGHT** - crack of light, or "cracker" light?
+- **BOOT** - cracked boot/leather?
+- **CUP** - cracked cup
+
+"CRACK" can mean:
+1. To break/split: mirror, screen, jar, cup
+2. "Crack of dawn" → LIGHT (crack of light)
+3. "Crack" as in excellent/elite
+4. Cracked screen is very common
+5. JAR - crack open a jar is very natural
+6. SEAL - crack the seal
+
+Already guessed "Fracture" which relates to breaking/cracking physically.
+
+SCREEN (cracked screen) seems very strong. JAR (crack open a jar) is natural. SEAL (crack the seal) is also good.
+
+I'll go with SCREEN first as cracked screens are extremely common.
+
+{"guess": "SCREEN", "reasoning": "Cracked screen is a very common phrase - phones, windows, etc. Strong connection to CRACK."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRACK' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Bark
+  Bear
+  Ink
+  Africa
+  Fang
+  Light
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+  [RED] CRACK 3  #1: Fracture → red
+  [RED] CRACK 3  #2: Screen → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'CRACK' with 2 successful guesses already (Fracture, Screen), I need one more word that relates to CRACK.
+
+Let me think about words that connect to CRACK:
+- **Bark**: trees have bark that can crack, but also "bark" as in a dog's sound
+- **Mirror**: a cracked mirror (bad luck) - this is a strong association
+- **Nail**: cracking nails? or "nail" as in fingernail that cracks
+- **Jar**: a jar can crack
+- **Drum**: a cracked drum? drumcrack? less obvious
+- **Seal**: a seal can crack (like a seal on a container breaking)
+- **Bear**: "bear" doesn't strongly connect to crack
+- **Boot**: "boot" - cracked boots? less obvious
+- **Cup**: a cracked cup - reasonable association
+- **Light**: "crack of light" - yes! "crack of dawn" = light! This is a strong connection
+
+"Crack of dawn" → LIGHT is a very strong association. Also "crackle" relates to light/fire.
+
+Wait, also considering: CRACK + SEAL could work (cracking a seal), but CRACK + LIGHT (crack of dawn, light through a crack) seems strong.
+
+Also "NUTCRACKER" doesn't help here. Let me also think about "WHIP CRACK" - no.
+
+LIGHT seems like the best remaining CRACK association - "crack of dawn" brings light.
+
+{"guess": "Light", "reasoning": "CRACK OF DAWN relates to light, and 'a crack of light' is a common phrase. This seems like the strongest remaining connection to CRACK."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Watch                ASSASSIN   
+  Bark                 RED        
+  Bear                 RED        
+  Point                BLUE       [revealed]
+  Ink                  NEUTRAL    
+  Africa               BLUE       
+  Head                 RED        [revealed]
+  Fang                 RED        
+  Light                NEUTRAL    [revealed]
+  Burst                RED        [revealed]
+  Fracture             RED        [revealed]
+  Jar                  NEUTRAL    
+  Deer                 NEUTRAL    
+  Drum                 RED        
+  Paste                BLUE       
+  Chapel               RED        
+  Court                BLUE       [revealed]
+  Boot                 NEUTRAL    
+  Bubble               BLUE       [revealed]
+  Screen               RED        [revealed]
+  Mirror               BLUE       
+  Cup                  BLUE       
+  Chart                NEUTRAL    
+  Nail                 BLUE       
+  Seal                 NEUTRAL    
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+  [RED] CRACK 3  #1: Fracture → red
+  [RED] CRACK 3  #2: Screen → red
+  [RED] CRACK 3  #3: Light → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AFRICA, BARK, BEAR, BOOT, BUBBLE, BURST, CHAPEL, CHART, COURT, CUP, DEER, DRUM, FANG, FRACTURE, HEAD, INK, JAR, LIGHT, MIRROR, NAIL, PASTE, POINT, SCREEN, SEAL, WATCH
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "GLASS", "number": 2, "reasoning": "Mirror and Cup are commonly made of glass."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GLASS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Watch
+  Bark
+  Bear
+  Ink
+  Africa
+  Fang
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Mirror
+  Cup
+  Chart
+  Nail
+  Seal
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+  [RED] CRACK 3  #1: Fracture → red
+  [RED] CRACK 3  #2: Screen → red
+  [RED] CRACK 3  #3: Light → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Mirror", "reasoning": "GLASS strongly associates with Mirror; mirrors are typically made of glass."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GLASS' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Watch
+  Bark
+  Bear
+  Ink
+  Africa
+  Fang
+  Jar
+  Deer
+  Drum
+  Paste
+  Chapel
+  Boot
+  Cup
+  Chart
+  Nail
+  Seal
+
+Game history:
+  [RED] PIPE 4  #1: Burst → red
+  [RED] PIPE 4  #2: Bubble → blue
+  [BLUE] TENNIS 3  #1: Court → blue
+  [BLUE] TENNIS 3  #2: Point → blue
+  [BLUE] TENNIS 3  #3: Head → red
+  [RED] CRACK 3  #1: Fracture → red
+  [RED] CRACK 3  #2: Screen → red
+  [RED] CRACK 3  #3: Light → neutral
+  [BLUE] GLASS 2  #1: Mirror → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Watch", "reasoning": "Second glass-related item (watch crystal) matching GLASS."}
+============================================================

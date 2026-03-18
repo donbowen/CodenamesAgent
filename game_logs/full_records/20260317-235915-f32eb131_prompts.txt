@@ -1,0 +1,2116 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Witch                NEUTRAL    
+  Chest                BLUE       
+  Zoo                  NEUTRAL    
+  Pipe                 RED        
+  Spring               ASSASSIN   
+  Chart                NEUTRAL    
+  Die                  RED        
+  Burst                BLUE       
+  Bow                  RED        
+  Light                RED        
+  Gene                 BLUE       
+  Crest                NEUTRAL    
+  Tower                RED        
+  Spirit               NEUTRAL    
+  Elm                  RED        
+  Letter               RED        
+  Bridge               BLUE       
+  Hospital             NEUTRAL    
+  Hollow               RED        
+  Jack                 NEUTRAL    
+  Couch                BLUE       
+  Dash                 BLUE       
+  Foam                 RED        
+  Link                 BLUE       
+  Fan                  BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOW, BRIDGE, BURST, CHART, CHEST, COUCH, CREST, DASH, DIE, ELM, FAN, FOAM, GENE, HOLLOW, HOSPITAL, JACK, LETTER, LIGHT, LINK, PIPE, SPIRIT, SPRING, TOWER, WITCH, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Pipe, Die, Bow, Light, Tower, Elm, Letter, Hollow, Foam.
+
+Let me think about groupings:
+
+- **Hollow, Elm**: These are both streets/places (Elm Street, Hollow...)
+- **Bow, Tower**: London areas (Tower of London, Bow in East London)
+- **Pipe, Foam**: Pipe foam, foam pipe insulation...
+- **Letter, Light**: Letter of the law, light...
+
+Let me think about "TREE":
+- Elm (tree)
+- Bow (tree - no)
+- Hollow (tree trunk hollow)
+
+"ORGAN":
+- Pipe organ
+- Light organ?
+- Bow?
+
+"STREET":
+- Elm Street
+- Bow (Bow Road/Street)
+- Letter (no)
+- Hollow (Sleepy Hollow)
+
+"BLOCK":
+- Tower block
+- Letter block
+- Hollow block?
+- Die (block die?)
+
+"LETTER":
+- Already on board
+
+"BOX":
+- Letter box
+- Light box
+- Die (dice box?)
+- Pipe?
+
+"DARK":
+- Hollow (Dark Hollow?)
+- Tower (Dark Tower)
+
+"DEAD":
+- Hollow (Sleepy Hollow)
+- Light (deadlight?)
+- Letter (dead letter)
+- Pipe (dead pipe?)
+- Die
+
+"RUBBER":
+- Foam rubber
+- Pipe (rubber pipe)
+- Bow (rubber bow?)
+- Die (rubber stamp/die)
+- Light?
+
+"SHAVING":
+- Foam (shaving foam)
+- Bow (shaving bow?)
+- Light?
+
+"BEER":
+- Foam (beer foam)
+- Tower (no)
+- Light (light beer)
+- Pipe (beer pipe/tap)
+- Die?
+
+"LAGER/ALE" - no...
+
+"DARK":
+- Tower (Dark Tower)
+- Hollow (dark hollow)
+- Light (dark vs light)
+
+"DEAD":
+- Letter (dead letter)
+- Light (deadlight)
+- Hollow (dead hollow?)
+- Pipe (dead pipe)
+- Die (to die)
+
+"SIGNAL":
+- Light (signal light)
+- Pipe?
+- Tower (signal tower)
+- Letter?
+
+"NIGHT":
+- Light (nightlight)
+- Hollow (Sleepy Hollow - night)
+
+"BOW":
+- Already on board
+
+"FIRE":
+- Tower (Fire Tower)
+- Light (firelight)
+- Foam (fire foam/retardant)
+- Pipe (fire pipe)
+- Bow? (no)
+
+"FIRE" connects: Tower (fire tower), Light (firelight), Foam (fire foam), Pipe (fire pipe/hose) - that's 4 RED words and doesn't hit assassin (Spring) or blue words strongly.
+
+Does "FIRE" hit any blue? Burst (fire burst - maybe), Link (fire link - no), Chest (no), Gene (no). Burst is a risk.
+
+Let me try "ORGAN":
+- Pipe (pipe organ)
+- Bow (bowing strings)
+- Light?
+- Tower (tower organ?)
+
+"STEEPLE":
+- Tower, Hollow, Elm...
+
+I'll go with FIRE connecting Tower, Light, Foam, Pipe (4 red words).
+
+{"clue": "FIRE", "number": 4, "reasoning": "Fire Tower (fire lookout tower), Firelight (light from fire), Fire Foam (firefighting foam), Fire Pipe (fire hose/pipe) - all RED words connected to fire, avoiding the assassin SPRING and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FIRE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Witch
+  Chest
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Burst
+  Bow
+  Light
+  Gene
+  Crest
+  Tower
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Couch
+  Dash
+  Foam
+  Link
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to FIRE.
+
+Let me think about compound words or phrases with FIRE:
+- FIRE + LIGHT = Firelight ✓
+- FIRE + TOWER = Fire Tower ✓
+- FIRE + CHEST = ? No
+- FIRE + PLACE = Fireplace (not on board)
+- FIRE + WORK = Firework (not on board)
+- FIRE + SIDE = Fireside (not on board)
+- FIRE + PIPE = ? No
+- FIRE + BURST = Fireburst? Not common
+- FIRE + FLY = Firefly (not on board)
+- FIRE + LINK = ? No
+- FIRE + JACK = Flapjack? No... Crackerjack? No
+- FIRE + HOLLOW = ? No
+- FIRE + SPIRIT = Fire Spirit? Maybe
+- FIRE + FOAM = Fire foam (firefighting foam) ✓
+- FIRE + DASH = ? No
+- FIRE + SPRING = Fire Spring? No
+- FIRE + BRIDGE = Firebridge? No
+- FIRE + WITCH = Fire Witch? No
+- FIRE + CHART = ? No
+- FIRE + BOW = Firebow? No... Rainbow? 
+- FIRE + FAN = Fire fan? Fan the flames?
+
+Strong ones: LIGHT (Firelight), TOWER (Fire tower), FOAM (fire retardant foam)
+Also: JACK - Flapjack? No... but "Cracker Jack" no. SPRING - no.
+
+Let me think differently:
+- LIGHT: Firelight ✓
+- TOWER: Fire Tower ✓  
+- FOAM: Firefighting foam ✓
+- BURST: Fireburst? Or "burst into flames"?
+- HOLLOW: Hollow fire? No
+- SPIRIT: Spirit = alcohol = fire? Fire spirit?
+
+I'll start with the most confident: LIGHT
+
+{"guess": "LIGHT", "reasoning": "FIRELIGHT is a common compound word - light from fire"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FIRE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Chest
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Burst
+  Bow
+  Gene
+  Crest
+  Tower
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Couch
+  Dash
+  Foam
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find words that relate to FIRE (4 words).
+
+Let me think about connections to FIRE:
+- **Pipe** → Fire pipe? Not strong
+- **Burst** → Burst into flames? Or fire burst
+- **Tower** → Fire tower (lookout tower for fires) ✓
+- **Hollow** → Sleepy Hollow? Not fire-related
+- **Jack** → Flapjack? No... Cracker Jack? 
+- **Dash** → Fire dash? No
+- **Foam** → Fire foam (firefighting foam) ✓
+- **Spring** → Firespring? No... 
+- **Elm** → Elm Street? No
+- **Chest** → Chest of fire? 
+- **Bow** → Fire bow (bow drill for making fire) ✓
+- **Link** → Firelink? 
+- **Fan** → Fan the flames ✓ or fire fan
+- **Spirit** → Fire spirit ✓
+- **Witch** → Fire witch?
+- **Gene** → No
+- **Chart** → No
+- **Crest** → No
+- **Bridge** → No
+- **Hospital** → No
+- **Zoo** → No
+- **Couch** → No
+- **Die** → No
+
+Strong connections:
+- **TOWER** → Fire tower ✓
+- **FOAM** → Fire foam (firefighting) ✓
+- **FAN** → Fan + fire, or fire fan ✓
+- **BURST** → Burst of fire ✓
+- **BOW** → Fire bow ✓
+- **SPIRIT** → Fire spirit ✓
+
+Let me think about compound words: FIRE + word or word + FIRE:
+- **Tower**: Fire tower ✓
+- **Foam**: Firefighting foam ✓
+- **Jack**: Flapjack... no. Cracker Jack... Jumping Jack... Fire Jack? 
+- **Dash**: No
+- **Link**: Firelink? 
+- **Elm**: No
+- **Burst**: Fireburst? Or burst of fire ✓
+- **Bow**: Fire bow ✓
+- **Fan**: Fire fan / fan fire ✓
+- **Spirit**: Fire spirit ✓
+
+Most confident: TOWER (fire tower), FOAM (fire foam), FAN (fan the fire/fire fan), BURST (burst of fire)
+
+Starting with TOWER as most confident:
+
+{"guess": "TOWER", "reasoning": "Fire tower is a common compound - lookout towers used to spot forest fires. Strong connection to FIRE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FIRE' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Chest
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Burst
+  Bow
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Couch
+  Dash
+  Foam
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining valid guesses and the clue 'FIRE' with 4 words:
+
+- Light (already guessed - red ✓)
+- Tower (already guessed - red ✓)
+
+Still need 2 more FIRE-related words:
+
+- **Pipe**: fire pipe? Not strong
+- **Burst**: burst into flames? Somewhat
+- **Dash**: not obvious
+- **Link**: fire link? No
+- **Jack**: Cracker Jack? No... "Flapjack"? 
+- **Hollow**: Sleepy Hollow? 
+- **Bow**: fire bow (bow and arrow with fire)?
+- **Spirit**: fire spirit? 
+- **Foam**: foam used to fight fires (fire foam/firefighting foam) ✓
+- **Chest**: chest... fireplace chest?
+- **Spring**: Springfield? No
+- **Fan**: fan the flames ✓
+
+Wait - thinking about compound words with FIRE:
+- **FIREPLACE** → no
+- **FOAM**: firefighting foam ✓
+- **FAN**: fan (fans fire) ✓  
+- **JACK**: Flapjack... no. Cracker Jack... Jumping Jack Flash... 
+- **LINK**: Firelink? No
+- **BURST**: burst of fire ✓
+- **SPRING**: Springfield? 
+- **HOLLOW**: Sleepy Hollow has headless horseman with fire...
+
+FOAM seems strong (fire foam = fire suppression foam).
+
+{"guess": "FOAM", "reasoning": "Fire foam is a firefighting suppression agent - 'foam' connects directly to FIRE as a compound/associated word used in firefighting."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FIRE' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Chest
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Burst
+  Bow
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Couch
+  Dash
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'FIRE' and the remaining valid guesses, I need to find one more word connected to FIRE.
+
+Already correctly guessed: Light (firelight), Tower (fire tower), Foam (fire foam/extinguisher)
+
+Remaining candidates related to FIRE:
+- **Burst**: a burst of fire, or "fireburster" - less common
+- **Pipe**: fire pipe? not strong
+- **Hollow**: not fire-related
+- **Jack**: Flapjack? not fire
+- **Cracker**: not on list
+- **Spirit**: spirit/fire connection (spirits are flammable) - possible
+- **Bow**: fire bow (primitive fire starting) - possible but weak
+- **Fan**: fan the flames - possible
+- **Bridge**: fire bridge? no
+- **Dash**: fire dash? no
+- **Link**: fire link? no
+
+Wait - **Burst**: "burst into flames" or "fireburst"
+**Spring**: spring... not fire
+**Chart**: fire chart? no
+**Crest**: fire crest? no
+
+Actually, thinking about compound words with FIRE:
+- **Cracker** → not on list
+- **Side** → not on list
+- **Work** → not on list
+- **Jack** → Flapjack, no... but "Fireman Jack"? weak
+- **Bow**: rainbow... no. But a fire bow is used to start fires
+
+Hmm, **Burst** - "fireburst" or bursting into fire seems reasonable. Also **Fan** - fanning flames.
+
+I'll go with **Burst** as it connects well to fire (fireburst, burst of flames).
+
+{"guess": "BURST", "reasoning": "Fireburst or 'burst into flames' - a strong connection to FIRE as a compound or phrase"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Witch                NEUTRAL    
+  Chest                BLUE       
+  Zoo                  NEUTRAL    
+  Pipe                 RED        
+  Spring               ASSASSIN   
+  Chart                NEUTRAL    
+  Die                  RED        
+  Burst                BLUE       [revealed]
+  Bow                  RED        
+  Light                RED        [revealed]
+  Gene                 BLUE       
+  Crest                NEUTRAL    
+  Tower                RED        [revealed]
+  Spirit               NEUTRAL    
+  Elm                  RED        
+  Letter               RED        
+  Bridge               BLUE       
+  Hospital             NEUTRAL    
+  Hollow               RED        
+  Jack                 NEUTRAL    
+  Couch                BLUE       
+  Dash                 BLUE       
+  Foam                 RED        [revealed]
+  Link                 BLUE       
+  Fan                  BLUE       
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOW, BRIDGE, BURST, CHART, CHEST, COUCH, CREST, DASH, DIE, ELM, FAN, FOAM, GENE, HOLLOW, HOSPITAL, JACK, LETTER, LIGHT, LINK, PIPE, SPIRIT, SPRING, TOWER, WITCH, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FURNITURE", "number": 2, "reasoning": "Chest and Couch are both types of furniture, linking two blue words without hinting at others."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Witch
+  Chest
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Bow
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Couch
+  Dash
+  Link
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Couch", "reasoning": "A direct furniture item; matches the FURNITURE clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Chest
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Bow
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chest", "reasoning": "Direct furniture item; a chest is a classic piece of furniture and a strong match for the 'FURNITURE' clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Bow
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "All furniture-related words on the board are already revealed (Couch, Chest); no unrevealed word matches the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Witch                NEUTRAL    
+  Chest                BLUE       [revealed]
+  Zoo                  NEUTRAL    
+  Pipe                 RED        
+  Spring               ASSASSIN   
+  Chart                NEUTRAL    
+  Die                  RED        
+  Burst                BLUE       [revealed]
+  Bow                  RED        
+  Light                RED        [revealed]
+  Gene                 BLUE       
+  Crest                NEUTRAL    
+  Tower                RED        [revealed]
+  Spirit               NEUTRAL    
+  Elm                  RED        
+  Letter               RED        
+  Bridge               BLUE       
+  Hospital             NEUTRAL    
+  Hollow               RED        
+  Jack                 NEUTRAL    
+  Couch                BLUE       [revealed]
+  Dash                 BLUE       
+  Foam                 RED        [revealed]
+  Link                 BLUE       
+  Fan                  BLUE       
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOW, BRIDGE, BURST, CHART, CHEST, COUCH, CREST, DASH, DIE, ELM, FAN, FOAM, GENE, HOLLOW, HOSPITAL, JACK, LETTER, LIGHT, LINK, PIPE, SPIRIT, SPRING, TOWER, WITCH, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: PIPE, DIE, BOW, ELM, LETTER, HOLLOW.
+
+Let me think about connections:
+
+**PIPE, BOW, ELM** - these could relate to music instruments? Pipe organ, bow (violin bow), elm (wood for instruments)... not tight enough.
+
+**HOLLOW, ELM** - trees? Elm is a tree, Hollow could be a tree hollow... but not a strong connection.
+
+**LETTER, BOW, DIE** - could these relate to something? 
+
+**BOW, DIE** - these are homonyms/have multiple meanings...
+
+**PIPE, ELM** - Elm Street? Pipe...
+
+**LETTER, BOW, PIPE** - could relate to "organ" - organ pipes, bow (music), letter...
+
+Let me think about **HOLLOW, ELM, PIPE**:
+- Hollow tree, Elm tree, Pipe... 
+
+**DIE, PIPE, BOW** - plumbing? No...
+
+**BOW, LETTER, DIE** - 
+
+**HOLLOW, PIPE** - both can describe empty cylindrical things...
+
+**ELM, HOLLOW** - Sleepy Hollow? Elm Street? Horror connections?
+
+**LETTER, BOW** - gift wrapping? A letter with a bow?
+
+**DIE, HOLLOW, PIPE** - 
+
+Let me think about **LETTER, BOW, DIE** - could be "ROLL": roll of the die, bow roll... no.
+
+**ELM, BOW, HOLLOW** - neighborhoods/streets? Elm Street, Bow (London area), Hollow...
+
+**PIPE, DIE, BOW** - **ORGAN**: pipe organ, bow (string instrument), die... no.
+
+**LETTER, PIPE, BOW** - **ORGAN**: organ pipe, bow tie... letter organ?
+
+**BOW, DIE, HOLLOW** - **CAST**: cast die, hollow cast...
+
+**ELM, HOLLOW, PIPE** - **TREE**: elm tree, hollow tree, pipe (tree pipe)... but TREE might point to ELM strongly.
+
+**LETTER, BOW, DIE** - **CAST**: cast die (casting die), cast letter (type casting), bow... 
+
+**LETTER, ELM, BOW** - **STREET**: Elm Street, Bow Street (London), Letter Street? No...
+
+**PIPE, BOW, ELM** - **WOOD**: pipewood? Elmwood, bowwood... 
+
+**DIE, HOLLOW, PIPE** - **CAST**: die cast, hollow cast, cast pipe... 
+
+**HOLLOW, PIPE, ELM** - 
+
+Let me try **LETTER, BOW, DIE** with clue **CAST**: die cast ✓, cast letter (typography) ✓, bow... not great.
+
+**PIPE, BOW, ELM** - **INSTRUMENT**: pipe (wind), bow (string), elm (wood for instruments)... this is decent!
+
+**LETTER, DIE** - both can be printing/typography related. **PRESS**: letter press ✓, die press ✓, bow press?... 
+
+**LETTER, DIE, PIPE** - **ORGAN**: organ pipe ✓, die... no.
+
+**BOW, DIE, HOLLOW** - **POINT**: bowpoint? 
+
+Let me go with **INSTRUMENT** for PIPE, BOW, ELM (3 words) - pipe instrument, bow instrument, elm wood instrument.
+
+But avoiding SPRING (assassin) - spring instrument? Maybe.
+
+{"clue": "INSTRUMENT", "number": 3, "reasoning": "PIPE (wind instrument/pipe organ), BOW (used to play string instruments), ELM (wood used to make instruments). Avoids SPRING which could also relate to instruments."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Witch
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Bow
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that match "INSTRUMENT" (musical instrument, tool/instrument, or legal instrument).
+
+Let me think through the valid guesses:
+
+- **Pipe**: A pipe organ is a musical instrument, or a pipe can be a tool/instrument
+- **Bow**: Used to play string instruments (violin bow) - definitely instrument-related
+- **Chart**: A chart can be an instrument (navigational chart), or "chart" in music
+- **Bridge**: Part of a string instrument (guitar/violin bridge) - instrument component
+- **Jack**: A jack can be a tool/instrument, or a jack in audio equipment
+- **Link**: Less obvious connection
+- **Spring**: A spring is a mechanical component, could be part of an instrument
+
+The strongest connections to INSTRUMENT:
+1. **Bow** - directly used with string instruments (violin, cello)
+2. **Pipe** - pipe is a wind instrument itself (pipes/bagpipes)
+3. **Bridge** - part of a string instrument
+
+These three seem like the best matches for musical instruments specifically.
+
+Starting with the most confident:
+
+{"guess": "BOW", "reasoning": "A bow is used to play string instruments like violin and cello, directly related to 'INSTRUMENT'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Pipe
+  Spring
+  Chart
+  Die
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'INSTRUMENT' with 3 words, and we've already correctly guessed "Bow" (a musical instrument / archery instrument).
+
+Let me think about remaining valid guesses that could be instruments:
+
+- **Pipe** - a pipe organ, or pipes as musical instruments (bagpipes), very strong connection
+- **Chart** - a chart can be an instrument (nautical chart for navigation), but weaker
+- **Bridge** - part of a stringed instrument (violin bridge), but also many other meanings
+- **Dash** - dashboard instrument? stretch
+- **Link** - weak connection
+- **Spring** - weak
+
+**Pipe** is very strong - pipes are musical instruments (organ pipes, bagpipes). 
+
+**Chart** - navigational instrument/tool? Less likely as a standalone "instrument."
+
+**Bridge** - the bridge of a guitar/violin is part of the instrument, but "bridge" as an instrument itself is a stretch. Also could be a surgical instrument bridge? 
+
+I think **Pipe** is the safest and most confident next guess for INSTRUMENT.
+
+{"guess": "Pipe", "reasoning": "A pipe is a musical instrument (organ pipe, bagpipes), making it a strong match for the INSTRUMENT clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'INSTRUMENT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Spring
+  Chart
+  Die
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Bridge
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'INSTRUMENT' with 3 words, I've already correctly guessed Bow and Pipe (both musical instruments / tools). I need one more guess.
+
+From the remaining valid words, let me think about what could be an instrument:
+- **Chart** - a chart can be an instrument (as in "instrument of measurement" or a nautical chart used as a navigational instrument)
+- **Bridge** - a bridge is part of a stringed instrument (violin, guitar)
+- **Jack** - a jack can be a mechanical instrument/tool
+- **Link** - less likely
+- **Spring** - a spring is a mechanical component
+
+**Bridge** is a strong candidate - it's literally a part of stringed instruments (the bridge on a violin or guitar). It also connects to the musical instrument theme that fits with Bow and Pipe.
+
+We have 4 red cards remaining and blue has 5. We need to be careful. Bridge as part of a stringed instrument seems very fitting with the INSTRUMENT clue alongside Bow (used with strings) and Pipe.
+
+{"guess": "Bridge", "reasoning": "A bridge is a component of stringed instruments (violin, guitar), fitting perfectly with the INSTRUMENT clue. Combined with Bow (used to play strings) and Pipe (wind instrument), Bridge completes the set of instrument-related words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Witch                NEUTRAL    
+  Chest                BLUE       [revealed]
+  Zoo                  NEUTRAL    
+  Pipe                 RED        [revealed]
+  Spring               ASSASSIN   
+  Chart                NEUTRAL    
+  Die                  RED        
+  Burst                BLUE       [revealed]
+  Bow                  RED        [revealed]
+  Light                RED        [revealed]
+  Gene                 BLUE       
+  Crest                NEUTRAL    
+  Tower                RED        [revealed]
+  Spirit               NEUTRAL    
+  Elm                  RED        
+  Letter               RED        
+  Bridge               BLUE       [revealed]
+  Hospital             NEUTRAL    
+  Hollow               RED        
+  Jack                 NEUTRAL    
+  Couch                BLUE       [revealed]
+  Dash                 BLUE       
+  Foam                 RED        [revealed]
+  Link                 BLUE       
+  Fan                  BLUE       
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOW, BRIDGE, BURST, CHART, CHEST, COUCH, CREST, DASH, DIE, ELM, FAN, FOAM, GENE, HOLLOW, HOSPITAL, JACK, LETTER, LIGHT, LINK, PIPE, SPIRIT, SPRING, TOWER, WITCH, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "GENETIC", "number": 2, "reasoning": "Genetic linkage ties Gene and Link; Fan and Dash are not strongly related."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GENETIC' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Witch
+  Zoo
+  Spring
+  Chart
+  Die
+  Gene
+  Crest
+  Spirit
+  Elm
+  Letter
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Gene","reasoning":"Direct match to GENETIC; most obvious word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GENETIC' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Spring
+  Chart
+  Die
+  Crest
+  Spirit
+  Elm
+  Letter
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Link
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Link", "reasoning": "Genetics-related: linkage is a key concept in genetics, fitting the GENETIC clue and complementing the prior 'Gene' guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'GENETIC' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Spring
+  Chart
+  Die
+  Crest
+  Spirit
+  Elm
+  Letter
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Chart", "reasoning": "Strong genetics association (genetic chart/pedigree) among remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Witch                NEUTRAL    
+  Chest                BLUE       [revealed]
+  Zoo                  NEUTRAL    
+  Pipe                 RED        [revealed]
+  Spring               ASSASSIN   
+  Chart                NEUTRAL    [revealed]
+  Die                  RED        
+  Burst                BLUE       [revealed]
+  Bow                  RED        [revealed]
+  Light                RED        [revealed]
+  Gene                 BLUE       [revealed]
+  Crest                NEUTRAL    
+  Tower                RED        [revealed]
+  Spirit               NEUTRAL    
+  Elm                  RED        
+  Letter               RED        
+  Bridge               BLUE       [revealed]
+  Hospital             NEUTRAL    
+  Hollow               RED        
+  Jack                 NEUTRAL    
+  Couch                BLUE       [revealed]
+  Dash                 BLUE       
+  Foam                 RED        [revealed]
+  Link                 BLUE       [revealed]
+  Fan                  BLUE       
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOW, BRIDGE, BURST, CHART, CHEST, COUCH, CREST, DASH, DIE, ELM, FAN, FOAM, GENE, HOLLOW, HOSPITAL, JACK, LETTER, LIGHT, LINK, PIPE, SPIRIT, SPRING, TOWER, WITCH, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Die, Elm, Letter, Hollow.
+
+Let me think about connections:
+
+- **Die**: to die, dice, dye
+- **Elm**: a tree, Elm Street
+- **Letter**: alphabet letter, mail letter
+- **Hollow**: empty space, Sleepy Hollow
+
+Let me think about what connects these:
+
+- **Elm, Hollow**: Both are types of trees? No, Hollow isn't a tree. But "Hollow" can relate to trees (hollow tree).
+- **Letter, Die**: Letter die (like a stamp/die for letters)?
+
+What about "A Nightmare on Elm Street" and "Sleepy Hollow" - both horror things?
+
+- **Hollow**: Sleepy Hollow (horror)
+- **Elm**: Elm Street (horror)
+- **Die**: dying (horror theme)
+- **Witch**: Witch is neutral though...
+
+What about **TREE**?
+- Elm is a tree
+- Hollow (tree hollow)
+- Letter (letter box is on trees? no...)
+
+What about **DEAD**?
+- Die → dead
+- Hollow → dead (hollow = dead inside)
+- Letter → dead letter
+- Elm → Dead Elm? not great
+
+**DEAD**: Die (dead), Letter (dead letter), Hollow (hollow/dead), Elm (less obvious)
+
+What about **BLOCK**?
+- Letter block
+- Die (dice/block)
+- Hollow (hollow block?)
+- Elm (Elm block? no)
+
+What about **WRITING**?
+- Letter
+- Die (die stamp)
+
+Let me reconsider. **SLEEPY** - Sleepy Hollow, but that's only one.
+
+What about connecting Die, Elm, Hollow with a horror theme - avoiding Dash (blue) and Fan (blue)?
+
+**NIGHTMARE**: Elm (Nightmare on Elm Street), Die (nightmare = death), Hollow (Sleepy Hollow)... that's 3 but risky.
+
+What about **WOOD**?
+- Elm (elm wood)
+- Hollow (hollow wood)
+- Die (die is made of wood sometimes)
+- Letter (wooden letter blocks)
+
+**WOOD** connects Elm and Hollow well, but Die and Letter less so.
+
+What about **CAST**?
+- Die cast (diecast)
+- Letter (cast letters in type)
+- Hollow (hollow cast?)
+
+**ALPHABET**: Letter, Die (alphabet die/block)... only 2.
+
+Let me try **CARVED**:
+- Die (carved die)
+- Letter (carved letter)
+- Hollow (carved hollow)
+- Elm (carved from elm)
+
+Or **STAMP**:
+- Die (stamp die)
+- Letter (stamp a letter)
+- Hollow? no
+- Elm? no
+
+**MAIL**: Letter (mail letter), Die? no...
+
+What about **BOX**?
+- Letter box
+- Hollow (hollow box?)
+- Die (die in a box?)
+
+I think the best connection I can find for 3 words is horror/spooky:
+- Elm (Elm Street)
+- Hollow (Sleepy Hollow)  
+- Die (death)
+
+But I want to avoid Witch (neutral) being guessed.
+
+Let me try **SLEEPY**: Sleepy Hollow - only 1.
+
+**GOTHIC** or **HORROR** for Elm, Hollow, Die?
+
+I'll go with **TREE** for Elm and Hollow (2 safe words):
+- Elm: definitely a tree
+- Hollow: tree hollow
+
+{"clue": "TREE", "number": 2, "reasoning": "Elm is a type of tree, and Hollow commonly refers to a hollow in a tree. This safely connects two red words while avoiding the assassin (Spring) and blue words (Dash, Fan)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Witch
+  Zoo
+  Spring
+  Die
+  Crest
+  Spirit
+  Elm
+  Letter
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'TREE' with 2 words, I need to find words related to trees from the valid list.
+
+- **Elm**: A type of tree directly
+- **Hollow**: Trees can be hollow; "Sleepy Hollow" has tree associations
+- **Witch**: "Witch elm" or "witch hazel" are trees
+- **Spring**: Less directly related to trees
+- **Jack**: "Jackfruit tree"? Less direct
+
+The most obvious tree-related words:
+- **Elm** - literally a type of tree
+- **Hollow** - a hollow tree is very common association
+
+Blue has only 2 cards remaining vs our 4, so I need to be careful not to hit blue cards. Let me think about risks:
+- Elm is very directly a tree type - very safe
+- Hollow - "hollow tree" is a strong association
+
+{"guess": "ELM", "reasoning": "Elm is literally a type of tree - the most direct connection to the clue 'TREE'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Spring
+  Die
+  Crest
+  Spirit
+  Letter
+  Hospital
+  Hollow
+  Jack
+  Dash
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+  [RED] TREE 2  #1: Elm → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the valid guesses and the clue "TREE 2":
+
+- Already guessed "Elm" correctly (a type of tree)
+- Now looking for another tree-related word from the remaining valid guesses
+
+"Hollow" - a hollow tree is a classic concept (think Sleepy Hollow, but also literally hollow trees)
+"Spring" - not particularly tree-related
+"Witch" - Witch Hazel is a tree/shrub!
+"Jack" - Jackfruit tree? Somewhat of a stretch
+"Crest" - not tree-related
+
+"Witch Hazel" is a well-known tree/shrub. Also "Witch" could relate to trees in folklore.
+
+"Hollow" is very strongly associated with trees (a hollow tree trunk).
+
+We need 3 more red cards and blue only needs 2. We should be aggressive. "Hollow" seems like a strong tree connection (hollow tree), and "Witch" (witch hazel tree) is also possible.
+
+I'll go with "Hollow" as it's most directly tree-associated.
+
+{"guess": "Hollow", "reasoning": "A hollow tree is a very common concept - trees often have hollows. This seems like a strong connection to TREE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TREE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Spring
+  Die
+  Crest
+  Spirit
+  Letter
+  Hospital
+  Jack
+  Dash
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Hollow → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the situation:
+- Red remaining: 2, Blue remaining: 2
+- I've already used 2 guesses this turn (Elm → red, Hollow → red)
+- I've guessed the clue_number (2) correctly, so I could try a bonus guess
+
+The clue is 'TREE' and I'm looking at the remaining valid words: Witch, Zoo, Spring, Die, Crest, Spirit, Letter, Hospital, Jack, Dash, Fan
+
+"Witch" could relate to TREE - "Witch Hazel" is a type of tree/shrub. But this is risky.
+"Jack" - Jackfruit tree? Or "Cracker Jack"? 
+"Spring" - not strongly tree-related.
+"Fan" - Fan palm is a type of tree.
+
+We need 2 more red cards. Blue also needs 2. This is very tense - if I guess wrong and hit a blue card, they win.
+
+"Witch" as in Witch Hazel (a tree) is possible, but I'm not confident enough to risk hitting a blue card when we're tied. 
+
+I should PASS to be safe, since I've already gotten 2 correct guesses matching the clue number.
+
+{"guess": "PASS", "reasoning": "I've successfully guessed the 2 words for the TREE clue (Elm and Hollow). With Red and Blue both at 2 remaining, guessing again risks hitting a blue card which would give them the win. I'll pass to let the Spymaster give a better clue next turn."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Witch                NEUTRAL    
+  Chest                BLUE       [revealed]
+  Zoo                  NEUTRAL    
+  Pipe                 RED        [revealed]
+  Spring               ASSASSIN   
+  Chart                NEUTRAL    [revealed]
+  Die                  RED        
+  Burst                BLUE       [revealed]
+  Bow                  RED        [revealed]
+  Light                RED        [revealed]
+  Gene                 BLUE       [revealed]
+  Crest                NEUTRAL    
+  Tower                RED        [revealed]
+  Spirit               NEUTRAL    
+  Elm                  RED        [revealed]
+  Letter               RED        
+  Bridge               BLUE       [revealed]
+  Hospital             NEUTRAL    
+  Hollow               RED        [revealed]
+  Jack                 NEUTRAL    
+  Couch                BLUE       [revealed]
+  Dash                 BLUE       
+  Foam                 RED        [revealed]
+  Link                 BLUE       [revealed]
+  Fan                  BLUE       
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Hollow → red
+  [RED] TREE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BOW, BRIDGE, BURST, CHART, CHEST, COUCH, CREST, DASH, DIE, ELM, FAN, FOAM, GENE, HOLLOW, HOSPITAL, JACK, LETTER, LIGHT, LINK, PIPE, SPIRIT, SPRING, TOWER, WITCH, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"speed","number":2,"reasoning":"Links Dash (a dash = speed) and Fan (fans have speed settings); targets our two remaining blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPEED' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Witch
+  Zoo
+  Spring
+  Die
+  Crest
+  Spirit
+  Letter
+  Hospital
+  Jack
+  Dash
+  Fan
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Hollow → red
+  [RED] TREE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dash", "reasoning": "Direct match to SPEED; 'dash' means to move quickly, a strong association."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPEED' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Witch
+  Zoo
+  Spring
+  Die
+  Crest
+  Spirit
+  Letter
+  Hospital
+  Jack
+  Fan
+
+Game history:
+  [RED] FIRE 4  #1: Light → red
+  [RED] FIRE 4  #2: Tower → red
+  [RED] FIRE 4  #3: Foam → red
+  [RED] FIRE 4  #4: Burst → blue
+  [BLUE] FURNITURE 2  #1: Couch → blue
+  [BLUE] FURNITURE 2  #2: Chest → blue
+  [BLUE] FURNITURE 2  #3: PASS
+  [RED] INSTRUMENT 3  #1: Bow → red
+  [RED] INSTRUMENT 3  #2: Pipe → red
+  [RED] INSTRUMENT 3  #3: Bridge → blue
+  [BLUE] GENETIC 2  #1: Gene → blue
+  [BLUE] GENETIC 2  #2: Link → blue
+  [BLUE] GENETIC 2  #3: Chart → neutral
+  [RED] TREE 2  #1: Elm → red
+  [RED] TREE 2  #2: Hollow → red
+  [RED] TREE 2  #3: PASS
+  [BLUE] SPEED 2  #1: Dash → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fan", "reasoning": "Most direct link to speed through 'fan speed' settings; likely one of the SPEED-related blue cards."}
+============================================================

@@ -1,0 +1,2157 @@
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Rose                 BLUE       
+  Fountain             BLUE       
+  Lever                BLUE       
+  Crest                BLUE       
+  Shadow               NEUTRAL    
+  Mirror               BLUE       
+  Ruler                BLUE       
+  Cap                  RED        
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    
+  Frame                RED        
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        
+  Chapel               NEUTRAL    
+  Dagger               RED        
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        
+  Button               BLUE       
+  Fence                RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "BORDER", "number": 3, "reasoning": "Relates to borders/edges: frame (border around a picture), fence (boundary), bar (barrier/border)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BORDER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rose
+  Fountain
+  Lever
+  Crest
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Frame
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+  Button
+  Fence
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fence", "reasoning": "Fence is a literal border/boundary, matching the clue BORDER."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BORDER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Lever
+  Crest
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Frame
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+  Button
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Frame", "reasoning": "Frame is a border around an object; directly connected to the clue BORDER."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'BORDER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Lever
+  Crest
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+  Button
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Crest", "reasoning": "Crest is an edge/border term, fitting the BORDER clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Rose                 BLUE       
+  Fountain             BLUE       
+  Lever                BLUE       
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    
+  Mirror               BLUE       
+  Ruler                BLUE       
+  Cap                  RED        
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        
+  Chapel               NEUTRAL    
+  Dagger               RED        
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        
+  Button               BLUE       
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED words, NEUTRAL words, and especially the ASSASSIN (Flow).
+
+Let me look at my remaining BLUE words: Rose, Fountain, Lever, Mirror, Ruler, Phoenix, Button
+
+Let me think about possible connections:
+
+- **Reflecting/Reflection**: Mirror (reflects), Fountain (reflects water), Rose... not great
+- **VANITY**: Mirror (vanity mirror), Rose (vanity/beauty), Fountain (fountain of youth/vanity)... but could point to other things
+- **Glass**: Mirror (glass), Rose (rose glass/stained glass), Fountain (glass fountain?)... weak
+- **PRESS**: Button (press a button), Lever (press a lever), Rose (pressed rose/flower press), Ruler (press ruler to paper?)... Let me check dangers: could "press" point to any red/assassin? Bar (bar press?), Cap (cap press?)... some risk
+- **PUSH**: Button (push button), Lever (push lever)... only 2
+- **PULL**: Lever (pull), Lure (pull toward) - Lure is RED, bad
+- **WATER**: Fountain (water), Rose (water a rose), Brook (water) - Brook is RED, dangerous
+- **SWITCH**: Button, Lever - both are switches, Mirror (switch/flip)... 
+- **MECHANICAL**: Lever, Button... only 2
+- **CONTROL**: Lever, Button, Ruler (one who rules/controls)... 3 words. Let me check dangers: could point to Cap (salary cap?), Bar, Dagger? Not really. Flow (flow control)? That's a slight risk with the assassin.
+- **MEASURE**: Ruler (measuring tool)... only 1-2
+- **GARDEN**: Rose (garden rose), Fountain (garden fountain), Lever? No.
+- **BLOOM**: Rose, Phoenix (rises/blooms)... Fountain? Not strong enough.
+- **REBIRTH**: Phoenix (rebirth), Rose (can symbolize renewal), Fountain (fountain of youth)... 3, but weak connections
+- **MYTHICAL/LEGEND**: Phoenix... only 1
+- **OPERATE**: Lever (operate), Button (operate)... 2
+
+Let me reconsider **CONTROL**: Ruler (controls), Lever (control lever), Button (control button) = 3. Risk to assassin "Flow" (flow control) is concerning.
+
+**TOGGLE**: Button (toggle button), Lever (toggle lever), Mirror (toggle/flip mirror)... no assassin risk. 
+
+{"clue": "TOGGLE", "number": 3, "reasoning": "TOGGLE connects Button (toggle button/switch), Lever (toggle lever), and Mirror (toggle/flip a mirror). These are all BLUE words. Low risk of pointing to RED words or the ASSASSIN (Flow)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOGGLE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rose
+  Fountain
+  Lever
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+  Button
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "SWITCH", "reasoning": "Let me reconsider - SWITCH is not on the valid list. Let me think about TOGGLE. A toggle is a type of switch or button mechanism. Looking at the valid guesses: BUTTON (you toggle a button), LEVER (you toggle a lever), and SWITCH/Cap... Let me think about what three words relate to TOGGLE. BUTTON - toggling a button on/off. LEVER - toggling a lever up/down. BAR - a toggle bar (like a toolbar toggle). Or CAP - toggle cap? Let me start with the most confident one."}
+
+Wait, I need to provide a valid guess. Let me redo this.
+
+{"guess": "BUTTON", "reasoning": "TOGGLE is strongly associated with BUTTON - you toggle a button on/off. This is a very common pairing in both physical switches and UI design (toggle button). This seems like the most confident connection to TOGGLE among the valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOGGLE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rose
+  Fountain
+  Lever
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+  Button
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[ASSISTANT]
+{"guess": "SWITCH", "reasoning": "Let me reconsider - SWITCH is not on the valid list. Let me think about TOGGLE. A toggle is a type of switch or button mechanism. Looking at the valid guesses: BUTTON (you toggle a button), LEVER (you toggle a lever), and SWITCH/Cap... Let me think about what three words relate to TOGGLE. BUTTON - toggling a button on/off. LEVER - toggling a lever up/down. BAR - a toggle bar (like a toolbar toggle). Or CAP - toggle cap? Let me start with the most confident one."}
+
+Wait, I need to provide a valid guess. Let me redo this.
+
+{"guess": "BUTTON", "reasoning": "TOGGLE is strongly associated with BUTTON - you toggle a button on/off. This is a very common pairing in both physical switches and UI design (toggle button). This seems like the most confident connection to TOGGLE among the valid guesses."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 503). Try again.
+
+[RESPONSE]
+{"guess": "BUTTON", "reasoning": "TOGGLE is strongly associated with BUTTON - you toggle a button on/off. This is a very common pairing in both physical switches and UI design (toggle button). This seems like the most confident connection to TOGGLE among the valid guesses."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOGGLE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Lever
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lever", "reasoning": "TOGGLE strongly relates to LEVER - a lever is a classic toggle mechanism, something you flip/switch back and forth. This is one of the most direct connections to the clue word TOGGLE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOGGLE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "SWITCH", "reasoning": "Let me reconsider - SWITCH is not on the valid guesses list."}
+
+Wait, let me reconsider the valid guesses.
+
+{"guess": "Cap", "reasoning": "TOGGLE relates to switching something on/off or flipping. A CAP can be toggled on/off (like a bottle cap, a lens cap, a cap on a pen). We've already correctly guessed Button and Lever which are both things you toggle. Cap fits this pattern as something that goes on and off. With 5 blue remaining and 7 red remaining, I should try to get this third word but be cautious."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TOGGLE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Shadow
+  Mirror
+  Ruler
+  Cap
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "SWITCH", "reasoning": "Let me reconsider - SWITCH is not on the valid guesses list."}
+
+Wait, let me reconsider the valid guesses.
+
+{"guess": "Cap", "reasoning": "TOGGLE relates to switching something on/off or flipping. A CAP can be toggled on/off (like a bottle cap, a lens cap, a cap on a pen). We've already correctly guessed Button and Lever which are both things you toggle. Cap fits this pattern as something that goes on and off. With 5 blue remaining and 7 red remaining, I should try to get this third word but be cautious."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 98). Try again.
+
+[RESPONSE]
+{"guess": "Cap", "reasoning": "TOGGLE relates to switching something on/off. A cap can be toggled on/off (bottle cap, lens cap, pen cap). We already got Button and Lever which are things you toggle. Cap fits as something that goes on and off."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Rose                 BLUE       
+  Fountain             BLUE       
+  Lever                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    
+  Mirror               BLUE       
+  Ruler                BLUE       
+  Cap                  RED        [revealed]
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        
+  Chapel               NEUTRAL    
+  Dagger               RED        
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        
+  Button               BLUE       [revealed]
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "KNIFE", "number": 1, "reasoning": "Dagger is a type of knife; links to one red unrevealed word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'KNIFE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rose
+  Fountain
+  Shadow
+  Mirror
+  Ruler
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Dagger
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dagger", "reasoning": "Directly matches the clue 'knife'; a dagger is a type of knife."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'KNIFE' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Shadow
+  Mirror
+  Ruler
+  Cargo
+  Kettle
+  Plane
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plane", "reasoning": "Knife is a cutting tool; a plane is a blade-based tool as well, sharing the blade/edge concept."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Rose                 BLUE       
+  Fountain             BLUE       
+  Lever                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    
+  Mirror               BLUE       
+  Ruler                BLUE       
+  Cap                  RED        [revealed]
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        
+  Chapel               NEUTRAL    
+  Dagger               RED        [revealed]
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        
+  Button               BLUE       [revealed]
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting some of: Rose, Fountain, Mirror, Ruler, Phoenix.
+
+Let me think about possible connections:
+
+**REFLECTION**: Mirror (reflects), Fountain (water reflects), Rose (less strong), Phoenix (less strong). But this mainly hits Mirror and Fountain well.
+
+**VANITY**: Mirror (vanity mirror), Rose (vanity/beauty), Fountain (fountain of youth/vanity). Maybe 3, but could it hit anything dangerous? "Flow" is the assassin - no connection. Bar, Brook, Fog, Dome, Lure - no strong connections.
+
+**GLASS**: Mirror (glass), Fountain (glass), Rose (rose glass/stained glass). Ruler could have a glass ruler. But this might be a stretch.
+
+**WATER**: Fountain (water fountain), Mirror (water mirror/reflection). But Brook (RED) and Flow (ASSASSIN!) are water-related. Too dangerous.
+
+**IMPERIAL**: Ruler (imperial ruler), Phoenix (imperial symbol, especially in mythology/heraldry), Rose (imperial rose, Tudor rose). Maybe Dome (imperial dome)? That's a risk. Let me assess: Dome is RED - "imperial dome" is somewhat possible but not the strongest link.
+
+**REGAL**: Ruler (regal), Rose (regal symbol), Phoenix (regal mythical bird), Fountain (regal fountain in palaces). Dome could be regal too though...
+
+**MYTHICAL**: Phoenix (mythical creature), Fountain (fountain of youth - mythical). Only 2.
+
+**EMBLEM**: Rose (emblem), Phoenix (emblem), Ruler (less so), Mirror (less so). Crest is already revealed.
+
+**BLOOM**: Rose (blooms), Phoenix (rises/blooms), Fountain (fountain blooms). But only Rose is strong.
+
+Let me reconsider **VANITY**: Mirror (vanity mirror - very strong), Rose (symbol of vanity), Fountain (fountain of youth/vanity). Three solid connections. Dangerous words: Lure could relate slightly to vanity? It's a stretch. Flow (assassin) - no connection. This seems safe.
+
+{"clue": "VANITY", "number": 3, "reasoning": "Connecting Mirror (vanity mirror), Rose (symbol of vanity/beauty), and Fountain (fountain of youth, associated with vanity). Avoids the assassin Flow and red words. Brook and Bar have no vanity connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VANITY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Rose
+  Fountain
+  Shadow
+  Mirror
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "MIRROR", "reasoning": "VANITY is strongly associated with MIRROR - a vanity mirror is a common compound word/phrase, and vanity as a concept involves looking at oneself in a mirror."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VANITY' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Rose
+  Fountain
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Rose", "reasoning": "VANITY can relate to 'Rose' - roses are associated with vanity/beauty/appearance. A vanity rose is a classic symbol of beauty and self-admiration."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VANITY' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fountain
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "FOUNTAIN", "reasoning": "A 'vanity' in bathroom context is associated with a sink/basin area, and a fountain involves water flowing, similar to a vanity basin. But more directly, 'vanity' relates to pride/self-admiration. We've already gotten Mirror and Rose (both connected to vanity/beauty). A 'fountain' could connect - think 'fountain of youth' which relates to vanity about appearance/aging. With 3 blue remaining and 5 red remaining, we need to be somewhat aggressive but careful. Let me also consider other options: 'Lure' could relate to vanity (attraction/allure), 'Chapel' has a vanity connection (vanity as a sin). 'Bar' could be a vanity bar. I'll go with Fountain as it connects through the 'fountain of youth' vanity concept."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'VANITY' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 words correctly this turn (Mirror, Rose, Fountain), matching the clue number of 3. With only 2 blue cards remaining, I should be cautious. The remaining words don't have a strong connection to 'VANITY', and guessing wrong could help the opponent or hit the assassin. Better to pass and wait for the next clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Rose                 BLUE       [revealed]
+  Fountain             BLUE       [revealed]
+  Lever                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    
+  Mirror               BLUE       [revealed]
+  Ruler                BLUE       
+  Cap                  RED        [revealed]
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        
+  Chapel               NEUTRAL    
+  Dagger               RED        [revealed]
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        
+  Button               BLUE       [revealed]
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "FISHING", "number": 2, "reasoning": "Links to Lure (fishing lure) and Brook (a waterway), both red unrevealed words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Lure
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Lure", "reasoning": "Direct association with fishing; a lure is used to catch fish."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+  Brook
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Brook", "reasoning": "Brook is a water body commonly associated with fishing, making it a strong candidate for the second red word tied to the FISHING clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "You've already found the two fishing-related red words (Lure, Brook). With only one guess left and several neutrals/blue/assassin risks among the remaining words, it's safest to pass."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Rose                 BLUE       [revealed]
+  Fountain             BLUE       [revealed]
+  Lever                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    
+  Mirror               BLUE       [revealed]
+  Ruler                BLUE       
+  Cap                  RED        [revealed]
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        [revealed]
+  Chapel               NEUTRAL    
+  Dagger               RED        [revealed]
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        [revealed]
+  Button               BLUE       [revealed]
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to connect RULER and PHOENIX — my two remaining blue words.
+
+Let me think about what connects a ruler and a phoenix:
+
+- Both can be associated with royalty/kingdoms — a ruler rules a kingdom, and a phoenix is a mythical creature often associated with royalty and empires.
+- "Reign" — a ruler reigns, and a phoenix could be associated with a reign (rising from ashes to reign again). But does it risk pointing to red words? FOG, DOME, BAR — not really.
+- "Emperor" — an emperor is a type of ruler, and there's the Emperor Phoenix or imperial phoenix imagery. But this might not be strong enough for phoenix.
+- "Mythical" — phoenix is mythical, but ruler isn't really.
+- "Rise" — a phoenix rises from ashes, and a ruler rises to power. But FLOW is the assassin — "rise" doesn't seem to point there. Does it point to FOG, DOME, BAR? Not strongly.
+- "Sovereign" — a ruler is a sovereign, and a phoenix is often a symbol of sovereignty. But this mainly points to RULER.
+- "Imperial" — similar to sovereign.
+- "Monarch" — a monarch is a ruler, and a monarch butterfly... not phoenix. But wait — the phoenix is often a symbol of monarchs/monarchy (e.g., in Chinese culture, the phoenix represents the empress).
+- "Kingdom" — a ruler has a kingdom, phoenix... less so.
+- "Reborn" — phoenix is reborn, ruler... not as strong.
+- "Crown" — a ruler wears a crown, and a phoenix is often depicted with a crown-like crest. But CREST is on the board (already revealed, but still). Does "crown" risk pointing to DOME or BAR? Not really.
+
+"REIGN" seems like a solid choice: a ruler reigns, and a phoenix reigns over mythical birds / rises to reign again. It doesn't point toward FOG, DOME, BAR, or the assassin FLOW.
+
+{"clue": "REIGN", "number": 2, "reasoning": "RULER directly connects to reign (a ruler reigns), and PHOENIX connects through the concept of rising to reign again, a symbol of imperial/royal power. Low risk of pointing to assassin FLOW or red words FOG, DOME, BAR."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'REIGN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Shadow
+  Ruler
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Ruler", "reasoning": "REIGN strongly relates to ruling/monarchy. A 'Ruler' is someone who reigns over a kingdom or territory. This is the most direct connection to the clue 'REIGN'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'REIGN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Shadow
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I already guessed 'Ruler' correctly, which was one of the REIGN clue words. With only 1 blue card remaining (now 0 after guessing Ruler correctly), wait - let me recheck. Blue remaining is 1, and I just guessed Ruler as blue. Actually, looking at the history, Ruler was guessed this turn and was blue. But the prompt says Blue remaining: 1, which might be the count before this turn's guesses. Actually, the guess history shows Ruler → blue already counted. So Blue remaining should now be 0... but the game says 1. Let me re-read: 'Guesses used this turn: 1 / 3' and 'Blue remaining: 1'. This means I still have 1 blue card left. The clue is REIGN 2, so I need to find another word. REIGN could connect to 'Shadow' (shadow reign?), 'Dome' (dome of power?), 'Chapel' (religious reign?), 'Phoenix' (phoenix rising, reign?), or 'Fleet' (fleet/naval reign?). None are strong connections. 'Crown' would be perfect but isn't available. I think I should guess but I'm very uncertain. Actually, 'reign' and 'rain' are homophones - could this be about RAIN? Shadow, Fog, Flow could relate to rain/weather. 'Flow' connects to rain (water flowing). Let me think about REIGN specifically: kingdom, monarch, rule, power, era, dynasty. 'Dome' could be a palace dome. 'Chapel' could relate to a monarch's chapel. 'Phoenix' could relate to a dynasty rising. None are confident. Given Red has 3 left and I have 1, I need to find it but can't risk the assassin. Let me guess 'Phoenix' - reign of the phoenix, dynasty."}
+
+Hmm, let me reconsider more carefully.
+
+{"guess": "Shadow", "reasoning": "Thinking about 'REIGN' as a homophone for 'RAIN' - 'rain shadow' is a well-known geographical/meteorological term. The Spymaster may be using the homophone connection. With 1 blue card remaining and Red having 3, I need to find this card. 'Rain shadow' is a strong compound phrase."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'REIGN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Shadow
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "PASS", "reasoning": "I already guessed 'Ruler' correctly, which was one of the REIGN clue words. With only 1 blue card remaining (now 0 after guessing Ruler correctly), wait - let me recheck. Blue remaining is 1, and I just guessed Ruler as blue. Actually, looking at the history, Ruler was guessed this turn and was blue. But the prompt says Blue remaining: 1, which might be the count before this turn's guesses. Actually, the guess history shows Ruler → blue already counted. So Blue remaining should now be 0... but the game says 1. Let me re-read: 'Guesses used this turn: 1 / 3' and 'Blue remaining: 1'. This means I still have 1 blue card left. The clue is REIGN 2, so I need to find another word. REIGN could connect to 'Shadow' (shadow reign?), 'Dome' (dome of power?), 'Chapel' (religious reign?), 'Phoenix' (phoenix rising, reign?), or 'Fleet' (fleet/naval reign?). None are strong connections. 'Crown' would be perfect but isn't available. I think I should guess but I'm very uncertain. Actually, 'reign' and 'rain' are homophones - could this be about RAIN? Shadow, Fog, Flow could relate to rain/weather. 'Flow' connects to rain (water flowing). Let me think about REIGN specifically: kingdom, monarch, rule, power, era, dynasty. 'Dome' could be a palace dome. 'Chapel' could relate to a monarch's chapel. 'Phoenix' could relate to a dynasty rising. None are confident. Given Red has 3 left and I have 1, I need to find it but can't risk the assassin. Let me guess 'Phoenix' - reign of the phoenix, dynasty."}
+
+Hmm, let me reconsider more carefully.
+
+{"guess": "Shadow", "reasoning": "Thinking about 'REIGN' as a homophone for 'RAIN' - 'rain shadow' is a well-known geographical/meteorological term. The Spymaster may be using the homophone connection. With 1 blue card remaining and Red having 3, I need to find this card. 'Rain shadow' is a strong compound phrase."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 1536). Try again.
+
+[RESPONSE]
+{"guess": "Shadow", "reasoning": "Thinking about REIGN as a homophone for RAIN - 'rain shadow' is a well-known geographical term. The Spymaster may be using the homophone connection. With 1 blue card remaining and Red having 3, I need to find this card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Rose                 BLUE       [revealed]
+  Fountain             BLUE       [revealed]
+  Lever                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    [revealed]
+  Mirror               BLUE       [revealed]
+  Ruler                BLUE       [revealed]
+  Cap                  RED        [revealed]
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    
+  Plane                NEUTRAL    [revealed]
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        
+  Dome                 RED        
+  Lure                 RED        [revealed]
+  Chapel               NEUTRAL    
+  Dagger               RED        [revealed]
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        [revealed]
+  Button               BLUE       [revealed]
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+  [BLUE] REIGN 2  #2: Shadow → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"MIST", "number": 1, "reasoning": "Mist is a synonym for Fog, one of our unrevealed red words; it should not point to Bar or Dome."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MIST' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cargo
+  Kettle
+  Fleet
+  Fog
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+  [BLUE] REIGN 2  #2: Shadow → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Fog","reasoning":"Direct synonym of mist; strongest match among the options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-nano
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'MIST' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Cargo
+  Kettle
+  Fleet
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+  [BLUE] REIGN 2  #2: Shadow → neutral
+  [RED] MIST 1  #1: Fog → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess":"Kettle","reasoning":"Mist often implies fog or steam; Kettle is the best direct link to steam among the options, likely a red word."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Rose                 BLUE       [revealed]
+  Fountain             BLUE       [revealed]
+  Lever                BLUE       [revealed]
+  Crest                BLUE       [revealed]
+  Shadow               NEUTRAL    [revealed]
+  Mirror               BLUE       [revealed]
+  Ruler                BLUE       [revealed]
+  Cap                  RED        [revealed]
+  Cargo                NEUTRAL    
+  Kettle               NEUTRAL    [revealed]
+  Plane                NEUTRAL    [revealed]
+  Frame                RED        [revealed]
+  Fleet                NEUTRAL    
+  Fog                  RED        [revealed]
+  Dome                 RED        
+  Lure                 RED        [revealed]
+  Chapel               NEUTRAL    
+  Dagger               RED        [revealed]
+  Phoenix              BLUE       
+  Flow                 ASSASSIN   
+  Satellite            NEUTRAL    
+  Bar                  RED        
+  Brook                RED        [revealed]
+  Button               BLUE       [revealed]
+  Fence                RED        [revealed]
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+  [BLUE] REIGN 2  #2: Shadow → neutral
+  [RED] MIST 1  #1: Fog → red
+  [RED] MIST 1  #2: Kettle → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BAR, BROOK, BUTTON, CAP, CARGO, CHAPEL, CREST, DAGGER, DOME, FENCE, FLEET, FLOW, FOG, FOUNTAIN, FRAME, KETTLE, LEVER, LURE, MIRROR, PHOENIX, PLANE, ROSE, RULER, SATELLITE, SHADOW
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "REBIRTH", "number": 1, "reasoning": "The only remaining blue word is PHOENIX. REBIRTH is strongly associated with the phoenix mythology - the phoenix dies and is reborn from its ashes. This clue shouldn't point to any red words (DOME, BAR) or the assassin (FLOW)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'REBIRTH' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Cargo
+  Fleet
+  Dome
+  Chapel
+  Phoenix
+  Flow
+  Satellite
+  Bar
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] BORDER 3  #1: Fence → red
+  [RED] BORDER 3  #2: Frame → red
+  [RED] BORDER 3  #3: Crest → blue
+  [BLUE] TOGGLE 3  #1: Button → blue
+  [BLUE] TOGGLE 3  #2: Lever → blue
+  [BLUE] TOGGLE 3  #3: Cap → red
+  [RED] KNIFE 1  #1: Dagger → red
+  [RED] KNIFE 1  #2: Plane → neutral
+  [BLUE] VANITY 3  #1: Mirror → blue
+  [BLUE] VANITY 3  #2: Rose → blue
+  [BLUE] VANITY 3  #3: Fountain → blue
+  [BLUE] VANITY 3  #4: PASS
+  [RED] FISHING 2  #1: Lure → red
+  [RED] FISHING 2  #2: Brook → red
+  [RED] FISHING 2  #3: PASS
+  [BLUE] REIGN 2  #1: Ruler → blue
+  [BLUE] REIGN 2  #2: Shadow → neutral
+  [RED] MIST 1  #1: Fog → red
+  [RED] MIST 1  #2: Kettle → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "PHOENIX", "reasoning": "REBIRTH is strongly associated with PHOENIX - the mythical bird that dies and is reborn from its ashes. This is one of the most classic word associations possible. With only 1 blue card remaining, this seems like the clear intended connection."}
+============================================================

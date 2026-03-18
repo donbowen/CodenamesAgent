@@ -1,0 +1,1474 @@
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Beacon               RED        
+  Canal                NEUTRAL    
+  Soldier              BLUE       
+  Flow                 BLUE       
+  Hull                 NEUTRAL    
+  Rock                 ASSASSIN   
+  Toast                NEUTRAL    
+  Capsule              BLUE       
+  Bar                  BLUE       
+  Atlantis             RED        
+  Field                NEUTRAL    
+  Eagle                RED        
+  Coach                RED        
+  Cherry               BLUE       
+  Leaf                 BLUE       
+  Antarctica           RED        
+  Jar                  NEUTRAL    
+  Dam                  RED        
+  Time                 BLUE       
+  Ice                  RED        
+  Model                RED        
+  Fruit                NEUTRAL    
+  Chamber              NEUTRAL    
+  Whale                RED        
+  Cat                  BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ATLANTIS, BAR, BEACON, CANAL, CAPSULE, CAT, CHAMBER, CHERRY, COACH, DAM, EAGLE, FIELD, FLOW, FRUIT, HULL, ICE, JAR, LEAF, MODEL, ROCK, SOLDIER, TIME, TOAST, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Frost", "number": 4, "reasoning": "Frost relates to Ice, Antarctica, and the cold environment of the other words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FROST' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Hull
+  Rock
+  Toast
+  Capsule
+  Bar
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Leaf
+  Antarctica
+  Jar
+  Dam
+  Time
+  Ice
+  Model
+  Fruit
+  Chamber
+  Whale
+  Cat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Antarctica", "reasoning": "Antarctica is associated with frost and extreme cold, making it a strong match for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FROST' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Hull
+  Rock
+  Toast
+  Capsule
+  Bar
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Leaf
+  Jar
+  Dam
+  Time
+  Ice
+  Model
+  Fruit
+  Chamber
+  Whale
+  Cat
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ice", "reasoning": "Ice is directly related to frost and the cold."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FROST' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Hull
+  Rock
+  Toast
+  Capsule
+  Bar
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Leaf
+  Jar
+  Dam
+  Time
+  Model
+  Fruit
+  Chamber
+  Whale
+  Cat
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Leaves can be associated with frost, as they are often covered in frost in cold weather."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Beacon               RED        
+  Canal                NEUTRAL    
+  Soldier              BLUE       
+  Flow                 BLUE       
+  Hull                 NEUTRAL    
+  Rock                 ASSASSIN   
+  Toast                NEUTRAL    
+  Capsule              BLUE       
+  Bar                  BLUE       
+  Atlantis             RED        
+  Field                NEUTRAL    
+  Eagle                RED        
+  Coach                RED        
+  Cherry               BLUE       
+  Leaf                 BLUE       [revealed]
+  Antarctica           RED        [revealed]
+  Jar                  NEUTRAL    
+  Dam                  RED        
+  Time                 BLUE       
+  Ice                  RED        [revealed]
+  Model                RED        
+  Fruit                NEUTRAL    
+  Chamber              NEUTRAL    
+  Whale                RED        
+  Cat                  BLUE       
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ATLANTIS, BAR, BEACON, CANAL, CAPSULE, CAT, CHAMBER, CHERRY, COACH, DAM, EAGLE, FIELD, FLOW, FRUIT, HULL, ICE, JAR, LEAF, MODEL, ROCK, SOLDIER, TIME, TOAST, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple blue words: Soldier, Flow, Capsule, Bar, Cherry, Time, Cat.
+
+Let me think through possible connections:
+
+- **PILL**: Capsule (pill capsule), Bar (pill bar? no), Cherry (cherry-flavored pill?)... weak
+- **STREAM**: Flow (stream/flow), Time (timestream), Bar (stream bar? no)
+- **BOMB**: Cherry bomb, Time bomb, Capsule... only 2 strong
+- **CHOCOLATE**: Bar (chocolate bar), Cherry (chocolate cherry), Flow (chocolate flow? no)... 
+- **CANDY**: Bar (candy bar), Cherry (cherry candy), Cat (Kit Cat/candy?)... risky
+- **SPACE**: Capsule (space capsule), Time (space-time), Cat (space cat? no), Soldier (space soldier? no)
+- **CLOCK**: Time (clock/time), Flow (clock flow? no), Cat (cat clock?)
+- **MILITARY**: Soldier, Capsule (cyanide capsule), Bar (military bar?)
+- **COCKTAIL**: Cherry (cocktail cherry), Bar (cocktail bar), Flow (cocktail flow? no)
+- **PUB**: Bar (pub), Soldier (pub soldier? no)
+- **RIVER**: Flow (river flow), Bar (river bar/sandbar), Dam is RED - dangerous!
+- **CURRENT**: Flow (current/flow), Time (current time), Cherry (current? no), Cat (current? no)
+- **TABBY**: Cat (tabby cat)... only 1
+- **JUICE**: Flow (juice flow), Cherry (cherry juice), Fruit is neutral but not dangerous, Bar (juice bar)... 3! But Fruit might mislead to neutral.
+- **COUNTER**: Time (countdown/counter), Bar (counter/bar), Capsule (counter? no), Flow (counterflow)
+- **BOMB**: Cherry bomb, Time bomb, Capsule (bomb capsule? no) - 2
+- **JUICE**: Cherry (cherry juice), Bar (juice bar), Flow (juice flow) - 3 solid connections, not pointing to assassin (Rock) or red words
+
+Let me check JUICE against red/assassin: Beacon, Atlantis, Eagle, Coach, Dam, Model, Whale, Rock - none strongly connect to juice.
+
+{"clue": "JUICE", "number": 3, "reasoning": "Cherry juice, juice bar, and flow (juice flows) are all strong connections. No strong links to red words or the assassin (Rock)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'JUICE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Hull
+  Rock
+  Toast
+  Capsule
+  Bar
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Fruit
+  Chamber
+  Whale
+  Cat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "FRUIT", "reasoning": "JUICE is strongly associated with FRUIT - fruit juice is one of the most direct connections possible. This seems like a very safe first guess."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Beacon               RED        
+  Canal                NEUTRAL    
+  Soldier              BLUE       
+  Flow                 BLUE       
+  Hull                 NEUTRAL    
+  Rock                 ASSASSIN   
+  Toast                NEUTRAL    
+  Capsule              BLUE       
+  Bar                  BLUE       
+  Atlantis             RED        
+  Field                NEUTRAL    
+  Eagle                RED        
+  Coach                RED        
+  Cherry               BLUE       
+  Leaf                 BLUE       [revealed]
+  Antarctica           RED        [revealed]
+  Jar                  NEUTRAL    
+  Dam                  RED        
+  Time                 BLUE       
+  Ice                  RED        [revealed]
+  Model                RED        
+  Fruit                NEUTRAL    [revealed]
+  Chamber              NEUTRAL    
+  Whale                RED        
+  Cat                  BLUE       
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ATLANTIS, BAR, BEACON, CANAL, CAPSULE, CAT, CHAMBER, CHERRY, COACH, DAM, EAGLE, FIELD, FLOW, FRUIT, HULL, ICE, JAR, LEAF, MODEL, ROCK, SOLDIER, TIME, TOAST, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Navy", "number": 3, "reasoning": "Navy relates to the sea, which connects to 'Eagle', 'Dam', and 'Atlantis' (the mythological city associated with water)." }
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NAVY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Hull
+  Rock
+  Toast
+  Capsule
+  Bar
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+  Cat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Hull", "reasoning": "The term 'hull' is directly related to ships and naval vessels, making it a strong match for the clue 'NAVY'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Beacon               RED        
+  Canal                NEUTRAL    
+  Soldier              BLUE       
+  Flow                 BLUE       
+  Hull                 NEUTRAL    [revealed]
+  Rock                 ASSASSIN   
+  Toast                NEUTRAL    
+  Capsule              BLUE       
+  Bar                  BLUE       
+  Atlantis             RED        
+  Field                NEUTRAL    
+  Eagle                RED        
+  Coach                RED        
+  Cherry               BLUE       
+  Leaf                 BLUE       [revealed]
+  Antarctica           RED        [revealed]
+  Jar                  NEUTRAL    
+  Dam                  RED        
+  Time                 BLUE       
+  Ice                  RED        [revealed]
+  Model                RED        
+  Fruit                NEUTRAL    [revealed]
+  Chamber              NEUTRAL    
+  Whale                RED        
+  Cat                  BLUE       
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ATLANTIS, BAR, BEACON, CANAL, CAPSULE, CAT, CHAMBER, CHERRY, COACH, DAM, EAGLE, FIELD, FLOW, FRUIT, HULL, ICE, JAR, LEAF, MODEL, ROCK, SOLDIER, TIME, TOAST, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects as many of my remaining blue words as possible: Soldier, Flow, Capsule, Bar, Cherry, Time, Cat.
+
+Let me think about groupings:
+
+- **Capsule, Time, Bar, Flow**: Could relate to "space" (space capsule, space-time, space bar, space flow... flow is a stretch)
+- **SPACE**: Capsule (space capsule), Bar (space bar), Time (space-time) — that's 3 solid connections. Flow is weaker but possible.
+- Let me check for assassin/red risks: Rock (assassin) - space rock is a thing, that's dangerous. Eagle (red) - space eagle? No. Beacon (red) - space beacon? Slight risk. Field (neutral) - space field? Slight risk.
+
+Actually, "space rock" is a very common phrase (asteroids). That's too risky with the assassin.
+
+Let me think of other options:
+
+- **CHOCOLATE**: Bar (chocolate bar), Cherry (chocolate cherry), Capsule (stretch), Flow (chocolate flow? stretch). Only 2 solid.
+- **MILITARY**: Soldier, Capsule (military capsule?), Bar (military bar?)
+- **BOMB**: Cherry bomb, time bomb, capsule... 2 solid.
+- **PIE**: Cherry pie, Time pie? No.
+- **STREAM**: Flow (stream/flow), Time (timestream), Cat (catfish? no, stream of cats?)
+- **CLOCK**: Time (clock/time), Cat (cat clock), Capsule (time capsule → clock?), Flow (clock flow?)
+- **PILL**: Capsule (pill/capsule), Bar (pill bar? no), Cherry (cherry pill? no), Cat (pill? no)
+- **WARP**: Time (time warp), Flow (warp flow), Capsule (warp capsule? no)
+- **CURRENT**: Flow (current/flow), Bar (current bar? no), Time (current time!) , Cat (current cat? no) — 2 solid.
+- **COUNTER**: Time (countdown/counter), Bar (counter/bar), Flow (counterflow) — 3 decent.
+- **TAB**: Bar (tab at a bar), Capsule (tablet/tab), Cat (tabby cat!) — 3 solid connections. Risk check: Rock - no. Dam - no. Eagle - no. Looks safe!
+
+**TABBY** → Cat (tabby cat). Only 1.
+
+**TAB**: Bar (tab at a bar), Capsule (tablet), Cat (tabby) — 3 solid.
+
+{"clue": "TAB", "number": 3, "reasoning": "TAB connects to Bar (running a tab at a bar), Capsule (tablet/tab as a form of capsule), and Cat (tabby cat). No strong connections to assassin (Rock) or red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TAB' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Rock
+  Toast
+  Capsule
+  Bar
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+  Cat
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about what words connect to "TAB" with 3 words.
+
+TAB can mean:
+- A tab on a keyboard (Tab key)
+- A tab you open (like on a can) - pull tab
+- A bar tab (running a tab for drinks)
+- Tab as in a tablet/pill
+- Tab as in a label/flap
+- Guitar tab (tablature)
+
+Let me think about connections:
+
+1. **Bar** - "Bar tab" is a very strong connection. You run a tab at a bar.
+2. **Capsule** - A tab can mean a tablet/pill, and capsule is related to pills/tablets.
+3. **Cat** - "Cat" → tabby cat! "Tab" is short for tabby.
+4. **Cherry** - Cherry tab? Not a strong connection.
+5. **Flow** - Tab → water flows when you open a tab/faucet? (In some dialects, "tab" means faucet)
+6. **Dam** - Related to water flow? Weak connection.
+7. **Key** - Not available.
+
+My top three guesses:
+1. **Bar** - Bar tab (very strong)
+2. **Cat** - Tabby cat (strong)
+3. **Capsule** - Tablet/capsule (reasonable connection)
+
+Let me start with the most confident one.
+
+{"guess": "BAR", "reasoning": "A 'bar tab' is an extremely common phrase - you run a tab at a bar. This is one of the strongest connections to TAB."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TAB' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Rock
+  Toast
+  Capsule
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+  Cat
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "KEY", "reasoning": "Let me reconsider - KEY is not in the valid guesses list. Let me think about TAB more carefully.\n\nTAB can relate to: keyboard tab, tab key, bar tab (already guessed Bar), guitar tab, tablet, tab collar, keeping tabs on something.\n\nLooking at the valid guesses:\n- CAPSULE could relate to tablet (a tab/tablet is a capsule)\n- CAT could relate to tabby cat (tab -> tabby -> cat)\n- CHERRY could relate to Cherry Tab? Not strong.\n- MODEL could relate to a tab model? Not strong.\n\nI think CAT is a strong connection via 'tabby cat' - a tabby is often shortened to 'tab'."}
+
+Wait, let me re-format properly.
+
+{"guess": "CAT", "reasoning": "TAB connects to CAT through 'tabby' - a tabby cat. 'Tab' is a common shortening of 'tabby', which is a type of cat. This seems like a strong connection for one of the 3 intended words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TAB' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Rock
+  Toast
+  Capsule
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+  Cat
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "KEY", "reasoning": "Let me reconsider - KEY is not in the valid guesses list. Let me think about TAB more carefully.\n\nTAB can relate to: keyboard tab, tab key, bar tab (already guessed Bar), guitar tab, tablet, tab collar, keeping tabs on something.\n\nLooking at the valid guesses:\n- CAPSULE could relate to tablet (a tab/tablet is a capsule)\n- CAT could relate to tabby cat (tab -> tabby -> cat)\n- CHERRY could relate to Cherry Tab? Not strong.\n- MODEL could relate to a tab model? Not strong.\n\nI think CAT is a strong connection via 'tabby cat' - a tabby is often shortened to 'tab'."}
+
+Wait, let me re-format properly.
+
+{"guess": "CAT", "reasoning": "TAB connects to CAT through 'tabby' - a tabby cat. 'Tab' is a common shortening of 'tabby', which is a type of cat. This seems like a strong connection for one of the 3 intended words."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 609). Try again.
+
+[RESPONSE]
+{"guess": "CAT", "reasoning": "TAB connects to CAT through 'tabby' - a tabby cat. Tab is a common shortening of tabby, which is a type of cat. This seems like a strong connection for one of the 3 intended words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TAB' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Rock
+  Toast
+  Capsule
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Let me think about what "TAB" could connect to among the remaining words.
+
+TAB has already connected to "Bar" (bar tab) and "Cat" (tabby cat). I need to find one more word that connects to TAB.
+
+Let me consider the remaining words:
+
+- **Key** - a tab key on a keyboard (but not available)
+- **Capsule** - tab/capsule are both forms of medication (a tablet/capsule)
+- **Cherry** - Cherry tab? Not obvious.
+- **Toast** - not clear connection
+- **Flow** - tab flow? Not obvious
+- **Model** - tablet model? Weak
+- **Field** - tab field (like a tab field in a form/database)? Possible but weak
+- **Eagle** - Eagle brand? No clear connection
+- **Dam** - no connection
+- **Beacon** - no connection
+- **Rock** - guitar tab? Rock music uses guitar tabs! That's a strong connection.
+- **Chamber** - tab chamber? No.
+- **Jar** - no clear connection
+
+Wait, let me reconsider:
+- **Rock** - Guitar tabs are used in rock music. This feels like a solid connection.
+- **Capsule** - A tablet and capsule are both pill forms. "Tab" is short for "tablet." This is also a reasonable connection.
+
+Between Rock (guitar tab → rock music) and Capsule (tab/tablet ↔ capsule as pill forms), I think **Capsule** might be the stronger direct connection since tab literally means tablet in pharmaceutical context, and capsule is the closest synonym/related term.
+
+But "Rock" through guitar tablature is also very strong.
+
+I'll go with **Capsule** as tab (tablet) and capsule are both forms of pills/medication.
+
+{"guess": "CAPSULE", "reasoning": "TAB is short for tablet, and a capsule is another form of medication/pill - tablet and capsule are closely related pharmaceutical terms. This seems like the third intended connection after 'Bar' (bar tab) and 'Cat' (tabby cat)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'TAB' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Rock
+  Toast
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already successfully guessed 3 blue words this turn (Bar, Cat, Capsule) which matches the clue number of 3. The remaining words don't have a strong connection to 'TAB' that I'm confident about. Guessing wrong could hit the assassin or help the opponent. With Blue needing 4 more cards (now reduced to 1 after this turn's 3 correct guesses), it's better to pass and let the Spymaster give another clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Beacon               RED        
+  Canal                NEUTRAL    
+  Soldier              BLUE       
+  Flow                 BLUE       
+  Hull                 NEUTRAL    [revealed]
+  Rock                 ASSASSIN   
+  Toast                NEUTRAL    
+  Capsule              BLUE       [revealed]
+  Bar                  BLUE       [revealed]
+  Atlantis             RED        
+  Field                NEUTRAL    
+  Eagle                RED        
+  Coach                RED        
+  Cherry               BLUE       
+  Leaf                 BLUE       [revealed]
+  Antarctica           RED        [revealed]
+  Jar                  NEUTRAL    
+  Dam                  RED        
+  Time                 BLUE       
+  Ice                  RED        [revealed]
+  Model                RED        
+  Fruit                NEUTRAL    [revealed]
+  Chamber              NEUTRAL    
+  Whale                RED        
+  Cat                  BLUE       [revealed]
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+  [BLUE] TAB 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ATLANTIS, BAR, BEACON, CANAL, CAPSULE, CAT, CHAMBER, CHERRY, COACH, DAM, EAGLE, FIELD, FLOW, FRUIT, HULL, ICE, JAR, LEAF, MODEL, ROCK, SOLDIER, TIME, TOAST, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "NAVY", "number": 3, "reasoning": "NAVY relates to the colors of the ocean, which connects to both ATLANTIS, EAGLE, and DAM."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4o-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'NAVY' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beacon
+  Canal
+  Soldier
+  Flow
+  Rock
+  Toast
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+  [BLUE] TAB 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Soldier", "reasoning": "The word 'Soldier' relates to the military, which is often associated with the navy."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Beacon               RED        
+  Canal                NEUTRAL    
+  Soldier              BLUE       [revealed]
+  Flow                 BLUE       
+  Hull                 NEUTRAL    [revealed]
+  Rock                 ASSASSIN   
+  Toast                NEUTRAL    
+  Capsule              BLUE       [revealed]
+  Bar                  BLUE       [revealed]
+  Atlantis             RED        
+  Field                NEUTRAL    
+  Eagle                RED        
+  Coach                RED        
+  Cherry               BLUE       
+  Leaf                 BLUE       [revealed]
+  Antarctica           RED        [revealed]
+  Jar                  NEUTRAL    
+  Dam                  RED        
+  Time                 BLUE       
+  Ice                  RED        [revealed]
+  Model                RED        
+  Fruit                NEUTRAL    [revealed]
+  Chamber              NEUTRAL    
+  Whale                RED        
+  Cat                  BLUE       [revealed]
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+  [BLUE] TAB 3  #4: PASS
+  [RED] NAVY 3  #1: Soldier → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANTARCTICA, ATLANTIS, BAR, BEACON, CANAL, CAPSULE, CAT, CHAMBER, CHERRY, COACH, DAM, EAGLE, FIELD, FLOW, FRUIT, HULL, ICE, JAR, LEAF, MODEL, ROCK, SOLDIER, TIME, TOAST, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting the remaining BLUE words: **Flow**, **Cherry**, and **Time**.
+
+Let me think about what connects these three:
+
+- **Stream**: Flow is a stream, but Cherry and Time don't connect well.
+- **Blossom**: Cherry blossom is strong, but Flow and Time don't connect as well.
+- **Current**: Flow = current (water current), Time = current (current time), Cherry = cherry current? Not great.
+- **River**: Flow connects (river flows), Cherry connects (cherry river? weak), Time connects (river of time? weak).
+- **Spring**: Flow connects (spring water flows), Cherry connects (cherry blossoms in spring), Time connects (springtime). This is excellent!
+
+Let me check for dangers:
+- **Spring** → Rock? No. Dam? No. Beacon? No. Eagle? No. Coach? No. Model? No. Whale? No. Atlantis? No.
+- Neutral words: Canal (spring canal? weak), Toast (no), Field (spring field? somewhat), Chamber (no), Jar (no).
+- Assassin: Rock — no connection to spring.
+
+"Spring" connects all three beautifully: springtime (Time), spring flow (Flow), cherry blossoms in spring (Cherry).
+
+{"clue": "SPRING", "number": 3, "reasoning": "Spring connects all three remaining blue words: Flow (springs flow/water springs), Cherry (cherry blossoms bloom in spring), and Time (springtime). Low risk of pointing to assassin (Rock) or red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPRING' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Beacon
+  Canal
+  Flow
+  Rock
+  Toast
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Cherry
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+  [BLUE] TAB 3  #4: PASS
+  [RED] NAVY 3  #1: Soldier → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find 3 words that connect to "SPRING."
+
+Let me think about the different meanings of "SPRING":
+1. **Season**: Spring → Cherry (cherry blossoms in spring), Time (springtime), Field (spring fields)
+2. **Water spring**: Flow (water flows from a spring), Canal (water-related), Dam (water-related)
+3. **Spring mechanism**: Coil, bounce
+4. **Spring forward**: Time (spring forward - daylight saving time)
+
+Let me evaluate the strongest connections:
+
+- **Cherry**: Cherry blossoms are iconic symbols of spring. Very strong connection.
+- **Flow**: A spring is a natural water source that flows. "Spring flow" is a real term.
+- **Time**: "Springtime" is a compound word. Strong connection.
+- **Field**: "Spring field" → Springfield. Could work but feels slightly weaker.
+- **Dam**: Related to water but not directly to "spring."
+
+My top 3 candidates: **Cherry** (spring blossoms), **Time** (springtime), **Flow** (water spring).
+
+I'm most confident in Cherry - cherry blossoms are quintessentially associated with spring.
+
+{"guess": "CHERRY", "reasoning": "Cherry blossoms are one of the most iconic symbols of spring. 'Cherry' strongly connects to the clue 'SPRING.'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPRING' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Flow
+  Rock
+  Toast
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+  [BLUE] TAB 3  #4: PASS
+  [RED] NAVY 3  #1: Soldier → blue
+  [BLUE] SPRING 3  #1: Cherry → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Flow", "reasoning": "SPRING can relate to a water spring, which flows. 'Flow' connects well with the concept of a spring (water source). We only need 2 more blue cards (now 1 after Cherry), so this is a strong candidate."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPRING' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Beacon
+  Canal
+  Rock
+  Toast
+  Atlantis
+  Field
+  Eagle
+  Coach
+  Jar
+  Dam
+  Time
+  Model
+  Chamber
+  Whale
+
+Game history:
+  [RED] FROST 4  #1: Antarctica → red
+  [RED] FROST 4  #2: Ice → red
+  [RED] FROST 4  #3: Leaf → blue
+  [BLUE] JUICE 3  #1: Fruit → neutral
+  [RED] NAVY 3  #1: Hull → neutral
+  [BLUE] TAB 3  #1: Bar → blue
+  [BLUE] TAB 3  #2: Cat → blue
+  [BLUE] TAB 3  #3: Capsule → blue
+  [BLUE] TAB 3  #4: PASS
+  [RED] NAVY 3  #1: Soldier → blue
+  [BLUE] SPRING 3  #1: Cherry → blue
+  [BLUE] SPRING 3  #2: Flow → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find the last BLUE word. We started with some number of blue cards and have been guessing correctly. Let me think about what connects to "SPRING" from the remaining words.
+
+SPRING can mean:
+- The season (spring)
+- A water spring
+- A coiled spring (mechanical)
+- To spring/jump
+
+Looking at remaining words:
+- **Time** - "springtime" is a compound word directly related to spring
+- **Field** - "spring field" (Springfield)
+- **Rock** - "Rock Spring" is a place name but weak
+- **Dam** - relates to water but not strongly to spring
+- **Coach** - spring coach? weak
+
+We only need 1 more blue card. "Time" seems like a strong connection (springtime). "Field" also works (Springfield). 
+
+Given that we've already correctly guessed "Cherry" (cherry blossom/spring) and "Flow" (water spring/flow), the spymaster was thinking about spring in multiple senses. "Springtime" is a very natural compound word.
+
+But let me also consider: we've already guessed 2 of the 3 clued words correctly. The third SPRING word could be "Field" (Springfield) or "Time" (springtime).
+
+"Time" feels like the strongest connection - "springtime" is one word.
+
+{"guess": "TIME", "reasoning": "Springtime is a direct compound word. With only 1 blue card remaining and having already matched Cherry and Flow to SPRING, Time (springtime) seems like the most natural third connection."}
+============================================================

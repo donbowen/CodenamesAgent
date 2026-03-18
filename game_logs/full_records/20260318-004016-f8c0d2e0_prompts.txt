@@ -1,0 +1,1125 @@
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Stadium              RED        
+  Copper               BLUE       
+  London               RED        
+  Olive                BLUE       
+  Chair                BLUE       
+  Kettle               NEUTRAL    
+  Engine               BLUE       
+  Blank                RED        
+  Chest                RED        
+  Bomb                 NEUTRAL    
+  Tower                BLUE       
+  Strike               RED        
+  Flag                 BLUE       
+  Cast                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Forge                RED        
+  Diamond              BLUE       
+  Venus                NEUTRAL    
+  Etch                 NEUTRAL    
+  Japan                RED        
+  Fan                  ASSASSIN   
+  Wolf                 BLUE       
+  Brim                 RED        
+  Pipe                 NEUTRAL    
+  Cake                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLANK, BLOSSOM, BOMB, BRIM, CAKE, CAST, CHAIR, CHEST, COPPER, DIAMOND, ENGINE, ETCH, FAN, FLAG, FORGE, JAPAN, KETTLE, LONDON, OLIVE, PIPE, STADIUM, STRIKE, TOWER, VENUS, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (FAN).
+
+Let me analyze my RED words: Stadium, London, Blank, Chest, Strike, Forge, Japan, Brim, Cake
+
+Let me think about groupings:
+
+**London + Japan**: Both are places/capitals. A clue like "CAPITAL" could work but might also point to TOWER (Tower of London confusion) or other words.
+
+**Strike + Forge**: Both relate to metalworking/blacksmithing. "ANVIL" or "HAMMER" could work. STRIKE (hitting), FORGE (smithing). But limited to 2.
+
+**Chest + Brim + Cake**: "TREASURE" connects to CHEST, but not the others well.
+
+**Brim + Cake + Chest**: HAT has a brim, but that's only 1 strong connection.
+
+**Stadium + Strike + Forge + Japan**: BOWLING - bowling strike, bowling stadium... not great.
+
+**Strike + Forge + Blank**: "IRON" - iron strike, iron forge, blank iron? Not great. But IRON connects to STRIKE (iron while hot), FORGE (where you forge iron), and possibly CHEST (iron chest). However, COPPER is BLUE (a metal) - risky.
+
+**London + Japan + Stadium**: "OLYMPIC" - London Olympics, Japan Olympics, Olympic Stadium! That's 3 strong connections. Let me check for conflicts: Tower (Olympic Tower?), Flag (Olympic flag - BLUE, risky!). Flag is a concern since Olympic flag is iconic.
+
+**ARENA**: Stadium (arena), Strike (arena), Forge (arena?)... weak.
+
+**LAYER**: Cake (layer cake), Brim (layer?), not great.
+
+**BASEBALL**: Strike (baseball strike), Stadium (baseball stadium), Diamond (baseball diamond - but BLUE!). Too risky.
+
+**OLYMPIC**: Stadium (Olympic stadium), London (2012 Olympics), Japan (2020 Olympics). Flag is BLUE and Olympic flag is a thing... but it's not the strongest connection. Let me weigh: 3 solid RED connections. Flag risk exists but "Olympic" most strongly suggests the three RED words first.
+
+Let me reconsider: Is FLAG a strong Olympic association? Yes, somewhat. But STADIUM, LONDON, JAPAN are all stronger direct Olympic connections.
+
+{"clue": "OLYMPIC", "number": 3, "reasoning": "Connects Stadium (Olympic stadium), London (2012 Olympics), and Japan (2020 Tokyo Olympics). Flag (BLUE) is a minor risk but the three RED connections are very strong and direct."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OLYMPIC' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Stadium
+  Copper
+  London
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Flag
+  Cast
+  Blossom
+  Forge
+  Diamond
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "STADIUM", "reasoning": "Olympics are held in stadiums - Olympic Stadium is a very common phrase (e.g., the Olympic Stadium in London, Tokyo, etc.)"}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OLYMPIC' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Copper
+  London
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Flag
+  Cast
+  Blossom
+  Forge
+  Diamond
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "London", "reasoning": "London hosted the Olympic Games multiple times (1908, 1948, 2012), making it a strong connection to the clue 'OLYMPIC'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'OLYMPIC' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Copper
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Flag
+  Cast
+  Blossom
+  Forge
+  Diamond
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "FLAG", "reasoning": "Olympic events feature flags prominently - the Olympic flag with its rings, national flags at ceremonies, and flag bearers at opening/closing ceremonies. This fits well with the OLYMPIC clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Stadium              RED        [revealed]
+  Copper               BLUE       
+  London               RED        [revealed]
+  Olive                BLUE       
+  Chair                BLUE       
+  Kettle               NEUTRAL    
+  Engine               BLUE       
+  Blank                RED        
+  Chest                RED        
+  Bomb                 NEUTRAL    
+  Tower                BLUE       
+  Strike               RED        
+  Flag                 BLUE       [revealed]
+  Cast                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Forge                RED        
+  Diamond              BLUE       
+  Venus                NEUTRAL    
+  Etch                 NEUTRAL    
+  Japan                RED        
+  Fan                  ASSASSIN   
+  Wolf                 BLUE       
+  Brim                 RED        
+  Pipe                 NEUTRAL    
+  Cake                 RED        
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLANK, BLOSSOM, BOMB, BRIM, CAKE, CAST, CHAIR, CHEST, COPPER, DIAMOND, ENGINE, ETCH, FAN, FLAG, FORGE, JAPAN, KETTLE, LONDON, OLIVE, PIPE, STADIUM, STRIKE, TOWER, VENUS, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Copper
+- Olive
+- Chair
+- Engine
+- Tower
+- Diamond
+- Wolf
+
+Let me analyze potential connections:
+
+1. **Metals/Materials**: Copper, Diamond - but need to avoid pointing to Forge (RED)
+2. **Buildings/Structures**: Tower, Chair (furniture) - could work
+3. **Animals**: Wolf - standalone
+4. **Colors**: Olive (color/tree)
+5. **Mechanical**: Engine
+
+Let me look for a strong multi-word clue:
+
+**METAL** could connect Copper and Diamond (precious materials), but Diamond is also a gem. Risk: might point to Forge (RED).
+
+**FURNITURE** could connect Chair and Tower (tower can be a furniture piece like a tower shelf), but that's weak.
+
+**PRECIOUS** could connect Diamond and Copper (metals/materials) - 2 words. Risk: none of the RED/ASSASSIN words relate strongly.
+
+**MINERAL** could connect Copper, Diamond, Olive (olivine is a mineral) - 3 words! This is strong.
+
+Wait, let me reconsider **MINERAL**:
+- Copper ✓ (metal/mineral)
+- Diamond ✓ (mineral/gem)
+- Olive ✗ (olive oil, olive tree - not directly mineral, though olivine exists)
+
+Better option: **JEWELRY** or **GEM**
+- Diamond ✓
+- Copper ✓ (used in jewelry)
+But only 2 words.
+
+Let me try **ANIMAL**: Wolf only - too narrow.
+
+**SEAT** for Chair and Tower (observation tower has seats)? Weak.
+
+I'll go with **MINERAL** for Copper and Diamond (2 solid connections), avoiding the assassin Fan and RED words.
+
+{"clue": "MINERAL", "number": 2, "reasoning": "Connects Copper (metallic mineral) and Diamond (crystalline mineral), both strong geological/material associations with no risk to assassin or red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MINERAL' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Copper
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Cast
+  Blossom
+  Forge
+  Diamond
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Diamond",
+  "reasoning": "Diamond is a mineral (carbon crystal), which directly matches the clue 'MINERAL'. This is a strong, confident first guess as diamonds are one of the most well-known minerals."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MINERAL' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Copper
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Cast
+  Blossom
+  Forge
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "Copper",
+  "reasoning": "Copper is a mineral and metallic element, making it a strong match for the clue MINERAL. Diamond (already guessed correctly) was also a mineral. This is my second guess out of the allowed 3, and Copper fits the clue perfectly. Since we're tied at 6 cards each remaining and I already got one correct, this is a confident second guess before considering passing."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MINERAL' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Cast
+  Blossom
+  Forge
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+```json
+{
+  "guess": "PASS",
+  "reasoning": "I've successfully guessed 2 words for the MINERAL clue (Diamond and Copper), which matches the clue number of 2. While I have one more guess available, none of the remaining words have a strong connection to minerals. Risky guesses like 'Cast' (metal casting) or 'Forge' (metalworking) are too indirect and could hit the assassin or opponent cards. With Blue at 5 remaining and Red at 7, we're ahead, so it's better to pass and avoid a potentially costly mistake."
+}
+```
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Stadium              RED        [revealed]
+  Copper               BLUE       [revealed]
+  London               RED        [revealed]
+  Olive                BLUE       
+  Chair                BLUE       
+  Kettle               NEUTRAL    
+  Engine               BLUE       
+  Blank                RED        
+  Chest                RED        
+  Bomb                 NEUTRAL    
+  Tower                BLUE       
+  Strike               RED        
+  Flag                 BLUE       [revealed]
+  Cast                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Forge                RED        
+  Diamond              BLUE       [revealed]
+  Venus                NEUTRAL    
+  Etch                 NEUTRAL    
+  Japan                RED        
+  Fan                  ASSASSIN   
+  Wolf                 BLUE       
+  Brim                 RED        
+  Pipe                 NEUTRAL    
+  Cake                 RED        
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLANK, BLOSSOM, BOMB, BRIM, CAKE, CAST, CHAIR, CHEST, COPPER, DIAMOND, ENGINE, ETCH, FAN, FLAG, FORGE, JAPAN, KETTLE, LONDON, OLIVE, PIPE, STADIUM, STRIKE, TOWER, VENUS, WOLF
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining RED words as possible: Blank, Chest, Strike, Forge, Japan, Brim, Cake.
+
+Let me think about groupings:
+
+- **TREASURE**: Chest (treasure chest), Japan (treasure?), not strong enough.
+- **IRON**: Strike (strike iron), Forge (forge iron), Chest (iron chest?), but also Engine could be linked.
+- **SMITH**: Forge (blacksmith), Strike (striking), could work but only 2.
+- **BLACKSMITH**: Forge, Strike... too close to board words.
+- **HAMMER**: Strike (hammer strike), Forge (hammer at forge), Japan (hammered metal?)... risky.
+- **STEEL**: Forge (steel is forged), Japan (Japanese steel), Strike (steel strike)... but Tower could be steel too (blue).
+- **HAT**: Brim (hat brim), Cake (hat could be a stretch?)... 
+- **FILLING**: Cake (cake filling), Blank (fill in the blank), Chest (chest filling?)... weak.
+- **LAYER**: Cake (layer cake), Brim (layer?), Blank (blank layer?)...
+- **SHEET**: Blank (blank sheet), Cake (sheet cake), Japan? Not great.
+- **GOLD**: Strike (strike gold), Japan (gold in Japan), Forge (forge gold), Brim (gold brim?)... but risky with blue words.
+- **BOWLING**: Strike (bowling strike), Blank? No.
+- **PIRATE**: Chest (pirate chest), Strike (pirate strike?), Japan (pirates?)... weak.
+- **ANVIL**: Forge, Strike... only 2.
+- **METAL**: Forge (metal forging), Strike (metal strike), Japan (metal work)... but Engine (blue) is metal too.
+- **SAMURAI**: Japan (samurai), Forge (samurai sword forged), Strike (samurai strike), Blank? Risky with Wolf or others.
+- **SWORD**: Forge (forge a sword), Strike (sword strike), Japan (Japanese swords)... Tower could be a stretch but it's blue. Let me check assassin - Fan. Sword doesn't connect to Fan.
+
+SWORD connects 3 RED words (Forge, Strike, Japan) without strongly pointing to blue or assassin.
+
+{"clue": "SWORD", "number": 3, "reasoning": "Forge (forge a sword), Strike (sword strike), Japan (famous for Japanese swords/katanas). Avoids assassin (Fan) and blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SWORD' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Strike
+  Cast
+  Blossom
+  Forge
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Strike", "reasoning": "SWORD + STRIKE: 'Swordstrike' is a natural compound concept - you strike with a sword. This is a strong association."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SWORD' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Cast
+  Blossom
+  Forge
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+  [RED] SWORD 3  #1: Strike → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Forge", "reasoning": "A forge is where swords are made - it's directly related to sword-making/blacksmithing. This is a strong connection to the clue 'SWORD'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SWORD' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Cast
+  Blossom
+  Venus
+  Etch
+  Japan
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+  [RED] SWORD 3  #1: Strike → red
+  [RED] SWORD 3  #2: Forge → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "JAPAN", "reasoning": "Japan is strongly associated with swords - Japanese katanas/samurai swords are iconic. This fits well with the SWORD clue. We've already gotten 2 correct (Strike, Forge), so this would be our 3rd for the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SWORD' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Cast
+  Blossom
+  Venus
+  Etch
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+  [RED] SWORD 3  #1: Strike → red
+  [RED] SWORD 3  #2: Forge → red
+  [RED] SWORD 3  #3: Japan → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I've already guessed 3 correct words for the "SWORD 3" clue (Strike, Forge, Japan), which matches the clue number. Let me consider if any remaining words strongly connect to SWORD.
+
+Looking at the remaining words:
+- **Cast** - you can "cast" a sword (casting metal)
+- **Chest** - a treasure chest might contain swords
+- **Blade** - not on the list
+- **Tower** - could relate to medieval/castle themes
+
+"Cast" has a reasonable connection to sword-making (casting a blade), but I'm not fully confident. I've already matched all 3 intended words, and with 4 red remaining vs 5 blue, I have a slight lead. The risk of hitting Bomb (assassin) or a blue card makes this dangerous.
+
+Given that I've already gotten all 3 clued words correctly, the safe play is to pass.
+
+{"guess": "PASS", "reasoning": "I've already guessed all 3 words for the SWORD clue correctly (Strike, Forge, Japan). While 'Cast' has a tenuous connection to swords (casting metal), I'm not confident enough to risk hitting the assassin (Bomb) or a blue card. Better to bank this successful turn."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Stadium              RED        [revealed]
+  Copper               BLUE       [revealed]
+  London               RED        [revealed]
+  Olive                BLUE       
+  Chair                BLUE       
+  Kettle               NEUTRAL    
+  Engine               BLUE       
+  Blank                RED        
+  Chest                RED        
+  Bomb                 NEUTRAL    
+  Tower                BLUE       
+  Strike               RED        [revealed]
+  Flag                 BLUE       [revealed]
+  Cast                 NEUTRAL    
+  Blossom              NEUTRAL    
+  Forge                RED        [revealed]
+  Diamond              BLUE       [revealed]
+  Venus                NEUTRAL    
+  Etch                 NEUTRAL    
+  Japan                RED        [revealed]
+  Fan                  ASSASSIN   
+  Wolf                 BLUE       
+  Brim                 RED        
+  Pipe                 NEUTRAL    
+  Cake                 RED        
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+  [RED] SWORD 3  #1: Strike → red
+  [RED] SWORD 3  #2: Forge → red
+  [RED] SWORD 3  #3: Japan → red
+  [RED] SWORD 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  BLANK, BLOSSOM, BOMB, BRIM, CAKE, CAST, CHAIR, CHEST, COPPER, DIAMOND, ENGINE, ETCH, FAN, FLAG, FORGE, JAPAN, KETTLE, LONDON, OLIVE, PIPE, STADIUM, STRIKE, TOWER, VENUS, WOLF
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words:
+- Olive
+- Chair
+- Engine
+- Tower
+- Wolf
+
+Let me consider potential clues:
+
+1. **Olive, Engine, Tower** - Could use "OIL" (olive oil, engine oil, oil tower) - but that's only 3 words
+2. **Chair, Tower** - "FURNITURE" doesn't work well for Tower
+3. **Engine, Tower** - "EIFFEL" connects to Eiffel Tower and could stretch to engine, but risky
+4. **Wolf, Tower** - Could try "LONE" (lone wolf, lone tower) but Tower isn't strongly associated
+5. **Chair, Olive** - Could try "GARDEN" (garden chair, olive garden) but only 2 words
+
+Let me think about safer individual connections:
+- **Tower, Engine** - "COOLING" (cooling tower, engine cooling) - 2 words, reasonably safe
+- **Wolf, Olive** - "GRAY/GREY" (gray wolf, gray olive color) - 2 words
+- **Chair, Engine** - "MOTOR" (motorchair, motor engine) - weak connection
+
+Looking at risks:
+- "FAN" is the ASSASSIN - must avoid clues like "COOL", "AIR", "WIND"
+- Red words remaining: Blank, Chest, Brim, Cake - should avoid bakery/container themes
+
+Best option: **"COOLING"** for Tower (cooling tower) and Engine (engine cooling system) - 2 words, safe from assassin and red words.
+
+Alternative: **"GRAY"** for Wolf (gray wolf) and Olive (grayish-green color) - also 2 words.
+
+I'll go with COOLING as it has stronger, more technical connections.
+
+{"clue": "COOLING", "number": 2, "reasoning": "Connects Tower (cooling tower) and Engine (engine cooling system) - both strong technical associations, avoids assassin Fan and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-5-20250929
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'COOLING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Olive
+  Chair
+  Kettle
+  Engine
+  Blank
+  Chest
+  Bomb
+  Tower
+  Cast
+  Blossom
+  Venus
+  Etch
+  Fan
+  Wolf
+  Brim
+  Pipe
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] OLYMPIC 3  #1: Stadium → red
+  [RED] OLYMPIC 3  #2: London → red
+  [RED] OLYMPIC 3  #3: Flag → blue
+  [BLUE] MINERAL 2  #1: Diamond → blue
+  [BLUE] MINERAL 2  #2: Copper → blue
+  [BLUE] MINERAL 2  #3: PASS
+  [RED] SWORD 3  #1: Strike → red
+  [RED] SWORD 3  #2: Forge → red
+  [RED] SWORD 3  #3: Japan → red
+  [RED] SWORD 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+```json
+{
+  "guess": "Fan",
+  "reasoning": "COOLING strongly suggests 'Fan' as fans are used for cooling purposes. This is a very direct connection and likely one of the intended words for this clue."
+}
+```
+============================================================

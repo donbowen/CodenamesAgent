@@ -1,0 +1,2242 @@
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fly                  RED        
+  Leaf                 NEUTRAL    
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        
+  Angel                NEUTRAL    
+  Model                NEUTRAL    
+  Witch                ASSASSIN   
+  Haze                 RED        
+  Clock                BLUE       
+  Bear                 BLUE       
+  Chill                NEUTRAL    
+  Gust                 RED        
+  Jaw                  RED        
+  Bar                  RED        
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Fly, Club, Check, Rose, Haze, Gust, Jaw, Bar, Shark.
+
+Let me think about connections:
+
+**Fly, Gust, Haze** - wind/air related... but Gust and Haze are more atmospheric
+**Jaw, Shark** - shark has a jaw, Jaws is a shark movie
+**Bar, Club** - both places to drink/socialize
+**Check, Bar** - music terms (bar = measure, check...)
+**Rose, Haze** - colors? Rose is pinkish, Haze is grayish
+
+Let me think about "DROP":
+- Jaw drop ✓
+- Fly... no
+- Club... no
+
+**GUITAR**: Bar (bar chord), Check... no
+
+**BAND**: Club, Bar, Check (check in music?)... 
+
+**WIND**: Gust ✓, Haze (no), Fly (wind makes things fly) ✓...
+
+**LOAN**: Shark (loan shark) ✓, Bar (bar exam)... 
+
+**LOAN SHARK** - Shark ✓, Bar (bar loan?)... 
+
+**GREAT WHITE**: Shark ✓, Rose... no
+
+Let me think about **BONE**: Jaw ✓, Club (bone club?) ✓... 
+
+**DROPPING**: Jaw-dropping... 
+
+**POOL**: Shark (pool shark) ✓, Club (pool club?)... 
+
+**CARD**: Check ✓, Club ✓, Bar (barcode?)... 
+
+**STRIPE**: Bar ✓, Check ✓, Rose (no)... 
+
+**PATTERN**: Check ✓, Bar ✓, Haze (no)...
+
+**GOLF**: Club ✓, Rose (no)...
+
+**NIGHT**: Club ✓, Bar ✓, Fly (no)... Haze (nighthaze?)... 
+
+**BOOK**: Club ✓, Check ✓, Bar (bar?)... Worm (bookworm - BLUE, avoid!)
+
+**SAND**: Bar (sandbar) ✓, Shark ✓... Haze (no)... 
+
+**RAIN**: Check (raincheck) ✓, Bow (no)... 
+
+**RAIN**: Haze (no), Fly (no)...
+
+**DOUBLE**: Check ✓, Bar (double bar) ✓, Club... 
+
+**SPEED**: Haze (speed haze?), Gust ✓... 
+
+**LOAN**: Shark (loan shark) ✓, Bar (no)...
+
+**HAMMERHEAD**: Shark ✓, ... 
+
+Let me try **WIND**: Gust ✓, Fly ✓, Haze (wind haze?)... 
+
+**STEEL**: Bar ✓, Club (steel club?) ✓, Jaw... 
+
+**CROW**: Bar (crowbar) ✓, Fly (crowfly?) ✓... 
+
+**CROW**: Bar ✓, Fly ✓... only 2 safely.
+
+**HANDLE**: Bar ✓, Club ✓, Check (no)... 
+
+**MINI**: Club (mini golf club?) ✓, Bar ✓... 
+
+**CANDY**: Bar ✓, Club (no)... 
+
+**SAND**: Bar (sandbar) ✓, Shark ✓, Gust (sandstorm/gust)... 
+
+**CROW**: Bar (crowbar) ✓, Rose (crow rose?) no...
+
+Let me try **CROWBAR** isn't a clue... 
+
+**IRON**: Bar ✓, Club (golf) ✓, Rose (no)... Jaw (iron jaw) ✓? 
+
+{"clue": "IRON", "number": 3, "reasoning": "Iron Bar (iron bar), Iron Jaw (iron jaw/strong jaw), Iron Club (golf iron/club) - all RED words connected to iron"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Chair
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Model
+  Witch
+  Haze
+  Clock
+  Bear
+  Chill
+  Gust
+  Jaw
+  Bar
+  Vest
+  Shark
+  Rock
+  Worm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that connect to "IRON" (3 words).
+
+Let me think about connections to IRON:
+
+1. **IRON** as a clothes iron - you iron clothes, press/flat
+2. **IRON** as in metal/steel
+3. **IRON** as in golf club (iron is a type of golf club)
+4. **IRON** as in "iron bar" - BAR
+5. **IRON** as in "iron clad", "iron curtain", "iron maiden"
+6. **IRON** as in "curling iron"
+7. **IRON** as in "IRON Man" - Marvel
+8. **IRON** as in "cast iron"
+9. **IRON** + word compounds: ironwork, ironclad, ironside
+
+Let me think about "___ IRON" or "IRON ___":
+- **IRON BAR** - BAR ✓
+- **IRON CLAD** - not on list
+- **IRON MAIDEN** - not on list
+- **IRON HORSE** - not on list
+- **CURLING IRON** - CURL not on list
+- **IRON FIST** - not on list
+- **IRON JAW** - JAW? "iron jaw" is a thing
+- **IRON WORM**? - no
+- **IRON VEST** - no, but "bulletproof vest"... 
+- **IRON CURTAIN** - not on list
+- **TIRE IRON** - not on list
+- **IRON BEAR**? - no
+- **IRON ROSE**? - no
+- **IRON CLUB** - a golf iron IS a club... CLUB ✓
+- **IRON ANGEL**? - no
+- **IRON ROCK**? - no
+- **IRON DUST** - DUST? iron filings/dust
+- **IRON GUST**? - no
+- **IRON HOLLOW**? - no
+- **IRON CHEST/CHECK**? - no
+
+Most confident:
+- **BAR** - iron bar (very common phrase)
+- **CLUB** - iron is a type of golf club
+- **JAW** - iron jaw (strong jaw)
+
+{"guess": "BAR", "reasoning": "IRON BAR is a very common compound - a bar made of iron. This seems like the strongest connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Chair
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Model
+  Witch
+  Haze
+  Clock
+  Bear
+  Chill
+  Gust
+  Jaw
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'IRON' and thinking about what words connect to iron:
+
+- IRON + something or something + IRON
+- "Curling iron" - no
+- "Iron Maiden" - no
+- "Iron Curtain" - no
+- "Cast iron" - no
+- "Iron Man" - no
+- "Wrinkle" related to ironing clothes
+
+Let me think about compound words or phrases with IRON:
+- IRON CLAD → no "clad" on board
+- IRON FIST → no
+- IRON WILL → no
+- IRON MAIDEN → no
+- IRON HORSE → no
+- IRON LUNG → no
+- CLOTHES IRON → 
+- CURLING IRON →
+
+Words that go with IRON:
+- IRON + CLAD
+- IRON + CAST
+- IRON + WORK
+- IRON + WORM? No...
+- IRON + VEST? → "INVEST" has iron? No...
+- IRON + VEST → "Iron Vest"? 
+- VEST → "Iron Vest" is a martial arts thing
+- ROCK → "Iron Rock"? 
+- CHAIR → "Iron Chair"? like Game of Thrones Iron Throne?
+- JAW → "Iron Jaw"? 
+
+Wait - IRON MAIDEN has a MAIDEN... 
+- IRON CLAD
+- CAST IRON
+- IRON CURTAIN
+- IRON FIST
+- IRON WILL
+- IRON LUNG
+
+HOLLOW - "Hollow" + iron? No...
+CHILL - no
+GUST - no
+
+WORM - "Iron Worm"? No...
+ROSE - "Iron Rose"? No...
+ANGEL - "Iron Angel"? No...
+
+VEST - a vest is like body armor, iron vest... 
+JAW - iron jaw (strong jaw)
+ROCK - iron rock?
+
+DUST - "Iron Dust"? 
+HAZE - no
+
+I think JAW (iron jaw = strong jaw) and VEST (ironvest/body armor) seem plausible.
+
+{"guess": "JAW", "reasoning": "Iron jaw is a common phrase meaning a strong or tough jaw, fitting the IRON clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'IRON' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Chair
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Model
+  Witch
+  Haze
+  Clock
+  Bear
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'IRON' and what's been guessed (Bar, Jaw - both red), I need to find a third word related to IRON.
+
+Words related to IRON:
+- IRON + something or something + IRON
+- "Curtain" (Iron Curtain) - not on list
+- "VEST" - a bulletproof vest is made of kevlar, but "iron vest" isn't common
+- "CLAD" - not on list
+- "MAIDEN" - Iron Maiden - not on list
+- "FIST" - not on list
+- "CAST" - not on list
+- "WRINKLE" - you iron wrinkles
+- "BOARD" - ironing board - not on list
+- "WILL" - Iron Will - not on list
+- "LUNG" - Iron Lung - not on list
+- "DUKE" - Iron Duke - not on list
+- "ROCK" - not obviously iron-related
+- "WORM" - bookworm, not iron
+- "ANGEL" - not obviously
+- "CHILL" - not obviously
+- "GUST" - not obviously
+- "HAZE" - not obviously
+- "HOLLOW" - Hollow iron? Sleepy Hollow?
+
+Wait - "IRON CURTAIN" → not there. What about "IRON CLAD"? 
+
+"IRON HORSE" → not there
+"IRON MIKE" → not there
+"IRON BUTTERFLY" → not there
+
+Hmm, thinking about "IRON MAN" → not there. What about compound words: "IRONCLAD", "IRON FIST"...
+
+"VEST" - a vest could be chain mail / iron... but weak connection.
+
+"CHAIR" - electric chair uses iron? Weak.
+
+"ROCK" - could be iron ore / rock... possible but weak.
+
+I'll pass since I'm not confident enough to risk a bad guess when we're already 2/3 done.
+
+{"guess": "PASS", "reasoning": "Already got 2 correct guesses for IRON (Bar, Jaw). I'm not confident enough in any remaining word to risk guessing wrong and helping blue or hitting an assassin. Better to pass with 2/3 correct."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Fly                  RED        
+  Leaf                 NEUTRAL    
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        
+  Angel                NEUTRAL    
+  Model                NEUTRAL    
+  Witch                ASSASSIN   
+  Haze                 RED        
+  Clock                BLUE       
+  Bear                 BLUE       
+  Chill                NEUTRAL    
+  Gust                 RED        
+  Jaw                  RED        [revealed]
+  Bar                  RED        [revealed]
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "furniture", "number": 2, "reasoning": "Chair and Clock are both types of furniture or can be found as furniture items in a home. Other blue words do not strongly connect, and the clue avoids the assassin and red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Chair
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Model
+  Witch
+  Haze
+  Clock
+  Bear
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Chair", "reasoning": "A chair is a common piece of furniture and is the most direct match to the clue 'FURNITURE' from the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Model
+  Witch
+  Haze
+  Clock
+  Bear
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Clock", "reasoning": "A clock is a common item of furniture or decor in many homes, fitting the clue 'FURNITURE' better than the other options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FURNITURE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Model
+  Witch
+  Haze
+  Bear
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Model", "reasoning": "Some furniture is called a 'model' (e.g., model number or type), and among the remaining options, 'Model' is the only word that can plausibly relate to furniture, even if it's a stretch. The other words fit less."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 6
+
+Board (all colors visible to you):
+  Fly                  RED        
+  Leaf                 NEUTRAL    
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       [revealed]
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        
+  Angel                NEUTRAL    
+  Model                NEUTRAL    [revealed]
+  Witch                ASSASSIN   
+  Haze                 RED        
+  Clock                BLUE       [revealed]
+  Bear                 BLUE       
+  Chill                NEUTRAL    
+  Gust                 RED        
+  Jaw                  RED        [revealed]
+  Bar                  RED        [revealed]
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words: Fly, Club, Check, Rose, Haze, Gust, Shark.
+
+Let me think about connections:
+
+- **Fly, Club, Check, Rose** - these could all follow "book"? No...
+- **Gust, Haze, Rose** - weather/atmosphere related?
+- **Fly, Shark** - predators? 
+- **Club, Check** - patterns? (plaid, tartan patterns include check and plaid)
+- **Fly, Gust, Haze** - wind/weather?
+- **Rose, Haze** - colors? (rose-colored, hazy)
+- **Shark, Club** - weapons? A club can be a weapon, shark...
+- **Fly, Rose, Gust** - wind words? Gust is wind, fly involves wind...
+- **Check, Club, Rose** - playing cards? No, those are suits: hearts, diamonds, clubs, spades
+- **Club** is a card suit... 
+
+Wait - **Fly, Gust, Haze** - all can precede or relate to something atmospheric?
+
+Let me think about "BOOK": Bookclub? No...
+
+**GOLF**: Club (golf club), Rose (Derrick Rose? no), Check...
+
+**WIND**: Gust (wind gust), Fly (flies in wind), Haze (wind clears haze?)... not strong enough
+
+**PATTERN**: Check (checkered pattern), Haze... no
+
+**BOOK**: Bookclub, Bookcheck... 
+
+**CARD**: Club (card suit), Check (card game term)... 
+
+**SPEED**: Gust, Fly, Haze... 
+
+**LOAN**: Shark (loan shark), Check (check loan?)...
+
+**GREAT**: Great White Shark, Great Barrier Reef Rose...
+
+**WHITE**: White Rose, White Check, White Shark (Great White)... White Fly (whitefly is a pest!), White Haze, White Gust? - Rose (White Rose), Shark (Great White Shark), Fly (whitefly), Check (white check pattern)... that's 4 RED words!
+
+But wait - does "white" connect to any BLUE or ASSASSIN words? Bear (polar bear is white - BLUE!), Worm (BLUE)... Bear is risky.
+
+Let me try **GREAT**: Great White Shark, Great Barrier... Great Gust? Great Fly? Not strong.
+
+**LOAN**: Shark (loan shark), Club (loan?), Check (loan check?)...
+
+**BOOK**: Club (book club), Check (book a check?), Rose (rose from book?)...
+
+**BOOK**: Bookclub ✓, Check (check a book out) ✓... 
+
+**GOLF**: Club ✓, Check ✓ (check in golf?), Rose...
+
+**BLUE** connections to avoid: Dust, Comic, Net, Bear, Vest, Worm
+
+**BOOK**: Club (book club) ✓, Check (check) ✓, Worm (bookworm - BLUE!) - dangerous
+
+**DUST**: is BLUE, so avoid dust connections
+
+**SPEED**: Gust, Fly, Haze... Check (speed check) ✓, Fly ✓, Gust ✓ - 3 RED words, and Chase (NEUTRAL - speed chase)...
+
+**COMIC**: is BLUE - avoid
+
+**GUITAR**: Rose, Club... 
+
+**ENGLISH**: Rose (English rose) ✓, Check (English check?) ✓, Club (English club) ✓... 
+
+**WILD**: Wild Rose ✓, Wild Fly ✓, Wild Shark?, Wild Gust?, Wild Check?...
+
+**MIST**: Haze (mist/haze) - synonyms...
+
+**FOG**: Haze, Gust... 
+
+**HAMMERHEAD**: Shark only - too few
+
+Let me try: **SPEED** connecting Fly, Gust, Haze (speed blur), Check (speed check) - 3-4 words, but Chase (neutral) is risky.
+
+**SMOG**: Haze, Dust(BLUE!)...
+
+I'll go with connecting Rose, Club, Check as card/English themed, plus maybe Fly.
+
+**ENGLISH**: Rose (English Rose) ✓, Club (English Club) ✓, Check (English spelling "cheque") ✓ - 3 RED words, avoiding BLUE words.
+
+{"clue": "ENGLISH", "number": 3, "reasoning": "English Rose (iconic phrase), English Club (social institution), Check/Cheque (English spelling) - all connect to English culture/language, targeting three RED words while avoiding blue words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ENGLISH' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Rose
+  Angel
+  Witch
+  Haze
+  Bear
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about words that relate to "ENGLISH."
+
+Things associated with English:
+- English Channel
+- English Rose (a term for a beautiful English woman)
+- English Muffin
+- English Bulldog
+- English Ivy
+- English Club
+- English Check (a type of pattern/fabric)
+- English Muffin... no "Muffin" not on board
+- English Rose - yes, "Rose" is on the board
+- English Club - "Club" is on the board
+- English Check - "Check" could be a type of pattern
+- English Ivy - no "Ivy"
+- English Worm? No...
+- English Bear? No...
+- English Witch? No...
+- English Vest? No...
+- English Haze? No...
+
+Strong candidates:
+1. **Rose** - "English Rose" is a very common phrase
+2. **Club** - "English Club" or more specifically, golf club (English golf), but also just "club" as in social club (very English)
+3. **Check** - English Check is a fabric pattern (like houndstooth/check patterns associated with English fashion)
+4. **Muffin** - not on board
+5. **Bulldog** - not on board
+
+Actually, thinking more carefully:
+- English Rose ✓ (very strong)
+- English Club ✓ (strong)
+- English Check ✓ (fabric pattern)
+- English Ivy - not on board
+- English Muffin - not on board
+
+Let me start with the most confident: **Rose**
+
+{"guess": "Rose", "reasoning": "English Rose is a very common phrase referring to a classic English beauty or the flower associated with England (the national flower)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ENGLISH' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 6  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Haze
+  Bear
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to think about what words connect to "ENGLISH" along with "Rose" (already guessed correctly).
+
+English Rose is a phrase. What other "English ___" or "___ English" phrases are there?
+
+- English **Muffin** - not on board
+- English **Channel** - not on board
+- English **Bull**dog - not on board
+- English **Horn** - not on board
+- English **Ivy** - not on board
+- **Plain** English - not on board
+- **Old** English - not on board
+- English **Mustard** - not on board
+- English **Breakfast** - not on board
+
+Wait, let me think about "___ English" or "English ___" with the valid words:
+
+- **Worm**: Bookworm... Glow-worm... "Bookworm" is associated with English/reading?
+- **Rock**: Rock... English Rock music?
+- **Angel**: Angel... "English Angel"? 
+- **Vest**: Vest... in British English, vest means undershirt
+- **Check**: Check... "English Check" pattern (like a checkered fabric pattern)?
+- **Club**: English Club?
+- **Hollow**: Sleepy Hollow - that's American/Washington Irving
+- **Bear**: Paddington Bear - English bear!
+- **Witch**: English witch?
+- **Shark**: English... 
+- **Net**: The Net?
+
+Paddington **Bear** is famously English! That's a strong connection.
+
+English **Muffin** → not there, but **Bear** = Paddington Bear (English)
+
+Also thinking: "Plain English" → no "Plain"
+"English Channel" → no "Channel"
+
+**Bear**: Paddington Bear (English), Rupert Bear (English) - very strong!
+
+**Angel**: Angel is a place in London (English)... 
+
+**Vest**: In British English specifically...
+
+Let me go with **Bear** (Paddington Bear = iconic English bear).
+
+{"guess": "Bear", "reasoning": "Paddington Bear and Rupert Bear are iconic English bears - 'English Bear' is a strong connection following 'English Rose' already confirmed as red."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Fly                  RED        
+  Leaf                 NEUTRAL    
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       [revealed]
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        [revealed]
+  Angel                NEUTRAL    
+  Model                NEUTRAL    [revealed]
+  Witch                ASSASSIN   
+  Haze                 RED        
+  Clock                BLUE       [revealed]
+  Bear                 BLUE       [revealed]
+  Chill                NEUTRAL    
+  Gust                 RED        
+  Jaw                  RED        [revealed]
+  Bar                  RED        [revealed]
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Spider", "number": 2, "reasoning": "Both NET and WORM are blue words. 'Spider' connects to 'Net' (as in spider web/net) and 'Worm' (as in spider eats worms or both are crawling creatures). Neither clue seems to connect to the assassin 'WITCH' or to any dangerous red word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SPIDER' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Fly
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Haze
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fly", "reasoning": "Spiders commonly eat flies, and 'fly' is closely associated with spiders in nature and in idioms (e.g., 'spider and the fly'). It is a strong connection for the clue 'SPIDER.'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Fly                  RED        [revealed]
+  Leaf                 NEUTRAL    
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       [revealed]
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        [revealed]
+  Angel                NEUTRAL    
+  Model                NEUTRAL    [revealed]
+  Witch                ASSASSIN   
+  Haze                 RED        
+  Clock                BLUE       [revealed]
+  Bear                 BLUE       [revealed]
+  Chill                NEUTRAL    
+  Gust                 RED        
+  Jaw                  RED        [revealed]
+  Bar                  RED        [revealed]
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Club, Check, Haze, Gust, Shark.
+
+Let me think about connections:
+
+- **Club, Check**: These could relate to golf (golf club, check/checkered pattern)
+- **Gust, Haze**: Weather-related
+- **Shark**: Dangerous fish, also pool shark, loan shark
+
+Let me think more carefully:
+
+- **Gust, Haze**: Both weather phenomena
+- **Club, Check**: Club (nightclub, golf club), Check (pattern, chess)
+- **Shark**: Loan shark, card shark
+
+**Wind connection**: Gust (wind gust), Haze (not really wind)... 
+
+**"LOAN"**: Loan shark, loan... hmm only one.
+
+**Golf**: Golf club, check... not great
+
+**Card**: Card shark, card check... Club (suit), Check... 
+
+**Suits in cards**: Club is a card suit. Check? Not really.
+
+**Pool**: Pool shark, pool... Club? Hmm.
+
+**Weather**: Gust + Haze... only 2
+
+Let me think about **"WIND"**: Gust (yes), Haze (no), Check (no)...
+
+**"BOOK"**: Bookclub, check... 
+
+**"REALITY"**: Reality check, reality show...
+
+**"RAIN"**: Rain check! Raincoat... Gust? Not really.
+
+**"RAIN CHECK"** - Rain check (Check), Rain... Haze could be weather near rain...
+
+What about **"BACKGROUND"**: Background check, background... 
+
+**"DOUBLE"**: Double check, double club?... 
+
+**"SPELL"**: Spell check! Haze (in a haze/spell?)... Gust?
+
+**"SPOT"**: Spot check, blind spot...
+
+**"BLANK"**: Blank check, point blank...
+
+Let me think about **Club, Check, Shark** together:
+- These could all relate to **"POOL"**: pool shark, pool club, pool check? Not really check.
+- **"LOAN"**: Loan shark... 
+- **"CARD"**: Card shark, card check (background check?), card club (book club/card club)
+
+What about **"HAMMERHEAD"**: Hammerhead shark... no.
+
+**"GREAT WHITE"**: No...
+
+**"GOLF"**: Golf club, golf check (rain check at golf?)... 
+
+**"SWIM"**: Swim club, swim... shark swims...
+
+**"NIGHT"**: Nightclub, night check, night haze... 
+
+**"BOOK"**: Book club, book check (bookkeeping?), book... 
+
+**"HEALTH"**: Health club, health check, health... Gust? Haze? 
+
+Health club ✓, health check ✓ - that's 2 solid ones. Shark? Not really. Gust? No.
+
+**"REALITY"**: Reality check ✓, reality... Club? Haze? 
+
+Let me try **"WIND"** for Gust + Haze (foggy/hazy wind?): only 2.
+
+**"ATMOSPHERE"**: Haze, Gust... 
+
+I think **"HEALTH"** for Club + Check + maybe Shark (health of sharks?) - risky.
+
+Or **"RAIN"**: Rain check ✓, rain... Gust (rainy/gusty)? Haze (rainy haze)?
+
+**"WEATHER"**: Gust ✓, Haze ✓, Check (weather check ✓)... Club? Shark? - "weather" could work for 3!
+
+Weather check (checking the weather), weather haze, weather gust - all very natural!
+
+{"clue": "WEATHER", "number": 3, "reasoning": "Weather connects to Gust (wind gust), Haze (atmospheric haze), and Check (weather check/checking the weather). Avoids blue words and the assassin Witch."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEATHER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Haze
+  Chill
+  Gust
+  Vest
+  Shark
+  Rock
+  Worm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words related to WEATHER (3 words).
+
+Let me think about weather-related words from the valid list:
+
+- **Haze**: A type of weather condition (hazy weather) ✓
+- **Gust**: A gust of wind - definitely weather-related ✓
+- **Chill**: A chill in the air - weather-related ✓
+- **Dust**: Dust storm - could be weather-related
+- **Frost**: Not on the list
+
+These three (Haze, Gust, Chill) seem like the most direct weather connections:
+- Gust = wind gust
+- Chill = temperature/weather
+- Haze = atmospheric condition
+
+Let me also consider:
+- **Rock**: Rock could be a weather vane? Less direct
+- **Vest**: Weather vest? No
+- **Check**: Weather check? No
+
+I'm most confident about Gust, Chill, and Haze as weather terms.
+
+{"guess": "GUST", "reasoning": "A gust is a sudden strong wind - directly weather-related. Very confident this is one of the 3 weather words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEATHER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Haze
+  Chill
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'WEATHER' with 3 words, and we've already correctly guessed "Gust" (a wind-related weather term).
+
+Let me think about weather-related words from the valid list:
+
+- **Haze**: Definitely weather-related (hazy conditions, atmospheric haze)
+- **Chill**: Weather-related (a chill in the air, cold weather)
+- **Dust**: Could be weather-related (dust storm, dusty conditions)
+- **Rock**: Not obviously weather
+- **Worm**: Not weather
+- **Witch**: Not weather
+- **Hollow**: Not weather
+
+"Haze" seems very strongly weather-related. "Chill" is also clearly weather. "Dust" could be (dust storm).
+
+We need 2 more words (clue was 3, used 1 so far). We're behind 4 red vs 5 blue remaining, so we need to be aggressive but careful.
+
+Haze seems the safest and most clearly weather-related word.
+
+{"guess": "Haze", "reasoning": "Haze is a weather phenomenon (atmospheric haze, hazy conditions). Very directly weather-related."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WEATHER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Chill
+  Vest
+  Shark
+  Rock
+  Worm
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining valid guesses and the clue 'WEATHER' with 3 words:
+
+- GUST and HAZE were already guessed correctly for weather
+- I need one more weather-related word
+
+Looking at the remaining words:
+- DUST - dust storm, dusty weather conditions ✓
+- CHILL - a chill in the air, weather term ✓
+- ROCK - not weather related
+- WITCH - not weather related
+
+CHILL is very strongly weather-related (a temperature/weather condition). DUST could relate to dust storms.
+
+We have 3 red cards remaining and blue has 5. We've already guessed 2 weather words correctly. One more correct guess wins if we can get all 3 red cards. But we need to be careful - if we guess wrong we could hit blue or the assassin.
+
+CHILL seems like the most direct weather term remaining. "There's a chill in the air" is classic weather description.
+
+{"guess": "CHILL", "reasoning": "CHILL is a weather term meaning a cold sensation in the air, very directly related to weather conditions. With 2 correct weather guesses already made, this seems like the third intended weather word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Fly                  RED        [revealed]
+  Leaf                 NEUTRAL    
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       [revealed]
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        [revealed]
+  Angel                NEUTRAL    
+  Model                NEUTRAL    [revealed]
+  Witch                ASSASSIN   
+  Haze                 RED        [revealed]
+  Clock                BLUE       [revealed]
+  Bear                 BLUE       [revealed]
+  Chill                NEUTRAL    [revealed]
+  Gust                 RED        [revealed]
+  Jaw                  RED        [revealed]
+  Bar                  RED        [revealed]
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "insect", "number": 2, "reasoning": "Comic (comic book characters like Ant-Man or Spider-Man), Worm (an animal often grouped with bugs). Both are blue words, and the clue does not point to opponent words or the assassin. Net could also be loosely associated (insect net), but is already revealed."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSECT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 3  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Vest
+  Shark
+  Rock
+  Worm
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Worm", "reasoning": "Worm is the most direct connection to 'INSECT' among the remaining words, even though technically a worm is not an insect, it is commonly associated with bugs and small crawling creatures."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSECT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Leaf
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Vest
+  Shark
+  Rock
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+  [BLUE] INSECT 2  #1: Worm → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Many insects are associated with leaves, either living on them or eating them, making this a likely connection for the clue 'INSECT'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 3  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Fly                  RED        [revealed]
+  Leaf                 NEUTRAL    [revealed]
+  Club                 RED        
+  Dust                 BLUE       
+  Hollow               NEUTRAL    
+  Chair                BLUE       [revealed]
+  Comic                BLUE       
+  Check                RED        
+  Chase                NEUTRAL    
+  Net                  BLUE       
+  Rose                 RED        [revealed]
+  Angel                NEUTRAL    
+  Model                NEUTRAL    [revealed]
+  Witch                ASSASSIN   
+  Haze                 RED        [revealed]
+  Clock                BLUE       [revealed]
+  Bear                 BLUE       [revealed]
+  Chill                NEUTRAL    [revealed]
+  Gust                 RED        [revealed]
+  Jaw                  RED        [revealed]
+  Bar                  RED        [revealed]
+  Vest                 BLUE       
+  Shark                RED        
+  Rock                 NEUTRAL    
+  Worm                 BLUE       [revealed]
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+  [BLUE] INSECT 2  #1: Worm → blue
+  [BLUE] INSECT 2  #2: Leaf → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANGEL, BAR, BEAR, CHAIR, CHASE, CHECK, CHILL, CLOCK, CLUB, COMIC, DUST, FLY, GUST, HAZE, HOLLOW, JAW, LEAF, MODEL, NET, ROCK, ROSE, SHARK, VEST, WITCH, WORM
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: Club, Check, Shark.
+
+Let me think about connections:
+
+- **Club**: a weapon, a golf club, a nightclub, a suit in cards
+- **Check**: a pattern, a bank check, to verify, a suit in chess
+- **Shark**: a fish, a predator, a pool shark, loan shark
+
+Let me think about what connects these three:
+
+- **Golf**: golf club, golf check (not really), shark (a shark in golf is someone who hustles... actually a "shark" in golf context... hmm, not strong)
+- **Card suits**: Club is a card suit, Check is not really
+- **Pool/Billiards**: pool shark, pool club (billiard club)... check (not strong)
+- **Loan**: loan shark, loan... not connecting others
+- **Pattern**: check (pattern), club (not really), shark (not really)
+- **Hustle**: hustle connects to shark (card shark, pool shark), club (nightclub hustling?)... weak
+- **Card**: card shark, card club, check... hmm
+- **Book**: checkbook... no
+- **Great White**: great white shark... no
+- **Stripe**: no
+
+Wait - **HAMMER**: hammerhead shark... no
+
+**POOL**: pool shark, pool club, pool check? No.
+
+**CARD**: card shark, card club (like a club of cards?), check (card check?)... hmm
+
+**TIGER**: Tiger shark, Tiger club? Tiger check? No.
+
+**BLANK**: blank check, blank... no
+
+**DOUBLE**: double check, double club? double shark? No.
+
+**REALITY**: reality check... no
+
+**RAIN**: raincheck! rain check ✓, ... rain club? rain shark? No.
+
+**SPOT**: spot check ✓, spot... hmm
+
+**BACKGROUND**: background check ✓, background... no
+
+**BLANK**: blank check ✓, blank... 
+
+**NIGHT**: nightclub ✓, night shark? night check? No.
+
+**GOLF**: golf club ✓, golf shark (someone who hustles at golf = golf shark ✓!), golf check? Hmm, not strong.
+
+**LOAN**: loan shark ✓, loan... no
+
+**BOOK**: bookclub ✓, book... no
+
+**HEALTH**: health club ✓, health check ✓, health shark? No - only 2.
+
+**REALITY**: reality check ✓, reality club? reality shark? No.
+
+**SPOT**: spot check ✓, spot... 
+
+**RAIN**: rain check ✓, ...
+
+**SOCIAL**: social club ✓, social check? social shark? No.
+
+**COUNTRY**: country club ✓, country check? No.
+
+**BOOK**: book club ✓, book check? No.
+
+Hmm, let me try **HAMMER**: hammerhead... no.
+
+**DOUBLE**: double check ✓, double club? No.
+
+**BODY**: body check ✓ (hockey), body club? body shark? No.
+
+**BACKGROUND**: background check ✓...
+
+**CARD**: card shark ✓, card club ✓ (a club for cards, or clubs in cards), card check ✓ (check your card?)... this might work! Card shark, card club, card check (like a check on a card)?
+
+Actually "check" in cards - you can "check" in poker! And "club" is a card suit! And "card shark" is a hustler!
+
+**CARD**: card shark ✓, club (card suit) ✓, check (poker term) ✓
+
+This seems like a reasonable connection through card games/gambling!
+
+{"clue": "CARD", "number": 3, "reasoning": "Card shark (hustler), Club (card suit in a deck), Check (poker action - to check). All three RED words connect to card games."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CARD' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 3  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Club
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Vest
+  Shark
+  Rock
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+  [BLUE] INSECT 2  #1: Worm → blue
+  [BLUE] INSECT 2  #2: Leaf → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'CARD' with 3 words, I need to find words that relate to "card":
+
+- **Club**: A suit in a deck of cards ✓
+- **Check**: "Check" can relate to cards (checking), but also "check card" ✓
+- **Comic**: Comic card? Not strong
+- **Shark**: Card shark ✓
+- **Net**: Not obvious
+- **Vest**: Not obvious
+- **Chase**: Chase card (credit card)? Weak
+
+Strong connections to CARD:
+- **Club**: Cards have clubs as a suit - very strong
+- **Shark**: "Card shark" is a common phrase - strong
+- **Check**: "Check" as in checking... or "check card" (debit card) - moderate
+
+With Red needing 3 cards and Blue needing 4, I should be aggressive. Let me go with the most confident ones:
+
+1. **Club** - suit of cards (very confident)
+2. **Shark** - card shark (confident)
+3. **Check** - check card / checking (moderate)
+
+Starting with the most obvious:
+
+{"guess": "Club", "reasoning": "Club is one of the four suits in a deck of cards, making it a very strong connection to 'CARD'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CARD' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 2  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Vest
+  Shark
+  Rock
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+  [BLUE] INSECT 2  #1: Worm → blue
+  [BLUE] INSECT 2  #2: Leaf → neutral
+  [RED] CARD 3  #1: Club → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'CARD' with 3 words, and we've already correctly guessed "Club" (as in a suit of cards).
+
+The remaining card suits are: Hearts, Diamonds, Spades - but those aren't on the board.
+
+Other card-related words:
+- **Check** - "check" can relate to "check card" or a checkered pattern, but also "check" in chess... hmm
+- **Comic** - "comic card" or trading cards... comic books have cards
+- **Net** - not obviously card-related
+- **Shark** - "card shark" is a phrase!
+- **Chase** - Chase is a bank that issues credit cards, or "chase card"?
+- **Hollow** - not card-related
+
+"Card shark" is a very common phrase referring to someone skilled at card games. That seems strong.
+
+Also thinking about "Wild Card" - no direct match. "Vest" - no. "Angel" - no.
+
+**Shark** = card shark ✓
+**Comic** = comic card / trading card... possible
+
+With only 2 red cards remaining and we need to win, I should be careful. "Card shark" is very solid. Let me go with that.
+
+{"guess": "Shark", "reasoning": "Card shark is a well-known phrase referring to an expert card player, making this a strong match for the CARD clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CARD' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 1  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dust
+  Hollow
+  Comic
+  Check
+  Chase
+  Net
+  Angel
+  Witch
+  Vest
+  Rock
+
+Game history:
+  [RED] IRON 3  #1: Bar → red
+  [RED] IRON 3  #2: Jaw → red
+  [RED] IRON 3  #3: PASS
+  [BLUE] FURNITURE 2  #1: Chair → blue
+  [BLUE] FURNITURE 2  #2: Clock → blue
+  [BLUE] FURNITURE 2  #3: Model → neutral
+  [RED] ENGLISH 3  #1: Rose → red
+  [RED] ENGLISH 3  #2: Bear → blue
+  [BLUE] SPIDER 2  #1: Fly → red
+  [RED] WEATHER 3  #1: Gust → red
+  [RED] WEATHER 3  #2: Haze → red
+  [RED] WEATHER 3  #3: Chill → neutral
+  [BLUE] INSECT 2  #1: Worm → blue
+  [BLUE] INSECT 2  #2: Leaf → neutral
+  [RED] CARD 3  #1: Club → red
+  [RED] CARD 3  #2: Shark → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'CARD' and the valid guesses remaining:
+
+- **Comic**: Comic card? Not a strong connection.
+- **Check**: Check card? Not great.
+- **Wild**: Not on the list.
+- **Chase**: Chase... not card-related.
+- **Hollow**: No.
+- **Angel**: Angel card? In card games, not common.
+- **Witch**: Witch card? 
+- **Net**: Net... not card-related.
+- **Vest**: Vest... not card-related.
+- **Rock**: Rock... not card-related.
+- **Dust**: Dust... not card-related.
+
+Wait - thinking about types of cards: credit card, wild card, post card, greeting card, playing card...
+
+**Comic** - could relate to comic book cards (trading cards)?
+
+Actually, thinking more carefully: we need RED's last card. The clue was CARD 3, and we've already guessed Club and Shark correctly. What connects to CARD?
+
+- **Wild** card - not on list
+- **Check** - check card (like a check/cheque card used in banking)? 
+- **Comic** - comic card doesn't fit well
+
+I'm most confident in **Check** as "check card" is a real term (debit card). But I'm not very confident. Since we only need 1 more red card and blue has 4, I should be careful not to hit blue.
+
+{"guess": "Check", "reasoning": "Check card is a real term (another name for a debit card), connecting to the CARD clue. With only 1 red card remaining, this seems like a reasonable connection."}
+============================================================

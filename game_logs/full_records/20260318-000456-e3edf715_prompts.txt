@@ -1,0 +1,2548 @@
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        
+  Cap                  RED        
+  Ghost                NEUTRAL    
+  Root                 BLUE       
+  Flute                BLUE       
+  Clip                 BLUE       
+  Toast                BLUE       
+  Edge                 ASSASSIN   
+  Cargo                BLUE       
+  Gene                 NEUTRAL    
+  Cook                 NEUTRAL    
+  Elm                  RED        
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        
+  Bill                 NEUTRAL    
+  Jungle               RED        
+  Cake                 RED        
+  Steam                BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "forest", "number": 2, "reasoning": "Forest is closely related to both JUNGLE and ELM, both of which are red words. This clue connects these two without strongly pointing toward any blue or the assassin (EDGE), and avoids dangerous overlap with neutrals or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Ghost
+  Root
+  Flute
+  Clip
+  Toast
+  Edge
+  Cargo
+  Gene
+  Cook
+  Elm
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Jungle
+  Cake
+  Steam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Jungle", "reasoning": "Jungle is strongly associated with a forest, making it a very likely match for the clue 'FOREST'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Ghost
+  Root
+  Flute
+  Clip
+  Toast
+  Edge
+  Cargo
+  Gene
+  Cook
+  Elm
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+  Steam
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Elm", "reasoning": "Elm is a type of tree commonly found in forests, making it a strong match for the clue 'FOREST'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'FOREST' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Ghost
+  Root
+  Flute
+  Clip
+  Toast
+  Edge
+  Cargo
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+  Steam
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Root", "reasoning": "A 'root' is a direct part of a tree, which is found in a forest, making it strongly linked to the clue 'FOREST'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        
+  Cap                  RED        
+  Ghost                NEUTRAL    
+  Root                 BLUE       [revealed]
+  Flute                BLUE       
+  Clip                 BLUE       
+  Toast                BLUE       
+  Edge                 ASSASSIN   
+  Cargo                BLUE       
+  Gene                 NEUTRAL    
+  Cook                 NEUTRAL    
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find clues for these BLUE words: Laser, Flute, Clip, Toast, Cargo, Alien, Steam
+
+Let me think about groupings:
+
+**Steam, Laser, Flute** - these could relate to music (flute is an instrument, but steam and laser don't fit well)
+
+**Cargo, Ship** - cargo ship... 
+
+**Clip, Toast, Steam** - hmm
+
+Let me think about "PUNK":
+- Steam**punk**
+- **Punk** rock... 
+
+**SHIP**: Cargo ship, Steam ship... that's 2
+
+**MUSIC**: Flute... 
+
+**IRON**: Steam iron, Laser... no
+
+**FLAT**: Flute (flute is related to flat/column), Laser (flat beam?)... no
+
+**SPACE**: Laser, Alien, Cargo (space cargo?)... 
+
+**ET/EXTRATERRESTRIAL**: Alien...
+
+**BEAM**: Laser beam, Steam beam? No...
+
+**PRESS**: Steam press, Clip (press clip), Toast (press conference toast?)... 
+
+**HAIR**: Clip (hair clip), Steam (steam for hair), Laser (laser hair removal)... that's 3 and avoids the assassin (EDGE is the dangerous one - razor's edge relates to hair too, but my team wouldn't guess EDGE for "hair")
+
+Wait - EDGE could be associated with "razor's edge" → razor → hair. That's risky.
+
+**RACK**: Toast rack, Cargo rack, Clip rack? Hmm...
+
+**FRENCH**: Toast (French toast), Clip (French clip?), Flute (French flute/baguette)... 
+
+Actually: French Toast, French Flute (a type of bread), French Clip (earring back)... and maybe Cargo (French Foreign Legion cargo?)... 
+
+**FRENCH** connecting Toast, Flute, Alien (French film "The Alien"? No)...
+
+French Toast, French Flute - that's solid. French Clip is a real thing. French Steam? No.
+
+Let me try **MUSIC**: Flute, Laser (laser light show), Steam (steam organ?)...
+
+**PIPE**: Flute (pipe/flute), Steam pipe, Laser pipe? Clip (pipe clip)... 
+
+**STEAM**: Already on board - forbidden.
+
+**PUNK**: Steampunk, Cyberpunk (laser/alien)... 
+
+**SHIP**: Cargo ship, Steam ship, Alien ship (spaceship)... 3 blue words! 
+- Cargo → cargo ship ✓
+- Steam → steamship ✓  
+- Alien → alien ship/spaceship ✓
+
+Does SHIP point to any red words? Boot (boot camp, not ship), Net (fishing net, not ship specifically)... seems okay. EDGE doesn't relate to ship.
+
+{"clue": "SHIP", "number": 3, "reasoning": "Cargo ship, Steamship, and Alien ship (spaceship) - three blue words that connect to SHIP without pointing toward the ASSASSIN (EDGE) or red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHIP' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Ghost
+  Flute
+  Clip
+  Toast
+  Edge
+  Cargo
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+  Steam
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that connect to "SHIP" (3 words).
+
+Let me think about SHIP connections:
+- Words that can follow SHIP: CARGO (cargo ship), GHOST (ghost ship)
+- Words that can precede SHIP: GUN-ship, STEAM-ship (steamship), HARD-ship, COURT-ship
+- STEAMSHIP → STEAM
+- CARGO SHIP → CARGO
+- GHOST SHIP → GHOST
+- COOK → Captain Cook? Cook on a ship?
+- CLIP → no
+- TOAST → no
+- BOOT → no
+- ALIEN → no
+
+Strong candidates:
+1. CARGO (cargo ship - very direct)
+2. STEAM (steamship - compound word)
+3. GHOST (ghost ship - very direct)
+
+Also thinking about "-ship" suffix words:
+- GENE → no
+- NURSE → no
+- SOLDIER → no
+
+Wait, let me think about "HARDSHIP" - HARD isn't there.
+- COURTSHIP - COURT isn't there
+- GUNSHIP - GUN isn't there
+- KINSHIP - KIN isn't there
+
+CARGO, STEAM, GHOST seem like the best three.
+
+Starting with the most obvious: CARGO
+
+{"guess": "CARGO", "reasoning": "Cargo ship is a very direct and common compound word/phrase with SHIP."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHIP' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Ghost
+  Flute
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+  Steam
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find words that relate to "SHIP" (3 words).
+
+Words that could relate to SHIP:
+- **Cargo** - already guessed (blue ✓)
+- **Cap** - Captain/Cap could relate to ship
+- **Cook** - Ship's cook is a role on a ship
+- **Clip** - Clipboard? No... Clipper ship!
+- **Ghost** - Ghost ship!
+- **Steam** - Steamship!
+- **Boot** - Boot camp? No... Bootleg? Actually "Boot" doesn't strongly connect to ship
+- **Nurse** - No strong connection
+- **Bill** - No strong connection
+- **Net** - No strong connection
+
+Strong candidates:
+- **Steam** - Steamship is very direct
+- **Ghost** - Ghost ship is a common phrase
+- **Clip** - Clipper ship is a type of sailing ship
+
+The clue number is 3, and we've used 1 guess. We need 2 more good guesses.
+
+"Steam" + "ship" = Steamship (very direct)
+"Ghost" + "ship" = Ghost ship (common phrase)
+"Clip" + "per" + "ship" = Clipper ship (slightly less direct)
+
+I'll go with "Steam" as it's the most direct compound word.
+
+{"guess": "Steam", "reasoning": "Steamship is a direct compound word - a type of ship powered by steam engines."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHIP' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Ghost
+  Flute
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SHIP' and what's been guessed so far (Cargo and Steam were correct), I need to find one more ship-related word.
+
+Possible ship connections:
+- **Ghost** ship - a very common phrase
+- **Boot** - not strongly ship-related
+- **Clip** - clipper ship!
+- **Cap** - captain of a ship?
+
+"Ghost ship" is a very well-known phrase. "Clipper ship" is also a real thing. 
+
+Ghost ship feels very natural and strong. Clipper ship is also valid but "Clip" alone might be less direct.
+
+I'm fairly confident about "Ghost" (ghost ship is a classic phrase), and we need to catch up as Red has 7 remaining while we have 5.
+
+{"guess": "Ghost", "reasoning": "Ghost ship is a very common phrase, fitting the SHIP clue perfectly as the third word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        
+  Cap                  RED        
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       
+  Clip                 BLUE       
+  Toast                BLUE       
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    
+  Cook                 NEUTRAL    
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "Hat", "number": 2, "reasoning": "Hat connects to both 'Cap' and 'Boot', as 'cap' is a type of hat and 'boot' can be associated with head-to-toe clothing. This avoids blue words and the assassin. It also doesn't seem to strongly connect to any neutral words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HAT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Cap
+  Flute
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cap", "reasoning": "A 'cap' is a type of hat, making it the most direct connection to the clue 'HAT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HAT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Boot
+  Flute
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Boot", "reasoning": "A 'boot' can refer to a type of footwear, and there are types of hats and boots (cowboy, etc.) that are both worn as apparel. It's the closest remaining word to 'hat' on the list."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HAT' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Flute
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "Both 'Cap' and 'Boot' have already been guessed and revealed as red, and none of the remaining words have a strong connection to 'HAT.' It's safest to pass to avoid risking the assassin or helping the opponent."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       
+  Clip                 BLUE       
+  Toast                BLUE       
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    
+  Cook                 NEUTRAL    
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words: LASER, FLUTE, CLIP, TOAST, ALIEN.
+
+Let me think about connections:
+
+- LASER: light, beam, pointer, cutting
+- FLUTE: music, instrument, champagne glass, column
+- CLIP: attach, hair, video, speed
+- TOAST: bread, drink, warm
+- ALIEN: extraterrestrial, foreign, strange
+
+Let me think about "CHAMPAGNE":
+- FLUTE (champagne flute) ✓
+- TOAST (champagne toast) ✓
+- That's only 2.
+
+What about "MUSIC":
+- FLUTE ✓
+- CLIP (music clip/video) ✓
+- Maybe not strong enough
+
+What about "HAIR":
+- CLIP (hair clip) ✓
+- That's only 1.
+
+What about "LIGHT":
+- LASER ✓
+- GLOW (red!) - dangerous
+
+What about "PAPER":
+- CLIP (paper clip) ✓
+- INK (neutral) - not ideal
+
+What about "FRENCH":
+- TOAST (French toast) ✓
+- ALIEN (French alien?) - no
+
+What about "CHAMPAGNE" connecting FLUTE and TOAST... Can I add more?
+- LASER (laser show at parties?) weak
+- ALIEN (alien toast?) weak
+
+What about "INSTRUMENT":
+- FLUTE ✓
+- LASER (laser instrument?) weak
+
+What about "VIDEO":
+- CLIP (video clip) ✓
+- ALIEN (Alien movie) ✓
+- LASER (laser disc?) weak
+
+What about "SPACE":
+- ALIEN ✓
+- LASER ✓
+- That's 2, but NURSE could be "space" (space nurse?) - no. NET? No.
+
+What about "FILM" or "MOVIE":
+- ALIEN (Alien movie) ✓
+- CLIP (film clip) ✓
+- TOAST (Toast movie?) weak
+- FLUTE (The Magic Flute?) weak
+
+What about "PAPER":
+- CLIP ✓
+- TOAST (paper toast?) no
+
+Let me try "BUBBLY" - champagne related:
+- FLUTE ✓
+- TOAST ✓
+- ALIEN? No... 
+
+What about "GLASS":
+- FLUTE (champagne flute/glass) ✓
+- LASER (laser glass?) weak
+- TOAST (raise a glass/toast) ✓
+- That's risky with NET (fishing net, not glass)
+
+What about "CELEBRATION":
+- TOAST ✓
+- FLUTE ✓
+- That's 2.
+
+Let me try "EXTRATERRESTRIAL" - no, that's too obvious for just ALIEN.
+
+What about "BEAM":
+- LASER ✓
+- That's 1.
+
+What about "FRENCH":
+- TOAST (French toast) ✓
+- ALIEN (French Foreign Legion?) weak
+
+Let me go with CHAMPAGNE for FLUTE and TOAST - safe 2-word clue avoiding dangerous words.
+
+Actually, can I connect ALIEN + LASER + something? "SCI-FI" or "SCIENCE":
+- ALIEN ✓
+- LASER ✓
+- FLUTE (Magic Flute?) weak
+
+What about "POINTER":
+- LASER (laser pointer) ✓
+- That's 1.
+
+I'll go with CHAMPAGNE for FLUTE and TOAST - it's safe and clear.
+
+{"clue": "CHAMPAGNE", "number": 2, "reasoning": "FLUTE (champagne flute) and TOAST (champagne toast/raising a toast) are both strongly associated with champagne celebrations. This avoids the assassin EDGE and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CHAMPAGNE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Laser
+  Flute
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words associated with CHAMPAGNE.
+
+Champagne connections:
+- **Flute**: A champagne flute is the classic glass used to drink champagne ✓
+- **Toast**: You make a toast with champagne ✓
+- **Cake**: Wedding cake often comes with champagne, but less direct
+- **Bubble**: Not on the list
+- **China**: Champagne region is in France, not China... but "china" as in fine china dishes?
+- **Cook**: Captain Cook? Less relevant
+- **Bill**: Less relevant
+
+The two strongest connections to CHAMPAGNE:
+1. **Flute** - champagne flute (the glass)
+2. **Toast** - raising a toast with champagne
+
+These are very clear and direct associations. Let me start with the most confident one.
+
+{"guess": "FLUTE", "reasoning": "A champagne flute is the iconic glass used for drinking champagne - very direct association."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CHAMPAGNE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Clip
+  Toast
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'CHAMPAGNE' with 2 words, and we've already correctly guessed "Flute" (a champagne glass shape).
+
+What else relates to champagne?
+- **Toast**: You make a toast with champagne - this is a very strong connection
+- **Cake**: Wedding cake goes with champagne, but less direct
+- **Bill**: Less related
+- **Glow**: Champagne has a glow/sparkle, but weak
+- **China**: Fine china goes with champagne settings, but weak
+
+"Toast" is the most natural association with champagne - you raise a glass and make a toast. This is a classic champagne connection.
+
+We're ahead (4 blue remaining vs 5 red remaining), and we've already used one guess correctly. "Toast" feels very confident.
+
+{"guess": "Toast", "reasoning": "Making a toast with champagne is a classic, direct association. After guessing 'Flute' (champagne glass), 'Toast' is the natural second word connected to champagne celebrations."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CHAMPAGNE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Clip
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the game state:
+- Blue remaining: 3 → wait, we started with more and have been guessing
+- Actually, Blue remaining shows 3 still... let me reconsider
+
+Wait - Blue remaining is 3, and we've used 2 guesses this turn (Flute → blue, Toast → blue). So we've found 2 blue cards this turn, but blue remaining is still 3? That seems odd - unless blue remaining is updated and we still have 3 left to find.
+
+Actually, the display shows current state: Blue remaining: 3. We've correctly guessed Flute and Toast (both blue). So we still need 3 more blue cards. We have one more guess available (3rd guess of the turn).
+
+The clue is CHAMPAGNE 2 - we've already used 2 correct guesses for this clue. The bonus guess could be used for a previous clue's word.
+
+Previous clue was SHIP 3 - we got Cargo, Steam, but Ghost was neutral (missed one). Could there be another SHIP word?
+
+CHAMPAGNE connections: bubbles, glass (flute ✓), toast ✓, bottle, cork, France, celebration, cake...
+
+CAKE could relate to champagne (celebration cake). But it could also be risky.
+
+CHINA - champagne is from France, not China. 
+
+BILL - champagne bill? 
+
+COOK - champagne cook? Captain Cook? 
+
+Given we need 3 more blue cards and red only needs 5, we're behind. But I should be careful not to hit the assassin or red cards.
+
+CAKE feels like a stretch. Let me PASS to be safe since we've already gotten our 2 clue words.
+
+{"guess": "PASS", "reasoning": "We've successfully guessed both words for the CHAMPAGNE 2 clue (Flute and Toast). The bonus guess is risky without strong confidence - passing to preserve our advantage rather than risk hitting a red card or the assassin."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       [revealed]
+  Clip                 BLUE       
+  Toast                BLUE       [revealed]
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    
+  Cook                 NEUTRAL    
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "hospital", "number": 1, "reasoning": "The word 'Nurse' is related to 'hospital.' This clue is safe, as it does not link to any blue words or the assassin, and directly points toward one of our red words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HOSPITAL' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Laser
+  Clip
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Nurse
+  Bill
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Nurse", "reasoning": "'Nurse' is most directly associated with 'Hospital' among the available words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HOSPITAL' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Laser
+  Clip
+  Edge
+  Gene
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Gene", "reasoning": "Of the remaining words, 'Gene' is most closely associated with hospitals due to genetic testing, research, and medical treatment. None of the other options are as directly connected to the clue 'HOSPITAL.'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       [revealed]
+  Clip                 BLUE       
+  Toast                BLUE       [revealed]
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    [revealed]
+  Cook                 NEUTRAL    
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        [revealed]
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining BLUE words: LASER, CLIP, ALIEN.
+
+Let me think about connections:
+
+**LASER, CLIP, ALIEN**
+
+- LASER: light amplification, beam, sci-fi weapon, pointer
+- CLIP: fastener, video clip, gun clip, hair clip, clip art
+- ALIEN: extraterrestrial, foreign, stranger, movie
+
+Let me think about what connects these three:
+
+- LASER + ALIEN: sci-fi connection
+- CLIP + ALIEN: ?
+- LASER + CLIP: ?
+
+**Gun/weapon angle**: LASER (weapon), CLIP (ammunition clip), ALIEN (the movie has weapons?)
+
+**Art**: CLIP art, LASER art... not great
+
+**Video**: VIDEO clip, VIDEO laser (laserdisc)... 
+
+**Movie**: ALIEN (movie), LASER (in many movies), CLIP (movie clip)...
+
+**Science fiction**: LASER, ALIEN - both sci-fi. CLIP less so.
+
+**Paper**: PAPER clip, PAPER... not connecting others well.
+
+**GUN**: GUN clip, LASER gun, ALIEN gun? Stretch.
+
+**MAGAZINE**: MAGAZINE clip (gun), MAGAZINE (publication)... LASER magazine? No.
+
+**SPEED**: Speed clip, speed... no.
+
+**HAIR**: HAIR clip, HAIR laser (laser hair removal)... HAIR alien? No.
+
+**BEAM**: LASER beam, BEAM me up (Star Trek/alien)... CLIP beam? No.
+
+**EXTRATERRESTRIAL**: Just ALIEN.
+
+**NEON**: NEON laser, NEON alien (neon glow)... NEON clip? 
+
+**PREDATOR**: PREDATOR uses laser sights, PREDATOR is an alien... CLIP? Stretch.
+
+**SCIENCE**: SCIENCE fiction covers ALIEN and LASER... SCIENCE clip? No.
+
+**ATTACK**: LASER attack, ALIEN attack... CLIP attack? 
+
+**INVASION**: ALIEN invasion... LASER invasion? No.
+
+**FINGERNAIL**: NAIL clip(per), NAIL laser (nail fungus treatment)... NAIL alien? No.
+
+**PAPER**: PAPER clip, PAPER... 
+
+Wait - **STAPLE**: No, not a connection.
+
+**BULLDOG**: BULLDOG clip... no.
+
+**CLAW**: CLAW clip, CLAW alien (aliens have claws)... CLAW laser? Stretch.
+
+**SPACE**: SPACE laser, SPACE alien, SPACE... CLIP? Space clip? Weak.
+
+**RAY**: RAY gun = LASER, RAY (alien ray)... CLIP? 
+
+**LIGHT**: LASER light, ALIEN (movie with light effects)... LIGHT clip? 
+
+**FILM**: FILM clip, FILM alien (Alien is a film), FILM... LASER? Laser disc?
+
+**MOVIE**: MOVIE clip, MOVIE alien... MOVIE laser? 
+
+**ACTION**: ACTION clip, ACTION... 
+
+**NAIL**: NAIL clip(per), NAIL... LASER nail treatment, ALIEN nails?
+
+**HAIR**: HAIR clip, HAIR laser removal... ALIEN hair? Weak.
+
+Let me try **PAPER**: PAPER clip - yes. PAPER... LASER printer uses laser, PAPER alien? No.
+
+**PRINTER**: LASER printer, CLIP... ALIEN printer? No.
+
+**TAG**: LASER tag, ALIEN tag... CLIP tag? 
+
+**SHOW**: LASER show, ALIEN show (TV show), CLIP show (TV clip show)! 
+
+{"clue": "SHOW", "number": 3, "reasoning": "LASER show (laser light show), ALIEN show (TV/movie), CLIP show (a TV episode made of clips) - connects all three blue words"}
+
+Wait, CLIP show is definitely a thing, LASER show is a thing, ALIEN show... less standard. Let me reconsider.
+
+**TAG**: LASER tag (game), ALIEN... TAG? CLIP tag? No.
+
+I'll go with a safer 2-word clue targeting LASER and ALIEN with sci-fi, and hope CLIP fits.
+
+{"clue": "SHOW", "number": 2, "reasoning": "LASER show and CLIP show are both common phrases; avoiding ALIEN which is less connected"}
+
+Actually let me try for all 3 with "SCI-FI" - but that's two words.
+
+{"clue": "TAG", "number": 2, "reasoning": "LASER tag is a game, and DOG tag... hmm"}
+
+{"clue": "SHOW", "number": 2, "reasoning": "LASER show and CLIP show are established phrases, connecting two blue words safely"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       
+  Boot                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       [revealed]
+  Clip                 BLUE       
+  Toast                BLUE       [revealed]
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    [revealed]
+  Cook                 NEUTRAL    
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        [revealed]
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[ASSISTANT]
+I need to find a clue for the remaining BLUE words: LASER, CLIP, ALIEN.
+
+Let me think about connections:
+
+**LASER, CLIP, ALIEN**
+
+- LASER: light amplification, beam, sci-fi weapon, pointer
+- CLIP: fastener, video clip, gun clip, hair clip, clip art
+- ALIEN: extraterrestrial, foreign, stranger, movie
+
+Let me think about what connects these three:
+
+- LASER + ALIEN: sci-fi connection
+- CLIP + ALIEN: ?
+- LASER + CLIP: ?
+
+**Gun/weapon angle**: LASER (weapon), CLIP (ammunition clip), ALIEN (the movie has weapons?)
+
+**Art**: CLIP art, LASER art... not great
+
+**Video**: VIDEO clip, VIDEO laser (laserdisc)... 
+
+**Movie**: ALIEN (movie), LASER (in many movies), CLIP (movie clip)...
+
+**Science fiction**: LASER, ALIEN - both sci-fi. CLIP less so.
+
+**Paper**: PAPER clip, PAPER... not connecting others well.
+
+**GUN**: GUN clip, LASER gun, ALIEN gun? Stretch.
+
+**MAGAZINE**: MAGAZINE clip (gun), MAGAZINE (publication)... LASER magazine? No.
+
+**SPEED**: Speed clip, speed... no.
+
+**HAIR**: HAIR clip, HAIR laser (laser hair removal)... HAIR alien? No.
+
+**BEAM**: LASER beam, BEAM me up (Star Trek/alien)... CLIP beam? No.
+
+**EXTRATERRESTRIAL**: Just ALIEN.
+
+**NEON**: NEON laser, NEON alien (neon glow)... NEON clip? 
+
+**PREDATOR**: PREDATOR uses laser sights, PREDATOR is an alien... CLIP? Stretch.
+
+**SCIENCE**: SCIENCE fiction covers ALIEN and LASER... SCIENCE clip? No.
+
+**ATTACK**: LASER attack, ALIEN attack... CLIP attack? 
+
+**INVASION**: ALIEN invasion... LASER invasion? No.
+
+**FINGERNAIL**: NAIL clip(per), NAIL laser (nail fungus treatment)... NAIL alien? No.
+
+**PAPER**: PAPER clip, PAPER... 
+
+Wait - **STAPLE**: No, not a connection.
+
+**BULLDOG**: BULLDOG clip... no.
+
+**CLAW**: CLAW clip, CLAW alien (aliens have claws)... CLAW laser? Stretch.
+
+**SPACE**: SPACE laser, SPACE alien, SPACE... CLIP? Space clip? Weak.
+
+**RAY**: RAY gun = LASER, RAY (alien ray)... CLIP? 
+
+**LIGHT**: LASER light, ALIEN (movie with light effects)... LIGHT clip? 
+
+**FILM**: FILM clip, FILM alien (Alien is a film), FILM... LASER? Laser disc?
+
+**MOVIE**: MOVIE clip, MOVIE alien... MOVIE laser? 
+
+**ACTION**: ACTION clip, ACTION... 
+
+**NAIL**: NAIL clip(per), NAIL... LASER nail treatment, ALIEN nails?
+
+**HAIR**: HAIR clip, HAIR laser removal... ALIEN hair? Weak.
+
+Let me try **PAPER**: PAPER clip - yes. PAPER... LASER printer uses laser, PAPER alien? No.
+
+**PRINTER**: LASER printer, CLIP... ALIEN printer? No.
+
+**TAG**: LASER tag, ALIEN tag... CLIP tag? 
+
+**SHOW**: LASER show, ALIEN show (TV show), CLIP show (TV clip show)! 
+
+{"clue": "SHOW", "number": 3, "reasoning": "LASER show (laser light show), ALIEN show (TV/movie), CLIP show (a TV episode made of clips) - connects all three blue words"}
+
+Wait, CLIP show is definitely a thing, LASER show is a thing, ALIEN show... less standard. Let me reconsider.
+
+**TAG**: LASER tag (game), ALIEN... TAG? CLIP tag? No.
+
+I'll go with a safer 2-word clue targeting LASER and ALIEN with sci-fi, and hope CLIP fits.
+
+{"clue": "SHOW", "number": 2, "reasoning": "LASER show and CLIP show are both common phrases; avoiding ALIEN which is less connected"}
+
+Actually let me try for all 3 with "SCI-FI" - but that's two words.
+
+{"clue": "TAG", "number": 2, "reasoning": "LASER tag is a game, and DOG tag... hmm"}
+
+{"clue": "SHOW", "number": 2, "reasoning": "LASER show and CLIP show are established phrases, connecting two blue words safely"}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 172). Try again with a different clue.
+
+[RESPONSE]
+{"clue": "SHOW", "number": 2, "reasoning": "LASER show and CLIP show are both common phrases connecting two blue words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHOW' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Laser
+  Clip
+  Edge
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'SHOW' with 2 words, I need to find words that connect to "SHOW."
+
+Let me think about compounds and phrases with SHOW:
+- **Cake**: "Cakewalk" - not directly SHOW related... but "piece of cake" - no. Wait, "SHOW" + cake? Or cake + show? Not obvious.
+- **Bill**: "Bill" as in a show bill (playbill)? Or "bill" as in invoice... "show bill" is a thing (poster for a show).
+- **Glow**: "Glow show"? Not common.
+- **Clip**: "Clip show" - yes! A clip show is a type of TV episode.
+- **Cook**: "Cook show"? Cooking show! Yes, a cooking show is very common.
+- **Net**: "Net" - hairnet? No direct SHOW connection.
+- **Laser**: "Laser show" - yes, that's a thing!
+- **Edge**: "Edge" - not obvious.
+- **Alien**: Not obvious.
+- **China**: Not obvious.
+- **Ink**: "Ink" - not obvious.
+- **Soldier**: Not obvious.
+
+Best candidates: **Cook** (cooking show), **Laser** (laser show), **Clip** (clip show).
+
+Cook and Laser both seem strong. "Laser show" is very common. "Cooking show" is common but it's "cooking" not "cook." "Cook show" is less natural. "Clip show" is a TV term.
+
+I'll go with **Laser** first (laser show is a direct compound), then **Cook** (cooking show).
+
+{"guess": "Laser", "reasoning": "LASER SHOW is a very common phrase - a light display performance. Strong connection to SHOW."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'SHOW' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Clip
+  Edge
+  Cook
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+  Cake
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue 'SHOW' with 2 words, and I've already correctly guessed "Laser" (laser show).
+
+Now I need to find one more word that relates to "SHOW."
+
+Let me think about the remaining valid guesses:
+- **Glow** - glow show? Not strong
+- **Cook** - cooking show! Very strong connection
+- **Bill** - bill could relate to show (bill as in playbill, or "fit the bill")
+- **Cake** - cake show? Not great
+- **Clip** - clip show! A "clip show" is a TV episode made of clips from previous episodes
+- **Net** - not obvious
+- **Ink** - not obvious
+- **China** - China? Not obvious
+- **Alien** - not obvious
+- **Edge** - not obvious
+
+"Cook" - cooking show is very natural. "Clip" - clip show is also a real thing.
+
+Given we only need 2 blue cards left and I've already used one guess correctly, I should be careful. "Cook" as in "cooking show" feels very natural and strong.
+
+{"guess": "Cook", "reasoning": "Cooking show is a very common phrase - 'cook' strongly relates to 'show' as in a cooking show/cook show."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        
+  Soldier              NEUTRAL    
+  Laser                BLUE       [revealed]
+  Boot                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       [revealed]
+  Clip                 BLUE       
+  Toast                BLUE       [revealed]
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    [revealed]
+  Cook                 NEUTRAL    [revealed]
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        [revealed]
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+  [BLUE] SHOW 2  #2: Cook → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "celebration", "number": 1, "reasoning": "The remaining unrevealed red words are China, Net, and Cake. 'Cake' is closely associated with celebrations (birthdays, weddings, etc.), while the other remaining red words do not connect well to this clue. This minimizes risk, as the blue and neutral words left do not strongly link to 'celebration', and it steers well clear of the assassin ('Edge')."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CELEBRATION' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Glow
+  Soldier
+  Clip
+  Edge
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+  Cake
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+  [BLUE] SHOW 2  #2: Cook → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Cake", "reasoning": "Cake is closely associated with celebrations such as birthdays, weddings, and parties. None of the other words on the list are as directly tied to the clue 'CELEBRATION'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-4.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CELEBRATION' — 1 word(s).
+Guesses used this turn: 1 / 2.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Glow
+  Soldier
+  Clip
+  Edge
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+  [BLUE] SHOW 2  #2: Cook → neutral
+  [RED] CELEBRATION 1  #1: Cake → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Glow", "reasoning": "Glow fits with 'celebration' as things like fireworks, sparklers, or lights are often associated with celebrations. None of the other words strongly connect to 'celebration.'"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Ink                  NEUTRAL    
+  Glow                 RED        [revealed]
+  Soldier              NEUTRAL    
+  Laser                BLUE       [revealed]
+  Boot                 RED        [revealed]
+  Cap                  RED        [revealed]
+  Ghost                NEUTRAL    [revealed]
+  Root                 BLUE       [revealed]
+  Flute                BLUE       [revealed]
+  Clip                 BLUE       
+  Toast                BLUE       [revealed]
+  Edge                 ASSASSIN   
+  Cargo                BLUE       [revealed]
+  Gene                 NEUTRAL    [revealed]
+  Cook                 NEUTRAL    [revealed]
+  Elm                  RED        [revealed]
+  Egypt                NEUTRAL    
+  Alien                BLUE       
+  China                RED        
+  Net                  RED        
+  Nurse                RED        [revealed]
+  Bill                 NEUTRAL    
+  Jungle               RED        [revealed]
+  Cake                 RED        [revealed]
+  Steam                BLUE       [revealed]
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+  [BLUE] SHOW 2  #2: Cook → neutral
+  [RED] CELEBRATION 1  #1: Cake → red
+  [RED] CELEBRATION 1  #2: Glow → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ALIEN, BILL, BOOT, CAKE, CAP, CARGO, CHINA, CLIP, COOK, EDGE, EGYPT, ELM, FLUTE, GENE, GHOST, GLOW, INK, JUNGLE, LASER, NET, NURSE, ROOT, SOLDIER, STEAM, TOAST
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the board, I need to find clues for the two remaining BLUE words: **CLIP** and **ALIEN**.
+
+Let me think about what connects CLIP and ALIEN:
+
+- CLIP: paper clip, hair clip, clip art, bulldog clip, tie clip
+- ALIEN: extraterrestrial, foreign, strange
+
+What connects them?
+- "Art CLIP" / "ALIEN art"? No...
+- VIDEO: video clip, video alien (no)
+- FILM: film clip, film alien (Alien is a famous film!)
+- MOVIE: movie clip, movie alien
+- SPACE: space alien... space clip? Not really
+- PAPER: paper clip, paper alien? No
+- SHORT: short clip? short alien? No
+- LITTLE: little alien? little clip? No
+- EXTRATERRESTRIAL: no
+- HAIR: hair clip, hair alien? No
+- INVADER: alien invader, clip? No
+
+FILM works well: "film clip" is a common phrase, and "Alien" is a famous film/movie. The risk is it might also suggest other things, but CLIP and ALIEN are both solidly connected to FILM.
+
+I need to avoid pointing toward CHINA (red) or NET (red) or INK (neutral) or EDGE (assassin).
+
+FILM → film clip ✓, film alien ✓. CHINA could be "fine china" not film. NET not film. EDGE not film. Looks safe!
+
+{"clue": "FILM", "number": 2, "reasoning": "CLIP connects to 'film clip' (a short movie excerpt) and ALIEN connects to the famous film 'Alien'. Neither CHINA, NET, INK, nor EDGE strongly connect to FILM."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FILM' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Ink
+  Soldier
+  Clip
+  Edge
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+  [BLUE] SHOW 2  #2: Cook → neutral
+  [RED] CELEBRATION 1  #1: Cake → red
+  [RED] CELEBRATION 1  #2: Glow → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue 'FILM' with 2 words, and we need 2 blue cards remaining.
+
+Let me think about which words connect to FILM:
+
+- **Clip**: A film clip is a very common phrase
+- **Edge**: Cutting edge, edge of film... less direct
+- **Alien**: The movie "Alien" is a famous film
+- **China**: Less obvious film connection
+- **Ink**: Less obvious
+- **Bill**: Bill Murray? Less direct
+- **Net**: Netflix? Stretch
+- **Soldier**: Soldier film? Less direct
+- **Egypt**: Less obvious
+
+The strongest connections to FILM:
+- **Clip**: "Film clip" is a direct compound word
+- **Alien**: Famous film, but could be risky
+
+"Clip" is extremely direct - a film clip is a segment of a movie. This feels very safe.
+
+"Alien" is also a famous film. But we need to be careful - Red has 2 cards left too, and Alien could be a red card.
+
+Let me think: FILM CLIP is a very natural phrase. CLIP could also relate to other things but FILM is the clue.
+
+I'll go with CLIP first as it's the most direct connection.
+
+{"guess": "Clip", "reasoning": "A 'film clip' is a direct and common phrase - a segment of a movie. This is the most natural compound word with FILM."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FILM' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Ink
+  Soldier
+  Edge
+  Egypt
+  Alien
+  China
+  Net
+  Bill
+
+Game history:
+  [RED] FOREST 2  #1: Jungle → red
+  [RED] FOREST 2  #2: Elm → red
+  [RED] FOREST 2  #3: Root → blue
+  [BLUE] SHIP 3  #1: Cargo → blue
+  [BLUE] SHIP 3  #2: Steam → blue
+  [BLUE] SHIP 3  #3: Ghost → neutral
+  [RED] HAT 2  #1: Cap → red
+  [RED] HAT 2  #2: Boot → red
+  [RED] HAT 2  #3: PASS
+  [BLUE] CHAMPAGNE 2  #1: Flute → blue
+  [BLUE] CHAMPAGNE 2  #2: Toast → blue
+  [BLUE] CHAMPAGNE 2  #3: PASS
+  [RED] HOSPITAL 1  #1: Nurse → red
+  [RED] HOSPITAL 1  #2: Gene → neutral
+  [BLUE] SHOW 2  #1: Laser → blue
+  [BLUE] SHOW 2  #2: Cook → neutral
+  [RED] CELEBRATION 1  #1: Cake → red
+  [RED] CELEBRATION 1  #2: Glow → red
+  [BLUE] FILM 2  #1: Clip → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the valid guesses and the clue 'FILM' with 2 words:
+
+- "Clip" was already guessed (correct, blue)
+- Now I need another word related to FILM
+
+Thinking about FILM connections:
+- **Alien** - "Alien" is a famous film/movie
+- **Edge** - could relate to film (cutting room edge?)
+- **China** - not obvious film connection
+- **Soldier** - there are soldier films
+- **Ink** - film ink? not strong
+- **Bill** - Kill Bill is a film, or "bill" as in movie bill?
+- **Net** - Netflix? film net?
+- **Egypt** - The Mummy, various films set in Egypt
+
+"Alien" is perhaps the most iconic single-word film title. But also thinking about "film" as a thin layer - like a film of something...
+
+Actually, "FILM" could relate to:
+- **Net** - hairnet/film? 
+- **Alien** - the movie "Alien"
+- **Edge** - "The Edge" is a film, or film edge (the physical edge of film strip)
+
+Blue only has 1 card remaining, so I need to be careful. The spymaster gave clue_number 2, and we've used 1 guess correctly. I should guess one more.
+
+"Alien" seems like a strong film title connection. But I'm worried about it being red or the assassin.
+
+Given the context and that we only need 1 more blue card, I'll go with **Alien** as it's a famous film.
+
+{"guess": "Alien", "reasoning": "ALIEN is a famous film title, fitting the FILM clue. With only 1 blue card remaining, this seems like a strong connection to film as a movie."}
+============================================================

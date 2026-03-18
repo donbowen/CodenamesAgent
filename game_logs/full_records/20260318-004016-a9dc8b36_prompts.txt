@@ -1,0 +1,2299 @@
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        
+  Australia            NEUTRAL    
+  Model                RED        
+  Spy                  RED        
+  Glow                 BLUE       
+  Ferry                NEUTRAL    
+  Cup                  RED        
+  Zoo                  RED        
+  Fabric               BLUE       
+  Cube                 NEUTRAL    
+  Brooch               BLUE       
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       
+  Slug                 RED        
+  Etch                 RED        
+  Dice                 RED        
+  Cold                 NEUTRAL    
+  Hotel                BLUE       
+  Root                 BLUE       
+  Dog                  BLUE       
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE, NEUTRAL, and especially the ASSASSIN (BILL).
+
+Let me look at my RED words: Leaf, Model, Spy, Cup, Zoo, Slug, Etch, Dice, Lark
+
+Let me brainstorm connections:
+
+- **Slug, Lark, Leaf** - nature/outdoors?
+- **Cup, Dice** - games/objects on a table?
+- **Etch, Model** - art-related? "SKETCH" connects to Etch, and Model (art model), and maybe Dice (drawing)?
+- **Slug, Snail** - gastropod?
+- **Zoo, Slug, Lark** - animals/creatures
+- **Lark, Slug, Spy** - these can all be verbs meaning types of activity
+
+Let me think about "ANIMAL" or "CREATURE": Zoo (animals), Slug (creature), Lark (bird) - but Dog is BLUE, which is dangerous.
+
+"SKETCH" - connects to Etch (sketching/etching), Model (sketch a model), maybe Leaf (sketch pad)? But this might be a stretch.
+
+"ROLL" - Dice (roll dice), Cup (dice cup/roll), Slug (slug roll?)... not great.
+
+"GARDEN" - Leaf, Slug (garden slug), Lark (garden bird)? Maybe Zoo? Not strong enough.
+
+"GAME" - Dice (game), Spy (game), Lark (a game/fun), Cup (trophy)... but this could point to Dog (game of fetch) or other neutrals.
+
+"ADVENTURE" - Spy, Lark (a lark = adventure)... too few.
+
+"PRANK" - Lark (a lark = prank), Spy (sneaky)... too few.
+
+"INSECT" or "PEST" - Slug (pest)... too narrow.
+
+"TROPHY" - Cup (trophy), Model (trophy), Lark? No.
+
+"ENGRAVE" - Etch (engraving), Dice (engraved), Cup (engraved trophy), Brooch (engraved) - but Brooch is BLUE.
+
+"TUMBLE" - Dice (tumble), Cup (tumble)... too few.
+
+"CASTING" - Model (casting), Dice (casting dice), Spy (casting agents)... maybe Cup (casting mold)?
+
+{"clue": "CASTING", "number": 4, "reasoning": "Casting connects to DICE (casting dice), MODEL (casting models/actors), CUP (casting molds), and SPY (spy casting/recruiting agents). Avoids ASSASSIN (BILL) and BLUE words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CASTING' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Leaf
+  Australia
+  Model
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Fabric
+  Cube
+  Brooch
+  Bill
+  Gorge
+  Eye
+  Slug
+  Etch
+  Dice
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to think about what words connect to "CASTING" with 4 words.
+
+"Casting" can relate to several concepts:
+1. **Casting** in acting/movies - casting a role, casting call, casting director
+2. **Casting** as in fishing - casting a line
+3. **Casting** as in throwing/casting something
+4. **Casting** as in metal casting (mold)
+5. Compound words or phrases with "cast"
+
+Let me go through the valid guesses:
+
+- **Model** - Models go to castings (casting calls). Strong connection.
+- **Coach** - A casting coach? Not standard. But "casting couch" is a well-known phrase... "Coach" vs "couch" - close but not quite.
+- **Spy** - Spy casting? Casting a spy in a movie? Weak.
+- **Eye** - "Casting an eye" is a common phrase. Strong connection.
+- **Dice** - "Casting dice" - you cast dice. Strong connection.
+- **Band** - Casting a band? Band could relate to a cast (like a medical cast has bands)?
+- **Cold** - "Cold casting"? Not strong.
+- **Dog** - Not obvious.
+- **Train** - Not obvious.
+- **Bill** - "Cast a bill"? Not strong.
+- **Slug** - In metal casting, a slug is a piece of cast metal. That's a reasonable connection.
+- **Glow** - "Casting a glow" - you can cast a glow. Possible.
+- **Root** - "Root casting"? No.
+- **Leaf** - Not obvious.
+- **Cube** - A cast cube? Not strong.
+- **Etch** - Related to metalwork but not casting specifically.
+- **Ferry** - "Cast off" on a ferry? Weak.
+
+My top 4 candidates: **Model** (casting call), **Dice** (casting dice), **Eye** (casting an eye), and possibly **Slug** (metal casting slug) or **Glow** (casting a glow).
+
+I'll start with the most confident:
+
+{"guess": "DICE", "reasoning": "Casting dice is a very common phrase - you 'cast' dice when you throw them."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CASTING' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Leaf
+  Australia
+  Model
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Fabric
+  Cube
+  Brooch
+  Bill
+  Gorge
+  Eye
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Model", "reasoning": "CASTING relates to casting models - in modeling/acting, a casting call is where models are selected. This is a strong connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CASTING' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Fabric
+  Cube
+  Brooch
+  Bill
+  Gorge
+  Eye
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Coach", "reasoning": "CASTING relates to casting a coach in a play/movie (casting call for actors), but more specifically, 'casting coach' is a well-known phrase (casting couch is the famous term, but coach could relate to casting in sports - a coach casts/selects players for positions). Actually, let me reconsider - casting can relate to: casting a line (fishing), casting a spell, casting actors, casting metal. 'Coach' doesn't fit perfectly. Let me think about other options: 'Slug' - casting a slug (metal casting), 'Bill' - casting a bill/vote, 'Band' - casting a band (music group casting), 'Eye' - casting an eye (to cast an eye on something is an idiom), 'Glow' - cast a glow, 'Cold' - cold casting. 'Eye' seems strong - 'casting an eye' is a common phrase. But given that dice and model were correct (both relate to casting), I think 'Slug' could work (a slug is a type of metal casting). 'Coach' doesn't fit as well. Let me go with 'Eye' - 'cast your eye' is a very common expression."}
+
+Wait, let me reconsider. The clue is CASTING 4, and dice and model were both correct. Let me think about what connects: casting dice, casting a model, casting... a line (fishing - LARK? no), casting a spell (SPELL isn't available). 
+
+{"guess": "Eye", "reasoning": "Casting an eye is a common expression (to cast one's eye over something). With dice and model already guessed correctly, 'eye' fits the pattern of things you can 'cast' - cast your eye."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CASTING' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Fabric
+  Cube
+  Brooch
+  Bill
+  Gorge
+  Eye
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "Coach", "reasoning": "CASTING relates to casting a coach in a play/movie (casting call for actors), but more specifically, 'casting coach' is a well-known phrase (casting couch is the famous term, but coach could relate to casting in sports - a coach casts/selects players for positions). Actually, let me reconsider - casting can relate to: casting a line (fishing), casting a spell, casting actors, casting metal. 'Coach' doesn't fit perfectly. Let me think about other options: 'Slug' - casting a slug (metal casting), 'Bill' - casting a bill/vote, 'Band' - casting a band (music group casting), 'Eye' - casting an eye (to cast an eye on something is an idiom), 'Glow' - cast a glow, 'Cold' - cold casting. 'Eye' seems strong - 'casting an eye' is a common phrase. But given that dice and model were correct (both relate to casting), I think 'Slug' could work (a slug is a type of metal casting). 'Coach' doesn't fit as well. Let me go with 'Eye' - 'cast your eye' is a very common expression."}
+
+Wait, let me reconsider. The clue is CASTING 4, and dice and model were both correct. Let me think about what connects: casting dice, casting a model, casting... a line (fishing - LARK? no), casting a spell (SPELL isn't available). 
+
+{"guess": "Eye", "reasoning": "Casting an eye is a common expression (to cast one's eye over something). With dice and model already guessed correctly, 'eye' fits the pattern of things you can 'cast' - cast your eye."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 1011). Try again.
+
+[RESPONSE]
+{"guess": "Eye", "reasoning": "Casting an eye is a common expression - to cast one's eye over something. With dice and model already guessed correctly as casting-related words, eye fits the pattern of things you can cast."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 7  |  Blue remaining: 7
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       
+  Ferry                NEUTRAL    
+  Cup                  RED        
+  Zoo                  RED        
+  Fabric               BLUE       
+  Cube                 NEUTRAL    
+  Brooch               BLUE       
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        
+  Etch                 RED        
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       
+  Root                 BLUE       
+  Dog                  BLUE       
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "PIN", "number": 2, "reasoning": "A brooch is a type of pin and pins are used with fabric/sewing (links Brooch and Fabric)"}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PIN' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Fabric
+  Cube
+  Brooch
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Brooch", "reasoning": "A brooch is essentially a decorative pin — direct match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PIN' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 7  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Fabric
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Fabric", "reasoning": "Pins fasten or decorate fabric (brooches/pins attach to clothing) — strong match to PIN clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PIN' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the two PIN-related blues (Brooch, Fabric). Safer to stop rather than risk a neutral/opponent/assassin on the extra guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 7  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       
+  Ferry                NEUTRAL    
+  Cup                  RED        
+  Zoo                  RED        
+  Fabric               BLUE       [revealed]
+  Cube                 NEUTRAL    
+  Brooch               BLUE       [revealed]
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        
+  Etch                 RED        
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       
+  Root                 BLUE       
+  Dog                  BLUE       
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining RED words as possible: Leaf, Spy, Cup, Zoo, Slug, Etch, Lark.
+
+Let me think about groupings:
+
+- **Lark, Slug, Leaf** - nature/outdoor things
+- **Cup, Etch, Spy** - harder to connect
+- **Zoo, Slug, Lark** - animals (lark is a bird, slug is a creature, zoo has animals)
+
+Let me think about "SKETCH":
+- Etch (sketching/etching - very strong)
+- But "sketch" is too close to just one word.
+
+What about "GARDEN"?
+- Leaf (garden leaves)
+- Slug (garden pest)
+- Lark (bird in the garden)
+- Maybe Cup (cup of tea in the garden?)
+- Risks: Root (BLUE - garden root), Dog (BLUE)... too dangerous.
+
+What about "SNAIL"?
+- Slug (very close - both gastropods)
+- Only connects one well.
+
+What about "TROPHY"?
+- Cup (trophy cup)
+- Lark (on a lark)
+- Not great.
+
+What about "AGENT"?
+- Spy (secret agent)
+- Slug (slug as a bullet/agent term)
+- Etch (stretch?)
+- Not great.
+
+What about "SCRATCH"?
+- Etch (scratch/engrave)
+- Slug (slug it out)
+- Not strong enough.
+
+What about "ENGRAVE"?
+- Etch (engraving)
+- Cup (engraved cup)
+- Maybe Leaf (gold leaf engraving?)
+
+What about "TEA"?
+- Cup (teacup)
+- Leaf (tea leaf)
+- Lark (tea + lark? not strong)
+- Risks: None of the blue/assassin words connect strongly.
+
+"TEA" connecting Cup and Leaf is solid and safe. Let me check dangers: Bill (assassin) - no. Gorge, Glow, Hotel, Root, Dog - none connect to tea strongly.
+
+Actually, let me see if I can get 3: Tea leaf, teacup, tea... zoo? No.
+
+Let me go with TEA for 2, it's safe and clear.
+
+{"clue": "TEA", "number": 2, "reasoning": "TEA connects to CUP (teacup) and LEAF (tea leaf) strongly. It avoids all blue words, neutral words, and the assassin (BILL). Safe and clear connection for two words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEA' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Cup
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "CUP", "reasoning": "Tea is strongly associated with 'cup' - a cup of tea is one of the most common phrases. This seems like a very confident match."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEA' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Leaf
+  Australia
+  Spy
+  Glow
+  Ferry
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Leaf", "reasoning": "Tea is made from tea leaves. 'Leaf' is strongly associated with tea, making it a very likely red card for this clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEA' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Glow
+  Ferry
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already correctly guessed 2 words matching the 'TEA' clue (Cup and Leaf), which equals the clue number. The remaining words on the board don't have a strong connection to 'TEA' that I'm confident about. While 'Root' could be a stretch (root tea?) or 'Cold' (cold tea?), these are too risky with 5 cards remaining for each team. Better to pass and let the Spymaster give another clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        [revealed]
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       
+  Ferry                NEUTRAL    
+  Cup                  RED        [revealed]
+  Zoo                  RED        
+  Fabric               BLUE       [revealed]
+  Cube                 NEUTRAL    
+  Brooch               BLUE       [revealed]
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        
+  Etch                 RED        
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       
+  Root                 BLUE       
+  Dog                  BLUE       
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"NEON","number":2,"reasoning":"Neon evokes glowing/bright signs (Glow) and neon-lit hotels/motels (Hotel)."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NEON' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Australia
+  Spy
+  Glow
+  Ferry
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Glow","reasoning":"Neon lights emit a distinctive glow — Glow is the strongest direct match to 'NEON' (likely paired with Hotel for the second)." }
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NEON' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Hotel
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Hotel", "reasoning": "Neon evokes neon signs — classic association with hotels and their bright neon signage."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NEON' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the two NEON targets (Glow, Hotel). Don't risk a third guess and possibly hit an opponent or assassin."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        [revealed]
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       [revealed]
+  Ferry                NEUTRAL    
+  Cup                  RED        [revealed]
+  Zoo                  RED        
+  Fabric               BLUE       [revealed]
+  Cube                 NEUTRAL    
+  Brooch               BLUE       [revealed]
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        
+  Etch                 RED        
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       [revealed]
+  Root                 BLUE       
+  Dog                  BLUE       
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining RED words as possible: **Spy, Zoo, Slug, Etch, Lark**.
+
+Let me think about possible connections:
+
+- **Spy, Zoo, Slug, Lark** - these are all short words, but that's not a useful clue.
+- **Slug, Snail** - not helpful for multiple words.
+- **Lark, Spy** - adventure/fun? 
+- **Etch, Sketch** - "Sketch" connects to Etch (Etch-a-Sketch), and could connect to Spy (sketch of a suspect), and maybe Lark (a lark/adventure)?
+- **Animal**: Zoo (animals), Slug (animal), Lark (bird), Spy (no). But "Dog" is BLUE and "Gorge" could be confused.
+- **Creature**: Slug (creature), Lark (creature), Zoo (creatures)... but Dog is BLUE.
+- **Garden**: Slug (garden pest), Lark (garden bird?)... weak.
+- **Secret**: Spy (secret agent), Zoo (no), Etch (no).
+- **ENGRAVE**: Etch (engraving), Slug (a slug is a piece of metal/type used in printing)... only 2.
+- **Prank**: Lark (a lark = prank/fun), Spy (spying as mischief?)... weak.
+- **SKETCH**: Etch (Etch-a-Sketch), Spy (sketch artist for suspects), Lark (?)... 
+- **AGENT**: Spy (secret agent), Slug (a slug in printing/typesetting)... weak.
+- **WILDLIFE**: Zoo (wildlife), Lark (bird/wildlife), Slug (wildlife)... but Dog is BLUE. However "wildlife" more strongly suggests Zoo, Lark, Slug than Dog.
+- **CAGE**: Zoo (cages), Lark (caged bird)... only 2.
+- **ANIMAL**: Zoo, Slug, Lark — 3 words. Dog is BLUE though, which is risky.
+
+Let me reconsider **WILDLIFE** — Zoo (wildlife park), Slug (wildlife), Lark (wildlife/bird). Dog is domesticated, less "wildlife." Root and Gorge are not animals. This seems relatively safe for 3.
+
+{"clue": "WILDLIFE", "number": 3, "reasoning": "Connecting Zoo (wildlife park), Slug (a wild creature), and Lark (a wild bird). Dog is BLUE but is domesticated, not typically 'wildlife.' Avoids assassin (Bill) and other blue/neutral words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WILDLIFE' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Australia
+  Spy
+  Ferry
+  Zoo
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Zoo", "reasoning": "Zoo is directly related to wildlife - it's a place where wild animals are kept. This is the strongest connection to the clue 'WILDLIFE'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WILDLIFE' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Slug
+  Etch
+  Cold
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Slug", "reasoning": "WILDLIFE clue for 3 words. A slug is a wildlife creature (a mollusk/gastropod found in nature). Zoo was already correctly guessed. Slug fits well as a wild animal."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WILDLIFE' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 3  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Etch
+  Cold
+  Root
+  Dog
+  Train
+  Band
+  Lark
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Lark", "reasoning": "A lark is a bird, which is wildlife. This fits the WILDLIFE clue well. We've already gotten 2 correct guesses this turn (Zoo and Slug), so this would be the third word matching the clue of 3. With 3 red remaining and 3 blue remaining, getting this right would be crucial."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'WILDLIFE' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Etch
+  Cold
+  Root
+  Dog
+  Train
+  Band
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 correct words this turn matching the clue number of 3. With only 2 red cards remaining, I should be cautious. The remaining words don't strongly connect to 'WILDLIFE' - Dog could be a stretch but it could also be blue or the assassin. It's safer to pass and wait for a more targeted clue for the remaining 2 red cards."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 2  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        [revealed]
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       [revealed]
+  Ferry                NEUTRAL    
+  Cup                  RED        [revealed]
+  Zoo                  RED        [revealed]
+  Fabric               BLUE       [revealed]
+  Cube                 NEUTRAL    
+  Brooch               BLUE       [revealed]
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        [revealed]
+  Etch                 RED        
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       [revealed]
+  Root                 BLUE       
+  Dog                  BLUE       
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        [revealed]
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "BARK", "number": 2, "reasoning": "Dogs bark; bark and root are both parts of a tree, linking Dog and Root."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BARK' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Etch
+  Cold
+  Root
+  Dog
+  Train
+  Band
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dog", "reasoning": "BARK most directly points to DOG (dogs bark). I’d also be targeting ROOT as the likely second Bark-related word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BARK' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Etch
+  Cold
+  Root
+  Train
+  Band
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Root", "reasoning": "Bark and root are both parts of a tree (outer layer vs underground support), strong tree-related connection."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'BARK' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Etch
+  Cold
+  Train
+  Band
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+  [BLUE] BARK 2  #2: Root → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the two BARK answers (Dog, Root). Safer to stop rather than risk a wrong third guess."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 2  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        [revealed]
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       [revealed]
+  Ferry                NEUTRAL    
+  Cup                  RED        [revealed]
+  Zoo                  RED        [revealed]
+  Fabric               BLUE       [revealed]
+  Cube                 NEUTRAL    
+  Brooch               BLUE       [revealed]
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        [revealed]
+  Etch                 RED        
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       [revealed]
+  Root                 BLUE       [revealed]
+  Dog                  BLUE       [revealed]
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        [revealed]
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+  [BLUE] BARK 2  #2: Root → blue
+  [BLUE] BARK 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects my two remaining red words: **SPY** and **ETCH**.
+
+Let me think about what connects these two:
+
+- SPY and ETCH: "Etch A Sketch" is a toy... "Sketch" could relate to spy (sketch artist, spy sketch) and etch (Etch A Sketch). 
+- SKETCH: connects to ETCH (Etch A Sketch) and SPY (a spy sketch, sketchy behavior, sketch of a suspect/spy)
+
+Let me check for dangers:
+- GORGE (unrevealed blue) - sketch doesn't really point to gorge
+- BILL (assassin) - sketch doesn't point to bill
+- Neutral words (Coach, Australia, Ferry, Cube, Cold, Train, Band) - sketch could vaguely relate to some but not strongly
+
+"SKETCH" seems solid. Both words connect well:
+- ETCH → Etch A Sketch (very strong connection)
+- SPY → spy sketch, sketching suspects, covert sketching
+
+Let me also consider "ENGRAVE" - connects to ETCH (engraving/etching) but not really to SPY.
+
+"UNDERCOVER" - connects to SPY but not ETCH.
+
+"SCRATCH" - connects to ETCH (scratching a surface) and maybe SPY is a stretch.
+
+I'll go with SKETCH as it has the strongest dual connection.
+
+{"clue": "SKETCH", "number": 2, "reasoning": "ETCH connects via 'Etch A Sketch' (the classic toy), and SPY connects via 'spy sketch' (drawing/sketching suspects, covert surveillance sketches). Neither GORGE (blue) nor BILL (assassin) are strongly associated with sketch."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SKETCH' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 2  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Etch
+  Cold
+  Train
+  Band
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+  [BLUE] BARK 2  #2: Root → blue
+  [BLUE] BARK 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find 2 words related to "SKETCH" from the valid guesses.
+
+Let me think about this:
+
+- **Etch** - Very strong connection. "Etch" is closely related to "sketch" - both involve drawing/engraving. "Etch-a-Sketch" is also a famous toy.
+- **Draw** - not on the list
+- **Bill** - A sketch can be a comedy sketch (like on a bill of a show), but that's a stretch
+- **Coach** - Not obviously related to sketch
+- **Band** - A sketch comedy show? Weak connection
+- **Train** - Not obviously related
+- **Cube** - Not obviously related
+- **Spy** - Not obviously related
+
+The strongest connection is clearly **Etch** (Etch-a-Sketch, and etching is similar to sketching).
+
+For the second word, let me think harder:
+- **Draft** would work but isn't on the list
+- **Bill** - a comedy sketch could be on a bill... weak
+- **Coach** - a coach could sketch plays? That's a reasonable connection actually - coaches sketch out plays/strategies on whiteboards
+- **Band** - no strong connection
+
+Wait - "sketch" as in a comedy sketch. SNL sketches. That doesn't clearly point to any of these.
+
+"Sketch" as drawing: **Etch** is very strong. For the second, **Coach** (coaches sketch plays) or possibly **Train** (train sketch?)... 
+
+Actually, thinking about it more: a **Bill** could refer to a "bill" of entertainment (a program of sketches). But I think the Spymaster likely picked words more directly related to drawing/sketching.
+
+Let me start with the most confident guess.
+
+{"guess": "Etch", "reasoning": "Etch is very closely related to sketch - both mean to draw/engrave, and 'Etch-a-Sketch' is a famous drawing toy. This is the strongest connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SKETCH' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Cold
+  Train
+  Band
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+  [BLUE] BARK 2  #2: Root → blue
+  [BLUE] BARK 2  #3: PASS
+  [RED] SKETCH 2  #1: Etch → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 'Etch' correctly, which was one of the 2 words for SKETCH. The clue number was 2, and I've gotten 1 correct. The remaining valid guesses for SKETCH could be 'Draw' or 'Pad' but those aren't on the board. Looking at the remaining words, none strongly connect to SKETCH. With only 1 red card remaining and 1 blue remaining, the risk of hitting the assassin or the blue card is too high. However, I must consider - 'Bill' could relate to sketch (a comedy sketch, like a comedy bill/show), or 'Band' (sketch comedy band?). Actually, wait - let me reconsider. We have 1 red remaining, meaning I need to find it. 'Coach' could relate to sketch (coach drawing/sketching plays). 'Bill' - a bill can be a sketch/drawing on currency. 'Train' - sketch on a train? Let me think about 'Draw' connections - 'Draw' is a synonym for sketch. None of these words strongly mean draw/sketch. Since I already got 1 of 2 correct and the stakes are very high (1 red vs 1 blue left), I should pass and wait for a better clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Coach                NEUTRAL    
+  Leaf                 RED        [revealed]
+  Australia            NEUTRAL    
+  Model                RED        [revealed]
+  Spy                  RED        
+  Glow                 BLUE       [revealed]
+  Ferry                NEUTRAL    
+  Cup                  RED        [revealed]
+  Zoo                  RED        [revealed]
+  Fabric               BLUE       [revealed]
+  Cube                 NEUTRAL    
+  Brooch               BLUE       [revealed]
+  Bill                 ASSASSIN   
+  Gorge                BLUE       
+  Eye                  BLUE       [revealed]
+  Slug                 RED        [revealed]
+  Etch                 RED        [revealed]
+  Dice                 RED        [revealed]
+  Cold                 NEUTRAL    
+  Hotel                BLUE       [revealed]
+  Root                 BLUE       [revealed]
+  Dog                  BLUE       [revealed]
+  Train                NEUTRAL    
+  Band                 NEUTRAL    
+  Lark                 RED        [revealed]
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+  [BLUE] BARK 2  #2: Root → blue
+  [BLUE] BARK 2  #3: PASS
+  [RED] SKETCH 2  #1: Etch → red
+  [RED] SKETCH 2  #2: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AUSTRALIA, BAND, BILL, BROOCH, COACH, COLD, CUBE, CUP, DICE, DOG, ETCH, EYE, FABRIC, FERRY, GLOW, GORGE, HOTEL, LARK, LEAF, MODEL, ROOT, SLUG, SPY, TRAIN, ZOO
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue":"Canyon","number":1,"reasoning":"Gorge is a synonym for canyon/ravine, pointing to the one remaining blue word."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5-mini
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'CANYON' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Coach
+  Australia
+  Spy
+  Ferry
+  Cube
+  Bill
+  Gorge
+  Cold
+  Train
+  Band
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] CASTING 4  #1: Dice → red
+  [RED] CASTING 4  #2: Model → red
+  [RED] CASTING 4  #3: Eye → blue
+  [BLUE] PIN 2  #1: Brooch → blue
+  [BLUE] PIN 2  #2: Fabric → blue
+  [BLUE] PIN 2  #3: PASS
+  [RED] TEA 2  #1: Cup → red
+  [RED] TEA 2  #2: Leaf → red
+  [RED] TEA 2  #3: PASS
+  [BLUE] NEON 2  #1: Glow → blue
+  [BLUE] NEON 2  #2: Hotel → blue
+  [BLUE] NEON 2  #3: PASS
+  [RED] WILDLIFE 3  #1: Zoo → red
+  [RED] WILDLIFE 3  #2: Slug → red
+  [RED] WILDLIFE 3  #3: Lark → red
+  [RED] WILDLIFE 3  #4: PASS
+  [BLUE] BARK 2  #1: Dog → blue
+  [BLUE] BARK 2  #2: Root → blue
+  [BLUE] BARK 2  #3: PASS
+  [RED] SKETCH 2  #1: Etch → red
+  [RED] SKETCH 2  #2: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess":"Gorge","reasoning":"Gorge is a direct synonym/close match for canyon."}
+============================================================

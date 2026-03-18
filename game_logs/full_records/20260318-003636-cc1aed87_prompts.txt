@@ -1,0 +1,2394 @@
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Chip                 BLUE       
+  Dinosaur             RED        
+  Blade                RED        
+  Press                NEUTRAL    
+  Slug                 RED        
+  Dart                 ASSASSIN   
+  Bubble               BLUE       
+  Whale                BLUE       
+  Dog                  RED        
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    
+  Dark                 BLUE       
+  Line                 NEUTRAL    
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        
+  Feather              RED        
+  Bolt                 NEUTRAL    
+  Canal                BLUE       
+  Fabric               RED        
+  Lure                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE words and especially the ASSASSIN (DART).
+
+Let me analyze my RED words: Dinosaur, Blade, Slug, Dog, Bomb, Venus, Deep, Feather, Fabric
+
+Let me think about possible connections:
+
+**"Light"** - Feather (light as a feather), Bomb (light a bomb/fuse), could work but also connects to AIR (blue) and DARK (blue, as opposite).
+
+**"Razor"** - Blade (razor blade), Slug (razor slug?), not great.
+
+**"Textile"** - Fabric, Feather (used in textiles)... too few.
+
+**"Shell"** - Bomb (shell/bombshell), Slug (slugs have shells... no they don't), Venus (Venus shell/clam shell), Dog (shell? no)
+
+**"Sea"** - Deep (deep sea), Slug (sea slug), Venus (Venus from the sea), Dog (sea dog = pirate)... but WHALE (blue) is a sea creature, CANAL (blue) is water-related.
+
+**"Fossil"** - Dinosaur (fossil), Slug (fossil), Deep (fossils found deep), Feather (feathered dinosaur fossils), Fabric (fossil fabric?)... but this might be a stretch.
+
+**"Sword"** - Blade (sword blade), Slug (slug it out?), Venus (Venus de Milo?)... not great.
+
+**"Pillow"** - Feather (feather pillow), Fabric (pillow fabric), Bomb (pillow bomb?)... weak.
+
+**"Shrapnel"** - Bomb, Blade... only 2.
+
+**"Snail"** - Slug (similar creature), Shell... only 1 direct.
+
+**"Plume"** - Feather (plume = feather), Dinosaur (plumed dinosaurs), Bomb (plume from bomb), Deep (deep plume), Slug (sea slug plume?)... BOMB plume is strong, FEATHER is strong, DINOSAUR (feathered dinosaurs) decent. Risk check: no strong blue/assassin connections.
+
+{"clue": "PLUME", "number": 3, "reasoning": "PLUME connects to FEATHER (a plume is a feather), BOMB (mushroom cloud/explosion plume), and DINOSAUR (feathered/plumed dinosaurs). Low risk of pointing to blue words or the assassin DART."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLUME' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Bubble
+  Whale
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Ink
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Feather
+  Bolt
+  Canal
+  Fabric
+  Lure
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "FEATHER", "reasoning": "A plume is literally a feather, especially a large, conspicuous one. This is the most direct connection to the clue 'PLUME'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PLUME' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Bubble
+  Whale
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Ink
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Canal
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Ink", "reasoning": "A plume of ink is a very common phrase - when ink disperses in water, it creates a 'plume.' This is a strong association with the clue PLUME."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 8  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Chip                 BLUE       
+  Dinosaur             RED        
+  Blade                RED        
+  Press                NEUTRAL    
+  Slug                 RED        
+  Dart                 ASSASSIN   
+  Bubble               BLUE       
+  Whale                BLUE       
+  Dog                  RED        
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       
+  Line                 NEUTRAL    
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    
+  Canal                BLUE       
+  Fabric               RED        
+  Lure                 BLUE       
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Chip, Bubble, Whale, Air, Dark, Aztec, Canal, Lure
+
+I need to find a clue that connects multiple blue words while avoiding the assassin (Dart) and red words.
+
+I notice several blue words relate to water/aquatic themes:
+- Bubble (forms in water)
+- Whale (ocean animal)
+- Canal (waterway)
+
+This seems like a strong connection that avoids dangerous words. The assassin "Dart" and red words like "Dinosaur," "Blade," "Bomb" etc. don't strongly relate to water.
+
+{"clue": "WATER", "number": 3, "reasoning": "Connects Bubble (forms in water), Whale (ocean animal), and Canal (waterway) while avoiding assassin and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Bubble
+  Whale
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Canal
+  Fabric
+  Lure
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+I need to find words that relate to "WATER" from the valid guesses list.
+
+Looking at the options, I can see several potential connections:
+- **Whale**: Lives in water, strong connection
+- **Bubble**: Forms in water, good connection
+- **Canal**: Man-made waterway, strong connection
+- **Deep**: Describes water depth
+- **Slug**: Some slugs are aquatic
+- **Ball**: Could be a water ball or beach ball used in water
+- **Air**: Water contains air/oxygen
+- **Ground**: Groundwater exists
+- **Jar**: Can hold water
+
+The strongest connections seem to be Whale (marine animal), Canal (waterway), and Bubble (forms in water). Whale feels like the safest and most direct connection to water.
+
+{"guess": "Whale", "reasoning": "Whale is a marine mammal that lives in water, making it the strongest and most direct connection to the clue WATER"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Bubble
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Canal
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bubble", "reasoning": "Bubbles are strongly associated with water - they form in water, are made of soapy water, and are commonly seen in baths, oceans, and other water contexts. This seems like a clear connection to the WATER clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 8  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Canal
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Canal", "reasoning": "Canal is directly related to water as it's a man-made waterway. This seems like the most obvious connection to the WATER clue among the remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'WATER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 words correctly for the WATER clue, matching the clue number exactly. While there might be other water-related words like 'Deep' or 'Slug' (sea slug), I've achieved the target and should avoid risking a wrong guess that could hit a red card or the assassin. Passing is the safe play here."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 8  |  Blue remaining: 5
+
+Board (all colors visible to you):
+  Chip                 BLUE       
+  Dinosaur             RED        
+  Blade                RED        
+  Press                NEUTRAL    
+  Slug                 RED        
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       
+  Line                 NEUTRAL    
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple RED words while avoiding BLUE words (Chip, Air, Dark, Aztec, Lure) and especially the ASSASSIN (Dart).
+
+Let me look at my remaining RED words: Dinosaur, Blade, Slug, Dog, Bomb, Venus, Deep, Fabric
+
+Let me think about groupings:
+
+**"Sharp"** - Blade (sharp edge), but could connect to Dart (ASSASSIN - very dangerous!)
+
+**"Textile"** - Fabric, but only one word.
+
+**"Sword"** - Blade... limited.
+
+**"Snail"** - Slug... limited.
+
+**"Shell"** - Bomb (bombshell), Slug (slug shell), Dinosaur (shell?)... weak.
+
+**"Explosive"** - Bomb, but limited.
+
+**"Sea"** - Deep (deep sea), Slug (sea slug), Venus (Venus from the sea)... but could point to Air or Lure.
+
+**"Ocean"** - Deep, Slug (sea slug), Venus (born from ocean)... but risky with Lure.
+
+**"Fossil"** - Dinosaur, Deep, Slug? Weak.
+
+**"Razor"** - Blade (razor blade), Dog (razor? no), Slug (no)... limited.
+
+**"Carpet"** - Bomb (carpet bomb), Fabric (carpet is fabric), Dog? Not great.
+
+**"Material"** - Fabric, Blade (material), Deep (deep material?)... weak.
+
+**"Silk"** - Fabric (silk fabric), Dog (silky dog?)... limited.
+
+**"Cutting"** - Blade, Fabric (cutting fabric), Deep (cutting deep)... 3 words! Let me check dangers: Dart could be cutting? Slightly risky. Chip (cutting chip?)... maybe.
+
+**"Satin"** - Fabric, Venus (satin/beauty)... limited.
+
+**"Fly"** - Venus (Venus flytrap), Bomb (fly bomb?), Dog (flydog?)... weak.
+
+**"Trap"** - Venus (Venus flytrap), Bomb (booby trap), Dog (trap dog?)... but Lure is BLUE and very "trap-like." Too risky.
+
+**"Cloth"** - Fabric, Blade? Limited.
+
+**"Abyss"** - Deep... one word.
+
+**"Extinction"** - Dinosaur, Bomb, Deep... possible but weak.
+
+**"Knife"** - Blade, Slug (knife?)... but Dart is ASSASSIN. Too close.
+
+**"Pet"** - Dog, Slug (pet slug), Dinosaur (pet dinosaur?)... 2-3. Safe from assassin. Blue words: not really.
+
+{"clue": "PET", "number": 3, "reasoning": "Connects Dog (pet dog), Slug (pet slug), Dinosaur (pet dinosaur - kids' toy/fantasy). Avoids the assassin Dart and blue words. Safe clue for 3 RED words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PET' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 8  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Dog
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "DOG", "reasoning": "Dog is a very common pet - this is the most obvious connection to the clue 'PET'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PET' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 7  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Slug
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Slug", "reasoning": "A slug can be a pet - it's a creature/animal. 'Pet slug' is a thing people have. This connects to the clue 'PET'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PET' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "LURE", "reasoning": "Thinking about 'PET' connections - a lure is used in fishing and can relate to pets (fishing lure, pet fish). Also 'pet' can mean to stroke/attract, which connects to 'lure' as in attracting. However, I'm not super confident. Let me think about other options: 'Dart' could relate to pet (dart frog?), 'Ball' could be a pet toy, 'Dinosaur' could be a pet dinosaur... 'Chip' could relate to pet microchip - that's actually a strong connection! Pet microchip is a very common phrase. Let me reconsider."}
+
+Wait, let me reconsider.
+
+{"guess": "Chip", "reasoning": "A 'pet chip' or 'microchip' is commonly associated with pets - pet microchipping is a very standard thing. This seems like a strong connection to the clue 'PET'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'PET' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 6  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Chip
+  Dinosaur
+  Blade
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "LURE", "reasoning": "Thinking about 'PET' connections - a lure is used in fishing and can relate to pets (fishing lure, pet fish). Also 'pet' can mean to stroke/attract, which connects to 'lure' as in attracting. However, I'm not super confident. Let me think about other options: 'Dart' could relate to pet (dart frog?), 'Ball' could be a pet toy, 'Dinosaur' could be a pet dinosaur... 'Chip' could relate to pet microchip - that's actually a strong connection! Pet microchip is a very common phrase. Let me reconsider."}
+
+Wait, let me reconsider.
+
+{"guess": "Chip", "reasoning": "A 'pet chip' or 'microchip' is commonly associated with pets - pet microchipping is a very standard thing. This seems like a strong connection to the clue 'PET'."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 535). Try again.
+
+[RESPONSE]
+{"guess": "Chip", "reasoning": "A pet microchip is a very common association - microchipping pets is standard practice. This seems like a strong connection to the clue PET."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 6  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Chip                 BLUE       [revealed]
+  Dinosaur             RED        
+  Blade                RED        
+  Press                NEUTRAL    
+  Slug                 RED        [revealed]
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        [revealed]
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       
+  Line                 NEUTRAL    
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining BLUE words:
+- Air
+- Dark
+- Aztec
+- Lure
+
+I need to find a clue that connects these words while avoiding the assassin (Dart) and red words.
+
+"Air" and "Dark" can both be connected to atmosphere/environment concepts. "Lure" relates to fishing/attraction. "Aztec" is a civilization.
+
+Let me consider "NIGHT" as a clue:
+- Air: night air is a common phrase
+- Dark: night is associated with darkness
+- This avoids pointing toward Dart (assassin) or red words
+- Aztec doesn't strongly connect, but 2 solid connections is better than risking the assassin
+
+{"clue": "NIGHT", "number": 2, "reasoning": "Connects Air (night air) and Dark (nighttime darkness) while avoiding assassin and red words"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NIGHT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 6  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dinosaur
+  Blade
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Dark
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Dark", "reasoning": "NIGHT strongly connects to Dark - they are closely associated concepts. Night is when it becomes dark, making this a very likely blue card for a clue about night time."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'NIGHT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 6  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dinosaur
+  Blade
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Line
+  Aztec
+  Jar
+  Deep
+  Bolt
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "NIGHT" with 2 words, I've already successfully guessed "Dark" which was a blue card. Now I need to find the second word that connects to NIGHT.
+
+From the remaining valid guesses, "Deep" stands out as having a strong connection to NIGHT. "Deep night" is a common phrase referring to the darkest, most intense part of nighttime - usually late night or the middle of the night when darkness is at its deepest.
+
+Other words like "Air" (night air) or "Ground" have weaker connections, and I want to avoid risky guesses since we only have 3 blue cards remaining compared to Red's 6.
+
+{"guess": "Deep", "reasoning": "Deep connects strongly to NIGHT in the phrase 'deep night' referring to the darkest part of nighttime, and it's likely the second word for this clue after already getting Dark"}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Chip                 BLUE       [revealed]
+  Dinosaur             RED        
+  Blade                RED        
+  Press                NEUTRAL    
+  Slug                 RED        [revealed]
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        [revealed]
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       [revealed]
+  Line                 NEUTRAL    
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        [revealed]
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue connecting as many of my remaining RED words as possible: **Dinosaur, Blade, Bomb, Venus, Fabric**.
+
+Let me think about groupings:
+
+- **Razor**: connects to Blade (razor blade), Bomb (razor-thin margin? weak), Dinosaur (no)
+- **Sharp**: Blade (sharp), Dinosaur (sharp teeth/claws), Bomb (bombshell? no)
+- **Cutting**: Blade (cutting), Fabric (cutting fabric), Dinosaur (no)
+- **Cloth**: Fabric (cloth/fabric), Blade (cloth cutting? weak), Venus (Venus de Milo draped in cloth? weak)
+- **Steel**: Blade (steel blade), Bomb (steel bomb), Fabric (steel fabric? no)
+- **Silk**: Fabric (silk fabric), Venus (Venus in silk?), Blade (silk cut? no)
+- **Textile**: Fabric (textile), no others
+- **Sword**: Blade (sword blade), Dinosaur (no)
+- **Nuclear**: Bomb (nuclear bomb), Dinosaur (nuclear caused extinction?)... risky
+- **Extinct**: Dinosaur (extinct), Bomb (extinction bomb)... Venus (Venus flytrap? no)
+- **Edge**: Blade (edge), Fabric (fabric edge/selvage)... weak
+- **Shear**: Blade (shears/blade), Fabric (shearing fabric) - but only 2
+
+Let me think about **Scissors**: Blade (scissor blade), Fabric (cut fabric with scissors) - 2 words, avoids assassin (Dart) and blue words.
+
+What about **Material**: Fabric (material), Blade (blade material?), Bomb (bomb material?)... too vague.
+
+**Flyover**: Venus flytrap + Dinosaur fly? No.
+
+**Raptor**: Dinosaur (velociraptor), Blade (raptor-like? no)
+
+**Satin**: Fabric (satin fabric), Venus (Venus in Satin? Botticelli painting)... only 2 and weak.
+
+**Shears**: Blade + Fabric = 2, clean and safe.
+
+Let me check: DART (assassin) - shears doesn't point there. AIR, AZTEC, LURE (blue) - no connection. Safe.
+
+{"clue": "SHEARS", "number": 2, "reasoning": "Shears connects to Blade (shears have blades) and Fabric (shears are used to cut fabric). This avoids the assassin (Dart) and blue words (Air, Aztec, Lure). With 5 remaining and blue at 3, getting 2 more helps maintain our lead."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHEARS' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dinosaur
+  Blade
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Line
+  Aztec
+  Jar
+  Bolt
+  Fabric
+  Lure
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Blade", "reasoning": "Shears are cutting tools with blades, so BLADE is a very strong match for the clue SHEARS."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'SHEARS' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dinosaur
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Line
+  Aztec
+  Jar
+  Bolt
+  Fabric
+  Lure
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Bolt", "reasoning": "SHEARS relates to cutting. 'Bolt' connects to shears because a bolt of fabric is what shears cut through. This is a strong association with shears in the context of textiles/cutting."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 4  |  Blue remaining: 3
+
+Board (all colors visible to you):
+  Chip                 BLUE       [revealed]
+  Dinosaur             RED        
+  Blade                RED        [revealed]
+  Press                NEUTRAL    
+  Slug                 RED        [revealed]
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        [revealed]
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       [revealed]
+  Line                 NEUTRAL    
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        [revealed]
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    [revealed]
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the remaining blue words: Air, Aztec, and Lure.
+
+I need to find a clue that connects these words while avoiding the assassin (Dart) and red words (Dinosaur, Bomb, Venus, Fabric).
+
+Let me analyze potential connections:
+- Air and Lure could both relate to fishing (air bubbles, fishing lure)
+- Aztec relates to ancient civilization
+- Air relates to atmosphere/breathing
+
+The word "FISHING" could work well:
+- LURE is directly related to fishing
+- AIR relates to fishing through air bubbles, surface air, or "fishing in the air"
+- AZTEC is less connected but ancient peoples did fish
+
+This avoids pointing to dangerous words like Dart (projectile, not fishing-related), Bomb, Venus, etc.
+
+{"clue": "FISHING", "number": 2, "reasoning": "Connects LURE (fishing equipment) and AIR (air bubbles in water, surface air while fishing). Avoids assassin and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 4  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dinosaur
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Line
+  Aztec
+  Jar
+  Fabric
+  Lure
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "FISHING" and the available words, I need to find words that relate to fishing activities or equipment.
+
+The most obvious connection is "Lure" - this is a direct fishing term for bait used to attract fish. "Line" is also strongly connected to fishing, as fishing line is essential equipment.
+
+Since I need 2 words for this clue and both of these have clear fishing connections, I'll start with the most direct one.
+
+{"guess": "Lure", "reasoning": "Lure is directly related to fishing - it's the bait used to attract fish when fishing"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'FISHING' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dinosaur
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Line
+  Aztec
+  Jar
+  Fabric
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the clue "FISHING" with 2 words, I've already correctly guessed "Lure" which is a perfect fishing-related word.
+
+For the second word, I need to find another connection to fishing from the remaining options:
+
+- **Line** - This is a very strong connection to fishing, as "fishing line" is essential equipment for fishing
+- **Dart** - Could relate to spear fishing or dart fishing, but it's a weaker connection
+- **Ground** - Could relate to fishing from the ground/shore, but very weak
+- **Ball** - Could relate to sinkers/weights, but very weak connection
+
+"Line" stands out as having the strongest connection to fishing after "Lure". Fishing line is fundamental equipment that every angler uses.
+
+Since I'm at 2 blue remaining vs 4 red remaining, I'm in a good position and can afford to take this reasonable risk on what appears to be a solid connection.
+
+{"guess": "Line", "reasoning": "Fishing line is essential fishing equipment, making this a strong connection to the FISHING clue"}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 4  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Chip                 BLUE       [revealed]
+  Dinosaur             RED        
+  Blade                RED        [revealed]
+  Press                NEUTRAL    
+  Slug                 RED        [revealed]
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        [revealed]
+  Bomb                 RED        
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       [revealed]
+  Line                 NEUTRAL    [revealed]
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        [revealed]
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    [revealed]
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       [revealed]
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue for the remaining RED words: **Dinosaur**, **Bomb**, **Venus**, **Fabric**.
+
+Let me think about connections:
+
+- **Dinosaur** + **Bomb** + **Venus** + **Fabric**: Hard to connect all four.
+- **Venus** + **Bomb**: "shell" - Venus (Botticelli shell), bomb shell... but shell isn't great for bomb.
+- **Dinosaur** + **Bomb**: "nuclear" - nuclear bomb, dinosaurs went extinct (nuclear winter-like event)
+- **Venus** + **Fabric**: "silk" - Venus associated with beauty/silk, fabric is silk... weak.
+- **Bomb** + **Fabric**: "carpet" - carpet bombing, carpet is fabric. 
+- **Dinosaur** + **Bomb** + **Venus**: "extinction" - dinosaur extinction, bomb causes extinction, Venus (planet) has extinction-level conditions... but this might be a stretch.
+- **Venus** + **Dinosaur**: "fossil" - dinosaur fossils, Venus of Willendorf is a famous fossil/artifact.
+- **Bomb** + **Dinosaur**: "explosive" - not great for dinosaur.
+- **Venus** + **Fabric** + **Bomb**: "bombshell" is two words.
+
+Let me think about "MATERIAL": Fabric is material, bomb-making material, Venus (material girl?)... weak.
+
+What about "TEXTILE"? Only hits Fabric.
+
+"CRATER": Venus has craters, bomb creates craters, dinosaur extinction (crater)... That's 3! And it doesn't point to Air, Aztec (the blue remaining words), or Dart (assassin).
+
+Let me verify: CRATER → Venus (planet covered in craters), Bomb (bombs make craters), Dinosaur (Chicxulub crater killed dinosaurs). None of the blue words (Air, Aztec) strongly connect to crater. Dart (assassin) doesn't connect. Neutral words like Ball, Press, Ground, Jar — "Ground" could be slightly related but it's neutral, not deadly.
+
+{"clue": "CRATER", "number": 3, "reasoning": "Venus (planet with many craters), Bomb (creates craters), Dinosaur (Chicxulub crater caused dinosaur extinction). Avoids assassin DART, and blue words AIR and AZTEC."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRATER' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 4  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Dinosaur
+  Press
+  Dart
+  Bomb
+  Ball
+  Air
+  Venus
+  Ground
+  Aztec
+  Jar
+  Fabric
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Bomb", "reasoning": "Craters are formed by bomb impacts/explosions. This is a strong connection to CRATER."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRATER' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 3  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dinosaur
+  Press
+  Dart
+  Ball
+  Air
+  Venus
+  Ground
+  Aztec
+  Jar
+  Fabric
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Venus", "reasoning": "Venus is a planet known for having many craters on its surface, making it a strong match for the clue 'CRATER'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRATER' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 2  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Dinosaur
+  Press
+  Dart
+  Ball
+  Air
+  Ground
+  Aztec
+  Jar
+  Fabric
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "DINOSAUR", "reasoning": "Craters are famously associated with the asteroid impact that caused the extinction of dinosaurs. With 2 red remaining and 2 blue remaining, I need to find the right words. Dinosaur connects to crater through the meteor/asteroid impact that created the Chicxulub crater and killed the dinosaurs. This seems like a strong connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CRATER' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Press
+  Dart
+  Ball
+  Air
+  Ground
+  Aztec
+  Jar
+  Fabric
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+  [RED] CRATER 3  #3: Dinosaur → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 correct red words this turn (Bomb, Venus, Dinosaur), matching the clue number of 3. With only 1 red card remaining, I need to be careful. The remaining valid guesses (Press, Dart, Ball, Air, Ground, Aztec, Jar, Fabric) don't have a strong connection to 'CRATER' and I risk hitting the assassin or a blue card. It's safer to pass and wait for a more specific clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 1  |  Blue remaining: 2
+
+Board (all colors visible to you):
+  Chip                 BLUE       [revealed]
+  Dinosaur             RED        [revealed]
+  Blade                RED        [revealed]
+  Press                NEUTRAL    
+  Slug                 RED        [revealed]
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        [revealed]
+  Bomb                 RED        [revealed]
+  Ball                 NEUTRAL    
+  Air                  BLUE       
+  Venus                RED        [revealed]
+  Ground               NEUTRAL    
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       [revealed]
+  Line                 NEUTRAL    [revealed]
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        [revealed]
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    [revealed]
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       [revealed]
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+  [RED] CRATER 3  #3: Dinosaur → red
+  [RED] CRATER 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+Looking at the board, I need to help BLUE find their remaining 2 words: **Air** and **Aztec**.
+
+Let me analyze potential clues:
+
+- **Air** could connect to: atmosphere, breathe, sky, wind, oxygen, gas
+- **Aztec** could connect to: ancient, civilization, Mexico, empire, culture
+
+I need a word that connects both concepts. Let me think:
+
+- "ANCIENT" - Could work for Aztec (ancient civilization) and Air (ancient atmosphere/winds), but Air connection is weak
+- "EMPIRE" - Strong for Aztec, but no clear connection to Air
+- "ELEMENT" - Could work for Air (air is an element) and Aztec (elements in their culture/calendar)
+
+Wait, let me consider "ELEMENT":
+- **Air** - One of the classical four elements (earth, water, fire, air)
+- **Aztec** - The Aztecs had strong beliefs about natural elements and their calendar/cosmology involved elemental concepts
+
+This seems like a solid connection that avoids the assassin (Dart) and opponent word (Fabric).
+
+{"clue": "ELEMENT", "number": 2, "reasoning": "Air is one of the classical four elements, and Aztec civilization had strong beliefs about natural elements in their cosmology and calendar system"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ELEMENT' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 1  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Press
+  Dart
+  Ball
+  Air
+  Ground
+  Aztec
+  Jar
+  Fabric
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+  [RED] CRATER 3  #3: Dinosaur → red
+  [RED] CRATER 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+Looking at the clue "ELEMENT" and the available words, I need to find words that relate to elements.
+
+From the valid guesses, "Air" stands out immediately as it's literally one of the classical elements (air, water, earth, fire). "Ground" could also relate to the earth element.
+
+Given that this is a 2-word clue and we're in a close game (Red has 1 remaining, Blue has 2 remaining), I should be confident in my first guess.
+
+{"guess": "Air", "reasoning": "Air is literally one of the classical elements, making it a very strong match for the clue ELEMENT"}
+============================================================
+
+============================================================
+PROMPT  model=claude-sonnet-4-20250514
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'ELEMENT' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Press
+  Dart
+  Ball
+  Ground
+  Aztec
+  Jar
+  Fabric
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+  [RED] CRATER 3  #3: Dinosaur → red
+  [RED] CRATER 3  #4: PASS
+  [BLUE] ELEMENT 2  #1: Air → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+Looking at the remaining words and the clue "ELEMENT" with 2 words, I need to find another word that could relate to a chemical element or basic component.
+
+From the valid guesses:
+- Press, Dart, Ball, Ground, Aztec, Jar, Fabric
+
+"Ground" stands out as it could relate to:
+1. Earth as an element (one of the classical four elements: earth, air, fire, water)
+2. Ground as a basic component or foundation
+3. Electrical ground as a fundamental element in circuits
+
+Since I already got "Air" (which was clearly an element), "Ground" seems like the most logical second element-related word.
+
+{"guess": "Ground", "reasoning": "Ground could refer to earth as one of the classical elements (earth, air, fire, water), and since Air was already correct, Ground fits the element theme well"}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 1  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Chip                 BLUE       [revealed]
+  Dinosaur             RED        [revealed]
+  Blade                RED        [revealed]
+  Press                NEUTRAL    
+  Slug                 RED        [revealed]
+  Dart                 ASSASSIN   
+  Bubble               BLUE       [revealed]
+  Whale                BLUE       [revealed]
+  Dog                  RED        [revealed]
+  Bomb                 RED        [revealed]
+  Ball                 NEUTRAL    
+  Air                  BLUE       [revealed]
+  Venus                RED        [revealed]
+  Ground               NEUTRAL    [revealed]
+  Ink                  NEUTRAL    [revealed]
+  Dark                 BLUE       [revealed]
+  Line                 NEUTRAL    [revealed]
+  Aztec                BLUE       
+  Jar                  NEUTRAL    
+  Deep                 RED        [revealed]
+  Feather              RED        [revealed]
+  Bolt                 NEUTRAL    [revealed]
+  Canal                BLUE       [revealed]
+  Fabric               RED        
+  Lure                 BLUE       [revealed]
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+  [RED] CRATER 3  #3: Dinosaur → red
+  [RED] CRATER 3  #4: PASS
+  [BLUE] ELEMENT 2  #1: Air → blue
+  [BLUE] ELEMENT 2  #2: Ground → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  AIR, AZTEC, BALL, BLADE, BOLT, BOMB, BUBBLE, CANAL, CHIP, DARK, DART, DEEP, DINOSAUR, DOG, FABRIC, FEATHER, GROUND, INK, JAR, LINE, LURE, PRESS, SLUG, VENUS, WHALE
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "TEXTILE", "number": 1, "reasoning": "The only remaining RED word is FABRIC. TEXTILE is a direct synonym for fabric. It doesn't point to the assassin (DART) or the remaining blue word (AZTEC), and it's not on the board."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'TEXTILE' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 1  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Press
+  Dart
+  Ball
+  Aztec
+  Jar
+  Fabric
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] PLUME 3  #1: Feather → red
+  [RED] PLUME 3  #2: Ink → neutral
+  [BLUE] WATER 3  #1: Whale → blue
+  [BLUE] WATER 3  #2: Bubble → blue
+  [BLUE] WATER 3  #3: Canal → blue
+  [BLUE] WATER 3  #4: PASS
+  [RED] PET 3  #1: Dog → red
+  [RED] PET 3  #2: Slug → red
+  [RED] PET 3  #3: Chip → blue
+  [BLUE] NIGHT 2  #1: Dark → blue
+  [BLUE] NIGHT 2  #2: Deep → red
+  [RED] SHEARS 2  #1: Blade → red
+  [RED] SHEARS 2  #2: Bolt → neutral
+  [BLUE] FISHING 2  #1: Lure → blue
+  [BLUE] FISHING 2  #2: Line → neutral
+  [RED] CRATER 3  #1: Bomb → red
+  [RED] CRATER 3  #2: Venus → red
+  [RED] CRATER 3  #3: Dinosaur → red
+  [RED] CRATER 3  #4: PASS
+  [BLUE] ELEMENT 2  #1: Air → blue
+  [BLUE] ELEMENT 2  #2: Ground → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Fabric", "reasoning": "TEXTILE directly relates to FABRIC - they are essentially synonyms. Fabric is a textile material. This is the most obvious and confident match for the clue 'TEXTILE'. With only 1 red card remaining, this must be it."}
+============================================================

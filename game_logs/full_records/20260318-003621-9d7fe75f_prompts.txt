@@ -1,0 +1,1744 @@
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 9  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Slug                 ASSASSIN   
+  Copper               BLUE       
+  Kettle               NEUTRAL    
+  Egypt                RED        
+  Dark                 RED        
+  Cargo                NEUTRAL    
+  Depot                RED        
+  Shark                RED        
+  Foot                 NEUTRAL    
+  Phoenix              RED        
+  Compass              BLUE       
+  Spell                BLUE       
+  Mind                 BLUE       
+  Anchor               NEUTRAL    
+  Plot                 BLUE       
+  Etch                 BLUE       
+  Screen               BLUE       
+  Aztec                RED        
+  Mine                 RED        
+  Olive                NEUTRAL    
+  Jet                  NEUTRAL    
+  Gate                 RED        
+  High                 NEUTRAL    
+  Column               RED        
+  Wall                 BLUE       
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANCHOR, AZTEC, CARGO, COLUMN, COMPASS, COPPER, DARK, DEPOT, EGYPT, ETCH, FOOT, GATE, HIGH, JET, KETTLE, MIND, MINE, OLIVE, PHOENIX, PLOT, SCREEN, SHARK, SLUG, SPELL, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "ancient", "number": 3, "reasoning": "Connects clearly to EGYPT, AZTEC, and PHOENIX (mythic/ancient), while avoiding strong associations to the assassin SLUG or to blue/neutral words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 9  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Slug
+  Copper
+  Kettle
+  Egypt
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Phoenix
+  Compass
+  Spell
+  Mind
+  Anchor
+  Plot
+  Etch
+  Screen
+  Aztec
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Column
+  Wall
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Egypt", "reasoning": "Egypt is strongly associated with ancient history and civilizations, making it the best first match for the clue 'ANCIENT'."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 8  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Phoenix
+  Compass
+  Spell
+  Mind
+  Anchor
+  Plot
+  Etch
+  Screen
+  Aztec
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Column
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Aztec", "reasoning": "Aztec is directly associated with an ancient civilization, fitting the clue strongly."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 7  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Phoenix
+  Compass
+  Spell
+  Mind
+  Anchor
+  Plot
+  Etch
+  Screen
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Column
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Phoenix", "reasoning": "The phoenix is a mythological creature rooted in ancient legends, fitting the ANCIENT theme better than the other remaining options."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'ANCIENT' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 6  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Spell
+  Mind
+  Anchor
+  Plot
+  Etch
+  Screen
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Column
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Column", "reasoning": "Ancient strongly suggests architecture and ruins; among remaining words, COLUMN most directly fits ancient structures like Greek and Roman columns."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 8
+
+Board (all colors visible to you):
+  Slug                 ASSASSIN   
+  Copper               BLUE       
+  Kettle               NEUTRAL    
+  Egypt                RED        [revealed]
+  Dark                 RED        
+  Cargo                NEUTRAL    
+  Depot                RED        
+  Shark                RED        
+  Foot                 NEUTRAL    
+  Phoenix              RED        [revealed]
+  Compass              BLUE       
+  Spell                BLUE       
+  Mind                 BLUE       
+  Anchor               NEUTRAL    
+  Plot                 BLUE       
+  Etch                 BLUE       
+  Screen               BLUE       
+  Aztec                RED        [revealed]
+  Mine                 RED        
+  Olive                NEUTRAL    
+  Jet                  NEUTRAL    
+  Gate                 RED        
+  High                 NEUTRAL    
+  Column               RED        [revealed]
+  Wall                 BLUE       
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANCHOR, AZTEC, CARGO, COLUMN, COMPASS, COPPER, DARK, DEPOT, EGYPT, ETCH, FOOT, GATE, HIGH, JET, KETTLE, MIND, MINE, OLIVE, PHOENIX, PLOT, SCREEN, SHARK, SLUG, SPELL, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to find a clue that connects multiple BLUE words while avoiding RED words (Dark, Depot, Shark, Mine, Gate) and the ASSASSIN (Slug).
+
+Let me analyze my BLUE words: Copper, Compass, Spell, Mind, Plot, Etch, Screen, Wall
+
+Let me think about groupings:
+
+**SKETCH**: Could connect to Etch (sketching/etching are similar drawing techniques), Screen (sketch on screen), Plot (sketch a plot/plan), Copper (copper plate sketching). But "sketch" contains "etch" - though it's not an exact match, so it should be fine.
+
+**DRAW**: Etch (draw/etch), Compass (you draw with a compass), Plot (draw a plot), Screen (draw on screen), Copper (draw copper wire). But could also point to Mine (draw from a mine) or Dark (draw the curtains).
+
+**ENGRAVE**: Etch (engraving), Copper (copper engraving plates), Plot (engrave a plot). Only 2-3 words.
+
+**PROJECTION**: Screen (projection screen), Plot (projection of a plot), Mind (mental projection), Wall (project onto a wall). But could point to some neutrals.
+
+**DISPLAY**: Screen (display screen), Wall (wall display), Copper (display). Not enough.
+
+**TELEPATHY**: Mind, Spell... only 2.
+
+**NAVIGATE**: Compass (navigation tool), Plot (plot a course), Screen (navigation screen), Copper (less clear). 
+
+**CHART**: Compass (charting with a compass), Plot (chart a plot/course), Screen (chart on screen), Wall (chart on wall), Copper (copper chart?). But could point to Mine (mining chart) or Depot.
+
+**INSCRIBE**: Etch (inscribe/etch), Wall (inscribe on a wall), Copper (inscribe on copper), Spell (inscribe a spell), Plot (inscribe). This seems strong - 4-5 words. Let me check dangers: Dark? No. Shark? No. Mine? No. Gate? No. Depot? No. Slug (ASSASSIN)? No.
+
+This looks very safe and connects well.
+
+{"clue": "INSCRIBE", "number": 4, "reasoning": "INSCRIBE connects to Etch (inscribing/etching are synonymous), Copper (inscribe on copper plates), Wall (inscribe on a wall), and Spell (inscribe a spell). It avoids all RED words (Dark, Depot, Shark, Mine, Gate) and the ASSASSIN (Slug)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSCRIBE' — 4 word(s).
+Guesses used this turn: 0 / 5.
+Red remaining: 5  |  Blue remaining: 8
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Spell
+  Mind
+  Anchor
+  Plot
+  Etch
+  Screen
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "ETCH", "reasoning": "INSCRIBE is very closely related to ETCH - both mean to carve or engrave marks/text into a surface. This is the most direct connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSCRIBE' — 4 word(s).
+Guesses used this turn: 1 / 5.
+Red remaining: 5  |  Blue remaining: 7
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Spell
+  Mind
+  Anchor
+  Plot
+  Screen
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Plot", "reasoning": "INSCRIBE relates to writing, marking, or engraving. 'Plot' can relate to inscribing in the sense of plotting/writing a story or plotting points (inscribing marks on a graph/chart). This seems like a reasonable connection."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSCRIBE' — 4 word(s).
+Guesses used this turn: 2 / 5.
+Red remaining: 5  |  Blue remaining: 6
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Spell
+  Mind
+  Anchor
+  Screen
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "SPELL", "reasoning": "INSCRIBE relates to writing/marking. 'Spell' connects to writing - you spell out words when you inscribe them. This seems like a reasonable connection to the clue INSCRIBE."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSCRIBE' — 4 word(s).
+Guesses used this turn: 3 / 5.
+Red remaining: 5  |  Blue remaining: 5
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mind
+  Anchor
+  Screen
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "SCREEN", "reasoning": "With INSCRIBE as the clue, I'm looking for words related to writing, engraving, or marking. 'Screen' can relate to 'screenwriting' or 'screen printing' which involves inscribing/printing onto surfaces. However, I'm not very confident. Let me think about other options: 'Slug' could relate to typesetting (a slug is a line of type in printing/typesetting), 'Copper' could relate to copperplate engraving which is a form of inscribing, 'Wall' could relate to wall inscriptions. 'Mine' - not obvious. 'Foot' - footnote? 'Compass' - used to inscribe circles. Actually, 'COMPASS' is quite strong - you literally use a compass to inscribe circles/arcs. But I already got 3 of 4 correct, so I've matched the clue number minus one. Let me think about what the spymaster likely intended. Etch, Plot, Spell were the first three - all related to writing/marking. The fourth could be 'SCREEN' (screenplay/screenwriting), 'SLUG' (typesetting term), or 'COMPASS' (inscribe circles). I think 'WALL' is possible too - wall inscriptions. I'll go with SCREEN as screen printing or screenplay writing connects to inscribe."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'INSCRIBE' — 4 word(s).
+Guesses used this turn: 4 / 5.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mind
+  Anchor
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already successfully guessed all 4 words my Spymaster intended with the INSCRIBE clue (Etch, Plot, Spell, Screen). We have 4 blue remaining but none of the remaining words on the board seem strongly connected to INSCRIBE. Rather than risk hitting a red card or the assassin, I should pass and wait for the next clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Slug                 ASSASSIN   
+  Copper               BLUE       
+  Kettle               NEUTRAL    
+  Egypt                RED        [revealed]
+  Dark                 RED        
+  Cargo                NEUTRAL    
+  Depot                RED        
+  Shark                RED        
+  Foot                 NEUTRAL    
+  Phoenix              RED        [revealed]
+  Compass              BLUE       
+  Spell                BLUE       [revealed]
+  Mind                 BLUE       
+  Anchor               NEUTRAL    
+  Plot                 BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Screen               BLUE       [revealed]
+  Aztec                RED        [revealed]
+  Mine                 RED        
+  Olive                NEUTRAL    
+  Jet                  NEUTRAL    
+  Gate                 RED        
+  High                 NEUTRAL    
+  Column               RED        [revealed]
+  Wall                 BLUE       
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANCHOR, AZTEC, CARGO, COLUMN, COMPASS, COPPER, DARK, DEPOT, EGYPT, ETCH, FOOT, GATE, HIGH, JET, KETTLE, MIND, MINE, OLIVE, PHOENIX, PLOT, SCREEN, SHARK, SLUG, SPELL, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "harbor", "number": 3, "reasoning": "Harbor strongly connects DEPOT (shipping/storage), CARGO (ships at a harbor), and ANCHOR (used by ships), all in a similar domain, while being semantically distant from the assassin SLUG and the blue words."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'HARBOR' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mind
+  Anchor
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Anchor", "reasoning": "Anchors are directly associated with harbors and docking ships, making it the strongest match to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 5  |  Blue remaining: 4
+
+Board (all colors visible to you):
+  Slug                 ASSASSIN   
+  Copper               BLUE       
+  Kettle               NEUTRAL    
+  Egypt                RED        [revealed]
+  Dark                 RED        
+  Cargo                NEUTRAL    
+  Depot                RED        
+  Shark                RED        
+  Foot                 NEUTRAL    
+  Phoenix              RED        [revealed]
+  Compass              BLUE       
+  Spell                BLUE       [revealed]
+  Mind                 BLUE       
+  Anchor               NEUTRAL    [revealed]
+  Plot                 BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Screen               BLUE       [revealed]
+  Aztec                RED        [revealed]
+  Mine                 RED        
+  Olive                NEUTRAL    
+  Jet                  NEUTRAL    
+  Gate                 RED        
+  High                 NEUTRAL    
+  Column               RED        [revealed]
+  Wall                 BLUE       
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANCHOR, AZTEC, CARGO, COLUMN, COMPASS, COPPER, DARK, DEPOT, EGYPT, ETCH, FOOT, GATE, HIGH, JET, KETTLE, MIND, MINE, OLIVE, PHOENIX, PLOT, SCREEN, SHARK, SLUG, SPELL, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+I need to connect: **Copper**, **Compass**, **Mind**, **Wall** (4 unrevealed blue words).
+
+Let me think about possible connections:
+
+- **Copper** and **Compass** both relate to metals/materials (copper is a metal, compass has a copper/metal component)
+- **Mind** and **Wall** → "mental wall," "wall of the mind"
+- **Compass** and **Mind** → "moral compass," "mind's compass"
+
+Let me think about "PENNY":
+- **Copper** → pennies are made of copper ✓
+- **Mind** → "penny for your thoughts" / "mind your pennies" ✓
+- **Wall** → not strong
+- **Compass** → not strong
+
+What about "MAGNETIC":
+- **Compass** → magnetic compass ✓
+- **Mind** → not great
+- **Copper** → copper is related to electromagnetism ✓
+
+What about "NORTH":
+- **Compass** → north on a compass ✓
+- **Wall** → North Wall (e.g., Hadrian's Wall, or "north wall") ✓
+- **Copper** → not strong
+- **Mind** → not strong
+
+What about "BRICK":
+- **Wall** → brick wall ✓
+- **Copper** → copper is slang for police, not great
+
+What about "READING":
+- **Mind** → mind reading ✓
+- **Compass** → compass reading ✓
+- **Copper** → copper reading? not great
+
+What about "MENTAL":
+- **Mind** → mental = of the mind ✓
+- **Compass** → "mental compass" ✓
+- **Wall** → "mental wall" ✓
+- **Copper** → not strong, but 3 is good
+
+Checking against dangerous words: DARK (mental darkness?), SHARK, DEPOT, GATE, MINE, SLUG — none strongly connect to "MENTAL."
+
+Assassin is **SLUG** — no connection to "MENTAL."
+
+{"clue": "MENTAL", "number": 3, "reasoning": "MENTAL connects to MIND (mental = of the mind), COMPASS (mental compass), and WALL (mental wall/mental block). Avoids assassin SLUG and red words."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MENTAL' — 3 word(s).
+Guesses used this turn: 0 / 4.
+Red remaining: 5  |  Blue remaining: 4
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mind
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Mind", "reasoning": "MENTAL directly relates to MIND - 'mental' literally means 'of or relating to the mind.' This is the strongest connection to the clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MENTAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "High", "reasoning": "MENTAL can relate to 'high' as in 'mental high' or psychological state. But let me think more carefully. MENTAL 3 - we already got 'Mind' which is clearly mental. Now I need 2 more. 'Dark' could relate to 'dark' as in mental darkness/dark thoughts. 'Compass' could be 'mental compass' - a sense of direction. 'Foot' could be 'mental footprint'... not great. 'Wall' could be 'mental wall' - a psychological barrier. 'Gate' could be 'mental gate'... not common. 'Jet' - 'mental jet lag'? No. 'Mine' - 'mind mine'? No. Actually 'mental note', 'mental health', 'mental block/wall'. 'Wall' seems strong - 'mental wall' is a common phrase. 'Compass' - 'moral/mental compass' is also a phrase. Let me go with 'Compass' as 'mental compass' is a well-known concept, but actually 'mental note' - 'Note' isn't on the board. Let me reconsider: 'mental block/wall' is very common. 'Mental image' - not here. 'Mental health' - not here. I think the three words are likely Mine (as in 'mind/mine' wordplay? No...), Dark ('mental darkness'), and Copper/Kettle (not obvious). Actually, wait - could it be wordplay? MENTAL contains 'metal' - Copper is a metal! And Jet could be a type of material. But the clue is MENTAL not METAL. Hmm, but maybe the spymaster is hinting at words that are close to 'mental' in some way. Let me stick with common phrases: 'mental wall' (mental block/barrier), 'mental note', 'mental compass'. I'll guess Wall."}
+
+Wait, let me reconsider and commit to one answer.
+
+{"guess": "Wall", "reasoning": "Mental wall is a very common phrase meaning a psychological barrier or mental block. With 3 blue remaining and the clue being MENTAL 3, this seems like a strong connection after already getting 'Mind'."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MENTAL' — 3 word(s).
+Guesses used this turn: 1 / 4.
+Red remaining: 5  |  Blue remaining: 3
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+  Wall
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[ASSISTANT]
+{"guess": "High", "reasoning": "MENTAL can relate to 'high' as in 'mental high' or psychological state. But let me think more carefully. MENTAL 3 - we already got 'Mind' which is clearly mental. Now I need 2 more. 'Dark' could relate to 'dark' as in mental darkness/dark thoughts. 'Compass' could be 'mental compass' - a sense of direction. 'Foot' could be 'mental footprint'... not great. 'Wall' could be 'mental wall' - a psychological barrier. 'Gate' could be 'mental gate'... not common. 'Jet' - 'mental jet lag'? No. 'Mine' - 'mind mine'? No. Actually 'mental note', 'mental health', 'mental block/wall'. 'Wall' seems strong - 'mental wall' is a common phrase. 'Compass' - 'moral/mental compass' is also a phrase. Let me go with 'Compass' as 'mental compass' is a well-known concept, but actually 'mental note' - 'Note' isn't on the board. Let me reconsider: 'mental block/wall' is very common. 'Mental image' - not here. 'Mental health' - not here. I think the three words are likely Mine (as in 'mind/mine' wordplay? No...), Dark ('mental darkness'), and Copper/Kettle (not obvious). Actually, wait - could it be wordplay? MENTAL contains 'metal' - Copper is a metal! And Jet could be a type of material. But the clue is MENTAL not METAL. Hmm, but maybe the spymaster is hinting at words that are close to 'mental' in some way. Let me stick with common phrases: 'mental wall' (mental block/barrier), 'mental note', 'mental compass'. I'll guess Wall."}
+
+Wait, let me reconsider and commit to one answer.
+
+{"guess": "Wall", "reasoning": "Mental wall is a very common phrase meaning a psychological barrier or mental block. With 3 blue remaining and the clue being MENTAL 3, this seems like a strong connection after already getting 'Mind'."}
+
+[USER]
+Invalid response: Extra data: line 3 column 1 (char 1460). Try again.
+
+[RESPONSE]
+{"guess": "Wall", "reasoning": "Mental wall is a common phrase meaning a psychological barrier or mental block. Strong connection to MENTAL clue."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MENTAL' — 3 word(s).
+Guesses used this turn: 2 / 4.
+Red remaining: 5  |  Blue remaining: 2
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Compass
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+I need to find one more BLUE word related to "MENTAL" from the remaining valid guesses. I've already correctly guessed "Mind" and "Wall" (as in "mental wall"/mental block).
+
+Let me think about which remaining words connect to "MENTAL":
+
+- **Copper** - not obviously mental
+- **Dark** - "dark" could relate to mental darkness, but seems like a stretch
+- **High** - could relate to "mental high" but risky
+- **Compass** - "mental compass" is a phrase (moral/mental compass)
+- **Mine** - "mine" as in "mind" is close but not quite... though "mental mine" doesn't work
+- **Jet** - not related
+- **Gate** - "mental gate"? Not a strong connection
+- **Note** - not on list
+- **Foot** - "mental footprint"? No
+
+"Compass" stands out - "mental compass" is a recognized phrase (your internal sense of direction or moral guidance). This seems like the strongest connection.
+
+However, I only need 2 more blue cards to win, and I've already gotten 2 this turn. The clue was for 3 words, so there should be one more. But if I guess wrong, especially an assassin or opponent card, it could be costly. With only 2 blue remaining and 5 red remaining, I have a lead but red could catch up.
+
+I'm fairly confident in "Compass" as "mental compass" is a well-known phrase.
+
+{"guess": "COMPASS", "reasoning": "Mental compass is a well-known phrase referring to one's internal sense of direction or moral guidance. This seems like the strongest connection to MENTAL among the remaining words, and with only 2 blue cards left to win, this could clinch the game."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'MENTAL' — 3 word(s).
+Guesses used this turn: 3 / 4.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "I've already guessed 3 correct words matching the clue number of 3. Blue only has 1 card remaining, so I need to be careful. The remaining words don't have a strong connection to 'MENTAL' that I can see. Guessing wrong could hit the assassin or help red. Better to pass and wait for a more specific clue for the last blue card."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Spymaster.
+Red remaining: 5  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Slug                 ASSASSIN   
+  Copper               BLUE       
+  Kettle               NEUTRAL    
+  Egypt                RED        [revealed]
+  Dark                 RED        
+  Cargo                NEUTRAL    
+  Depot                RED        
+  Shark                RED        
+  Foot                 NEUTRAL    
+  Phoenix              RED        [revealed]
+  Compass              BLUE       [revealed]
+  Spell                BLUE       [revealed]
+  Mind                 BLUE       [revealed]
+  Anchor               NEUTRAL    [revealed]
+  Plot                 BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Screen               BLUE       [revealed]
+  Aztec                RED        [revealed]
+  Mine                 RED        
+  Olive                NEUTRAL    
+  Jet                  NEUTRAL    
+  Gate                 RED        
+  High                 NEUTRAL    
+  Column               RED        [revealed]
+  Wall                 BLUE       [revealed]
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+  [BLUE] MENTAL 3  #4: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANCHOR, AZTEC, CARGO, COLUMN, COMPASS, COPPER, DARK, DEPOT, EGYPT, ETCH, FOOT, GATE, HIGH, JET, KETTLE, MIND, MINE, OLIVE, PHOENIX, PLOT, SCREEN, SHARK, SLUG, SPELL, WALL
+
+Give a clue that helps your team (RED) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "cave", "number": 2, "reasoning": "Points strongly to MINE and DARK (dark cave, mine in a cave). Other words are only weakly related, and the assassin SLUG is not naturally linked to cave in common usage, making this a relatively safe double clue."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAVE' — 2 word(s).
+Guesses used this turn: 0 / 3.
+Red remaining: 5  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Mine
+  Olive
+  Jet
+  Gate
+  High
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+  [BLUE] MENTAL 3  #4: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "Mine", "reasoning": "Mines are often found in caves or resemble caves underground, making this the strongest association with the clue CAVE."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAVE' — 2 word(s).
+Guesses used this turn: 1 / 3.
+Red remaining: 4  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Dark
+  Cargo
+  Depot
+  Shark
+  Foot
+  Olive
+  Jet
+  Gate
+  High
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+  [BLUE] MENTAL 3  #4: PASS
+  [RED] CAVE 2  #1: Mine → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "Dark", "reasoning": "Caves are typically dark, and among the remaining options Dark is the most directly associated with caves compared to the others, which fit more weakly or not at all."}
+============================================================
+
+============================================================
+PROMPT  model=gpt-5.1
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the RED Field Operative.
+Clue: 'CAVE' — 2 word(s).
+Guesses used this turn: 2 / 3.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list (or PASS to stop guessing):
+  Slug
+  Copper
+  Kettle
+  Cargo
+  Depot
+  Shark
+  Foot
+  Olive
+  Jet
+  Gate
+  High
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+  [BLUE] MENTAL 3  #4: PASS
+  [RED] CAVE 2  #1: Mine → red
+  [RED] CAVE 2  #2: Dark → red
+
+Guess one word from the VALID GUESSES list above, or respond PASS to end your turn.
+
+[RESPONSE]
+{"guess": "PASS", "reasoning": "We already found the 2 intended CAVE words and blue only has 1 card left, so taking an extra risk is not worth it."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Spymaster in a game of Codenames. You have full knowledge of the board: which words belong to your team, the opponent, are neutral, or are the deadly assassin.
+
+Your task: give ONE word as a clue and a NUMBER indicating how many of your team's words relate to it.
+
+Rules:
+- The clue must be a single English word (no proper nouns that match board words, no phrases).
+- The clue CANNOT be any word currently on the board (exact match, case-insensitive).
+- The number must be at least 1.
+- Avoid clues that could guide your team toward the ASSASSIN — guessing it loses the game instantly.
+- Avoid clues that point to opponent words.
+
+Respond with ONLY valid JSON:
+{"clue": "WORD", "number": N, "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Spymaster.
+Red remaining: 3  |  Blue remaining: 1
+
+Board (all colors visible to you):
+  Slug                 ASSASSIN   
+  Copper               BLUE       
+  Kettle               NEUTRAL    
+  Egypt                RED        [revealed]
+  Dark                 RED        [revealed]
+  Cargo                NEUTRAL    
+  Depot                RED        
+  Shark                RED        
+  Foot                 NEUTRAL    
+  Phoenix              RED        [revealed]
+  Compass              BLUE       [revealed]
+  Spell                BLUE       [revealed]
+  Mind                 BLUE       [revealed]
+  Anchor               NEUTRAL    [revealed]
+  Plot                 BLUE       [revealed]
+  Etch                 BLUE       [revealed]
+  Screen               BLUE       [revealed]
+  Aztec                RED        [revealed]
+  Mine                 RED        [revealed]
+  Olive                NEUTRAL    
+  Jet                  NEUTRAL    
+  Gate                 RED        
+  High                 NEUTRAL    
+  Column               RED        [revealed]
+  Wall                 BLUE       [revealed]
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+  [BLUE] MENTAL 3  #4: PASS
+  [RED] CAVE 2  #1: Mine → red
+  [RED] CAVE 2  #2: Dark → red
+  [RED] CAVE 2  #3: PASS
+
+FORBIDDEN CLUE WORDS — your clue cannot be any of these board words:
+  ANCHOR, AZTEC, CARGO, COLUMN, COMPASS, COPPER, DARK, DEPOT, EGYPT, ETCH, FOOT, GATE, HIGH, JET, KETTLE, MIND, MINE, OLIVE, PHOENIX, PLOT, SCREEN, SHARK, SLUG, SPELL, WALL
+
+Give a clue that helps your team (BLUE) identify their unrevealed words.
+
+[RESPONSE]
+{"clue": "PENNY", "number": 1, "reasoning": "The only remaining blue word is COPPER. A penny is made of copper, making this a strong and direct connection. PENNY doesn't point to any red words (DEPOT, SHARK, GATE) or the ASSASSIN (SLUG)."}
+============================================================
+
+============================================================
+PROMPT  model=claude-opus-4-6
+============================================================
+[SYSTEM]
+You are a Field Operative in a game of Codenames. Your Spymaster has given you a clue (a word + number). Guess which unrevealed words on the board best match the clue.
+
+Rules:
+- You may guess up to (clue_number + 1) times per turn.
+- Only unrevealed words are valid guesses.
+- Correct guess (your team's card): turn continues.
+- Neutral card: turn ends immediately.
+- Opponent card: turn ends, opponent benefits.
+- ASSASSIN card: your team LOSES instantly — be very careful!
+- Respond "PASS" to end your turn without guessing. You cannot PASS on your first guess — you must guess at least once before passing.  
+- Passing is smart if you're unsure or want to avoid risking a bad guess.
+- You should probably pass if you've guessed clue_number correctly, unless you're trying to get a word from a prior clue that you think you did not use yet.
+- Your aggression/risk aversion will depend on how few cards you and the opponent have left, and how confident you are in your guesses.
+
+Respond with ONLY valid JSON:
+{"guess": "WORD_OR_PASS", "reasoning": "brief explanation"}
+
+
+[USER]
+You are the BLUE Field Operative.
+Clue: 'PENNY' — 1 word(s).
+Guesses used this turn: 0 / 2.
+Red remaining: 3  |  Blue remaining: 1
+
+VALID GUESSES — you MUST choose ONLY from this list:
+  Slug
+  Copper
+  Kettle
+  Cargo
+  Depot
+  Shark
+  Foot
+  Olive
+  Jet
+  Gate
+  High
+
+NOTE: You MUST make at least one guess this turn before you can pass.
+
+Game history:
+  [RED] ANCIENT 3  #1: Egypt → red
+  [RED] ANCIENT 3  #2: Aztec → red
+  [RED] ANCIENT 3  #3: Phoenix → red
+  [RED] ANCIENT 3  #4: Column → red
+  [BLUE] INSCRIBE 4  #1: Etch → blue
+  [BLUE] INSCRIBE 4  #2: Plot → blue
+  [BLUE] INSCRIBE 4  #3: Spell → blue
+  [BLUE] INSCRIBE 4  #4: Screen → blue
+  [BLUE] INSCRIBE 4  #5: PASS
+  [RED] HARBOR 3  #1: Anchor → neutral
+  [BLUE] MENTAL 3  #1: Mind → blue
+  [BLUE] MENTAL 3  #2: Wall → blue
+  [BLUE] MENTAL 3  #3: Compass → blue
+  [BLUE] MENTAL 3  #4: PASS
+  [RED] CAVE 2  #1: Mine → red
+  [RED] CAVE 2  #2: Dark → red
+  [RED] CAVE 2  #3: PASS
+
+Guess one word from the VALID GUESSES list above. You cannot pass yet.
+
+[RESPONSE]
+{"guess": "COPPER", "reasoning": "PENNY is a coin, and pennies are made of COPPER. This is a very strong association. With only 1 blue card remaining, this seems like the clear intended connection. The other words don't have nearly as strong a link to PENNY."}
+============================================================
