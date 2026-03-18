@@ -186,10 +186,11 @@ function renderH2HMatrix(games) {
 }
 
 // ── Game Log Table ────────────────────────────────────────────
-let allGames  = [];
-let sortCol   = 'timestamp';
-let sortDir   = 'desc';
-let filterStr = '';
+let allGames   = [];
+let sortCol    = 'timestamp';
+let sortDir    = 'desc';
+let filterStr  = '';
+let filterStr2 = '';
 
 function renderGameTable(games) {
   allGames = games;
@@ -200,6 +201,11 @@ function renderGameTable(games) {
 function attachGameTableEvents() {
   document.getElementById('games-filter').addEventListener('input', e => {
     filterStr = e.target.value.trim().toLowerCase();
+    rebuildGameTable();
+  });
+
+  document.getElementById('games-filter2').addEventListener('input', e => {
+    filterStr2 = e.target.value.trim().toLowerCase();
     rebuildGameTable();
   });
 
@@ -219,11 +225,15 @@ function attachGameTableEvents() {
 }
 
 function rebuildGameTable() {
+  const matchesFilter = (g, f) =>
+    g.red_name.toLowerCase().includes(f) ||
+    g.blue_name.toLowerCase().includes(f) ||
+    g.winner_name.toLowerCase().includes(f);
+
   let rows = allGames.filter(g => {
-    if (!filterStr) return true;
-    return g.red_name.toLowerCase().includes(filterStr) ||
-           g.blue_name.toLowerCase().includes(filterStr) ||
-           g.winner_name.toLowerCase().includes(filterStr);
+    if (filterStr  && !matchesFilter(g, filterStr))  return false;
+    if (filterStr2 && !matchesFilter(g, filterStr2)) return false;
+    return true;
   });
 
   rows.sort((a, b) => {
@@ -545,12 +555,21 @@ function renderStep() {
   // Update board card flip states
   const cards = document.querySelectorAll('#board-wrap .card');
   cards.forEach(card => {
-    const word = card.dataset.word;
+    const word  = card.dataset.word;
+    const color = card.dataset.color; // e.g. "red", "blue", "neutral", "assassin"
+
     if (step.revealed[word]) {
       card.classList.add('revealed');
     } else {
       card.classList.remove('revealed');
     }
+
+    // Subtle color hint on unrevealed cards at game end
+    card.classList.remove('hint-red', 'hint-blue', 'hint-neutral', 'hint-assassin');
+    if (step.type === 'end' && !step.revealed[word]) {
+      card.classList.add(`hint-${color}`);
+    }
+
     // Assassin hit highlight on end step
     const front = card.querySelector('.card-front');
     front.classList.remove('assassin-hit');
