@@ -28,10 +28,11 @@ ELO leaderboard.
 ## Building and updating the leaderboard.
 
 1. Initialize the leaderboard. The models are set in `codenames/tournament.py`, and should come from https://models.litellm.ai/ 
-   ```bash
+  ```bash
   conda activate codenames
   python -m codenames.tournament --rounds 1
-   ```
+  ```
+
 2. Add new models to the leaderboard. The new model(s) will play 1 round of red/blue against ~10 models to determine its place on the leaderboard.
   ```bash
   todo
