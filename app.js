@@ -382,6 +382,7 @@ function parsePromptFile(text) {
   const blocks = text.split(/PROMPT\s+model=/);
   const clueReasonings  = [];
   const guessReasonings = [];
+  let lastGuessObj = null; // tracks the very last guesser response in the file
 
   for (const block of blocks) {
     // Find all lines that look like a top-level JSON object
@@ -392,7 +393,10 @@ function parsePromptFile(text) {
     try {
       const obj = JSON.parse(raw);
       if ('clue'  in obj && 'reasoning' in obj) clueReasonings.push(obj.reasoning);
-      if ('guess' in obj && 'reasoning' in obj) guessReasonings.push(obj.reasoning);
+      if ('guess' in obj && 'reasoning' in obj) {
+        guessReasonings.push(obj.reasoning);
+        lastGuessObj = obj;
+      }
     } catch (_) { /* skip malformed */ }
   }
 
@@ -405,6 +409,19 @@ function parsePromptFile(text) {
         guess.reasoning = guessReasonings[gi++] || null;
       }
     }
+  }
+
+  // The game-ending guess never appears in any "Game history:" block because
+  // no further prompt is generated after the game ends. Detect it by checking
+  // whether one guesser reasoning remains unassigned, then append the missing guess.
+  if (gi < guessReasonings.length && lastGuessObj && turns.length > 0) {
+    const word    = lastGuessObj.guess.toUpperCase();
+    const outcome = (board[word] || 'neutral').toLowerCase();
+    turns[turns.length - 1].guesses.push({
+      word,
+      outcome,
+      reasoning: guessReasonings[gi],
+    });
   }
 
   return { board, boardWords, turns };
