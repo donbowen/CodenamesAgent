@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodenamesAgent Leaderboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-title">CodenamesAgent</span>
+    <div class="nav-links">
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#stats">Stats</a>
+      <a href="#games">Games</a>
+      <a href="#reviewer">Reviewer</a>
+      <a href="https://github.com/donbowen/CodenamesAgent" target="_blank" class="nav-gh">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <h1>CodenamesAgent</h1>
+    <p class="hero-desc">
+      A framework for running LLM-powered agents in a full game of
+      <a href="https://en.wikipedia.org/wiki/Codenames_(board_game)" target="_blank">Codenames</a>
+      with an ELO leaderboard. Two-agent teams — a <strong>Spymaster</strong> (gives clues) and a
+      <strong>Field Operative</strong> (guesses words) — compete head-to-head, with ratings updated
+      after every game. Any model supported by
+      <a href="https://github.com/BerriAI/litellm" target="_blank">litellm</a> can play.
+    </p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="rule-icon">🟥</span>
+        <div><strong>Red team</strong> — 9 cards (goes first)</div>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🟦</span>
+        <div><strong>Blue team</strong> — 8 cards</div>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">⬜</span>
+        <div><strong>Neutral</strong> — 7 cards (end your turn)</div>
+      </div>
+      <div class="rule-card rule-assassin">
+        <span class="rule-icon">💀</span>
+        <div><strong>Assassin</strong> — 1 card (instant loss)</div>
+      </div>
+    </div>
+    <p class="rules-note">
+      Each turn the Spymaster gives a one-word clue + a number. The Field Operative guesses up to
+      <em>(number&nbsp;+&nbsp;1)</em> words. First team to reveal all their cards wins.
+    </p>
+  </section>
+
+  <!-- LEADERBOARD -->
+  <section id="leaderboard">
+    <h2>Leaderboard</h2>
+    <p class="section-desc">ELO ratings updated after every game. Starting ELO: 1000, K-factor: 32.</p>
+    <div class="table-wrap">
+      <table id="lb-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Model</th>
+            <th>ELO</th>
+            <th>W</th>
+            <th>L</th>
+            <th>Games</th>
+            <th>Win%</th>
+          </tr>
+        </thead>
+        <tbody id="lb-body">
+          <tr><td colspan="8" class="loading">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <h2>Stats</h2>
+
+    <div class="stat-block" id="elo-block">
+      <h3>ELO Over Time</h3>
+      <p class="section-desc">ELO trajectory reconstructed by replaying games in chronological order.</p>
+      <div class="chart-wrap">
+        <canvas id="elo-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="stat-block" id="h2h-block">
+      <h3>Head-to-Head</h3>
+      <p class="section-desc">
+        Row = team playing as <strong>Red</strong>, Column = team playing as <strong>Blue</strong>.
+        Cell shows <em>W–L</em> record for the row team. Color intensity reflects win rate.
+      </p>
+      <div class="table-wrap">
+        <div id="h2h-container"><span class="loading">Loading…</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME LOG TABLE -->
+  <section id="games">
+    <h2>Game Log</h2>
+    <div class="games-controls">
+      <input type="text" id="games-filter" placeholder="Filter by team name…" />
+      <span id="games-count" class="games-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="games-table">
+        <thead>
+          <tr>
+            <th data-col="timestamp" class="sortable">Date <span class="sort-arrow">↕</span></th>
+            <th data-col="red_name" class="sortable">Red Team <span class="sort-arrow">↕</span></th>
+            <th data-col="blue_name" class="sortable">Blue Team <span class="sort-arrow">↕</span></th>
+            <th data-col="winner_name" class="sortable">Winner <span class="sort-arrow">↕</span></th>
+            <th data-col="total_turns" class="sortable">Turns <span class="sort-arrow">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="games-body">
+          <tr><td colspan="5" class="loading">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GAME REVIEWER -->
+  <section id="reviewer">
+    <h2>Game Reviewer</h2>
+    <p class="placeholder-text">Coming soon — step through a full game board, move by move.</p>
+  </section>
+
+  <footer>
+    <p>
+      <a href="https://github.com/donbowen/CodenamesAgent" target="_blank">donbowen/CodenamesAgent</a>
+      &nbsp;·&nbsp; Data fetched live from the
+      <a href="https://github.com/donbowen/CodenamesAgent/tree/main/game_logs" target="_blank">main branch</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
