@@ -1,11 +1,11 @@
 /* ============================================================
-   CodenamesAgent — GitHub Pages app
+   CodenamesBench — GitHub Pages app
    Fetches leaderboard.json and games.json from the main branch
    and renders leaderboard, ELO chart, H2H matrix, game log,
    and interactive game reviewer.
    ============================================================ */
 
-const REPO       = 'donbowen/CodenamesAgent';
+const REPO       = 'donbowen/CodenamesBench';
 const RAW        = `https://raw.githubusercontent.com/${REPO}/main/game_logs`;
 const LB_URL     = `${RAW}/leaderboard.json`;
 const GAMES_URL  = `${RAW}/games.json`;
