@@ -627,9 +627,7 @@ function renderStep() {
     turnInd.textContent = `Turn ${clueStepsCurr.length} of ${clueSteps.length}`;
   }
 
-  // PASS banner
-  const passBanner = document.getElementById('pass-banner');
-  passBanner.hidden = (step.type !== 'pass');
+  document.getElementById('pass-banner').hidden = true;
 
   // End banner
   const endBanner = document.getElementById('end-banner');
