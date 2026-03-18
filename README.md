@@ -1,4 +1,4 @@
-# CodenamesAgent
+# CodenamesBench
 
 A framework for running LLM-powered agents in a full game of
 [Codenames](https://en.wikipedia.org/wiki/Codenames_(board_game)) with an

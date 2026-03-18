@@ -1,5 +1,5 @@
 """
-CodenamesAgent – command-line interface.
+CodenamesBench – command-line interface.
 
 Usage examples
 --------------
